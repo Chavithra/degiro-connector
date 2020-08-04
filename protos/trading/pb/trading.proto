@@ -1,0 +1,85 @@
+syntax = "proto3";
+
+/* ENUM(S) DEFINITION */
+enum Action {
+  BUY = 0;
+  SELL = 1;
+}
+
+enum OrderType {
+  LIMIT = 0;
+  STOP_LIMIT = 1;
+  MARKET = 2;
+  STOP_LOSS = 3;
+}
+
+enum TimeType {
+  UNKNOWN_0  = 0;
+  GOOD_TILL_DAY = 1;
+  UNKNOWN_2  = 2;
+  GOOD_TILL_CANCELED = 3;
+}
+
+enum UpdateOption {
+  ALERTS = 0;
+  CASHFUNDS = 1;
+  HISTORICALORDERS = 2;
+  ORDERS = 3;
+  PORTFOLIO = 4;
+  TOTALPORTFOLIO = 5;
+  TRANSACTIONS = 6;
+}
+
+/* MESSAGE(S) DEFINITION */
+message Order {
+  // Used by check "order"
+  Action action = 2; // called "buysell" by the API
+  string id = 7;
+  OrderType order_type = 3; // called "orderTypeId" by the API
+  double price = 5;
+  int32 product_id = 1; // called "productId" by the API
+  double size = 6;
+  TimeType time_type = 4;
+
+  // Used by confirmed "orders"
+  double contract_size = 8; // called "contractSize" by the API
+  int32 contract_type = 9; // called "contractType" by the API
+  string currency = 10;
+  string hour = 11; // called "date" by the API
+  bool is_deletable = 12; // called "isDeletable" by the API
+  bool is_modifiable = 13; // called "isModifiable" by the API
+  string product = 14;
+  double quantity = 15;
+  double stop_price = 16; // called "stopPrice" by the API
+  double total_order_value = 17; // called "totalOrderValue" by the API
+
+  // Used by "historicalOrders"
+  bool retained_order = 18; // called "retainedOrder" by the API
+  bool sent_to_exchange = 19; // called "sentToExchange" by the API
+}
+
+message Transaction {
+  Action action = 1; // called "buysell" by the API
+  string currency = 2;
+  string hour = 3; // called "date" by the API
+  int32 id = 4;
+  double price = 5;
+  string product = 6;
+  int32 product_id = 7;
+  double quantity = 8;
+}
+
+message Update {
+  repeated Transaction transaction_list = 1;
+  repeated Order order_list = 2;
+}
+
+message UpdateOptionList {
+  repeated UpdateOption list = 1;
+}
+
+message Credentials {
+  int32 int_account = 1;
+  string username = 2;
+  string password = 3;
+}

@@ -1,0 +1,10 @@
+class URLs:
+    LOGIN ='https://trader.degiro.nl/login/secure/login'
+    ORDER_CHECK = 'https://trader.degiro.nl/trading/secure/v5/checkOrder'
+    ORDER_CONFIRM = 'https://trader.degiro.nl/trading/secure/v5/order'
+    ORDER_DELETE = 'https://trader.degiro.nl/trading/secure/v5/order'
+    ORDER_UPDATE = 'https://trader.degiro.nl/trading/secure/v5/order'
+    CONFIG = 'https://trader.degiro.nl/login/secure/config'
+    CLIENT_DETAILS = 'https://trader.degiro.nl/pa/secure/client'
+    UPDATE = 'https://trader.degiro.nl/trading/secure/v5/update'
+    CLIENT_INFO = 'https://trader.degiro.nl/trading/secure/v5/account/info'

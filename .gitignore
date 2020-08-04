@@ -1,0 +1,14 @@
+__pycache__
+/logs
+/.vscode
+*.txt
+*.json
+!*template.json
+/bat
+*.txt
+/*.egg-info
+/build
+/dist
+/*.py
+!/setup.py
+*.ipynb

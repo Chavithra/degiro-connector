@@ -1,0 +1,73 @@
+syntax = "proto3";
+
+/* ENUM(S) DEFINITION */
+enum Action {
+  SUBSCRIBE = 0;
+  UNSUBSCRIBE = 1;
+}
+
+/* MESSAGE(S) DEFINITION */
+message Metadata {
+  string response_datetime = 1;
+  double request_duration = 2;
+}
+
+message Metric {
+  bool heartbeat = 1;
+  string label = 5;
+  int32 product_id = 4;
+  int32 reference = 2;
+  string value = 3;
+}
+
+message Matching {
+  int32 reference = 1;
+  string value = 2;
+  int32 product_id = 3;
+  string label = 4;
+}
+
+message RawResponse {
+  string response_json = 1;
+  Metadata metadata = 2;
+}
+
+message SubscriptionRequest {
+  Action action = 1;
+  int32 product_id = 2;
+  repeated string label_list = 3;
+}
+
+message Ticker {
+  repeated Metric metric_list = 1;
+  repeated int32 product_list = 2;
+  Metadata metadata = 3;
+}
+
+/*
+user_token
+  The user_token is a property of the Degiro account.
+  It is called "userToken" or "id" by Degiro's API.
+  It is an unsigned integer.
+  It can be retrieved using the following endpoints :
+      "https://trader.degiro.nl/pa_s/secure/client?sessionId={session_id}"
+      "https://trader.degiro.nl/pa/secure/client?sessionId={session_id}"
+  The "{session_id}" here above can be retrieved using this endpoint with the HTTP method POST :
+      "https://trader.degiro.nl/login/secure/login"
+  The endpoint to retrieve "{session_id}" requires this parameters :
+      ```json
+      {
+          "username": "{username}",
+          "password": "{password}}",
+          "isPassCodeReset": false,
+          "isRedirectToMobile": false,
+          "queryParams": {}
+      }
+      ```
+  Apparently :
+      - Each Degiro account has an unique user_token.
+      - This number is set at the creation of a Degiro account and never changes.
+*/
+message Credentials {
+  int32 user_token = 1;
+}
