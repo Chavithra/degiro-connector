@@ -6,6 +6,7 @@ setup(
     install_requires=[
         'click',
         'grpcio',
+        'requests',
         'wrapt',
     ],
     author='Chavithra PARANA',
