@@ -5,10 +5,10 @@ setup(
     packages=find_packages(),
     install_requires=[
         'click',
+        'grpcio',
+        'protobuf',
         'requests',
         'wrapt',
-        'wheel',
-        'grpcio',
     ],
     author='Chavithra PARANA',
     author_email='chavithra@gmail.com',
