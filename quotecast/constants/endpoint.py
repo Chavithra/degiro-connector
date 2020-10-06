@@ -1,3 +1,3 @@
 class Endpoint:
     URL = 'https://degiro.quotecast.vwdservices.com/CORS'
-    VERSION = '1.0.20200310'
+    VERSION = '1.0.20200812'
