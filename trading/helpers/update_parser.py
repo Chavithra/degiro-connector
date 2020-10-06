@@ -1,4 +1,4 @@
-from trading.pb.broker_pb2 import (
+from trading.pb.trading_pb2 import (
     Order,
     Action,
     Update,
