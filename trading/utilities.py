@@ -7,6 +7,7 @@ from trading.constants import URLs, Headers
 from trading.pb.trading_pb2 import (
     Credentials,
     Order,
+    Update,
     UpdateOptionList,
 )
 from trading.helpers.update_parser import UpdateParser
@@ -97,7 +98,7 @@ def get_update(
         credentials:Credentials,
         session:requests.Session=None,
         logger:logging.Logger=None
-    )->dict:
+    )->Update:
     """ Retrieve information from Degiro's Trading Update endpoint.
 
     Parameters:
@@ -125,7 +126,7 @@ def get_update(
             This object will be generated if None. (default: {None})
 
     Returns:
-        dict -- Endpoint response.
+        Update -- API response.
     """
     
     if logger is None:
@@ -148,7 +149,8 @@ def get_update(
 
     try:
         response = session.send(prepped, verify=False)
-        response = response.json()
+        response = response.text
+        response = UpdateParser.api_to_grpc_update(response)
     except Exception as e:
         logger.fatal(e)
         return False
