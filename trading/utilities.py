@@ -1,18 +1,22 @@
 import json
 import logging
 import requests
+import trading.helpers.payload_handler as payload_handler
 import urllib3
 
 from trading.constants import URLs, Headers
 from trading.pb.trading_pb2 import (
+    AccountOverview,
     Credentials,
     Order,
+    OrdersHistory,
+    TransactionsHistory,
     Update,
-    UpdateOptionList,
 )
-from trading.helpers.update_parser import UpdateParser
-from trading.helpers.order_parser import OrderParser
-from typing import List
+from typing import (
+    List,
+    Union,
+)
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -93,40 +97,69 @@ def get_session_id(
         raise ConnectionError('No session id returned.')
   
 def get_update(
-        option_list:UpdateOptionList,
+        request_list:Update.RequestList,
         session_id:str,
         credentials:Credentials,
+        raw:bool=False,
         session:requests.Session=None,
-        logger:logging.Logger=None
-    )->Update:
+        logger:logging.Logger=None,
+    )->Union[dict, Update]:
+
     """ Retrieve information from Degiro's Trading Update endpoint.
 
-    Parameters:
-        session_id {str}
-            Degiro's session id
-        credentials {Credentials}
-            Credentials containing the parameter "int_account".
-        option_list {UpdateOptionList}
+    Args:
+        request (Update.RequestList):
             List of options that we want to retrieve from the endpoint.
             Example :
-                option_list = UpdateOptionList(
-                    list = [
-                        UpdateOption.ALERTS,
-                        UpdateOption.CASHFUNDS,
-                        UpdateOption.HISTORICALORDERS,
-                        UpdateOption.ORDERS,
-                        UpdateOption.PORTFOLIO,
-                        UpdateOption.TOTALPORTFOLIO,
-                        UpdateOption.TRANSACTIONS,
+                request = Update.RequestList()
+                request.list.extend(
+                    [
+                        Update.Request(
+                            option=Update.Option.ALERTS,
+                            last_update_number=0,
+                        ),
+                        Update.Request(
+                            option=Update.Option.CASHFUNDS,
+                            last_update_number=0,
+                        ),
+                        Update.Request(
+                            option=Update.Option.HISTORICALORDERS,
+                            last_update_number=0,
+                        ),
+                        Update.Request(
+                            option=Update.Option.ORDERS,
+                            last_update_number=0,
+                        ),
+                        Update.Request(
+                            option=Update.Option.PORTFOLIO,
+                            last_update_number=0,
+                        ),
+                        Update.Request(
+                            option=Update.Option.TOTALPORTFOLIO,
+                            last_update_number=0,
+                        ),
+                        Update.Request(
+                            option=Update.Option.TRANSACTIONS,
+                            last_update_number=0,
+                        ),
                     ]
                 )
-        session {requests.Session}
-            This object will be generated if None. (default: {None})
-        logger {logging.Logger}
-            This object will be generated if None. (default: {None})
+        session_id (str):
+            Degiro's session id
+        credentials (Credentials):
+            Credentials containing the parameter "int_account".
+        raw (bool, optional):
+            Whether are not we want the raw API response.
+            Defaults to False.
+        session (requests.Session, optional):
+            This object will be generated if None.
+            Defaults to None.
+        logger (logging.Logger, optional):
+            This object will be generated if None.
+            Defaults to None.
 
     Returns:
-        Update -- API response.
+        Update: API response.
     """
     
     if logger is None:
@@ -137,21 +170,27 @@ def get_update(
     int_account = credentials.int_account
     url = URLs.UPDATE
     url = f'{url}/{int_account};jsessionid={session_id}'
-    
-    params = UpdateParser.grpc_to_api_update_option_list(
-        option_list=option_list
+
+    params = payload_handler.update_request_list_to_api(
+        request_list=request_list
     )
     params['intAccount'] = int_account
     params['sessionId'] = session_id
-    
+
     request = requests.Request(method='GET', url=url, params=params)
     prepped = session.prepare_request(request)
 
     try:
-        response = session.send(prepped, verify=False)
-        response = response.text
-        response = UpdateParser.api_to_grpc_update(response)
+        response_raw = session.send(prepped, verify=False)
+        response_dict = response_raw.json()
+
+        if raw == True:
+            response = response_dict
+        else:
+            response = payload_handler.update_to_grpc(response_dict)
     except Exception as e:
+        logger.fatal(response_raw.status_code)
+        logger.fatal(response_raw.text)
         logger.fatal(e)
         return False
 
@@ -161,9 +200,10 @@ def check_order(
         order:Order,
         session_id:str,
         credentials:Credentials,
+        raw:bool=False,
         session:requests.Session=None,
-        logger:logging.Logger=None
-    )->str:
+        logger:logging.Logger=None,
+    )->Union[Order.CheckingResponse, bool]:
     
     if logger is None:
         logger = build_logger()
@@ -187,26 +227,98 @@ def check_order(
     prepped = session.prepare_request(request)
 
     try:
-        response = session.send(prepped, verify=False)
-        response = response.json()
+        response_raw = session.send(prepped, verify=False)
+        response_dict = response_raw.json()
     except Exception as e:
+        logger.fatal(response_raw.status_code)
+        logger.fatal(response_raw.text)
         logger.fatal(e)
         return False
 
-    if (
-        type(response) != dict
-        or 'data' not in response
-        or 'confirmationId' not in response['data']
-    ): return False
+    if \
+        isinstance(response_dict, dict) \
+        and 'data' in response_dict \
+        and 'confirmationId' in response_dict['data']:
 
-    return response['data']['confirmationId']
+        if raw == True:
+            response = response_dict
+        else:
+            response = payload_handler.checking_response_to_grpc(
+                checking_dict=response_dict,
+            )
+    else:
+        logger.fatal(response_raw.status_code)
+        logger.fatal(response_raw.text)
+        response = False
+
+    return response
+
+def confirm_order(
+        confirmation_id:str,
+        order:Order,
+        session_id:str,
+        credentials:Credentials,
+        raw:bool=False,
+        session:requests.Session=None,
+        logger:logging.Logger=None,
+    )->Union[Order.ConfirmationResponse, bool]:
+    
+    if logger is None:
+        logger = build_logger()
+    if session is None:
+        session = build_session()
+
+    int_account = credentials.int_account
+    url = URLs.ORDER_CONFIRM
+    url = f'{url}/{confirmation_id};jsessionid={session_id}?intAccount={int_account}&sessionId={session_id}'
+    
+    order_dict = {
+        'buySell' : order.action,
+        'orderType' : order.order_type,
+        'price' : order.price,
+        'productId' : order.product_id,
+        'size' : order.size,
+        'timeType' : order.time_type,
+    }
+
+    request = requests.Request(method='POST', url=url, json=order_dict)
+    prepped = session.prepare_request(request)
+
+    try:
+        response_raw = session.send(prepped, verify=False)
+
+        response_dict = response_raw.json()
+    except Exception as e:
+        logger.fatal(response_raw.status_code)
+        logger.fatal(response_raw.text)
+        logger.fatal(e)
+        return False
+
+    if \
+        isinstance(response_dict, dict) \
+        and 'data' in response_dict \
+        and 'orderId' in response_dict['data']:
+
+        if raw == True:
+            order.id = response_dict['data']['orderId']
+            response = response_dict
+        else:
+            order.id = response_dict['data']['orderId']
+            response = payload_handler.confirmation_response_to_grpc(
+                confirmation_dict=response_dict,
+            )
+    else:
+        response = False
+
+    return response
 
 def update_order(
         order:Order,
         session_id:str,
         credentials:Credentials,
+        raw:bool=False,
         session:requests.Session=None,
-        logger:logging.Logger=None
+        logger:logging.Logger=None,
     )->str:
     
     if logger is None:
@@ -234,64 +346,20 @@ def update_order(
     try:
         response = session.send(prepped, verify=False)
     except Exception as e:
+        logger.fatal(response.status_code)
+        logger.fatal(response.text)
         logger.fatal(e)
         return False
 
     return response.status_code == 200
 
-def confirm_order(
-        confirmation_id:str,
-        order:Order,
-        session_id:str,
-        credentials:Credentials,
-        session:requests.Session=None,
-        logger:logging.Logger=None
-    ) -> Order:
-    
-    if logger is None:
-        logger = build_logger()
-    if session is None:
-        session = build_session()
-
-    int_account = credentials.int_account
-    url = URLs.ORDER_CONFIRM
-    url = f'{url}/{confirmation_id};jsessionid={session_id}?intAccount={int_account}&sessionId={session_id}'
-    
-    order_dict = {
-        'buySell' : order.action,
-        'orderType' : order.order_type,
-        'price' : order.price,
-        'productId' : order.product_id,
-        'size' : order.size,
-        'timeType' : order.time_type,
-    }
-
-    request = requests.Request(method='POST', url=url, json=order_dict)
-    prepped = session.prepare_request(request)
-
-    try:
-        response = session.send(prepped, verify=False)
-        response = response.json()
-    except Exception as e:
-        logger.fatal(e)
-        return False
-
-    if (
-        type(response) != dict
-        or 'data' not in response
-        or 'orderId' not in response['data']
-    ): return False
-
-    order.id = response['data']['orderId']
-
-    return order
-
 def delete_order(
         order_id:str,
         session_id:str,
         credentials:Credentials,
+        raw:bool=False,
         session:requests.Session=None,
-        logger:logging.Logger=None
+        logger:logging.Logger=None,
     )->bool:
 
     if logger is None:
@@ -310,6 +378,8 @@ def delete_order(
         response = session.send(prepped, verify=False)
         response = response.json()
     except Exception as e:
+        logger.fatal(response.status_code)
+        logger.fatal(response.text)
         logger.fatal(e)
         return False
     
@@ -321,7 +391,7 @@ def delete_order(
 def get_config(
         session_id:str,
         session:requests.Session=None,
-        logger:logging.Logger=None
+        logger:logging.Logger=None,
     )->dict:
 
     if logger is None:
@@ -352,8 +422,9 @@ def get_config(
 
 def get_client_details(
         session_id:str,
+        raw:bool=False,
         session:requests.Session=None,
-        logger:logging.Logger=None
+        logger:logging.Logger=None,
     )->dict:
 
     if logger is None:
@@ -386,8 +457,9 @@ def get_client_details(
 def get_client_info(
         session_id:str,
         credentials:Credentials,
+        raw:bool=False,
         session:requests.Session=None,
-        logger:logging.Logger=None
+        logger:logging.Logger=None,
     )->dict:
 
     if logger is None:
@@ -406,6 +478,219 @@ def get_client_info(
     if response.status_code != 200: return False
 
     return response.json()
+
+def get_order_history(
+        request:OrdersHistory.Request,
+        session_id:str,
+        credentials:Credentials,
+        raw:bool=False,
+        session:requests.Session=None,
+        logger:logging.Logger=None,
+    )->Union[dict, Update]:
+
+    """ Retrieve history about orders.
+
+    Args:
+        request (OrdersHistory.Request):
+            List of options that we want to retrieve from the endpoint.
+            Example :
+                request = OrdersHistory.Request(
+                    from_date='15/10/2020',
+                    to_date='16/10/2020',
+                )
+        session_id (str):
+            Degiro's session id
+        credentials (Credentials):
+            Credentials containing the parameter "int_account".
+        raw (bool, optional):
+            Whether are not we want the raw API response.
+            Defaults to False.
+        session (requests.Session, optional):
+            This object will be generated if None.
+            Defaults to None.
+        logger (logging.Logger, optional):
+            This object will be generated if None.
+            Defaults to None.
+
+    Returns:
+        OrdersHistory: API response.
+    """
+    
+    if logger is None:
+        logger = build_logger()
+    if session is None:
+        session = build_session()
+
+    int_account = credentials.int_account
+    url = URLs.UPDATE
+    url = f'{url}/{int_account};jsessionid={session_id}'
+
+    params = payload_handler.orders_history_request_to_api(
+        request=request
+    )
+    params['intAccount'] = int_account
+    params['sessionId'] = session_id
+
+    request = requests.Request(method='GET', url=url, params=params)
+    prepped = session.prepare_request(request)
+
+    try:
+        response_raw = session.send(prepped, verify=False)
+        response_dict = response_raw.json()
+
+        if raw == True:
+            response = response_dict
+        else:
+            response = payload_handler.orders_history_to_grpc(response_dict)
+    except Exception as e:
+        logger.fatal(response_raw.status_code)
+        logger.fatal(response_raw.text)
+        logger.fatal(e)
+        return False
+
+    return response
+
+def get_transactions_history(
+        request:TransactionsHistory.Request,
+        session_id:str,
+        credentials:Credentials,
+        raw:bool=False,
+        session:requests.Session=None,
+        logger:logging.Logger=None,
+    )->Union[dict, Update]:
+
+    """ Retrieve history about transactions.
+
+    Args:
+        request (TransactionsHistory.Request):
+            List of options that we want to retrieve from the endpoint.
+            Example :
+                request = TransactionsHistory.Request(
+                    from_date='15/10/2020',
+                    to_date='16/10/2020',
+                )
+        session_id (str):
+            Degiro's session id
+        credentials (Credentials):
+            Credentials containing the parameter "int_account".
+        raw (bool, optional):
+            Whether are not we want the raw API response.
+            Defaults to False.
+        session (requests.Session, optional):
+            This object will be generated if None.
+            Defaults to None.
+        logger (logging.Logger, optional):
+            This object will be generated if None.
+            Defaults to None.
+
+    Returns:
+        TransactionsHistory: API response.
+    """
+    
+    if logger is None:
+        logger = build_logger()
+    if session is None:
+        session = build_session()
+
+    int_account = credentials.int_account
+    url = URLs.UPDATE
+    url = f'{url}/{int_account};jsessionid={session_id}'
+
+    params = payload_handler.order_history_request_to_api(
+        request=request
+    )
+    params['intAccount'] = int_account
+    params['sessionId'] = session_id
+
+    request = requests.Request(method='GET', url=url, params=params)
+    prepped = session.prepare_request(request)
+
+    try:
+        response_raw = session.send(prepped, verify=False)
+        response_dict = response_raw.json()
+
+        if raw == True:
+            response = response_dict
+        else:
+            response = payload_handler.transactions_history_to_grpc(response_dict)
+    except Exception as e:
+        logger.fatal(response_raw.status_code)
+        logger.fatal(response_raw.text)
+        logger.fatal(e)
+        return False
+
+    return response
+
+def get_account_overview(
+        request:AccountOverview.Request,
+        session_id:str,
+        credentials:Credentials,
+        raw:bool=False,
+        session:requests.Session=None,
+        logger:logging.Logger=None,
+    )->Union[dict, Update]:
+
+    """ Retrieve information about the account.
+
+    Args:
+        request (OrdersHistory.Request):
+            List of options that we want to retrieve from the endpoint.
+            Example :
+                request = AccountOverview.Request(
+                    from_date='15/10/2020',
+                    to_date='16/10/2020',
+                )
+        session_id (str):
+            Degiro's session id
+        credentials (Credentials):
+            Credentials containing the parameter "int_account".
+        raw (bool, optional):
+            Whether are not we want the raw API response.
+            Defaults to False.
+        session (requests.Session, optional):
+            This object will be generated if None.
+            Defaults to None.
+        logger (logging.Logger, optional):
+            This object will be generated if None.
+            Defaults to None.
+
+    Returns:
+        AccountOverview: API response.
+    """
+    
+    if logger is None:
+        logger = build_logger()
+    if session is None:
+        session = build_session()
+
+    int_account = credentials.int_account
+    url = URLs.UPDATE
+    url = f'{url}/{int_account};jsessionid={session_id}'
+
+    params = payload_handler.account_overview_request_to_api(
+        request=request
+    )
+    params['intAccount'] = int_account
+    params['sessionId'] = session_id
+
+    request = requests.Request(method='GET', url=url, params=params)
+    prepped = session.prepare_request(request)
+
+    try:
+        response_raw = session.send(prepped, verify=False)
+        response_dict = response_raw.json()
+
+        if raw == True:
+            response = response_dict
+        else:
+            response = payload_handler.account_overview_to_grpc(response_dict)
+    except Exception as e:
+        logger.fatal(response_raw.status_code)
+        logger.fatal(response_raw.text)
+        logger.fatal(e)
+        return False
+
+    return response
 
 if __name__ == "__main__":
     with open('config.json') as config_file:

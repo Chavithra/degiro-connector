@@ -199,3 +199,12 @@ Feel free to open an issue or send me a message if you have a question.
 
 # License
 [BSD-3-Clause License](https://raw.githubusercontent.com/Chavithra/degiro_connector/master/LICENSE)
+
+# Note
+* A minor issue :
+    In the payload from the following URL :
+        https://trader.degiro.nl/trading/secure/v5/update
+    In the attribute "orders" of this payload.
+    Inside an Order :
+        - "date" field is the "hour of the day" when it's a Sell Order.
+        - "date" field is the "date of the day" when it's a Buy Order.

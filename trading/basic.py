@@ -4,13 +4,16 @@ import threading
 import time
 import trading.utilities as utilities
 
-from typing import List
+from typing import (
+    List,
+    Union,
+)
 from trading.constants import Headers
 from trading.models.sessions_storage import SessionsStorage
 from trading.pb.trading_pb2 import (
     Credentials,
     Order,
-    UpdateOptionList,
+    Update,
 )
 
 class Basic:
@@ -62,26 +65,29 @@ class Basic:
 
     def get_update(
             self, 
-            option_list:UpdateOptionList,
-            session_id:str
+            request_list:Update.RequestList,
+            session_id:str,
+            raw:bool=False,
         ) -> str:
         logger = self.logger
         credentials = self.credentials
         session = self.sessions_storage.session
 
         return utilities.get_update(
-            option_list=option_list,
+            request_list=request_list,
             session_id=session_id,
             credentials=credentials,
+            raw=raw,
             session=session,
-            logger=logger
+            logger=logger,
         )
 
     def check_order(
             self, 
             order:Order,
-            session_id:str
-        ) -> str:
+            session_id:str,
+            raw:bool=False,
+        )->Union[Order.CheckingResponse, bool]:
         logger = self.logger
         credentials = self.credentials
         session = self.sessions_storage.session
@@ -90,33 +96,18 @@ class Basic:
             order=order,
             session_id=session_id,
             credentials=credentials,
+            raw=raw,
             session=session,
-            logger=logger
-        )
-
-    def update_order(
-            self, 
-            order:Order,
-            session_id:str
-        ) -> str:
-        logger = self.logger
-        credentials = self.credentials
-        session = self.sessions_storage.session
-
-        return utilities.update_order(
-            order=order,
-            session_id=session_id,
-            credentials=credentials,
-            session=session,
-            logger=logger
+            logger=logger,
         )
 
     def confirm_order(
             self,
             confirmation_id:str,
             order:Order,
-            session_id:str
-        ) -> str:
+            session_id:str,
+            raw:bool=False,
+        )->Union[Order.ConfirmationResponse, bool]:
         logger = self.logger
         credentials = self.credentials
         session = self.sessions_storage.session
@@ -126,14 +117,35 @@ class Basic:
             order=order,
             session_id=session_id,
             credentials=credentials,
+            raw=raw,
             session=session,
-            logger=logger
+            logger=logger,
+        )
+
+    def update_order(
+            self, 
+            order:Order,
+            session_id:str,
+            raw:bool=False,
+        ) -> str:
+        logger = self.logger
+        credentials = self.credentials
+        session = self.sessions_storage.session
+
+        return utilities.update_order(
+            order=order,
+            session_id=session_id,
+            credentials=credentials,
+            raw=raw,
+            session=session,
+            logger=logger,
         )
 
     def delete_order(
             self,
             order_id:str,
-            session_id:str
+            session_id:str,
+            raw:bool=False,
         ) -> bool:
         logger = self.logger
         credentials = self.credentials
@@ -143,8 +155,9 @@ class Basic:
             order_id=order_id,
             session_id=session_id,
             credentials=credentials,
+            raw=raw,
             session=session,
-            logger=logger
+            logger=logger,
         )
 
 if __name__ == '__main__':

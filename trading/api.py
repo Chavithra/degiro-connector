@@ -9,9 +9,12 @@ from trading.models.connection_storage import ConnectionStorage
 from trading.pb.trading_pb2 import (
     Credentials,
     Order,
-    UpdateOptionList,
+    Update,
 )
-from typing import List
+from typing import (
+    List,
+    Union,
+)
 from wrapt.decorators import synchronized
     
 class API:
@@ -63,51 +66,62 @@ class API:
         self.basic = Basic(credentials=credentials)
         self.connection_storage = ConnectionStorage(basic=self.basic)
 
-    def get_update(self, option_list:UpdateOptionList):
+    def get_update(
+            self,
+            request_list:Update.RequestList,
+            raw:bool=False,
+        ):
         basic = self.basic
         session_id = self.connection_storage.session_id
 
         return basic.get_update(
-            option_list=option_list,
-            session_id=session_id
+            request_list=request_list,
+            session_id=session_id,
+            raw=raw,
         )
 
     def check_order(
             self, 
             order:Order,
-        ) -> str:
+            raw:bool=False,
+        )->Union[Order.ConfirmationResponse, bool]:
         basic = self.basic
         session_id = self.connection_storage.session_id
 
         return basic.check_order(
             order=order,
-            session_id=session_id
-        )
-    
-    def update_order(
-            self, 
-            order:Order,
-        ) -> str:
-        basic = self.basic
-        session_id = self.connection_storage.session_id
-
-        return basic.update_order(
-            order=order,
-            session_id=session_id
+            session_id=session_id,
+            raw=raw,
         )
 
     def confirm_order(
             self,
             confirmation_id:str,
-            order:Order
-        ) -> str:
+            order:Order,
+            raw:bool=False,
+        )->Union[Order.ConfirmationResponse, bool]:
         basic = self.basic
         session_id = self.connection_storage.session_id
 
         return basic.confirm_order(
             confirmation_id=confirmation_id,
             order=order,
-            session_id=session_id
+            session_id=session_id,
+            raw=raw,
+        )
+    
+    def update_order(
+            self, 
+            order:Order,
+            raw:bool=False,
+        ):
+        basic = self.basic
+        session_id = self.connection_storage.session_id
+
+        return basic.update_order(
+            order=order,
+            session_id=session_id,
+            raw=raw,
         )
 
     def delete_order(

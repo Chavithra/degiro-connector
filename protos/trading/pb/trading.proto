@@ -1,47 +1,51 @@
 syntax = "proto3";
 
-/* ENUM(S) DEFINITION */
-enum Action {
-  BUY = 0;
-  SELL = 1;
-}
+import "google/protobuf/struct.proto";
 
-enum OrderType {
-  LIMIT = 0;
-  STOP_LIMIT = 1;
-  MARKET = 2;
-  STOP_LOSS = 3;
-}
-
-enum TimeType {
-  UNKNOWN_0  = 0;
-  GOOD_TILL_DAY = 1;
-  UNKNOWN_2  = 2;
-  GOOD_TILL_CANCELED = 3;
-}
-
-enum UpdateOption {
-  ALERTS = 0;
-  CASHFUNDS = 1;
-  HISTORICALORDERS = 2;
-  ORDERS = 3;
-  PORTFOLIO = 4;
-  TOTALPORTFOLIO = 5;
-  TRANSACTIONS = 6;
-}
-
-/* MESSAGE(S) DEFINITION */
+// MESSAGE(S) DEFINITION
 message Order {
-  // Used by check "order"
+  // ENUMS
+  enum Action {
+    BUY = 0;
+    SELL = 1;
+  }
+  enum OrderType {
+    LIMIT = 0;
+    STOP_LIMIT = 1;
+    MARKET = 2;
+    STOP_LOSS = 3;
+  }
+  enum TimeType {
+    UNKNOWN_0  = 0;
+    GOOD_TILL_DAY = 1;
+    UNKNOWN_2  = 2;
+    GOOD_TILL_CANCELED = 3;
+  }
+
+  // MESSAGES
+  message CheckingResponse {
+    string response_datetime = 1;
+    string confirmation_id = 2;
+    double free_space_new = 3;
+    repeated google.protobuf.Struct transaction_fees = 4;
+    repeated google.protobuf.Struct transaction_opposite_fees = 5;
+    repeated google.protobuf.Struct transaction_taxes = 6;
+  }
+  message ConfirmationResponse {
+    string response_datetime = 1;
+    string orderId = 2;
+  }
+
+  // USED TO CHECK ORDER
   Action action = 2; // called "buysell" by the API
   string id = 7;
   OrderType order_type = 3; // called "orderTypeId" by the API
   double price = 5;
   int32 product_id = 1; // called "productId" by the API
   double size = 6;
-  TimeType time_type = 4;
+  TimeType time_type = 4; // called "orderTimeTypeId" by the API
 
-  // Used by confirmed "orders"
+  // USED TO CONFIRM ORDER
   double contract_size = 8; // called "contractSize" by the API
   int32 contract_type = 9; // called "contractType" by the API
   string currency = 10;
@@ -53,13 +57,13 @@ message Order {
   double stop_price = 16; // called "stopPrice" by the API
   double total_order_value = 17; // called "totalOrderValue" by the API
 
-  // Used by "historicalOrders"
+  // USED FOR HISTORICAL
   bool retained_order = 18; // called "retainedOrder" by the API
   bool sent_to_exchange = 19; // called "sentToExchange" by the API
 }
 
 message Transaction {
-  Action action = 1; // called "buysell" by the API
+  Order.Action action = 1; // called "buysell" by the API
   string currency = 2;
   string hour = 3; // called "date" by the API
   int32 id = 4;
@@ -69,13 +73,118 @@ message Transaction {
   double quantity = 8;
 }
 
+
+// For the payload from the following URL :
+// https://trader.degiro.nl/trading/secure/v5/update
 message Update {
-  repeated Transaction transaction_list = 1;
-  repeated Order order_list = 2;
+  // ENUMS
+  enum Option {
+    ALERTS = 0;
+    CASHFUNDS = 1;
+    HISTORICALORDERS = 2;
+    ORDERS = 3;
+    PORTFOLIO = 4;
+    TOTALPORTFOLIO = 5;
+    TRANSACTIONS = 6;
+  }
+
+  // MESSAGES
+  message Request {
+    Option option = 1;
+    int32 last_update_number = 2;
+  }
+  message RequestList {
+    repeated Request values = 1;
+    uint32 periodicity = 2;
+  }
+
+  // MESSAGES FOR PROPERTIES
+  message Alerts {
+    int32 last_updated = 1;
+    google.protobuf.Struct values = 2;
+  }
+  message CashFunds {
+    int32 last_updated = 1;
+    google.protobuf.Struct values = 2;
+  }
+  message HistoricalOrders {
+    int32 last_updated = 1;
+    repeated Order order_list = 2;
+  }
+  message Orders {
+    int32 last_updated = 1;
+    repeated Order order_list = 2;
+  }
+  message Portfolio {
+    int32 last_updated = 1;
+    repeated google.protobuf.Struct position_row_list = 2;
+  }
+  message TotalPortfolio {
+    int32 last_updated = 1;
+    google.protobuf.Struct values = 2;
+  }
+  message Transactions {
+    int32 last_updated = 1;
+    repeated Transaction order_list = 2;
+  }
+
+  // PROPERTIES
+  Alerts alerts = 1;
+  CashFunds cash_funds = 2;
+  HistoricalOrders historical_orders = 3;
+  Orders orders = 4;
+  Portfolio portfolio = 5;
+  TotalPortfolio total_portfolio = 6;
+  Transactions transactions = 7;
 }
 
-message UpdateOptionList {
-  repeated UpdateOption list = 1;
+// For the payload from the following URL :
+// https://trader.degiro.nl/reporting/secure/v4/order-history
+message OrdersHistory {
+  // MESSAGES
+  message Request {
+    string from_date = 1;
+    string to_date = 2;
+    int32 int_account = 3;
+    string session_id = 4;
+  }
+
+  // PROPERTIES
+  string response_datetime = 1;
+  google.protobuf.Struct values = 2;
+}
+
+// For the payload from the following URL :
+//https://trader.degiro.nl/reporting/secure/v4/transactions
+message TransactionsHistory { 
+  // MESSAGES
+  message Request {
+    string from_date = 1;
+    string to_date = 2;
+    int32 int_account = 3;
+    bool groupTransactionsByOrder= 4;
+    string session_id = 5;
+  }
+
+  // PROPERTIES
+  string response_datetime = 1;
+  google.protobuf.Struct values = 2;
+}
+
+// For the payload from the following URL :
+//https://trader.degiro.nl/reporting/secure/v6/accountoverview
+message AccountOverview { 
+  // MESSAGES
+  message Request {
+    string from_date = 1;
+    string to_date = 2;
+    int32 int_account = 3;
+    string session_id = 4;
+  }
+
+  // PROPERTIES
+  string response_datetime = 1;
+  google.protobuf.Struct values = 2;
 }
 
 message Credentials {
