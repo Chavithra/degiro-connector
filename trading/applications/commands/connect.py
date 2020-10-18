@@ -35,12 +35,12 @@ import logging
     help='The choosen log dir.'
 )
 def cli(
-        username:str,
-        password:str,
-        int_account:int,
-        log_level:str,
-        log_directory:str=None
-    ):
+    username:str,
+    password:str,
+    int_account:int,
+    log_level:str,
+    log_directory:str=None
+):
     """ Retrieves a session_id from Degiro Quotecast API."""
 
     from trading.api import API

@@ -52,7 +52,10 @@ class API:
         return self._connection_storage
 
     @connection_storage.setter
-    def connection_storage(self, connection_storage:ConnectionStorage):
+    def connection_storage(
+        self,
+        connection_storage:ConnectionStorage,
+    ):
         """ Setter for the attribute : self.connection_storage
 
         Arguments:
@@ -67,10 +70,10 @@ class API:
         self.connection_storage = ConnectionStorage(basic=self.basic)
 
     def get_update(
-            self,
-            request_list:Update.RequestList,
-            raw:bool=False,
-        ):
+        self,
+        request_list:Update.RequestList,
+        raw:bool=False,
+    ):
         basic = self.basic
         session_id = self.connection_storage.session_id
 
@@ -81,10 +84,10 @@ class API:
         )
 
     def check_order(
-            self, 
-            order:Order,
-            raw:bool=False,
-        )->Union[Order.ConfirmationResponse, bool]:
+        self, 
+        order:Order,
+        raw:bool=False,
+    )->Union[Order.ConfirmationResponse, bool]:
         basic = self.basic
         session_id = self.connection_storage.session_id
 
@@ -95,11 +98,11 @@ class API:
         )
 
     def confirm_order(
-            self,
-            confirmation_id:str,
-            order:Order,
-            raw:bool=False,
-        )->Union[Order.ConfirmationResponse, bool]:
+        self,
+        confirmation_id:str,
+        order:Order,
+        raw:bool=False,
+    )->Union[Order.ConfirmationResponse, bool]:
         basic = self.basic
         session_id = self.connection_storage.session_id
 
@@ -111,10 +114,10 @@ class API:
         )
     
     def update_order(
-            self, 
-            order:Order,
-            raw:bool=False,
-        ):
+        self, 
+        order:Order,
+        raw:bool=False,
+    ):
         basic = self.basic
         session_id = self.connection_storage.session_id
 
@@ -125,9 +128,9 @@ class API:
         )
 
     def delete_order(
-            self,
-            order_id:str
-        ) -> bool:
+        self,
+        order_id:str
+    )->bool:
         basic = self.basic
         session_id = self.connection_storage.session_id
 

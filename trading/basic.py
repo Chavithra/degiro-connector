@@ -44,7 +44,11 @@ class Basic:
             hooks=None
         )
 
-    def __init__(self, credentials:Credentials, sessions_storage=None):
+    def __init__(
+        self,
+        credentials:Credentials,
+        sessions_storage=None,
+    ):
         if sessions_storage is None:
             sessions_storage = self.build_sessions_storage()
 
@@ -64,11 +68,11 @@ class Basic:
         )
 
     def get_update(
-            self, 
-            request_list:Update.RequestList,
-            session_id:str,
-            raw:bool=False,
-        ) -> str:
+        self, 
+        request_list:Update.RequestList,
+        session_id:str,
+        raw:bool=False,
+    ) -> str:
         logger = self.logger
         credentials = self.credentials
         session = self.sessions_storage.session
@@ -83,11 +87,11 @@ class Basic:
         )
 
     def check_order(
-            self, 
-            order:Order,
-            session_id:str,
-            raw:bool=False,
-        )->Union[Order.CheckingResponse, bool]:
+        self, 
+        order:Order,
+        session_id:str,
+        raw:bool=False,
+    )->Union[Order.CheckingResponse, bool]:
         logger = self.logger
         credentials = self.credentials
         session = self.sessions_storage.session
@@ -102,12 +106,12 @@ class Basic:
         )
 
     def confirm_order(
-            self,
-            confirmation_id:str,
-            order:Order,
-            session_id:str,
-            raw:bool=False,
-        )->Union[Order.ConfirmationResponse, bool]:
+        self,
+        confirmation_id:str,
+        order:Order,
+        session_id:str,
+        raw:bool=False,
+    )->Union[Order.ConfirmationResponse, bool]:
         logger = self.logger
         credentials = self.credentials
         session = self.sessions_storage.session
@@ -123,11 +127,11 @@ class Basic:
         )
 
     def update_order(
-            self, 
-            order:Order,
-            session_id:str,
-            raw:bool=False,
-        ) -> str:
+        self, 
+        order:Order,
+        session_id:str,
+        raw:bool=False,
+    ) -> str:
         logger = self.logger
         credentials = self.credentials
         session = self.sessions_storage.session
@@ -142,11 +146,11 @@ class Basic:
         )
 
     def delete_order(
-            self,
-            order_id:str,
-            session_id:str,
-            raw:bool=False,
-        ) -> bool:
+        self,
+        order_id:str,
+        session_id:str,
+        raw:bool=False,
+    ) -> bool:
         logger = self.logger
         credentials = self.credentials
         session = self.sessions_storage.session
