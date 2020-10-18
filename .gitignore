@@ -12,3 +12,4 @@ __pycache__
 /*.py
 !/setup.py
 *.ipynb
+*.log
