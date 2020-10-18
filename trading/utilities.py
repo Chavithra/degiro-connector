@@ -187,7 +187,9 @@ def get_update(
         if raw == True:
             response = response_dict
         else:
-            response = payload_handler.update_to_grpc(response_dict)
+            response = payload_handler.update_to_grpc(
+                update_dict=response_dict,
+            )
     except Exception as e:
         logger.fatal(response_raw.status_code)
         logger.fatal(response_raw.text)
@@ -541,7 +543,9 @@ def get_order_history(
         if raw == True:
             response = response_dict
         else:
-            response = payload_handler.orders_history_to_grpc(response_dict)
+            response = payload_handler.orders_history_to_grpc(
+                orders_history_dict=response_dict,
+            )
     except Exception as e:
         logger.fatal(response_raw.status_code)
         logger.fatal(response_raw.text)
@@ -612,7 +616,9 @@ def get_transactions_history(
         if raw == True:
             response = response_dict
         else:
-            response = payload_handler.transactions_history_to_grpc(response_dict)
+            response = payload_handler.transactions_history_to_grpc(
+                transactions_history_dict=response_dict,
+            )
     except Exception as e:
         logger.fatal(response_raw.status_code)
         logger.fatal(response_raw.text)
@@ -683,7 +689,9 @@ def get_account_overview(
         if raw == True:
             response = response_dict
         else:
-            response = payload_handler.account_overview_to_grpc(response_dict)
+            response = payload_handler.account_overview_to_grpc(
+                account_overview_dict=response_dict,
+            )
     except Exception as e:
         logger.fatal(response_raw.status_code)
         logger.fatal(response_raw.text)

@@ -1,8 +1,11 @@
 import datetime
 from google.protobuf import json_format
 from trading.pb.trading_pb2 import (
+    AccountOverview,
     Order,
+    OrdersHistory,
     Transaction,
+    TransactionsHistory,
     Update,
 )
 from typing import (
@@ -53,7 +56,7 @@ def update_request_list_to_api(
 
     """ Makes a payload compatible with the API.
 
-    Paramters:
+    Parameters:
         update_option_list {UpdateOptionList}
             List of option available from grpc "consume_update".
 
@@ -70,6 +73,42 @@ def update_request_list_to_api(
 
     return payload
 
+def orders_history_request_to_api(
+        request:OrdersHistory.Request,
+    )->dict:
+
+    request_dict = json_format.MessageToDict(
+        message=request,
+        including_default_value_fields=True,
+        preserving_proto_field_name=False,
+    )
+
+    return request_dict
+
+def transactions_request_to_api(
+        request:OrdersHistory.Request,
+    )->dict:
+
+    request_dict = json_format.MessageToDict(
+        message=request,
+        including_default_value_fields=True,
+        preserving_proto_field_name=False,
+    )
+
+    return request_dict
+
+
+def account_overview_request_to_api(
+        request:OrdersHistory.Request,
+    )->dict:
+
+    request_dict = json_format.MessageToDict(
+        message=request,
+        including_default_value_fields=True,
+        preserving_proto_field_name=False,
+    )
+
+    return request_dict
 
 # API TO GRPC
 def order_to_grpc(
@@ -210,3 +249,45 @@ def confirmation_response_to_grpc(
     )
 
     return confirmation_response
+
+def orders_history_to_grpc(
+        orders_history_dict:dict,
+    )->OrdersHistory:
+
+    js_dict = orders_history_dict['data']
+    js_dict['response_datetime'] = str(datetime.datetime.now())
+    orders_history = OrdersHistory()
+    json_format.ParseDict(
+        js_dict=js_dict,
+        message=orders_history,
+    )
+
+    return orders_history
+
+def transactions_history_to_grpc(
+        transactions_history_dict:dict,
+    )->TransactionsHistory:
+
+    js_dict = transactions_history_dict['data']
+    js_dict['response_datetime'] = str(datetime.datetime.now())
+    transactions_history = TransactionsHistory()
+    json_format.ParseDict(
+        js_dict=js_dict,
+        message=transactions_history,
+    )
+
+    return transactions_history
+
+def account_overview_to_grpc(
+        account_overview_dict:dict,
+    )->OrdersHistory:
+
+    js_dict = account_overview_dict['data']
+    js_dict['response_datetime'] = str(datetime.datetime.now())
+    account_overview = AccountOverview()
+    json_format.ParseDict(
+        js_dict=js_dict,
+        message=account_overview,
+    )
+
+    return account_overview
