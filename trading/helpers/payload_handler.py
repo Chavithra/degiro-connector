@@ -51,9 +51,8 @@ __UPDATE_OPTION_MATCHING = {
 
 # GRPC TO API
 def update_request_list_to_api(
-        request_list:Update.RequestList,
-    )->dict:
-
+    request_list:Update.RequestList,
+)->dict:
     """ Makes a payload compatible with the API.
 
     Parameters:
@@ -69,14 +68,13 @@ def update_request_list_to_api(
 
     for request in request_list.values:
         option = __UPDATE_OPTION_MATCHING[request.option]
-        payload[option] = request.last_update_number
+        payload[option] = request.last_update
 
     return payload
 
 def orders_history_request_to_api(
-        request:OrdersHistory.Request,
-    )->dict:
-
+    request:OrdersHistory.Request,
+)->dict:
     request_dict = json_format.MessageToDict(
         message=request,
         including_default_value_fields=True,
@@ -86,9 +84,8 @@ def orders_history_request_to_api(
     return request_dict
 
 def transactions_request_to_api(
-        request:OrdersHistory.Request,
-    )->dict:
-
+    request:OrdersHistory.Request,
+)->dict:
     request_dict = json_format.MessageToDict(
         message=request,
         including_default_value_fields=True,
@@ -99,9 +96,8 @@ def transactions_request_to_api(
 
 
 def account_overview_request_to_api(
-        request:OrdersHistory.Request,
-    )->dict:
-
+    request:OrdersHistory.Request,
+)->dict:
     request_dict = json_format.MessageToDict(
         message=request,
         including_default_value_fields=True,
@@ -112,10 +108,9 @@ def account_overview_request_to_api(
 
 # API TO GRPC
 def order_to_grpc(
-        order_dict:dict,
-        return_dict:bool=False,
-    )->Union[Order, dict]:
-
+    order_dict:dict,
+    return_dict:bool=False,
+)->Union[Order, dict]:
     """ Build an "Order" object using "dict" returned by the API.
     Parameters:
         order {dict}
@@ -146,8 +141,8 @@ def order_to_grpc(
         return Order(**order_dict)
 
 def update_to_grpc(
-        update_dict:dict
-    )->Update:
+    update_dict:dict
+)->Update:
 
     update = Update()
     
@@ -165,7 +160,7 @@ def update_to_grpc(
 
 
         total_portfolio_dict = dict()
-        total_portfolio_dict['last_updated'] = update_dict['totalPortfolio']['lastUpdated']
+        total_portfolio_dict['last_update'] = update_dict['totalPortfolio']['lastUpdated']
         total_portfolio_dict['values'] = total_portfolio_dict_values
 
         json_format.ParseDict(
@@ -190,7 +185,7 @@ def update_to_grpc(
             position_row_list.append(positionrow_dict)
 
         portfolio_dict = dict()
-        portfolio_dict['last_updated'] = update_dict['portfolio']['lastUpdated']
+        portfolio_dict['last_update'] = update_dict['portfolio']['lastUpdated']
         portfolio_dict['position_row_list'] = position_row_list
 
         json_format.ParseDict(
@@ -211,7 +206,7 @@ def update_to_grpc(
             order_list.append(order_dict)
 
         orders_dict = dict()
-        orders_dict['last_updated'] = update_dict['orders']['lastUpdated']
+        orders_dict['last_update'] = update_dict['orders']['lastUpdated']
         orders_dict['order_list'] = order_list
 
         json_format.ParseDict(
@@ -223,9 +218,8 @@ def update_to_grpc(
     return update
 
 def checking_response_to_grpc(
-        checking_dict:dict,
-    )->Order.CheckingResponse:
-
+    checking_dict:dict,
+)->Order.CheckingResponse:
     js_dict = checking_dict['data']
     js_dict['response_datetime'] = str(datetime.datetime.now())
     checking_response = Order.CheckingResponse()
@@ -237,9 +231,8 @@ def checking_response_to_grpc(
     return checking_response
 
 def confirmation_response_to_grpc(
-        confirmation_dict:dict,
-    )->Order.ConfirmationResponse:
-
+    confirmation_dict:dict,
+)->Order.ConfirmationResponse:
     js_dict = confirmation_dict['data']
     js_dict['response_datetime'] = str(datetime.datetime.now())
     confirmation_response = Order.ConfirmationResponse()
@@ -251,9 +244,8 @@ def confirmation_response_to_grpc(
     return confirmation_response
 
 def orders_history_to_grpc(
-        orders_history_dict:dict,
-    )->OrdersHistory:
-
+    orders_history_dict:dict,
+)->OrdersHistory:
     js_dict = orders_history_dict['data']
     js_dict['response_datetime'] = str(datetime.datetime.now())
     orders_history = OrdersHistory()
@@ -265,9 +257,8 @@ def orders_history_to_grpc(
     return orders_history
 
 def transactions_history_to_grpc(
-        transactions_history_dict:dict,
-    )->TransactionsHistory:
-
+    transactions_history_dict:dict,
+)->TransactionsHistory:
     js_dict = transactions_history_dict['data']
     js_dict['response_datetime'] = str(datetime.datetime.now())
     transactions_history = TransactionsHistory()
@@ -279,9 +270,8 @@ def transactions_history_to_grpc(
     return transactions_history
 
 def account_overview_to_grpc(
-        account_overview_dict:dict,
-    )->OrdersHistory:
-
+    account_overview_dict:dict,
+)->OrdersHistory:
     js_dict = account_overview_dict['data']
     js_dict['response_datetime'] = str(datetime.datetime.now())
     account_overview = AccountOverview()
