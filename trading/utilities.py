@@ -23,7 +23,9 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 def build_logger():
     return logging.getLogger(__name__)
 
-def build_session(headers:dict=None) -> requests.Session:
+def build_session(
+    headers:dict=None
+)->requests.Session:
     """ Setup a requests.Session object.
 
     Arguments:
@@ -43,10 +45,10 @@ def build_session(headers:dict=None) -> requests.Session:
     return session
 
 def get_session_id(
-        credentials:Credentials,
-        session:requests.Session=None,
-        logger:logging.Logger=None
-    )->str:
+    credentials:Credentials,
+    session:requests.Session=None,
+    logger:logging.Logger=None
+)->str:
     """ Retrieve "session_id".
     This "session_id" is used by most Degiro's trading endpoint.
     Parameters:
@@ -97,14 +99,13 @@ def get_session_id(
         raise ConnectionError('No session id returned.')
   
 def get_update(
-        request_list:Update.RequestList,
-        session_id:str,
-        credentials:Credentials,
-        raw:bool=False,
-        session:requests.Session=None,
-        logger:logging.Logger=None,
-    )->Union[dict, Update]:
-
+    request_list:Update.RequestList,
+    session_id:str,
+    credentials:Credentials,
+    raw:bool=False,
+    session:requests.Session=None,
+    logger:logging.Logger=None,
+)->Union[dict, Update]:
     """ Retrieve information from Degiro's Trading Update endpoint.
 
     Args:
@@ -116,31 +117,31 @@ def get_update(
                     [
                         Update.Request(
                             option=Update.Option.ALERTS,
-                            last_update_number=0,
+                            last_update=0,
                         ),
                         Update.Request(
                             option=Update.Option.CASHFUNDS,
-                            last_update_number=0,
+                            last_update=0,
                         ),
                         Update.Request(
                             option=Update.Option.HISTORICALORDERS,
-                            last_update_number=0,
+                            last_update=0,
                         ),
                         Update.Request(
                             option=Update.Option.ORDERS,
-                            last_update_number=0,
+                            last_update=0,
                         ),
                         Update.Request(
                             option=Update.Option.PORTFOLIO,
-                            last_update_number=0,
+                            last_update=0,
                         ),
                         Update.Request(
                             option=Update.Option.TOTALPORTFOLIO,
-                            last_update_number=0,
+                            last_update=0,
                         ),
                         Update.Request(
                             option=Update.Option.TRANSACTIONS,
-                            last_update_number=0,
+                            last_update=0,
                         ),
                     ]
                 )
@@ -199,14 +200,13 @@ def get_update(
     return response
 
 def check_order(
-        order:Order,
-        session_id:str,
-        credentials:Credentials,
-        raw:bool=False,
-        session:requests.Session=None,
-        logger:logging.Logger=None,
-    )->Union[Order.CheckingResponse, bool]:
-    
+    order:Order,
+    session_id:str,
+    credentials:Credentials,
+    raw:bool=False,
+    session:requests.Session=None,
+    logger:logging.Logger=None,
+)->Union[Order.CheckingResponse, bool]:
     if logger is None:
         logger = build_logger()
     if session is None:
@@ -256,15 +256,14 @@ def check_order(
     return response
 
 def confirm_order(
-        confirmation_id:str,
-        order:Order,
-        session_id:str,
-        credentials:Credentials,
-        raw:bool=False,
-        session:requests.Session=None,
-        logger:logging.Logger=None,
-    )->Union[Order.ConfirmationResponse, bool]:
-    
+    confirmation_id:str,
+    order:Order,
+    session_id:str,
+    credentials:Credentials,
+    raw:bool=False,
+    session:requests.Session=None,
+    logger:logging.Logger=None,
+)->Union[Order.ConfirmationResponse, bool]:
     if logger is None:
         logger = build_logger()
     if session is None:
@@ -315,14 +314,13 @@ def confirm_order(
     return response
 
 def update_order(
-        order:Order,
-        session_id:str,
-        credentials:Credentials,
-        raw:bool=False,
-        session:requests.Session=None,
-        logger:logging.Logger=None,
-    )->str:
-    
+    order:Order,
+    session_id:str,
+    credentials:Credentials,
+    raw:bool=False,
+    session:requests.Session=None,
+    logger:logging.Logger=None,
+)->str:
     if logger is None:
         logger = build_logger()
     if session is None:
@@ -356,14 +354,13 @@ def update_order(
     return response.status_code == 200
 
 def delete_order(
-        order_id:str,
-        session_id:str,
-        credentials:Credentials,
-        raw:bool=False,
-        session:requests.Session=None,
-        logger:logging.Logger=None,
-    )->bool:
-
+    order_id:str,
+    session_id:str,
+    credentials:Credentials,
+    raw:bool=False,
+    session:requests.Session=None,
+    logger:logging.Logger=None,
+)->bool:
     if logger is None:
         logger = build_logger()
     if session is None:
@@ -391,11 +388,10 @@ def delete_order(
 
 
 def get_config(
-        session_id:str,
-        session:requests.Session=None,
-        logger:logging.Logger=None,
-    )->dict:
-
+    session_id:str,
+    session:requests.Session=None,
+    logger:logging.Logger=None,
+)->dict:
     if logger is None:
         logger = build_logger()
     if session is None:
@@ -423,12 +419,11 @@ def get_config(
 
 
 def get_client_details(
-        session_id:str,
-        raw:bool=False,
-        session:requests.Session=None,
-        logger:logging.Logger=None,
-    )->dict:
-
+    session_id:str,
+    raw:bool=False,
+    session:requests.Session=None,
+    logger:logging.Logger=None,
+)->dict:
     if logger is None:
         logger = build_logger()
     if session is None:
@@ -457,13 +452,12 @@ def get_client_details(
     return response_payload['data']
 
 def get_client_info(
-        session_id:str,
-        credentials:Credentials,
-        raw:bool=False,
-        session:requests.Session=None,
-        logger:logging.Logger=None,
-    )->dict:
-
+    session_id:str,
+    credentials:Credentials,
+    raw:bool=False,
+    session:requests.Session=None,
+    logger:logging.Logger=None,
+)->dict:
     if logger is None:
         logger = build_logger()
     if session is None:
@@ -482,14 +476,13 @@ def get_client_info(
     return response.json()
 
 def get_order_history(
-        request:OrdersHistory.Request,
-        session_id:str,
-        credentials:Credentials,
-        raw:bool=False,
-        session:requests.Session=None,
-        logger:logging.Logger=None,
-    )->Union[dict, Update]:
-
+    request:OrdersHistory.Request,
+    session_id:str,
+    credentials:Credentials,
+    raw:bool=False,
+    session:requests.Session=None,
+    logger:logging.Logger=None,
+)->Union[dict, Update]:
     """ Retrieve history about orders.
 
     Args:
@@ -555,14 +548,13 @@ def get_order_history(
     return response
 
 def get_transactions_history(
-        request:TransactionsHistory.Request,
-        session_id:str,
-        credentials:Credentials,
-        raw:bool=False,
-        session:requests.Session=None,
-        logger:logging.Logger=None,
-    )->Union[dict, Update]:
-
+    request:TransactionsHistory.Request,
+    session_id:str,
+    credentials:Credentials,
+    raw:bool=False,
+    session:requests.Session=None,
+    logger:logging.Logger=None,
+)->Union[dict, Update]:
     """ Retrieve history about transactions.
 
     Args:
@@ -628,14 +620,13 @@ def get_transactions_history(
     return response
 
 def get_account_overview(
-        request:AccountOverview.Request,
-        session_id:str,
-        credentials:Credentials,
-        raw:bool=False,
-        session:requests.Session=None,
-        logger:logging.Logger=None,
-    )->Union[dict, Update]:
-
+    request:AccountOverview.Request,
+    session_id:str,
+    credentials:Credentials,
+    raw:bool=False,
+    session:requests.Session=None,
+    logger:logging.Logger=None,
+)->Union[dict, Update]:
     """ Retrieve information about the account.
 
     Args:
