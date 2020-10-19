@@ -18,7 +18,9 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # pylint: disable=no-member
 
-def build_session(headers:dict=None) -> requests.Session:
+def build_session(
+    headers:dict=None,
+)->requests.Session:
     """ Setup a requests.Session object.
 
     Arguments:
@@ -41,10 +43,10 @@ def build_logger():
     return logging.getLogger(__name__)
 
 def get_session_id(
-        user_token:int,
-        session:requests.Session=None,
-        logger:logging.Logger=None
-    )->str:
+    user_token:int,
+    session:requests.Session=None,
+    logger:logging.Logger=None
+)->str:
     """ Retrieve "session_id".
     This "session_id" is used by most Degiro's trading endpoint.
 
@@ -87,10 +89,10 @@ def get_session_id(
         return None
 
 def fetch_data(
-        session_id:str,
-        session:requests.Session=None,
-        logger:logging.Logger=None
-    )->RawResponse:
+    session_id:str,
+    session:requests.Session=None,
+    logger:logging.Logger=None
+)->RawResponse:
     """
     Fetch data from the feed.
 
@@ -155,11 +157,11 @@ def fetch_data(
     return raw_response
 
 def subscribe(
-        subscription_request:SubscriptionRequest,
-        session_id:str,
-        session:requests.Session=None,
-        logger:logging.Logger=None
-    )->bool:
+    subscription_request:SubscriptionRequest,
+    session_id:str,
+    session:requests.Session=None,
+    logger:logging.Logger=None
+)->bool:
     """ Subscribe/unsubscribe to a feed from Degiro's QuoteCast API.
     Parameters :
     session_id {str} -- API's session id.

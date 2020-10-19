@@ -41,7 +41,10 @@ class Basic:
         return self._sessions_storage
 
     @sessions_storage.setter
-    def sessions_storage(self, sessions_storage:SessionsStorage):
+    def sessions_storage(
+        self,
+        sessions_storage:SessionsStorage,
+    ):
         self._sessions_storage = sessions_storage
 
     def build_sessions_storage(self)->SessionsStorage:
@@ -50,7 +53,11 @@ class Basic:
             hooks=None
         )
 
-    def __init__(self, user_token:int, sessions_storage=None):
+    def __init__(
+        self,
+        user_token:int,
+        sessions_storage=None,
+    ):
         if sessions_storage is None:
             sessions_storage = self.build_sessions_storage()
 
@@ -59,9 +66,9 @@ class Basic:
         self._sessions_storage = sessions_storage
 
     def fetch_data(
-            self,
-            session_id:str,
-        )->RawResponse:
+        self,
+        session_id:str,
+    )->RawResponse:
         """
         Fetch data from the feed.
 
@@ -103,10 +110,11 @@ class Basic:
             logger=logger
         )
 
-    def subscribe(self,
-            subscription_request:SubscriptionRequest,
-            session_id:str
-        )->bool:
+    def subscribe(
+        self,
+        subscription_request:SubscriptionRequest,
+        session_id:str
+    )->bool:
         """ Subscribe/unsubscribe to a feed from Degiro's QuoteCast API.
         Parameters :
         session_id {str} -- API's session id.

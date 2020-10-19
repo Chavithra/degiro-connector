@@ -53,7 +53,10 @@ class API:
         return self._connection_storage
 
     @connection_storage.setter
-    def connection_storage(self, connection_storage:ConnectionStorage):
+    def connection_storage(
+        self,
+        connection_storage:ConnectionStorage,
+    ):
         """ Setter for the attribute : self.connection_storage
 
         Arguments:
@@ -62,7 +65,10 @@ class API:
 
         self._connection_storage = connection_storage
 
-    def __init__(self, user_token:int):
+    def __init__(
+        self,
+        user_token:int,
+    ):
         self._logger = logging.getLogger(self.__module__)
         self._basic = Basic(user_token=user_token)
         self._connection_storage = ConnectionStorage(basic=self.basic)
@@ -86,9 +92,9 @@ class API:
         )
 
     def subscribe(
-            self,
-            subscription_request:SubscriptionRequest
-        )->bool:
+        self,
+        subscription_request:SubscriptionRequest
+    )->bool:
         """ Subscribe/unsubscribe to a feed from Degiro's QuoteCast API.
         Parameters :
         session {requests.Session}
