@@ -20,12 +20,11 @@ def cli(user_token):
     from quotecast.api import API
     from quotecast.pb.quotecast_pb2 import (
         Action,
-        Credentials,
         SubscriptionRequest
     )
 
     # SETUP API
-    api = API(credentials=Credentials(user_token=user_token))
+    api = API(user_token=user_token)
 
     api.connection_storage.connect()
     

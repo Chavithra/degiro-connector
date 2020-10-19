@@ -7,7 +7,6 @@ import urllib3
 from quotecast.constants import Endpoint, Headers
 from quotecast.pb.quotecast_pb2 import (
     Action,
-    Credentials,
     Metadata,
     RawResponse,
     SubscriptionRequest
@@ -42,7 +41,7 @@ def build_logger():
     return logging.getLogger(__name__)
 
 def get_session_id(
-        credentials:Credentials,
+        user_token:int,
         session:requests.Session=None,
         logger:logging.Logger=None
     )->str:
@@ -61,7 +60,6 @@ def get_session_id(
     url = Endpoint.URL
     url = f'{url}/request_session'
     version = Endpoint.VERSION
-    user_token = credentials.user_token
     
     parameters = {'version': version, 'userToken': user_token}
     data = '{"referrer":"https://trader.degiro.nl"}'

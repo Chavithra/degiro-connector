@@ -10,7 +10,6 @@ from quotecast.constants import Headers
 from quotecast.models.sessions_storage import SessionsStorage
 from quotecast.pb.quotecast_pb2 import (
     Action,
-    Credentials,
     RawResponse,
     SubscriptionRequest
 )
@@ -34,8 +33,8 @@ class Basic:
     """
 
     @property
-    def credentials(self)->Credentials:
-        return self._credentials
+    def user_token(self)->int:
+        return self._user_token
 
     @property
     def sessions_storage(self)->SessionsStorage:
@@ -51,12 +50,12 @@ class Basic:
             hooks=None
         )
 
-    def __init__(self, credentials:Credentials, sessions_storage=None):
+    def __init__(self, user_token:int, sessions_storage=None):
         if sessions_storage is None:
             sessions_storage = self.build_sessions_storage()
 
-        self.logger = logging.getLogger(self.__module__)
-        self._credentials = credentials
+        self._logger = logging.getLogger(self.__module__)
+        self._user_token = user_token
         self._sessions_storage = sessions_storage
 
     def fetch_data(
@@ -76,8 +75,8 @@ class Basic:
             request_duration : Duration of the request.
         """
 
-        logger = self.logger
-        session = self.sessions_storage.session
+        logger = self._logger
+        session = self._sessions_storage.session
 
         return utilities.fetch_data(
             session_id=session_id,
@@ -94,12 +93,12 @@ class Basic:
         {str} -- API's session id.
         """
 
-        logger = self.logger
-        credentials = self.credentials
-        session = self.sessions_storage.session
+        logger = self._logger
+        user_token = self._user_token
+        session = self._sessions_storage.session
 
         return utilities.get_session_id(
-            credentials=credentials,
+            user_token=user_token,
             session=session,
             logger=logger
         )
@@ -116,8 +115,8 @@ class Basic:
         {bool} -- Whether or not the subscription succeeded.
         """
 
-        logger = self.logger
-        session = self.sessions_storage.session
+        logger = self._logger
+        session = self._sessions_storage.session
         
         return utilities.subscribe(
             subscription_request=subscription_request,
@@ -155,7 +154,7 @@ if __name__ == '__main__':
     #     label_list=label_list
     # )
     
-    # basic = Basic(Credentials(user_token=user_token))
+    # basic = Basic(user_token=user_token)
     
     # session_id = basic.get_session_id()
     # basic.subscribe(subscription_request=subscription_request, session_id=session_id)

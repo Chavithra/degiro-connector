@@ -68,6 +68,3 @@ user_token
       - Each Degiro account has an unique user_token.
       - This number is set at the creation of a Degiro account and never changes.
 */
-message Credentials {
-  int32 user_token = 1;
-}

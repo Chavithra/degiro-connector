@@ -9,7 +9,6 @@ from quotecast.basic import Basic
 from quotecast.models.connection_storage import  ConnectionStorage
 from quotecast.pb.quotecast_pb2 import (
     Action,
-    Credentials,
     RawResponse,
     SubscriptionRequest
 )
@@ -63,10 +62,10 @@ class API:
 
         self._connection_storage = connection_storage
 
-    def __init__(self, credentials:Credentials):
-        self.logger = logging.getLogger(self.__module__)
-        self.basic = Basic(credentials=credentials)
-        self.connection_storage = ConnectionStorage(basic=self.basic)
+    def __init__(self, user_token:int):
+        self._logger = logging.getLogger(self.__module__)
+        self._basic = Basic(user_token=user_token)
+        self._connection_storage = ConnectionStorage(basic=self.basic)
 
     def fetch_data(self)->RawResponse:
         """
@@ -127,7 +126,7 @@ if __name__ == '__main__':
         'LastVolume',
     ]
 
-    api = API(Credentials(user_token=user_token))
+    api = API(user_token=user_token)
     
     subscription_request = SubscriptionRequest(
         action=Action.SUBSCRIBE,

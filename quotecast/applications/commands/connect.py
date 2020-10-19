@@ -27,7 +27,6 @@ def cli(log_level:str, user_token:int, log_directory:str=None):
 
     from datetime import date
     from quotecast.api import API
-    from quotecast.pb.quotecast_pb2 import Credentials
     
     # Setup logs
     log_level = logging.getLevelName(log_level)
@@ -39,7 +38,7 @@ def cli(log_level:str, user_token:int, log_directory:str=None):
         logging.basicConfig(level=log_level)
 
     # Setup objects used by the services
-    api = API(credentials=Credentials(user_token=user_token))
+    api = API(user_token=user_token)
 
     api.connection_storage.connect()
     
