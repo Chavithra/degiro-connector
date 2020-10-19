@@ -180,14 +180,6 @@ if __name__ == "__main__":
     #     order=order
     # )
 
-    option_list = UpdateOptionList(
-        list=[
-            UpdateOption.Value('ORDERS')
-        ]
-    )
-    update = api.get_update(option_list=option_list)
-
     # print('session_id', api.connection_storage.session_id)
     # print('confirmation_id', confirmation_id)
     print('order', order)
-    print(update)
