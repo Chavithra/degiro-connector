@@ -145,6 +145,7 @@ def update_to_grpc(
 )->Update:
 
     update = Update()
+    update.response_datetime = str(datetime.datetime.now())
     
     # TOTALPORTFOLIO
     if 'totalPortfolio' in update_dict:
