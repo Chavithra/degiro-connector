@@ -110,15 +110,15 @@ message Update {
   }
   message HistoricalOrders {
     int32 last_update = 1;
-    repeated Order order_list = 2;
+    repeated Order values = 2;
   }
   message Orders {
     int32 last_update = 1;
-    repeated Order order_list = 2;
+    repeated Order values = 2; // Order
   }
   message Portfolio {
     int32 last_update = 1;
-    repeated google.protobuf.Struct position_row_list = 2;
+    repeated google.protobuf.Struct values = 2; // positionrow
   }
   message TotalPortfolio {
     int32 last_update = 1;
@@ -126,17 +126,18 @@ message Update {
   }
   message Transactions {
     int32 last_update = 1;
-    repeated Transaction order_list = 2;
+    repeated Transaction values = 2; // Transaction
   }
 
   // PROPERTIES
-  Alerts alerts = 1;
-  CashFunds cash_funds = 2;
-  HistoricalOrders historical_orders = 3;
-  Orders orders = 4;
-  Portfolio portfolio = 5;
-  TotalPortfolio total_portfolio = 6;
-  Transactions transactions = 7;
+  string response_datetime = 1;
+  Alerts alerts = 2;
+  CashFunds cash_funds = 3;
+  HistoricalOrders historical_orders = 4;
+  Orders orders = 5;
+  Portfolio portfolio = 6;
+  TotalPortfolio total_portfolio = 7;
+  Transactions transactions = 8;
 }
 
 // For the payload from the following URL :
