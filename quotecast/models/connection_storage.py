@@ -5,7 +5,7 @@ import threading
 
 from quotecast.api import Basic
 from quotecast.constants import Headers
-from quotecast.models.sessions_storage import SessionsStorage
+from quotecast.models.session_storage import SessionStorage
 from wrapt.decorators import synchronized
 
 class ConnectionStorage:
@@ -27,7 +27,7 @@ class ConnectionStorage:
             basic {Basic} -- New Basic object.
         """
 
-        basic.sessions_storage = self.build_session_storage()
+        basic.session_storage = self.build_session_storage()
 
         self._basic = basic
 
@@ -59,11 +59,11 @@ class ConnectionStorage:
 
         self._session_id = session_id
 
-    def build_session_storage(self)->SessionsStorage:
+    def build_session_storage(self)->SessionStorage:
         headers = Headers.get_headers()
         hooks = {'response':[self.response_hook]}
 
-        session_storage = SessionsStorage(
+        session_storage = SessionStorage(
             headers=headers,
             hooks=hooks
         )

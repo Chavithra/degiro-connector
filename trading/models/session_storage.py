@@ -2,7 +2,7 @@ import logging
 import requests
 import threading
 
-class SessionsStorage:
+class SessionStorage:
     """ Handle the Requests Session objects in a threadsafe manner. """
 
     @property

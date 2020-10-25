@@ -27,7 +27,7 @@ class TLSAdapter(requests.adapters.HTTPAdapter):
             ssl_context=ctx,
         )
 
-class SessionsStorage:
+class SessionStorage:
     """ Handle the Requests Session objects in a threadsafe manner. """
 
     @property

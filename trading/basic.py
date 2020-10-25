@@ -9,7 +9,7 @@ from typing import (
     Union,
 )
 from trading.constants import Headers
-from trading.models.sessions_storage import SessionsStorage
+from trading.models.session_storage import SessionStorage
 from trading.pb.trading_pb2 import (
     Credentials,
     Order,
@@ -31,15 +31,15 @@ class Basic:
         return self._credentials
 
     @property
-    def sessions_storage(self)->SessionsStorage:
-        return self._sessions_storage
+    def session_storage(self)->SessionStorage:
+        return self._session_storage
 
-    @sessions_storage.setter
-    def sessions_storage(self, sessions_storage:SessionsStorage):
-        self._sessions_storage = sessions_storage
+    @session_storage.setter
+    def session_storage(self, session_storage:SessionStorage):
+        self._session_storage = session_storage
 
-    def build_sessions_storage(self)->SessionsStorage:
-        return SessionsStorage(
+    def build_session_storage(self)->SessionStorage:
+        return SessionStorage(
             headers=Headers.get_headers(),
             hooks=None
         )
@@ -47,19 +47,19 @@ class Basic:
     def __init__(
         self,
         credentials:Credentials,
-        sessions_storage=None,
+        session_storage=None,
     ):
-        if sessions_storage is None:
-            sessions_storage = self.build_sessions_storage()
+        if session_storage is None:
+            session_storage = self.build_session_storage()
 
         self.logger = logging.getLogger(self.__module__)
         self._credentials = credentials
-        self._sessions_storage = sessions_storage
+        self._session_storage = session_storage
     
     def get_session_id(self)->str:
         logger = self.logger
         credentials = self.credentials
-        session = self.sessions_storage.session
+        session = self.session_storage.session
 
         return utilities.get_session_id(
             credentials=credentials,
@@ -75,7 +75,7 @@ class Basic:
     ) -> str:
         logger = self.logger
         credentials = self.credentials
-        session = self.sessions_storage.session
+        session = self.session_storage.session
 
         return utilities.get_update(
             request_list=request_list,
@@ -94,7 +94,7 @@ class Basic:
     )->Union[Order.CheckingResponse, bool]:
         logger = self.logger
         credentials = self.credentials
-        session = self.sessions_storage.session
+        session = self.session_storage.session
 
         return utilities.check_order(
             order=order,
@@ -114,7 +114,7 @@ class Basic:
     )->Union[Order.ConfirmationResponse, bool]:
         logger = self.logger
         credentials = self.credentials
-        session = self.sessions_storage.session
+        session = self.session_storage.session
 
         return utilities.confirm_order(
             confirmation_id=confirmation_id,
@@ -134,7 +134,7 @@ class Basic:
     ) -> str:
         logger = self.logger
         credentials = self.credentials
-        session = self.sessions_storage.session
+        session = self.session_storage.session
 
         return utilities.update_order(
             order=order,
@@ -153,7 +153,7 @@ class Basic:
     ) -> bool:
         logger = self.logger
         credentials = self.credentials
-        session = self.sessions_storage.session
+        session = self.session_storage.session
 
         return utilities.delete_order(
             order_id=order_id,
