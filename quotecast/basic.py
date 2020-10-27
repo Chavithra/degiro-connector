@@ -7,10 +7,10 @@ import time
 import urllib3
 
 from quotecast.constants import Headers
-from quotecast.models.sessions_storage import SessionsStorage
+from quotecast.models.session_storage import SessionStorage
 from quotecast.pb.quotecast_pb2 import (
     Action,
-    RawResponse,
+    Quotecast,
     SubscriptionRequest
 )
 
@@ -37,18 +37,18 @@ class Basic:
         return self._user_token
 
     @property
-    def sessions_storage(self)->SessionsStorage:
-        return self._sessions_storage
+    def session_storage(self)->SessionStorage:
+        return self._session_storage
 
-    @sessions_storage.setter
-    def sessions_storage(
+    @session_storage.setter
+    def session_storage(
         self,
-        sessions_storage:SessionsStorage,
+        session_storage:SessionStorage,
     ):
-        self._sessions_storage = sessions_storage
+        self._session_storage = session_storage
 
-    def build_sessions_storage(self)->SessionsStorage:
-        return SessionsStorage(
+    def build_session_storage(self)->SessionStorage:
+        return SessionStorage(
             headers=Headers.get_headers(),
             hooks=None
         )
@@ -56,19 +56,19 @@ class Basic:
     def __init__(
         self,
         user_token:int,
-        sessions_storage=None,
+        session_storage=None,
     ):
-        if sessions_storage is None:
-            sessions_storage = self.build_sessions_storage()
+        if session_storage is None:
+            session_storage = self.build_session_storage()
 
         self._logger = logging.getLogger(self.__module__)
         self._user_token = user_token
-        self._sessions_storage = sessions_storage
+        self._session_storage = session_storage
 
     def fetch_data(
         self,
         session_id:str,
-    )->RawResponse:
+    )->Quotecast:
         """
         Fetch data from the feed.
 
@@ -83,7 +83,7 @@ class Basic:
         """
 
         logger = self._logger
-        session = self._sessions_storage.session
+        session = self._session_storage.session
 
         return utilities.fetch_data(
             session_id=session_id,
@@ -102,7 +102,7 @@ class Basic:
 
         logger = self._logger
         user_token = self._user_token
-        session = self._sessions_storage.session
+        session = self._session_storage.session
 
         return utilities.get_session_id(
             user_token=user_token,
@@ -124,7 +124,7 @@ class Basic:
         """
 
         logger = self._logger
-        session = self._sessions_storage.session
+        session = self._session_storage.session
         
         return utilities.subscribe(
             subscription_request=subscription_request,

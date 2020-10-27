@@ -8,7 +8,7 @@ from quotecast.constants import Endpoint, Headers
 from quotecast.pb.quotecast_pb2 import (
     Action,
     Metadata,
-    RawResponse,
+    Quotecast,
     SubscriptionRequest
 )
 from typing import List
@@ -92,7 +92,7 @@ def fetch_data(
     session_id:str,
     session:requests.Session=None,
     logger:logging.Logger=None
-)->RawResponse:
+)->Quotecast:
     """
     Fetch data from the feed.
 
@@ -136,8 +136,8 @@ def fetch_data(
         response_datetime=response_datetime,
         request_duration=request_duration
     )
-    raw_response = RawResponse(
-        response_json=response.text,
+    raw_response = Quotecast(
+        json_data=response.text,
         metadata=metadata
     )
 

@@ -9,7 +9,7 @@ from quotecast.basic import Basic
 from quotecast.models.connection_storage import  ConnectionStorage
 from quotecast.pb.quotecast_pb2 import (
     Action,
-    RawResponse,
+    Quotecast,
     SubscriptionRequest
 )
 
@@ -73,7 +73,7 @@ class API:
         self._basic = Basic(user_token=user_token)
         self._connection_storage = ConnectionStorage(basic=self.basic)
 
-    def fetch_data(self)->RawResponse:
+    def fetch_data(self)->Quotecast:
         """
         Fetch data from the feed.
 

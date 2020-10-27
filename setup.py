@@ -8,6 +8,7 @@ setup(
         'click',
         'grpcio',
         'protobuf',
+        'requests',
     ],
     author='Chavithra PARANA',
     author_email='chavithra@gmail.com',

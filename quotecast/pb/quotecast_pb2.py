@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x1cquotecast/pb/quotecast.proto\"?\n\x08Metadata\x12\x19\n\x11response_datetime\x18\x01 \x01(\t\x12\x18\n\x10request_duration\x18\x02 \x01(\x01\"`\n\x06Metric\x12\x11\n\theartbeat\x18\x01 \x01(\x08\x12\r\n\x05label\x18\x05 \x01(\t\x12\x12\n\nproduct_id\x18\x04 \x01(\x05\x12\x11\n\treference\x18\x02 \x01(\x05\x12\r\n\x05value\x18\x03 \x01(\t\"O\n\x08Matching\x12\x11\n\treference\x18\x01 \x01(\x05\x12\r\n\x05value\x18\x02 \x01(\t\x12\x12\n\nproduct_id\x18\x03 \x01(\x05\x12\r\n\x05label\x18\x04 \x01(\t\"A\n\x0bRawResponse\x12\x15\n\rresponse_json\x18\x01 \x01(\t\x12\x1b\n\x08metadata\x18\x02 \x01(\x0b\x32\t.Metadata\"V\n\x13SubscriptionRequest\x12\x17\n\x06\x61\x63tion\x18\x01 \x01(\x0e\x32\x07.Action\x12\x12\n\nproduct_id\x18\x02 \x01(\x05\x12\x12\n\nlabel_list\x18\x03 \x03(\t\"Y\n\x06Ticker\x12\x1c\n\x0bmetric_list\x18\x01 \x03(\x0b\x32\x07.Metric\x12\x14\n\x0cproduct_list\x18\x02 \x03(\x05\x12\x1b\n\x08metadata\x18\x03 \x01(\x0b\x32\t.Metadata*(\n\x06\x41\x63tion\x12\r\n\tSUBSCRIBE\x10\x00\x12\x0f\n\x0bUNSUBSCRIBE\x10\x01\x62\x06proto3'
+  serialized_pb=b'\n\x1cquotecast/pb/quotecast.proto\"?\n\x08Metadata\x12\x19\n\x11response_datetime\x18\x01 \x01(\t\x12\x18\n\x10request_duration\x18\x02 \x01(\x01\"`\n\x06Metric\x12\x11\n\theartbeat\x18\x01 \x01(\x08\x12\r\n\x05label\x18\x05 \x01(\t\x12\x12\n\nproduct_id\x18\x04 \x01(\x05\x12\x11\n\treference\x18\x02 \x01(\x05\x12\r\n\x05value\x18\x03 \x01(\t\"O\n\x08Matching\x12\x11\n\treference\x18\x01 \x01(\x05\x12\r\n\x05value\x18\x02 \x01(\t\x12\x12\n\nproduct_id\x18\x03 \x01(\x05\x12\r\n\x05label\x18\x04 \x01(\t\";\n\tQuotecast\x12\x11\n\tjson_data\x18\x01 \x01(\t\x12\x1b\n\x08metadata\x18\x02 \x01(\x0b\x32\t.Metadata\"V\n\x13SubscriptionRequest\x12\x17\n\x06\x61\x63tion\x18\x01 \x01(\x0e\x32\x07.Action\x12\x12\n\nproduct_id\x18\x02 \x01(\x05\x12\x12\n\nlabel_list\x18\x03 \x03(\t\"~\n\x06Ticker\x12\x1c\n\x0bmetric_list\x18\x01 \x03(\x0b\x32\x07.Metric\x12\x14\n\x0cproduct_list\x18\x02 \x03(\x05\x12\x1b\n\x08metadata\x18\x03 \x01(\x0b\x32\t.Metadata\x12#\n\x12\x66illed_metric_list\x18\x04 \x03(\x0b\x32\x07.Metric*(\n\x06\x41\x63tion\x12\r\n\tSUBSCRIBE\x10\x00\x12\x0f\n\x0bUNSUBSCRIBE\x10\x01\x62\x06proto3'
 )
 
 _ACTION = _descriptor.EnumDescriptor(
@@ -43,8 +43,8 @@ _ACTION = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=522,
-  serialized_end=562,
+  serialized_start=553,
+  serialized_end=593,
 )
 _sym_db.RegisterEnumDescriptor(_ACTION)
 
@@ -206,23 +206,23 @@ _MATCHING = _descriptor.Descriptor(
 )
 
 
-_RAWRESPONSE = _descriptor.Descriptor(
-  name='RawResponse',
-  full_name='RawResponse',
+_QUOTECAST = _descriptor.Descriptor(
+  name='Quotecast',
+  full_name='Quotecast',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='response_json', full_name='RawResponse.response_json', index=0,
+      name='json_data', full_name='Quotecast.json_data', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='metadata', full_name='RawResponse.metadata', index=1,
+      name='metadata', full_name='Quotecast.metadata', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -241,7 +241,7 @@ _RAWRESPONSE = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=276,
-  serialized_end=341,
+  serialized_end=335,
 )
 
 
@@ -286,8 +286,8 @@ _SUBSCRIPTIONREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=343,
-  serialized_end=429,
+  serialized_start=337,
+  serialized_end=423,
 )
 
 
@@ -320,6 +320,13 @@ _TICKER = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='filled_metric_list', full_name='Ticker.filled_metric_list', index=3,
+      number=4, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -332,18 +339,19 @@ _TICKER = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=431,
-  serialized_end=520,
+  serialized_start=425,
+  serialized_end=551,
 )
 
-_RAWRESPONSE.fields_by_name['metadata'].message_type = _METADATA
+_QUOTECAST.fields_by_name['metadata'].message_type = _METADATA
 _SUBSCRIPTIONREQUEST.fields_by_name['action'].enum_type = _ACTION
 _TICKER.fields_by_name['metric_list'].message_type = _METRIC
 _TICKER.fields_by_name['metadata'].message_type = _METADATA
+_TICKER.fields_by_name['filled_metric_list'].message_type = _METRIC
 DESCRIPTOR.message_types_by_name['Metadata'] = _METADATA
 DESCRIPTOR.message_types_by_name['Metric'] = _METRIC
 DESCRIPTOR.message_types_by_name['Matching'] = _MATCHING
-DESCRIPTOR.message_types_by_name['RawResponse'] = _RAWRESPONSE
+DESCRIPTOR.message_types_by_name['Quotecast'] = _QUOTECAST
 DESCRIPTOR.message_types_by_name['SubscriptionRequest'] = _SUBSCRIPTIONREQUEST
 DESCRIPTOR.message_types_by_name['Ticker'] = _TICKER
 DESCRIPTOR.enum_types_by_name['Action'] = _ACTION
@@ -370,12 +378,12 @@ Matching = _reflection.GeneratedProtocolMessageType('Matching', (_message.Messag
   })
 _sym_db.RegisterMessage(Matching)
 
-RawResponse = _reflection.GeneratedProtocolMessageType('RawResponse', (_message.Message,), {
-  'DESCRIPTOR' : _RAWRESPONSE,
+Quotecast = _reflection.GeneratedProtocolMessageType('Quotecast', (_message.Message,), {
+  'DESCRIPTOR' : _QUOTECAST,
   '__module__' : 'quotecast.pb.quotecast_pb2'
-  # @@protoc_insertion_point(class_scope:RawResponse)
+  # @@protoc_insertion_point(class_scope:Quotecast)
   })
-_sym_db.RegisterMessage(RawResponse)
+_sym_db.RegisterMessage(Quotecast)
 
 SubscriptionRequest = _reflection.GeneratedProtocolMessageType('SubscriptionRequest', (_message.Message,), {
   'DESCRIPTOR' : _SUBSCRIPTIONREQUEST,

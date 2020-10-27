@@ -27,8 +27,8 @@ message Matching {
   string label = 4;
 }
 
-message RawResponse {
-  string response_json = 1;
+message Quotecast {
+  string json_data = 1;
   Metadata metadata = 2;
 }
 
@@ -42,6 +42,7 @@ message Ticker {
   repeated Metric metric_list = 1;
   repeated int32 product_list = 2;
   Metadata metadata = 3;
+  repeated Metric filled_metric_list = 4;
 }
 
 /*
