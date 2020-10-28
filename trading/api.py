@@ -3,7 +3,6 @@ import json
 import threading
 import time
 
-from trading.constants import Headers
 from trading.basic import Basic
 from trading.models.connection_storage import ConnectionStorage
 from trading.pb.trading_pb2 import (
@@ -22,7 +21,7 @@ class API:
 
     @property
     def basic(self)->Basic:
-        """ Getter for the attribute : self.basic
+        """ Getter for the attribute : self._basic
         
         Returns:
             {Basic} -- Current Basic object.
@@ -32,7 +31,7 @@ class API:
 
     @basic.setter
     def basic(self, basic:Basic):
-        """ Setter for the attribute : self.basic
+        """ Setter for the attribute : self._basic
 
         Arguments:
             basic {Basic} -- New Basic object.
@@ -43,7 +42,7 @@ class API:
     
     @property
     def connection_storage(self)->Basic:
-        """ Getter for the attribute : self.connection_storage
+        """ Getter for the attribute : self._connection_storage
         
         Returns:
             {Basic} -- Current ConnectionStorage object.
@@ -56,7 +55,7 @@ class API:
         self,
         connection_storage:ConnectionStorage,
     ):
-        """ Setter for the attribute : self.connection_storage
+        """ Setter for the attribute : self._connection_storage
 
         Arguments:
             connection_storage {ConnectionStorage} -- New ConnectionStorage object.
@@ -66,16 +65,16 @@ class API:
 
     def __init__(self, credentials:Credentials):
         self.logger = logging.getLogger(self.__module__)
-        self.basic = Basic(credentials=credentials)
-        self.connection_storage = ConnectionStorage(basic=self.basic)
+        self._basic = Basic(credentials=credentials)
+        self._connection_storage = ConnectionStorage(basic=self._basic)
 
     def get_update(
         self,
         request_list:Update.RequestList,
         raw:bool=False,
     ):
-        basic = self.basic
-        session_id = self.connection_storage.session_id
+        basic = self._basic
+        session_id = self._connection_storage.session_id
 
         return basic.get_update(
             request_list=request_list,
@@ -88,8 +87,8 @@ class API:
         order:Order,
         raw:bool=False,
     )->Union[Order.ConfirmationResponse, bool]:
-        basic = self.basic
-        session_id = self.connection_storage.session_id
+        basic = self._basic
+        session_id = self._connection_storage.session_id
 
         return basic.check_order(
             order=order,
@@ -103,8 +102,8 @@ class API:
         order:Order,
         raw:bool=False,
     )->Union[Order.ConfirmationResponse, bool]:
-        basic = self.basic
-        session_id = self.connection_storage.session_id
+        basic = self._basic
+        session_id = self._connection_storage.session_id
 
         return basic.confirm_order(
             confirmation_id=confirmation_id,
@@ -118,8 +117,8 @@ class API:
         order:Order,
         raw:bool=False,
     ):
-        basic = self.basic
-        session_id = self.connection_storage.session_id
+        basic = self._basic
+        session_id = self._connection_storage.session_id
 
         return basic.update_order(
             order=order,
@@ -131,12 +130,102 @@ class API:
         self,
         order_id:str
     )->bool:
-        basic = self.basic
-        session_id = self.connection_storage.session_id
+        basic = self._basic
+        session_id = self._connection_storage.session_id
 
         return basic.delete_order(
             order_id=order_id,
             session_id=session_id
+        )
+
+    def get_config(
+        self,
+    )->dict:
+        basic = self._basic
+        session_id = self._connection_storage.session_id
+
+        return basic.get_config(
+            session_id=session_id,
+        )
+
+    def get_client_details(
+        self,
+        raw:bool=False,
+    )->dict:
+        basic = self._basic
+        session_id = self._connection_storage.session_id
+
+        return basic.get_client_details(
+            session_id=session_id,
+            raw=raw,
+        )
+
+    def get_client_info(
+        self,
+        raw:bool=False,
+    )->dict:
+        basic = self._basic
+        session_id = self._connection_storage.session_id
+
+        return basic.get_client_details(
+            session_id=session_id,
+            raw=raw,
+        )
+
+    def get_order_history(
+        self,
+        request:OrdersHistory.Request,
+        raw:bool=False,
+    )->Union[dict, Update]:
+        basic = self._basic
+        session_id = self._connection_storage.session_id
+
+        return basic.get_client_details(
+            request=request,
+            session_id=session_id,
+            raw=raw,
+        )
+
+    def get_transactions_history(
+        self,
+        request:OrdersHistory.Request,
+        raw:bool=False,
+    )->Union[dict, Update]:
+        basic = self._basic
+        session_id = self._connection_storage.session_id
+
+        return basic.get_transactions_history(
+            request=request,
+            session_id=session_id,
+            raw=raw,
+        )
+
+    def get_account_overview(
+        self,
+        request:OrdersHistory.Request,
+        raw:bool=False,
+    )->Union[dict, Update]:
+        basic = self._basic
+        session_id = self._connection_storage.session_id
+
+        return basic.get_account_overview(
+            request=request,
+            session_id=session_id,
+            raw=raw,
+        )
+
+    def products_lookup(
+        self,
+        request:OrdersHistory.Request,
+        raw:bool=False,
+    )->Union[dict, Update]:
+        basic = self._basic
+        session_id = self._connection_storage.session_id
+
+        return basic.products_lookup(
+            request=request,
+            session_id=session_id,
+            raw=raw,
         )
 
 if __name__ == "__main__":

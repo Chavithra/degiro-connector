@@ -189,6 +189,21 @@ message AccountOverview {
   google.protobuf.Struct values = 2;
 }
 
+message ProductsLookup { 
+  // MESSAGES
+  message Request {
+    string search_text = 1;
+    int32 limit = 2;
+    int32 offset = 3;
+    int32 int_account = 4;
+    string session_id = 5;
+  }
+
+  // PROPERTIES
+  string response_datetime = 1;
+  google.protobuf.Struct values = 2;
+}
+
 message Credentials {
   int32 int_account = 1;
   string username = 2;

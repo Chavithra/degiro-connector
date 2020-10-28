@@ -8,7 +8,7 @@ from typing import (
     List,
     Union,
 )
-from trading.constants import Headers
+from quotecast.constants.headers import Headers
 from trading.models.session_storage import SessionStorage
 from trading.pb.trading_pb2 import (
     Credentials,
@@ -24,6 +24,7 @@ class Basic:
         No need to re-enter the credentials for each function.
     2/ Sessions
         The "requests.Session" object is reuse in a thread safe manner.
+    3/ Logging
     """
 
     @property
@@ -52,14 +53,14 @@ class Basic:
         if session_storage is None:
             session_storage = self.build_session_storage()
 
-        self.logger = logging.getLogger(self.__module__)
+        self._logger = logging.getLogger(self.__module__)
         self._credentials = credentials
         self._session_storage = session_storage
     
     def get_session_id(self)->str:
-        logger = self.logger
-        credentials = self.credentials
-        session = self.session_storage.session
+        credentials = self._credentials
+        logger = self._logger
+        session = self._session_storage.session
 
         return utilities.get_session_id(
             credentials=credentials,
@@ -73,9 +74,9 @@ class Basic:
         session_id:str,
         raw:bool=False,
     ) -> str:
-        logger = self.logger
-        credentials = self.credentials
-        session = self.session_storage.session
+        credentials = self._credentials
+        logger = self._logger
+        session = self._session_storage.session
 
         return utilities.get_update(
             request_list=request_list,
@@ -92,9 +93,9 @@ class Basic:
         session_id:str,
         raw:bool=False,
     )->Union[Order.CheckingResponse, bool]:
-        logger = self.logger
-        credentials = self.credentials
-        session = self.session_storage.session
+        credentials = self._credentials
+        logger = self._logger
+        session = self._session_storage.session
 
         return utilities.check_order(
             order=order,
@@ -112,9 +113,9 @@ class Basic:
         session_id:str,
         raw:bool=False,
     )->Union[Order.ConfirmationResponse, bool]:
-        logger = self.logger
-        credentials = self.credentials
-        session = self.session_storage.session
+        credentials = self._credentials
+        logger = self._logger
+        session = self._session_storage.session
 
         return utilities.confirm_order(
             confirmation_id=confirmation_id,
@@ -132,9 +133,9 @@ class Basic:
         session_id:str,
         raw:bool=False,
     ) -> str:
-        logger = self.logger
-        credentials = self.credentials
-        session = self.session_storage.session
+        credentials = self._credentials
+        logger = self._logger
+        session = self._session_storage.session
 
         return utilities.update_order(
             order=order,
@@ -151,12 +152,135 @@ class Basic:
         session_id:str,
         raw:bool=False,
     ) -> bool:
-        logger = self.logger
-        credentials = self.credentials
-        session = self.session_storage.session
+        credentials = self._credentials
+        logger = self._logger
+        session = self._session_storage.session
 
         return utilities.delete_order(
             order_id=order_id,
+            session_id=session_id,
+            credentials=credentials,
+            raw=raw,
+            session=session,
+            logger=logger,
+        )
+
+    def get_config(
+        self,
+        session_id:str,
+    )->dict:
+        credentials = self._credentials
+        logger = self._logger
+        session = self._session_storage.session
+
+        return utilities.get_config(
+            session_id=session_id,
+            session=session,
+            logger=logger,
+        )
+
+    def get_client_details(
+        self,
+        session_id:str,
+        raw:bool=False,
+    )->dict:
+        credentials = self._credentials
+        logger = self._logger
+        session = self._session_storage.session
+
+        return utilities.get_client_details(
+            session_id=session_id,
+            raw=raw,
+            session=session,
+            logger=logger,
+        )
+
+    def get_client_info(
+        self,
+        session_id:str,
+        raw:bool=False,
+    )->dict:
+        credentials = self._credentials
+        logger = self._logger
+        session = self._session_storage.session
+
+        return utilities.get_client_details(
+            session_id=session_id,
+            credentials=credentials,
+            raw=raw,
+            session=session,
+            logger=logger,
+        )
+
+    def get_order_history(
+        self,
+        request:OrdersHistory.Request,
+        session_id:str,
+        raw:bool=False,
+    )->Union[dict, Update]:
+        credentials = self._credentials
+        logger = self._logger
+        session = self._session_storage.session
+
+        return utilities.get_client_details(
+            request=request,
+            session_id=session_id,
+            credentials=credentials,
+            raw=raw,
+            session=session,
+            logger=logger,
+        )
+
+    def get_transactions_history(
+        self,
+        request:OrdersHistory.Request,
+        session_id:str,
+        raw:bool=False,
+    )->Union[dict, Update]:
+        credentials = self._credentials
+        logger = self._logger
+        session = self._session_storage.session
+
+        return utilities.get_transactions_history(
+            request=request,
+            session_id=session_id,
+            credentials=credentials,
+            raw=raw,
+            session=session,
+            logger=logger,
+        )
+
+    def get_account_overview(
+        self,
+        request:OrdersHistory.Request,
+        session_id:str,
+        raw:bool=False,
+    )->Union[dict, Update]:
+        credentials = self._credentials
+        logger = self._logger
+        session = self._session_storage.session
+
+        return utilities.get_account_overview(
+            request=request,
+            session_id=session_id,
+            credentials=credentials,
+            raw=raw,
+            session=session,
+            logger=logger,
+        )
+
+    def products_lookup(
+        self,
+        request:OrdersHistory.Request,
+        session_id:str,
+        raw:bool=False,
+    )->Union[dict, Update]:
+        credentials = self._credentials
+        logger = self._logger
+        session = self._session_storage.session
+
+        return utilities.products_lookup(
+            request=request,
             session_id=session_id,
             credentials=credentials,
             raw=raw,

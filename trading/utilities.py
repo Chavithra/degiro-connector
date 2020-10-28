@@ -4,12 +4,14 @@ import requests
 import trading.helpers.payload_handler as payload_handler
 import urllib3
 
-from trading.constants import URLs, Headers
+from trading.constants.urls import URLs
+from trading.constants.headers import Headers
 from trading.pb.trading_pb2 import (
     AccountOverview,
     Credentials,
     Order,
     OrdersHistory,
+    ProductsLookup,
     TransactionsHistory,
     Update,
 )
@@ -516,15 +518,13 @@ def get_order_history(
     if session is None:
         session = build_session()
 
-    int_account = credentials.int_account
-    url = URLs.UPDATE
-    url = f'{url}/{int_account};jsessionid={session_id}'
+    url = URLs.ORDERS_HISTORY
+    request.int_account = credentials.int_account
+    request.session_id = session_id
 
     params = payload_handler.orders_history_request_to_api(
-        request=request
+        request=request,
     )
-    params['intAccount'] = int_account
-    params['sessionId'] = session_id
 
     request = requests.Request(method='GET', url=url, params=params)
     prepped = session.prepare_request(request)
@@ -588,15 +588,13 @@ def get_transactions_history(
     if session is None:
         session = build_session()
 
-    int_account = credentials.int_account
-    url = URLs.UPDATE
-    url = f'{url}/{int_account};jsessionid={session_id}'
+    url = URLs.TRANSACTIONS_HISTORY
+    request.int_account = credentials.int_account
+    request.session_id = session_id
 
     params = payload_handler.order_history_request_to_api(
         request=request
     )
-    params['intAccount'] = int_account
-    params['sessionId'] = session_id
 
     request = requests.Request(method='GET', url=url, params=params)
     prepped = session.prepare_request(request)
@@ -660,15 +658,83 @@ def get_account_overview(
     if session is None:
         session = build_session()
 
-    int_account = credentials.int_account
-    url = URLs.UPDATE
-    url = f'{url}/{int_account};jsessionid={session_id}'
+    url = URLs.ACCOUNT_OVERVIEW
+    request.int_account = credentials.int_account
+    request.session_id = session_id
 
     params = payload_handler.account_overview_request_to_api(
         request=request
     )
-    params['intAccount'] = int_account
-    params['sessionId'] = session_id
+
+    request = requests.Request(method='GET', url=url, params=params)
+    prepped = session.prepare_request(request)
+
+    try:
+        response_raw = session.send(prepped, verify=False)
+        response_dict = response_raw.json()
+
+        if raw == True:
+            response = response_dict
+        else:
+            response = payload_handler.account_overview_to_grpc(
+                account_overview_dict=response_dict,
+            )
+    except Exception as e:
+        logger.fatal(response_raw.status_code)
+        logger.fatal(response_raw.text)
+        logger.fatal(e)
+        return False
+
+    return response
+
+def products_lookup(
+    request:ProductsLookup.Request,
+    session_id:str,
+    credentials:Credentials,
+    raw:bool=False,
+    session:requests.Session=None,
+    logger:logging.Logger=None,
+)->Union[dict, Update]:
+    """ Retrieve information about the account.
+
+    Args:
+        request (OrdersHistory.Request):
+            List of options that we want to retrieve from the endpoint.
+            Example :
+                request = AccountOverview.Request(
+                    from_date='15/10/2020',
+                    to_date='16/10/2020',
+                )
+        session_id (str):
+            Degiro's session id
+        credentials (Credentials):
+            Credentials containing the parameter "int_account".
+        raw (bool, optional):
+            Whether are not we want the raw API response.
+            Defaults to False.
+        session (requests.Session, optional):
+            This object will be generated if None.
+            Defaults to None.
+        logger (logging.Logger, optional):
+            This object will be generated if None.
+            Defaults to None.
+
+    Returns:
+        AccountOverview: API response.
+    """
+    
+    if logger is None:
+        logger = build_logger()
+    if session is None:
+        session = build_session()
+
+    url = URLs.ACCOUNT_OVERVIEW
+    request.int_account = credentials.int_account
+    request.session_id = session_id
+
+    params = payload_handler.account_overview_request_to_api(
+        request=request
+    )
 
     request = requests.Request(method='GET', url=url, params=params)
     prepped = session.prepare_request(request)
