@@ -99,8 +99,8 @@ You can use this code :
 
 ```python
 # REQUEST SETUP
-subscription_request = SubscriptionRequest(
-    action=Action.SUBSCRIBE,
+request = Request(
+    action=Request.Action.SUBSCRIBE,
     product_id=360015751,
     label_list=[
         'LastDate',
@@ -111,7 +111,7 @@ subscription_request = SubscriptionRequest(
 )
 
 # SEND REQUEST
-api.subscribe(subscription_request=subscription_request)
+api.subscribe(request=request)
 
 # FETCH DATA
 while True:

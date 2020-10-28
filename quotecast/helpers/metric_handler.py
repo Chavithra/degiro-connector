@@ -254,7 +254,7 @@ def build_metric_list_from_json(
             List of Matching objects extracted.
     """
 
-    data = json.loads(data)
+    data = json.loads(json_data)
     if matching_list is None : matching_list = []
     metric_list=[]
 

@@ -31,6 +31,7 @@ class QuotecastParser:
         """
     
         self.__logger = logging.getLogger(self.__module__)
+        self.__fill_na = fill_na
         self.__matching_list = None
         self.__ticker = None
         self.__metric_list_storage = MetricListSorage()
@@ -71,7 +72,7 @@ class QuotecastParser:
         # SETUP FILLED METRIC LIST
         if fill_na == True:
             metric_list_storage.put_metric_list(
-                filled_metric_list=metric_list,
+                metric_list=metric_list,
             )
             filled_metric_list = metric_list_storage.get_metric_list(
                 product_list=product_list,

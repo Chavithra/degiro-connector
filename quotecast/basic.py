@@ -9,9 +9,8 @@ import urllib3
 from quotecast.constants import Headers
 from quotecast.models.session_storage import SessionStorage
 from quotecast.pb.quotecast_pb2 import (
-    Action,
     Quotecast,
-    SubscriptionRequest
+    Request,
 )
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -50,7 +49,7 @@ class Basic:
     def build_session_storage(self)->SessionStorage:
         return SessionStorage(
             headers=Headers.get_headers(),
-            hooks=None
+            hooks=None,
         )
 
     def __init__(
@@ -88,7 +87,7 @@ class Basic:
         return utilities.fetch_data(
             session_id=session_id,
             session=session,
-            logger=logger
+            logger=logger,
         )
 
     def get_session_id(self)->str:
@@ -112,8 +111,8 @@ class Basic:
 
     def subscribe(
         self,
-        subscription_request:SubscriptionRequest,
-        session_id:str
+        request:Request,
+        session_id:str,
     )->bool:
         """ Subscribe/unsubscribe to a feed from Degiro's QuoteCast API.
         Parameters :
@@ -127,10 +126,10 @@ class Basic:
         session = self._session_storage.session
         
         return utilities.subscribe(
-            subscription_request=subscription_request,
+            request=request,
             session_id=session_id,
             session=session,
-            logger=logger
+            logger=logger,
         )
 
 if __name__ == '__main__':
@@ -157,9 +156,9 @@ if __name__ == '__main__':
 
 
     # subscription_request = SubscriptionRequest(
-    #     action=SubscriptionRequest.Action.SUBSCRIBE,
+    #     action=Request.Action.SUBSCRIBE,
     #     product_id=product_id,
-    #     label_list=label_list
+    #     label_list=label_list,
     # )
     
     # basic = Basic(user_token=user_token)

@@ -6,10 +6,9 @@ import urllib3
 
 from quotecast.constants import Endpoint, Headers
 from quotecast.pb.quotecast_pb2 import (
-    Action,
     Metadata,
     Quotecast,
-    SubscriptionRequest
+    Request,
 )
 from typing import List
 
@@ -45,7 +44,7 @@ def build_logger():
 def get_session_id(
     user_token:int,
     session:requests.Session=None,
-    logger:logging.Logger=None
+    logger:logging.Logger=None,
 )->str:
     """ Retrieve "session_id".
     This "session_id" is used by most Degiro's trading endpoint.
@@ -91,7 +90,7 @@ def get_session_id(
 def fetch_data(
     session_id:str,
     session:requests.Session=None,
-    logger:logging.Logger=None
+    logger:logging.Logger=None,
 )->Quotecast:
     """
     Fetch data from the feed.
@@ -157,10 +156,10 @@ def fetch_data(
     return quotecast
 
 def subscribe(
-    subscription_request:SubscriptionRequest,
+    request:Request,
     session_id:str,
     session:requests.Session=None,
-    logger:logging.Logger=None
+    logger:logging.Logger=None,
 )->bool:
     """ Subscribe/unsubscribe to a feed from Degiro's QuoteCast API.
     Parameters :
@@ -177,15 +176,15 @@ def subscribe(
     
     url = Endpoint.URL
     url = f'{url}/{session_id}'
-    vwd_id = subscription_request.vwd_id
-    label_list = subscription_request.label_list
+    vwd_id = request.vwd_id
+    label_list = request.label_list
 
-    if subscription_request.action == Action.SUBSCRIBE:
+    if request.action == Request.Action.SUBSCRIBE:
         action = 'req'
-    elif subscription_request.action == Action.UNSUBSCRIBE:
+    elif request.action == Request.Action.UNSUBSCRIBE:
         action = 'rel'
     else:
-        raise AttributeError('Unknown "Request.action".')
+        raise AttributeError('Unknown "request.action".')
     
     data = list()
     for label in label_list:

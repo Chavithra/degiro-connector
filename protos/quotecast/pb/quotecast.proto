@@ -1,11 +1,5 @@
 syntax = "proto3";
 
-/* ENUM(S) DEFINITION */
-enum Action {
-  SUBSCRIBE = 0;
-  UNSUBSCRIBE = 1;
-}
-
 /* MESSAGE(S) DEFINITION */
 message Metadata {
   string response_datetime = 1;
@@ -32,7 +26,11 @@ message Quotecast {
   Metadata metadata = 2;
 }
 
-message SubscriptionRequest {
+message Request {
+  enum Action {
+    SUBSCRIBE = 0;
+    UNSUBSCRIBE = 1;
+  }
   Action action = 1;
   string vwd_id = 2;
   repeated string label_list = 3;

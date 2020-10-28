@@ -8,9 +8,8 @@ import urllib3
 from quotecast.basic import Basic
 from quotecast.models.connection_storage import  ConnectionStorage
 from quotecast.pb.quotecast_pb2 import (
-    Action,
     Quotecast,
-    SubscriptionRequest
+    Request,
 )
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -93,7 +92,7 @@ class API:
 
     def subscribe(
         self,
-        subscription_request:SubscriptionRequest
+        request:Request
     )->bool:
         """ Subscribe/unsubscribe to a feed from Degiro's QuoteCast API.
         Parameters :
@@ -109,8 +108,8 @@ class API:
         session_id = self.connection_storage.session_id
 
         return basic.subscribe(
-            subscription_request=subscription_request,
-            session_id=session_id
+            request=request,
+            session_id=session_id,
         )
 
 if __name__ == '__main__':
@@ -120,7 +119,7 @@ if __name__ == '__main__':
 
     logging.basicConfig(level=logging.DEBUG)
     
-    with open('applications/subscription_request.json') as config_file:
+    with open('config/subscription_request.json') as config_file:
         config = json.load(config_file)
 
     # SETUP VARIABLES
@@ -135,13 +134,13 @@ if __name__ == '__main__':
 
     api = API(user_token=user_token)
     
-    subscription_request = SubscriptionRequest(
-        action=Action.SUBSCRIBE,
+    request = Request(
+        action=Request.Action.SUBSCRIBE,
         product_id=product_id,
-        label_list=label_list
+        label_list=label_list,
     )
 
     api.connection_storage.connect()
-    api.subscribe(subscription_request=subscription_request)
+    api.subscribe(request=request)
     time.sleep(1)
     api.fetch_data()

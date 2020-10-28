@@ -19,8 +19,7 @@ def cli(user_token):
     from datetime import date
     from quotecast.api import API
     from quotecast.pb.quotecast_pb2 import (
-        Action,
-        SubscriptionRequest
+        Request,
     )
 
     # SETUP API
@@ -37,13 +36,13 @@ def cli(user_token):
         'LastPrice',
         'LastVolume',
     ]
-    subscription_request = SubscriptionRequest(
-        action=Action.SUBSCRIBE,
+    request = Request(
+        action=Request.Action.SUBSCRIBE,
         vwd_id=vwd_id,
         label_list=label_list
     )
 
-    api.subscribe(subscription_request=subscription_request)
+    api.subscribe(request=request)
 
     while True:
         raw_response = api.fetch_data()
