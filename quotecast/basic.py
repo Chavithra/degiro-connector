@@ -6,7 +6,7 @@ import threading
 import time
 import urllib3
 
-from quotecast.constants import Headers
+from quotecast.constants.headers import Headers
 from quotecast.models.session_storage import SessionStorage
 from quotecast.pb.quotecast_pb2 import (
     Quotecast,

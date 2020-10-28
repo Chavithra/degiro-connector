@@ -4,7 +4,7 @@ import time
 import threading
 
 from quotecast.api import Basic
-from quotecast.constants import Headers
+from quotecast.constants.headers import Headers
 from quotecast.models.session_storage import SessionStorage
 from wrapt.decorators import synchronized
 

@@ -1,13 +1,17 @@
-# Degiro Connector
-
-Yet another library to handle Degiro's API.
+# **Degiro Connector**
 
 ## Features
-
-* [Create/Confirm an Order](#createconfirm-an-order)
-* [Update an Order](#update-an-order)
-* [Delete an Order](#delete-an-order)
-* [Collect financial data](#data-collection)
+This library will allow you to connect to Degiro's website and access :
+1. **Realtime data** (last price, volume, high, low, open, close,...)
+2. **Order** (creation/update/delete)
+3. **Portfolio** (alerts, cash funds, orders, transactions)
+4. **TotalPortfolio** (free space, porfolio value, total cash,...)
+5. **OrderHistory**
+6. **TransactionsHistory**
+7. **ClientInfo**
+8. **ClientDetails**
+9. **AccountOverview** (cashMovements)
+10. **ProductLookup**
 
 ## Install
 You can install it directly from Github, using the command :
@@ -21,17 +25,49 @@ Here is the command to remove it from your system :
 ```bash
 pip uninstall degiro-connector
 ```
-## Create/Confirm an Order
-To work with Orders you need to use the class : **trading.api**.
 
-You can use this code :
+## **Examples**
 
+## 1. Realtime data
+
+```python
+# SETUP API
+api = API(user_token=**__YOUR_TOKEN__**)
+# CONNECTION
+api.connection_storage.connect()
+# SUBSCRIBE TO FEED
+request = Request(
+    action=Request.Action.SUBSCRIBE,
+    vwd_id=360015751,
+    label_list=[
+        'LastDate',
+        'LastTime',
+        'LastPrice',
+        'LastVolume',
+        'OpenPrice',
+        'HighPrice',
+        'LowPrice',
+        'ClosePrice',
+        'PreviousClosePrice',
+    ],
+)
+api.subscribe(request=request)
+# FETCH DATA
+while True:
+    data = api.fetch_data()
+```
+
+For a more comprehensive example : examples.quotecast.realtimedata
+
+## 2. Order
+
+### 2. Order - Create
 ```python
 # ORDER SETUP
 order = Order(
     action=Action.Value('BUY'),
     order_type=OrderType.Value('LIMIT'),
-    price=10.60,
+    price=10,
     product_id=71981,
     size=1,
     time_type=TimeType.Value('GOOD_TILL_DAY')
@@ -47,10 +83,7 @@ order = api.confirm_order(
 )
 ```
 
-## Update an Order
-To work with Orders you need to use the class : **trading.api**.
-
-You can use this code :
+### 2. Order - Update
 
 ```python
 # ORDER SETUP
@@ -68,128 +101,10 @@ order = Order(
 status_code = api.update_order(order=order)
 ```
 
-## Delete an Order
-To work with Orders you need to use the class : **trading.api**
-
-You can use this code :
+### Delete an Order
 
 ```python
-# ORDER SETUP
-order = Order(
-    id=YOUR_ORDER_ID
-    action=Action.Value('BUY'),
-    order_type=OrderType.Value('LIMIT'),
-    price=10.60,
-    product_id=71981,
-    size=1,
-    time_type=TimeType.Value('GOOD_TILL_DAY')
-)
-
-# DELETE ORDER
-status = api.delete(order_id=order.id)
-
-# OTHER SOLUTION
 status = api.delete(order_id=YOUR_ORDER_ID)
-```
-
-## Data collection
-To fetch Quotecasts you need to use the class : **quotecast.api**
-
-You can use this code :
-
-```python
-# REQUEST SETUP
-request = Request(
-    action=Request.Action.SUBSCRIBE,
-    product_id=360015751,
-    label_list=[
-        'LastDate',
-        'LastTime',
-        'LastPrice',
-        'LastVolume',
-    ],
-)
-
-# SEND REQUEST
-api.subscribe(request=request)
-
-# FETCH DATA
-while True:
-    raw_response = api.fetch_data()
-    print(raw_response)
-```
-
-For a more comprehensive example : [quotecast.applications.fetch_data](quotecast/applications/commands/fetch_data.py)
-
-
-## Connection
-
-### Why a connection ?
-
-Most of Degiro's API features require a **session**.
-
-There are two kinds of **session**:
- 1. **quotecast_session** : to collect financial data
- 2. **trading_session** : to do trading operations
-
-### What is the **session** duration ?
-The connection has a timeout after which it will cease to work.  
-Same thing if you disconnect (using the right API call).
-
-According to my test, it is safe to assume these durations :
- 1. **quotecast_session** : at least 15 seconds
- 2. **trading_session** : at least 30 minutes
-
-### How connect for Trading ?
-You can use this code :
-```python
-#!/usr/bin/env python3
-from trading.api import API
-from trading.pb.trading_pb2 import Credentials
-
-# USER_TOKEN SETUP
-int_account = YOUR_INT_ACCOUNT
-username = YOUR_USERNAME
-password = YOUR_PASSWORD
-
-# API SETUP
-credentials = Credentials(
-    int_account=int_account,
-    username=username,
-    password=password
-)
-api = API(credentials=credentials)
-
-# CONNECTION
-api.connection_storage.connect()
-
-# DISPLAY SESSION_ID
-session_id = api.connection_storage.session_id
-
-print(session_id)
-```
-
-### How connect for Quotecasts ?
-You can use this code :
-```python
-#!/usr/bin/env python3
-from quotecast.api import API
-from quotecast.pb.quotecast_pb2 import Credentials
-
-# USER_TOKEN SETUP
-user_token = YOUR_TOKEN
-
-# API SETUP
-credentials=Credentials(user_token=user_token)
-api = API(credentials=credentials)
-
-# CONNECTION
-api.connection_storage.connect()
-
-# DISPLAY SESSION_ID
-session_id = api.connection_storage.session_id
-
-print(session_id)
 ```
 
 # Contributing

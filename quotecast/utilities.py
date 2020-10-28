@@ -4,7 +4,8 @@ import requests
 import time
 import urllib3
 
-from quotecast.constants import Endpoint, Headers
+from quotecast.constants.endpoint import Endpoint
+from quotecast.constants.headers import Headers
 from quotecast.pb.quotecast_pb2 import (
     Metadata,
     Quotecast,
