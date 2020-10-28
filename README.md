@@ -32,7 +32,7 @@ pip uninstall degiro-connector
 
 ```python
 # SETUP API
-api = API(user_token=**__YOUR_TOKEN__**)
+api = API(user_token=YOUR_TOKEN)
 # CONNECTION
 api.connection_storage.connect()
 # SUBSCRIBE TO FEED
