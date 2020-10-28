@@ -9,6 +9,7 @@ setup(
         'grpcio',
         'protobuf',
         'requests',
+        'wrapt',
     ],
     author='Chavithra PARANA',
     author_email='chavithra@gmail.com',
