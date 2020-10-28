@@ -57,7 +57,7 @@ while True:
     data = api.fetch_data()
 ```
 
-For a more comprehensive example : examples.quotecast.realtimedata
+For a more comprehensive example : [realtime_data.py](examples/quotecast/realtime_data.py)
 
 ## 2. Order
 
