@@ -1,7 +1,7 @@
 # **Degiro Connector**
 
 ## Features
-This library will allow you to connect to Degiro's website and access :
+This library will allow you to connect to Degiro's website and to use :
 1. **Realtime data** (last price, volume, high, low, open, close,...)
 2. **Order** (creation/update/delete)
 3. **Portfolio** (alerts, cash funds, orders, transactions)
