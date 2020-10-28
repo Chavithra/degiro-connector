@@ -1,17 +1,27 @@
-__pycache__
-/logs
+# ROOT FOLDERS
 /.vscode
-*.txt
-*.json
-!*template.json
 /bat
-*.txt
-/*.egg-info
 /build
+/config
 /dist
+/logs
+
+# ROOT FILES
+/*.egg-info
 /*.py
 !/setup.py
-*.ipynb
+
+# FOLDERS
+__pycache__
+
+# FILES
+!*template.json
+*.bat
+*.csv
 *.db
+*.json
+*.ipynb
 *.log
-/config
+*.sh
+*.txt
+*.xlsx
