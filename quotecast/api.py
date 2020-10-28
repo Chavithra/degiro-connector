@@ -114,6 +114,7 @@ class API:
         )
 
 if __name__ == '__main__':
+    # IMPORTATIONS
     import logging
     import json
 
@@ -122,7 +123,7 @@ if __name__ == '__main__':
     with open('applications/subscription_request.json') as config_file:
         config = json.load(config_file)
 
-    # Parameters required for testing
+    # SETUP VARIABLES
     user_token = config['user_token']
     product_id = 360015751
     label_list =[

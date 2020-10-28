@@ -12,4 +12,6 @@ __pycache__
 /*.py
 !/setup.py
 *.ipynb
+*.db
 *.log
+/config

@@ -136,25 +136,25 @@ def fetch_data(
         response_datetime=response_datetime,
         request_duration=request_duration
     )
-    raw_response = Quotecast(
+    quotecast = Quotecast(
         json_data=response.text,
         metadata=metadata
     )
 
     logger.debug(
-        'fetch_data:raw_response.response_json: %s',
-        raw_response.response_json
+        'fetch_data:json_data.response_json: %s',
+        quotecast.json_data
     )
     logger.debug(
-        'fetch_data:raw_response.response_datetime: %s',
+        'fetch_data:metadata.response_datetime: %s',
         metadata.response_datetime
     )
     logger.debug(
-        'fetch_data:raw_response.request_duration: %s',
+        'fetch_data:metadata.request_duration: %s',
         metadata.request_duration
     )
 
-    return raw_response
+    return quotecast
 
 def subscribe(
     subscription_request:SubscriptionRequest,
@@ -177,6 +177,8 @@ def subscribe(
     
     url = Endpoint.URL
     url = f'{url}/{session_id}'
+    vwd_id = subscription_request.vwd_id
+    label_list = subscription_request.label_list
 
     if subscription_request.action == Action.SUBSCRIBE:
         action = 'req'
@@ -186,8 +188,8 @@ def subscribe(
         raise AttributeError('Unknown "Request.action".')
     
     data = list()
-    for label in subscription_request.label_list:
-        data.append(f'{action}({subscription_request.product_id}.{label})')
+    for label in label_list:
+        data.append(f'{action}({vwd_id}.{label})')
     data = '{"controlData":"' + ';'.join(data) + ';"}'
 
     request = requests.Request(method='POST', url=url, data=data)

@@ -34,7 +34,7 @@ message Quotecast {
 
 message SubscriptionRequest {
   Action action = 1;
-  int32 product_id = 2;
+  string vwd_id = 2;
   repeated string label_list = 3;
 }
 

@@ -691,18 +691,84 @@ def get_account_overview(
 
     return response
 
-if __name__ == "__main__":
+if __name__ == '__main__':
+
+    # IMPORTATIONS
+    import datetime
+    import logging
+    import time
+    import pandas as pd
+
+    from datetime import date
+    from google.protobuf import json_format
+    from trading.api import API
+    from trading.pb.trading_pb2 import Credentials
+    from trading.pb.trading_pb2 import (
+        Credentials,
+        Update,
+        OrdersHistory,
+    )
+
+    # SETUP VARIABLES
     with open('config.json') as config_file:
         config = json.load(config_file)
-
-    int_account = config['int_account']
     username = config['username']
     password = config['password']
+    int_account = config['int_account']
+    log_level = logging._nameToLevel['INFO']
+
+    # SETUP LOGS
+    log_level = logging.getLevelName(log_level)
+    logging.basicConfig(
+        level=log_level,
+        format='%(asctime)s %(levelname)-8s %(message)s',
+        datefmt='%Y-%m-%d %H:%M:%S',
+        filename='test2.log',
+    )
+
     credentials = Credentials(
         int_account=int_account,
         username=username,
         password=password
     )
-    session_id = get_session_id(credentials=credentials)
-    
-    print(session_id)
+    api = API(credentials=credentials)
+
+    request_list = Update.RequestList()
+    request_list.values.extend(
+        [
+            # Update.Request(
+            #     option=Update.Option.CASHFUNDS,
+            #     last_update_number=0,
+            # ),
+            # Update.Request(
+            #     option=Update.Option.HISTORICALORDERS,
+            #     last_update_number=0,
+            # ),
+            Update.Request(
+                option=Update.Option.ORDERS,
+                last_update=0,
+            ),
+            Update.Request(
+                option=Update.Option.PORTFOLIO,
+                last_update=0,
+            ),
+            Update.Request(
+                option=Update.Option.TOTALPORTFOLIO,
+                last_update=0,
+            ),
+            # Update.Request(
+            #     option=Update.Option.TRANSACTIONS,
+            #     last_update_number=0,
+            # ),
+        ]
+    )
+
+    logger = logging.getLogger(__name__)
+    api.connection_storage.connect()
+
+    # RAW
+    # update_dict = api.get_update(request_list=request_list, raw=True)
+    # update_dict['response_datetime'] = str(datetime.datetime.now())
+
+    # PROTOBUF
+    update = api.get_update(request_list=request_list, raw=False)

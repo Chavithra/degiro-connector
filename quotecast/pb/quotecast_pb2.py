@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x1cquotecast/pb/quotecast.proto\"?\n\x08Metadata\x12\x19\n\x11response_datetime\x18\x01 \x01(\t\x12\x18\n\x10request_duration\x18\x02 \x01(\x01\"`\n\x06Metric\x12\x11\n\theartbeat\x18\x01 \x01(\x08\x12\r\n\x05label\x18\x05 \x01(\t\x12\x12\n\nproduct_id\x18\x04 \x01(\x05\x12\x11\n\treference\x18\x02 \x01(\x05\x12\r\n\x05value\x18\x03 \x01(\t\"O\n\x08Matching\x12\x11\n\treference\x18\x01 \x01(\x05\x12\r\n\x05value\x18\x02 \x01(\t\x12\x12\n\nproduct_id\x18\x03 \x01(\x05\x12\r\n\x05label\x18\x04 \x01(\t\";\n\tQuotecast\x12\x11\n\tjson_data\x18\x01 \x01(\t\x12\x1b\n\x08metadata\x18\x02 \x01(\x0b\x32\t.Metadata\"V\n\x13SubscriptionRequest\x12\x17\n\x06\x61\x63tion\x18\x01 \x01(\x0e\x32\x07.Action\x12\x12\n\nproduct_id\x18\x02 \x01(\x05\x12\x12\n\nlabel_list\x18\x03 \x03(\t\"~\n\x06Ticker\x12\x1c\n\x0bmetric_list\x18\x01 \x03(\x0b\x32\x07.Metric\x12\x14\n\x0cproduct_list\x18\x02 \x03(\x05\x12\x1b\n\x08metadata\x18\x03 \x01(\x0b\x32\t.Metadata\x12#\n\x12\x66illed_metric_list\x18\x04 \x03(\x0b\x32\x07.Metric*(\n\x06\x41\x63tion\x12\r\n\tSUBSCRIBE\x10\x00\x12\x0f\n\x0bUNSUBSCRIBE\x10\x01\x62\x06proto3'
+  serialized_pb=b'\n\x1cquotecast/pb/quotecast.proto\"?\n\x08Metadata\x12\x19\n\x11response_datetime\x18\x01 \x01(\t\x12\x18\n\x10request_duration\x18\x02 \x01(\x01\"`\n\x06Metric\x12\x11\n\theartbeat\x18\x01 \x01(\x08\x12\r\n\x05label\x18\x05 \x01(\t\x12\x12\n\nproduct_id\x18\x04 \x01(\x05\x12\x11\n\treference\x18\x02 \x01(\x05\x12\r\n\x05value\x18\x03 \x01(\t\"O\n\x08Matching\x12\x11\n\treference\x18\x01 \x01(\x05\x12\r\n\x05value\x18\x02 \x01(\t\x12\x12\n\nproduct_id\x18\x03 \x01(\x05\x12\r\n\x05label\x18\x04 \x01(\t\";\n\tQuotecast\x12\x11\n\tjson_data\x18\x01 \x01(\t\x12\x1b\n\x08metadata\x18\x02 \x01(\x0b\x32\t.Metadata\"R\n\x13SubscriptionRequest\x12\x17\n\x06\x61\x63tion\x18\x01 \x01(\x0e\x32\x07.Action\x12\x0e\n\x06vwd_id\x18\x02 \x01(\t\x12\x12\n\nlabel_list\x18\x03 \x03(\t\"~\n\x06Ticker\x12\x1c\n\x0bmetric_list\x18\x01 \x03(\x0b\x32\x07.Metric\x12\x14\n\x0cproduct_list\x18\x02 \x03(\x05\x12\x1b\n\x08metadata\x18\x03 \x01(\x0b\x32\t.Metadata\x12#\n\x12\x66illed_metric_list\x18\x04 \x03(\x0b\x32\x07.Metric*(\n\x06\x41\x63tion\x12\r\n\tSUBSCRIBE\x10\x00\x12\x0f\n\x0bUNSUBSCRIBE\x10\x01\x62\x06proto3'
 )
 
 _ACTION = _descriptor.EnumDescriptor(
@@ -43,8 +43,8 @@ _ACTION = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=553,
-  serialized_end=593,
+  serialized_start=549,
+  serialized_end=589,
 )
 _sym_db.RegisterEnumDescriptor(_ACTION)
 
@@ -261,9 +261,9 @@ _SUBSCRIPTIONREQUEST = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='product_id', full_name='SubscriptionRequest.product_id', index=1,
-      number=2, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
+      name='vwd_id', full_name='SubscriptionRequest.vwd_id', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
@@ -287,7 +287,7 @@ _SUBSCRIPTIONREQUEST = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=337,
-  serialized_end=423,
+  serialized_end=419,
 )
 
 
@@ -339,8 +339,8 @@ _TICKER = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=425,
-  serialized_end=551,
+  serialized_start=421,
+  serialized_end=547,
 )
 
 _QUOTECAST.fields_by_name['metadata'].message_type = _METADATA

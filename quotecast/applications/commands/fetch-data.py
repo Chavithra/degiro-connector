@@ -30,7 +30,7 @@ def cli(user_token):
     
     click.echo(f'Session id : {api.connection_storage.session_id}')
     
-    product_id = 360015751
+    vwd_id = 360015751
     label_list =[
         'LastDate',
         'LastTime',
@@ -39,7 +39,7 @@ def cli(user_token):
     ]
     subscription_request = SubscriptionRequest(
         action=Action.SUBSCRIBE,
-        product_id=product_id,
+        vwd_id=vwd_id,
         label_list=label_list
     )
 
