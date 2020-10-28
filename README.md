@@ -38,7 +38,7 @@ api.connection_storage.connect()
 # SUBSCRIBE TO FEED
 request = Request(
     action=Request.Action.SUBSCRIBE,
-    vwd_id=360015751,
+    vwd_id='360015751',
     label_list=[
         'LastDate',
         'LastTime',
