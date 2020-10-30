@@ -57,13 +57,7 @@ class MetricListSorage:
             if product_id == 0:
                 continue
             elif not product_id in metric_dict:
-                new_metric = Metric()
-                new_metric.CopyFrom(metric)
-
                 metric_dict[product_id] = dict()
-                metric_dict[product_id][label] = new_metric
+                metric_dict[product_id][label] = metric
             else:
-                new_metric = Metric()
-                new_metric.CopyFrom(metric)
-
-                metric_dict[product_id][label] = new_metric
+                metric_dict[product_id][label] = metric
