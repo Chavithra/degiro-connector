@@ -5,6 +5,7 @@
 /config
 /dist
 /logs
+/payloads
 
 # ROOT FILES
 /*.egg-info
@@ -25,3 +26,4 @@ __pycache__
 *.sh
 *.txt
 *.xlsx
+*.pickle
