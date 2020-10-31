@@ -1,12 +1,10 @@
 import json
 import logging
 
-import quotecast.helpers.metric_handler as metric_handler
 
 from quotecast.models.metric_list_storage import MetricListSorage
 from quotecast.models.raw_metric_parser import RawMetricParser
 from quotecast.pb.quotecast_pb2 import (
-    Matching,
     Metadata,
     Metric,
     Quotecast,

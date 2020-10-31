@@ -6,8 +6,6 @@ from quotecast.pb.quotecast_pb2 import (
 )
 from typing import Dict, List, Union
 
-
-
 class RawMetricParser:
     """ Handle the payload returned from this endpoint :
 

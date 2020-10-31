@@ -14,13 +14,6 @@ message Metric {
   string value = 3;
 }
 
-message Matching {
-  int32 reference = 1;
-  string value = 2;
-  int32 product_id = 3;
-  string label = 4;
-}
-
 message Quotecast {
   string json_data = 1;
   Metadata metadata = 2;
