@@ -10,6 +10,7 @@ setup(
         'protobuf',
         'requests',
         'wrapt',
+        'orjson',
     ],
     author='Chavithra PARANA',
     author_email='chavithra@gmail.com',
