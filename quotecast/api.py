@@ -1,7 +1,4 @@
-import json
 import logging
-import requests
-import threading
 import time
 import urllib3
 

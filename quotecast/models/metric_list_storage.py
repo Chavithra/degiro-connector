@@ -1,16 +1,9 @@
-import json
 import logging
 
 from quotecast.pb.quotecast_pb2 import (
-    Metadata,
     Metric,
-    Quotecast,
-    Ticker,
 )
-from typing import (
-    List,
-    Dict,
-)
+from typing import List
 from wrapt.decorators import synchronized
 
 class MetricListSorage:

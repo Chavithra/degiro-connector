@@ -1,7 +1,4 @@
 import logging
-import json
-import threading
-import time
 
 from trading.basic import Basic
 from trading.models.connection_storage import ConnectionStorage
@@ -230,6 +227,7 @@ class API:
         )
 
 if __name__ == "__main__":
+    import json
 
     from trading.pb.trading_pb2 import (
         Order,

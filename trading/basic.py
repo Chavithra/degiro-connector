@@ -1,7 +1,4 @@
-import json
 import logging
-import threading
-import time
 import trading.utilities as utilities
 
 from typing import (
@@ -290,6 +287,8 @@ class Basic:
         )
 
 if __name__ == '__main__':
+    import json
+
     with open('config.json') as config_file:
         config = json.load(config_file)
 

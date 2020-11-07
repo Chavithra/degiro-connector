@@ -1,4 +1,4 @@
-import json
+import orjson as json
 import logging
 import requests
 import trading.helpers.payload_handler as payload_handler

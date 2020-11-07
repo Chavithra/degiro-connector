@@ -1,9 +1,5 @@
-import json
 import logging
 import quotecast.utilities as utilities
-import requests
-import threading
-import time
 import urllib3
 
 from quotecast.constants.headers import Headers
