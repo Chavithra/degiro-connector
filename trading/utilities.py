@@ -182,6 +182,7 @@ def get_update(
 
     request = requests.Request(method='GET', url=url, params=params)
     prepped = session.prepare_request(request)
+    response_raw = None
 
     try:
         response_raw = session.send(prepped, verify=False)
@@ -229,6 +230,7 @@ def check_order(
 
     request = requests.Request(method='POST', url=url, json=order_dict)
     prepped = session.prepare_request(request)
+    response_raw = None
 
     try:
         response_raw = session.send(prepped, verify=False)
@@ -286,6 +288,7 @@ def confirm_order(
 
     request = requests.Request(method='POST', url=url, json=order_dict)
     prepped = session.prepare_request(request)
+    response_raw = None
 
     try:
         response_raw = session.send(prepped, verify=False)
@@ -344,6 +347,7 @@ def update_order(
 
     request = requests.Request(method='PUT', url=url, json=order_dict)
     prepped = session.prepare_request(request)
+    response = None
 
     try:
         response = session.send(prepped, verify=False)
@@ -374,6 +378,7 @@ def delete_order(
 
     request = requests.Request(method='DELETE', url=url)
     prepped = session.prepare_request(request)
+    response = None
 
     try:
         response = session.send(prepped, verify=False)
@@ -528,6 +533,7 @@ def get_order_history(
 
     request = requests.Request(method='GET', url=url, params=params)
     prepped = session.prepare_request(request)
+    response_raw = None
 
     try:
         response_raw = session.send(prepped, verify=False)
@@ -598,6 +604,7 @@ def get_transactions_history(
 
     request = requests.Request(method='GET', url=url, params=params)
     prepped = session.prepare_request(request)
+    response_raw = None
 
     try:
         response_raw = session.send(prepped, verify=False)
@@ -668,6 +675,7 @@ def get_account_overview(
 
     request = requests.Request(method='GET', url=url, params=params)
     prepped = session.prepare_request(request)
+    response_raw = None
 
     try:
         response_raw = session.send(prepped, verify=False)
@@ -738,6 +746,7 @@ def products_lookup(
 
     request = requests.Request(method='GET', url=url, params=params)
     prepped = session.prepare_request(request)
+    response_raw = None
 
     try:
         response_raw = session.send(prepped, verify=False)
