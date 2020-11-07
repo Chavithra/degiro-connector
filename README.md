@@ -44,18 +44,32 @@ request = Request(
         'LastTime',
         'LastPrice',
         'LastVolume',
-        'OpenPrice',
-        'HighPrice',
-        'LowPrice',
-        'ClosePrice',
-        'PreviousClosePrice',
     ],
 )
 api.subscribe(request=request)
-# FETCH DATA
-while True:
-    data = api.fetch_data()
+quotecast = api.fetch_data()
+
+# DISPLAY RAW JSON
+print(quotecast.json_data)
+
+# DISPLAY TICKER (PROTOBUF/GRPC OBJECT)
+quotecast_parser.put_quotecast(quotecast=quotecast)
+ticker = quotecast_parser.ticker
+
+# DISPLAY DICT
+record_list = pb_handler.build_dict_from_ticker(ticker=ticker)
+print(record_list)
+
+# DISPLAY PANDAS.DATAFRAME
+df = pb_handler.build_df_from_ticker(ticker=ticker)
+print(df)
 ```
+
+Example :
+|   | product_id  | response_datetime | request_duration | LastDate | LastTime | LastPrice | LastVolume |
+| - | ----------  | ----------------- | ---------------- | -------- | -------- | --------- | ---------- |
+| 0 | 360015751 | 2020-11-07 22:01:43 | 1.02312 | 2020-11-06 | 17:36:17 | 22.99 | 470
+| 1 | 360114899 | 2020-11-07 22:01:43 | 1.02312 | 2020-11-06 | 17:39:57 | 70.0 | 100
 
 For a more comprehensive example : [realtime_data.py](examples/quotecast/realtime_data.py)
 
