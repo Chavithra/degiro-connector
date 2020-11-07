@@ -11,6 +11,7 @@ from quotecast.pb.quotecast_pb2 import (
     Quotecast,
     Request,
 )
+from typing import Union
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -92,8 +93,9 @@ class API:
 
     def subscribe(
         self,
-        request:Request
-    )->bool:
+        request:Request,
+        raw:bool=False,
+    )->Union[Request, int]:
         """ Subscribe/unsubscribe to a feed from Degiro's QuoteCast API.
         Parameters :
         session {requests.Session}
@@ -110,6 +112,7 @@ class API:
         return basic.subscribe(
             request=request,
             session_id=session_id,
+            raw=raw,
         )
 
 if __name__ == '__main__':

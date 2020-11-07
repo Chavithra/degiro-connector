@@ -27,6 +27,7 @@ message Request {
   Action action = 1;
   string vwd_id = 2;
   repeated string label_list = 3;
+  int32 status_code = 4;
 }
 
 message Ticker {

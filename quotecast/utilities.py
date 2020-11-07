@@ -11,7 +11,7 @@ from quotecast.pb.quotecast_pb2 import (
     Quotecast,
     Request,
 )
-from typing import List
+from typing import Union
 
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -72,10 +72,10 @@ def get_session_id(
         data=data,
         params=parameters
     )
-    prepped = session.prepare_request(request)
+    prepped = session.prepare_request(request=request)
 
     try:
-        response = session.send(prepped, verify=False)
+        response = session.send(request=prepped, verify=False)
         response_dict = response.json()
     except Exception as e:
         logger.fatal(e)
@@ -115,10 +115,10 @@ def fetch_data(
     url = f'{url}/{session_id}'
 
     request = requests.Request(method='GET', url=url)
-    prepped = session.prepare_request(request)
+    prepped = session.prepare_request(request=request)
 
     start = time.time()
-    response = session.send(prepped, verify=False)
+    response = session.send(request=prepped, verify=False)
     # We could also use : response.elapsed.total_seconds()
     request_duration = time.time() - start 
 
@@ -159,9 +159,10 @@ def fetch_data(
 def subscribe(
     request:Request,
     session_id:str,
+    raw:bool=False,
     session:requests.Session=None,
     logger:logging.Logger=None,
-)->bool:
+)->Union[Request, int]:
     """ Subscribe/unsubscribe to a feed from Degiro's QuoteCast API.
     Parameters :
     session_id {str} -- API's session id.
@@ -192,24 +193,30 @@ def subscribe(
         data.append(f'{action}({vwd_id}.{label})')
     data = '{"controlData":"' + ';'.join(data) + ';"}'
 
-    request = requests.Request(method='POST', url=url, data=data)
-    prepped = session.prepare_request(request)
+    session_request = requests.Request(method='POST', url=url, data=data)
+    prepped = session.prepare_request(request=session_request)
 
-    logger.info('subscribe:payload: %s', data)
+    logger.debug('subscribe:payload: %s', data)
     
     try:
-        response = session.send(prepped, verify=False)
+        response_raw = session.send(request=prepped, verify=False)
+        request.status_code = response_raw.status_code
+
+        if raw == True:
+            response = response_raw.status_code
+        else:
+            response = request
     except Exception as e:
         logger.fatal(e)
         return False
 
     logger.debug(
         'subscribe:response.text: %s',
-        response.text
+        response_raw.text
     )
     logger.debug(
         'subscribe:response.status_code: %s',
-        response.status_code
+        response_raw.status_code
     )
 
-    return response.status_code == 200
+    return response

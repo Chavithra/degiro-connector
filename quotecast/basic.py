@@ -8,10 +8,8 @@ import urllib3
 
 from quotecast.constants.headers import Headers
 from quotecast.models.session_storage import SessionStorage
-from quotecast.pb.quotecast_pb2 import (
-    Quotecast,
-    Request,
-)
+from quotecast.pb.quotecast_pb2 import Quotecast, Request
+from typing import Union
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -113,7 +111,8 @@ class Basic:
         self,
         request:Request,
         session_id:str,
-    )->bool:
+        raw:bool=False,
+    )->Union[Request, int]:
         """ Subscribe/unsubscribe to a feed from Degiro's QuoteCast API.
         Parameters :
         session_id {str} -- API's session id.
@@ -128,6 +127,7 @@ class Basic:
         return utilities.subscribe(
             request=request,
             session_id=session_id,
+            raw=raw,
             session=session,
             logger=logger,
         )
