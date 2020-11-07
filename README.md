@@ -107,14 +107,6 @@ status_code = api.update_order(order=order)
 status = api.delete(order_id=YOUR_ORDER_ID)
 ```
 
-# Contributing
-Pull requests are welcome.
-
-Feel free to open an issue or send me a message if you have a question.
-
-# License
-[BSD-3-Clause License](https://raw.githubusercontent.com/Chavithra/degiro_connector/master/LICENSE)
-
 # Note
 * A minor issue :
     In the payload from the following URL :
@@ -123,3 +115,11 @@ Feel free to open an issue or send me a message if you have a question.
     Inside an Order :
         - "date" field is the "hour of the day" when it's a Sell Order.
         - "date" field is the "date of the day" when it's a Buy Order.
+
+# Contributing
+Pull requests are welcome.
+
+Feel free to open an issue or send me a message if you have a question.
+
+# License
+[BSD-3-Clause License](https://raw.githubusercontent.com/Chavithra/degiro_connector/master/LICENSE)
