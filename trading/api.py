@@ -8,6 +8,7 @@ from trading.models.connection_storage import ConnectionStorage
 from trading.pb.trading_pb2 import (
     Credentials,
     Order,
+    OrdersHistory,
     Update,
 )
 from typing import (
@@ -231,13 +232,10 @@ class API:
 if __name__ == "__main__":
 
     from trading.pb.trading_pb2 import (
-        Action,
         Order,
-        OrderType,
-        TimeType,
-        UpdateOption,
+        Update,
     )
-    with open('config.json') as config_file:
+    with open('config/config.json') as config_file:
         config = json.load(config_file)
 
     int_account = config['int_account']
@@ -253,16 +251,18 @@ if __name__ == "__main__":
     # INITIALIZATION
 
     api.connection_storage.connect()
+
+    print(api.connection_storage.session_id)
     
-    order = Order(
-        action=Action.Value('BUY'),
-        order_type=OrderType.Value('LIMIT'),
-        price=10.60,
-        product_id=71981,
-        size=1,
-        time_type=TimeType.Value('GOOD_TILL_DAY')
-    )
-    print(order)
+    # order = Order(
+    #     action=Order.Action.BUY,
+    #     order_type=Order.OrderType.LIMIT,
+    #     price=10.60,
+    #     product_id=71981,
+    #     size=1,
+    #     time_type=Order.TimeType.GOOD_TILL_DAY,
+    # )
+    # print(order)
     # confirmation_id = api.check_order(order=order)
     # order = api.confirm_order(
     #     confirmation_id=confirmation_id,
@@ -271,4 +271,4 @@ if __name__ == "__main__":
 
     # print('session_id', api.connection_storage.session_id)
     # print('confirmation_id', confirmation_id)
-    print('order', order)
+    # print('order', order)

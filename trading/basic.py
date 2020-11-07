@@ -13,6 +13,7 @@ from trading.models.session_storage import SessionStorage
 from trading.pb.trading_pb2 import (
     Credentials,
     Order,
+    OrdersHistory,
     Update,
 )
 
