@@ -67,7 +67,7 @@ print(df)
 
 Example - DISPLAY PANDAS.DATAFRAME :
 
-    product_id    response_datetime  request_duration    LastDate  LastTime LastPrice LastVolume
+       product_id    response_datetime  request_duration    LastDate  LastTime LastPrice LastVolume
     0   360114899  2020-11-08 02:40:27          1.022489  2020-11-06  17:39:57      70.0        100
     1   360015751  2020-11-08 02:40:27          1.022489  2020-11-06  17:36:17     22.99        470
 
