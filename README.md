@@ -65,17 +65,17 @@ df = pb_handler.build_df_from_ticker(ticker=ticker)
 print(df)
 ```
 
-Example :
-|   | product_id  | response_datetime | request_duration | LastDate | LastTime | LastPrice | LastVolume |
-| - | ----------  | ----------------- | ---------------- | -------- | -------- | --------- | ---------- |
-| 0 | 360015751 | 2020-11-07 22:01:43 | 1.02312 | 2020-11-06 | 17:36:17 | 22.99 | 470
-| 1 | 360114899 | 2020-11-07 22:01:43 | 1.02312 | 2020-11-06 | 17:39:57 | 70.0 | 100
+Example - DISPLAY PANDAS.DATAFRAME :
+
+    product_id    response_datetime  request_duration    LastDate  LastTime LastPrice LastVolume
+    0   360114899  2020-11-08 02:40:27          1.022489  2020-11-06  17:39:57      70.0        100
+    1   360015751  2020-11-08 02:40:27          1.022489  2020-11-06  17:36:17     22.99        470
 
 For a more comprehensive example : [realtime_data.py](examples/quotecast/realtime_data.py)
 
 ## 2. Order
 
-### 2. Order - Create
+### 2.1 Order - Create
 ```python
 # ORDER SETUP
 order = Order(
@@ -97,7 +97,7 @@ order = api.confirm_order(
 )
 ```
 
-### 2. Order - Update
+### 2.2 Order - Update
 
 ```python
 # ORDER SETUP
@@ -115,20 +115,21 @@ order = Order(
 status_code = api.update_order(order=order)
 ```
 
-### Delete an Order
+### 2.2 Order - Delete
 
 ```python
 status = api.delete(order_id=YOUR_ORDER_ID)
 ```
 
 # Note
-* A minor issue :
+**A minor issue in Degiro's API** :
+
     In the payload from the following URL :
-        https://trader.degiro.nl/trading/secure/v5/update
+    https://trader.degiro.nl/trading/secure/v5/update
     In the attribute "orders" of this payload.
     Inside an Order :
-        - "date" field is the "hour of the day" when it's a Sell Order.
-        - "date" field is the "date of the day" when it's a Buy Order.
+        * "date" field is the "hour of the day" when it's a Sell Order.
+        * "date" field is the "date of the day" when it's a Buy Order.
 
 # Contributing
 Pull requests are welcome.

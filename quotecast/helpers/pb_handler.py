@@ -9,6 +9,7 @@ from typing import Dict, List
 
 pd.set_option('display.max_rows', None)
 pd.set_option('display.max_columns', None)
+pd.set_option('display.expand_frame_repr', False)
 
 def add_unset_column_list(
     record:Dict[str, str],
