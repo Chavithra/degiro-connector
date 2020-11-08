@@ -1,11 +1,8 @@
 import logging
 
-
 from quotecast.models.metric_list_storage import MetricListSorage
 from quotecast.models.raw_metric_parser import RawMetricParser
 from quotecast.pb.quotecast_pb2 import (
-    Metadata,
-    Metric,
     Quotecast,
     Ticker,
 )

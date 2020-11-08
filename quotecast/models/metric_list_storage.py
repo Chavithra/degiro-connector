@@ -1,8 +1,6 @@
 import logging
 
-from quotecast.pb.quotecast_pb2 import (
-    Metric,
-)
+from quotecast.pb.quotecast_pb2 import Metric
 from typing import List
 from wrapt.decorators import synchronized
 
@@ -21,6 +19,7 @@ class MetricListSorage:
     def metric_dict(self)->List[Metric]:
         return self.__metric_dict
 
+    @synchronized
     def get_metric_list(
         self,
         product_list:List[int],
@@ -35,6 +34,7 @@ class MetricListSorage:
 
         return metric_list
 
+    @synchronized
     def put_metric_list(
         self,
         metric_list:List[Metric],

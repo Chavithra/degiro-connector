@@ -1,9 +1,7 @@
 import logging
 import orjson as json
 
-from quotecast.pb.quotecast_pb2 import (
-    Metric,
-)
+from quotecast.pb.quotecast_pb2 import Metric
 from typing import Dict, List, Union
 
 class RawMetricParser:
