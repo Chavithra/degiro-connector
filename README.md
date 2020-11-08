@@ -61,7 +61,7 @@ quotecast.json_data
 
 For a more comprehensive example : [realtime_data.py](examples/quotecast/realtime_data.py)
 
-### 1.2. Realtime data - Ticker / Dictionnaries / DataFrame
+### 1.3. Realtime data - Ticker / Dictionnaries / DataFrame
 
 This **quotecast** can be converted into :
 |Type|Description|
