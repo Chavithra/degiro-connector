@@ -50,12 +50,37 @@ api.subscribe(request=request)
 quotecast = api.fetch_data()
 ```
 
+For a more comprehensive example : [realtime_data.py](examples/quotecast/realtime_data.py)
+
+### 1.2. Realtime data - Raw JSON
+
+```python
+# RAW JSON
+quotecast.json_data
+```
+
+For a more comprehensive example : [realtime_data.py](examples/quotecast/realtime_data.py)
+
+### 1.2. Realtime data - Ticker / Dictionnaries / DataFrame
+
 This **quotecast** can be converted into :
 |Type|Description|
 |:-|:-|
-|Ticker|Protobuf message (for GRPC)|
-|dict|Standard Python Dictionaries|
-|DataFrame|DataFrame from the library Pandas|
+|**Ticker**|Protobuf message (for GRPC)|
+|**Dictionnaries**|Standard Python Dictionaries : **dict**|
+|**DataFrame**|DataFrame from the library Pandas|
+
+```python
+# BUILD TICKER (PROTOBUF/GRPC OBJECT)
+quotecast_parser.put_quotecast(quotecast=quotecast)
+ticker = quotecast_parser.ticker
+
+# BUILD DICT
+ticker_dict = pb_handler.build_dict_from_ticker(ticker=ticker)
+
+# BUILD PANDAS.DATAFRAME
+ticker_df = pb_handler.build_df_from_ticker(ticker=ticker)
+```
 
 Example - dict :
 
@@ -87,31 +112,6 @@ Example - DataFrame :
        product_id    response_datetime  request_duration    LastDate  LastTime LastPrice LastVolume
     0   360114899  2020-11-08 12:00:27          1.022489  2020-11-06  17:39:57      70.0        100
     1   360015751  2020-11-08 12:00:27          1.022489  2020-11-06  17:36:17     22.99        470
-
-For a more comprehensive example : [realtime_data.py](examples/quotecast/realtime_data.py)
-
-### 1.1. Realtime data - Raw JSON
-
-```python
-# RAW JSON
-quotecast.json_data
-```
-
-For a more comprehensive example : [realtime_data.py](examples/quotecast/realtime_data.py)
-
-### 1.1. Realtime data - Ticker / Dict / DataFrame
-
-```python
-# BUILD TICKER (PROTOBUF/GRPC OBJECT)
-quotecast_parser.put_quotecast(quotecast=quotecast)
-ticker = quotecast_parser.ticker
-
-# BUILD DICT
-ticker_dict = pb_handler.build_dict_from_ticker(ticker=ticker)
-
-# BUILD PANDAS.DATAFRAME
-ticker_df = pb_handler.build_df_from_ticker(ticker=ticker)
-```
 
 For a more comprehensive example : [realtime_data.py](examples/quotecast/realtime_data.py)
 
