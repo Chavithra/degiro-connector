@@ -36,28 +36,3 @@ message Ticker {
   Metadata metadata = 3;
   repeated Metric filled_metric_list = 4;
 }
-
-/*
-user_token
-  The user_token is a property of the Degiro account.
-  It is called "userToken" or "id" by Degiro's API.
-  It is an unsigned integer.
-  It can be retrieved using the following endpoints :
-      "https://trader.degiro.nl/pa_s/secure/client?sessionId={session_id}"
-      "https://trader.degiro.nl/pa/secure/client?sessionId={session_id}"
-  The "{session_id}" here above can be retrieved using this endpoint with the HTTP method POST :
-      "https://trader.degiro.nl/login/secure/login"
-  The endpoint to retrieve "{session_id}" requires this parameters :
-      ```json
-      {
-          "username": "{username}",
-          "password": "{password}}",
-          "isPassCodeReset": false,
-          "isRedirectToMobile": false,
-          "queryParams": {}
-      }
-      ```
-  Apparently :
-      - Each Degiro account has an unique user_token.
-      - This number is set at the creation of a Degiro account and never changes.
-*/
