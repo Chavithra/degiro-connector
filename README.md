@@ -4,14 +4,15 @@
 This library will allow you to connect to Degiro's website and to use :
 1. **Realtime data** (last price, volume, high, low, open, close,...)
 2. **Order** (creation/update/delete)
-3. **Portfolio** (alerts, cash funds, orders, transactions)
-4. **TotalPortfolio** (free space, porfolio value, total cash,...)
-5. **OrderHistory**
-6. **TransactionsHistory**
-7. **ClientInfo**
-8. **ClientDetails**
-9. **AccountOverview** (cashMovements)
-10. **ProductLookup**
+3. **Orders**
+4. **Portfolio** (alerts, cash funds, orders, transactions)
+5. **TotalPortfolio** (free space, porfolio value, total cash,...)
+6. **OrderHistory**
+7. **TransactionsHistory**
+8. **ClientInfo**
+9. **ClientDetails**
+10. **AccountOverview** (cashMovements)
+11. **ProductLookup**
 
 ## Install
 You can install it directly from Github, using the command :
@@ -26,16 +27,13 @@ Here is the command to remove it from your system :
 pip uninstall degiro-connector
 ```
 
-## **Examples**
-
 ## 1. Realtime data
 
+
+### 1.1. Realtime data - Quotecast
+
 ```python
-# SETUP API
-api = API(user_token=YOUR_TOKEN)
-# CONNECTION
-api.connection_storage.connect()
-# SUBSCRIBE TO FEED
+# SUBSCRIBE TO A FEED
 request = Request(
     action=Request.Action.SUBSCRIBE,
     vwd_id='360015751',
@@ -47,35 +45,79 @@ request = Request(
     ],
 )
 api.subscribe(request=request)
+
+# FETCH DATA
 quotecast = api.fetch_data()
+```
 
-# DISPLAY RAW JSON
-print(quotecast.json_data)
+This **quotecast** can be converted into :
+|Type|Description|
+|:-|:-|
+|Ticker|Protobuf message (for GRPC)|
+|dict|Standard Python Dictionaries|
+|DataFrame|DataFrame from the library Pandas|
 
-# DISPLAY TICKER (PROTOBUF/GRPC OBJECT)
+Example - dict :
+
+```python
+[
+    {
+        'product_id': 360114899,
+        'response_datetime': '2020-11-08 12:00:27',
+        'request_duration': 1.0224891666870117,
+        'LastDate': '2020-11-06',
+        'LastTime': '17:36:17',
+        'LastPrice': '70.0',
+        'LastVolume': '100'
+    },
+    {
+        'product_id': 360015751,
+        'response_datetime': '2020-11-08 12:00:27',
+        'request_duration': 1.0224891666870117,
+        'LastDate': '2020-11-06',
+        'LastTime': '17:36:17',
+        'LastPrice': '22.99',
+        'LastVolume': '470'
+    }
+]
+```
+
+Example - DataFrame :
+
+       product_id    response_datetime  request_duration    LastDate  LastTime LastPrice LastVolume
+    0   360114899  2020-11-08 12:00:27          1.022489  2020-11-06  17:39:57      70.0        100
+    1   360015751  2020-11-08 12:00:27          1.022489  2020-11-06  17:36:17     22.99        470
+
+For a more comprehensive example : [realtime_data.py](examples/quotecast/realtime_data.py)
+
+### 1.1. Realtime data - Raw JSON
+
+```python
+# RAW JSON
+quotecast.json_data
+```
+
+For a more comprehensive example : [realtime_data.py](examples/quotecast/realtime_data.py)
+
+### 1.1. Realtime data - Ticker / Dict / DataFrame
+
+```python
+# BUILD TICKER (PROTOBUF/GRPC OBJECT)
 quotecast_parser.put_quotecast(quotecast=quotecast)
 ticker = quotecast_parser.ticker
 
-# DISPLAY DICT
-record_list = pb_handler.build_dict_from_ticker(ticker=ticker)
-print(record_list)
+# BUILD DICT
+ticker_dict = pb_handler.build_dict_from_ticker(ticker=ticker)
 
-# DISPLAY PANDAS.DATAFRAME
-df = pb_handler.build_df_from_ticker(ticker=ticker)
-print(df)
+# BUILD PANDAS.DATAFRAME
+ticker_df = pb_handler.build_df_from_ticker(ticker=ticker)
 ```
-
-Example - DISPLAY PANDAS.DATAFRAME :
-
-       product_id    response_datetime  request_duration    LastDate  LastTime LastPrice LastVolume
-    0   360114899  2020-11-08 02:40:27          1.022489  2020-11-06  17:39:57      70.0        100
-    1   360015751  2020-11-08 02:40:27          1.022489  2020-11-06  17:36:17     22.99        470
 
 For a more comprehensive example : [realtime_data.py](examples/quotecast/realtime_data.py)
 
 ## 2. Order
 
-### 2.1 Order - Create
+### 2.1. Order - Create
 ```python
 # ORDER SETUP
 order = Order(
@@ -97,7 +139,7 @@ order = api.confirm_order(
 )
 ```
 
-### 2.2 Order - Update
+### 2.2. Order - Update
 
 ```python
 # ORDER SETUP
@@ -115,11 +157,56 @@ order = Order(
 status_code = api.update_order(order=order)
 ```
 
-### 2.2 Order - Delete
+### 2.2. Order - Delete
 
 ```python
 status = api.delete(order_id=YOUR_ORDER_ID)
 ```
+### 3. Orders
+
+```python
+request_list = Update.RequestList()
+request_list.values.extend(
+    [
+        Update.Request(
+            option=Update.Option.ORDERS,
+            last_update=0,
+        ),
+    ]
+)
+
+update = trading_api.get_update(request_list=request_list)
+
+update_dict = pb_handler.build_dict_from_message(message=update)
+
+if 'orders' in update_dict:
+    orders_df = pd.DataFrame(update_dict['orders']['values'])
+    print('orders')
+    display(orders_df)
+
+if 'portfolio' in update_dict:
+    portfolio_df = pd.DataFrame(update_dict['portfolio']['values'])
+    print('portfolio')
+    display(portfolio_df)
+
+if 'total_portfolio' in update_dict:
+    total_portfolio_df = pd.DataFrame(update_dict['total_portfolio']['values'])
+    print('total_portfolio')
+    display(total_portfolio_df)
+```
+Example : DataFrame
+       product_id      time_type  price  size                                    id  ...  action  order_type stop_price retained_order  sent_to_exchange
+    0           0  GOOD_TILL_DAY      2     3  202cb962-ac59-075b-964b-07152d234b70  ...     BUY       LIMIT         16             17                18
+
+For a more comprehensive example : [update.py](examples/quotecast/update.py)
+
+### 5. TotalPortfolio
+
+Example : DataFrame
+       degiroCash  flatexCash  totalCash  totalDepositWithdrawal  todayDepositWithdrawal  ...  reportNetliq  reportOverallMargin  reportTotalLongVal  reportDeficit  marginCallStatus
+    0           0           1          2                       3                       4  ...            16                   17                  18             19    NO_MARGIN_CALL
+
+For a more comprehensive example : [update.py](examples/quotecast/update.py)
 
 # Note
 **A minor issue in Degiro's API** :

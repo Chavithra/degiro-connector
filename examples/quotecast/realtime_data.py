@@ -2,7 +2,7 @@
 import logging
 import quotecast.helpers.pb_handler as pb_handler
 
-from quotecast.api import API
+from quotecast.api import API as QuotecastAPI
 from quotecast.models.quotecast_parser import QuotecastParser
 from quotecast.pb.quotecast_pb2 import Request
 
@@ -10,10 +10,10 @@ from quotecast.pb.quotecast_pb2 import Request
 logging.basicConfig(level=logging.INFO)
 
 # SETUP API
-api = API(user_token=12345) # to replace with your own "user_token"
+quotecast_api = QuotecastAPI(user_token=12345) # to replace with your own "user_token"
 
 # CONNECTION
-api.connection_storage.connect()
+quotecast_api.connection_storage.connect()
 
 # SUBSCRIBE TO FEED
 request = Request(
@@ -26,7 +26,7 @@ request = Request(
         'LastVolume',
     ],
 )
-api.subscribe(request=request)
+quotecast_api.subscribe(request=request)
 
 # SETUP JSON PARSER
 quotecast_parser = QuotecastParser(fill_na=True)
@@ -34,7 +34,7 @@ quotecast_parser = QuotecastParser(fill_na=True)
 while True:
     try:
         # FETCH DATA
-        quotecast = api.fetch_data()
+        quotecast = quotecast_api.fetch_data()
 
         # DISPLAY RAW JSON
         print(quotecast.json_data)
