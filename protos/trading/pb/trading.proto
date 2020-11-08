@@ -95,8 +95,6 @@ message Update {
   }
   message RequestList {
     repeated Request values = 1;
-    uint32 periodicity = 2;
-    bool update_only = 3;
   }
 
   // MESSAGES FOR PROPERTIES
