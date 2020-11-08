@@ -206,6 +206,7 @@ total_portfolio_df = pd.DataFrame(update_dict['total_portfolio']['values'])
 ```
 
 Example : DataFrame
+
        degiroCash  flatexCash  totalCash  totalDepositWithdrawal  todayDepositWithdrawal  ...  reportNetliq  reportOverallMargin  reportTotalLongVal  reportDeficit  marginCallStatus
     0           0           1          2                       3                       4  ...            16                   17                  18             19    NO_MARGIN_CALL
 
