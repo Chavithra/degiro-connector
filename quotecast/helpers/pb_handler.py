@@ -1,9 +1,11 @@
 import pandas as pd
 
+from google.protobuf import json_format
 from quotecast.pb.quotecast_pb2 import (
     Ticker,
 )
 from typing import Dict, List
+from google.protobuf.message import Message
 
 # pylint: disable=no-member
 
@@ -107,6 +109,14 @@ def build_sample_ticker():
     cticker.metric_list.extend(ticker.metric_list)
 
     return cticker
+
+def build_dict_from_message(message:Message)->dict:
+    message_dict = json_format.MessageToDict(
+        message=message,
+        including_default_value_fields=True,
+        preserving_proto_field_name=True,
+    )
+    return message_dict
 
 if __name__ == '__main__':
     from IPython.display import display
