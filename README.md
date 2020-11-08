@@ -176,31 +176,34 @@ request_list.values.extend(
 )
 
 update = trading_api.get_update(request_list=request_list)
-
 update_dict = pb_handler.build_dict_from_message(message=update)
-
-if 'orders' in update_dict:
-    orders_df = pd.DataFrame(update_dict['orders']['values'])
-    print('orders')
-    display(orders_df)
-
-if 'portfolio' in update_dict:
-    portfolio_df = pd.DataFrame(update_dict['portfolio']['values'])
-    print('portfolio')
-    display(portfolio_df)
-
-if 'total_portfolio' in update_dict:
-    total_portfolio_df = pd.DataFrame(update_dict['total_portfolio']['values'])
-    print('total_portfolio')
-    display(total_portfolio_df)
+orders_df = pd.DataFrame(update_dict['orders']['values'])
 ```
-Example : DataFrame
+
+Example : Orders
+
        product_id      time_type  price  size                                    id  ...  action  order_type stop_price retained_order  sent_to_exchange
     0           0  GOOD_TILL_DAY      2     3  202cb962-ac59-075b-964b-07152d234b70  ...     BUY       LIMIT         16             17                18
 
 For a more comprehensive example : [update.py](examples/quotecast/update.py)
 
 ### 5. TotalPortfolio
+
+```python
+request_list = Update.RequestList()
+request_list.values.extend(
+    [
+        Update.Request(
+            option=Update.Option.TOTALPORTFOLIO,
+            last_update=0,
+        ),
+    ]
+)
+
+update = trading_api.get_update(request_list=request_list)
+update_dict = pb_handler.build_dict_from_message(message=update)
+total_portfolio_df = pd.DataFrame(update_dict['total_portfolio']['values'])
+```
 
 Example : DataFrame
        degiroCash  flatexCash  totalCash  totalDepositWithdrawal  todayDepositWithdrawal  ...  reportNetliq  reportOverallMargin  reportTotalLongVal  reportDeficit  marginCallStatus
