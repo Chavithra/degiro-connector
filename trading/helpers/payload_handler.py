@@ -50,9 +50,7 @@ __UPDATE_OPTION_MATCHING = {
 }
 
 # GRPC TO API
-def update_request_list_to_api(
-    request_list:Update.RequestList,
-)->dict:
+def update_request_list_to_api(request_list:Update.RequestList)->dict:
     """ Makes a payload compatible with the API.
 
     Parameters:
@@ -68,13 +66,11 @@ def update_request_list_to_api(
 
     for request in request_list.values:
         option = __UPDATE_OPTION_MATCHING[request.option]
-        payload[option] = request.last_update
+        payload[option] = request.last_updated
 
     return payload
 
-def orders_history_request_to_api(
-    request:OrdersHistory.Request,
-)->dict:
+def orders_history_request_to_api(request:OrdersHistory.Request)->dict:
     request_dict = json_format.MessageToDict(
         message=request,
         including_default_value_fields=True,
@@ -83,9 +79,7 @@ def orders_history_request_to_api(
 
     return request_dict
 
-def transactions_request_to_api(
-    request:OrdersHistory.Request,
-)->dict:
+def transactions_request_to_api(request:OrdersHistory.Request)->dict:
     request_dict = json_format.MessageToDict(
         message=request,
         including_default_value_fields=True,
@@ -107,8 +101,8 @@ def account_overview_request_to_api(
     return request_dict
 
 # API TO GRPC
-def order_to_grpc(
-    order_dict:dict,
+def build_order_from_payload(
+    order_payload:dict,
     return_dict:bool=False,
 )->Union[Order, dict]:
     """ Build an "Order" object using "dict" returned by the API.
@@ -119,19 +113,12 @@ def order_to_grpc(
         {Order}
     """
 
-    order_attribute_dict = dict()
-    for attribute in order_dict['value']:
-        if \
-            'name' in attribute \
-            and 'value' in attribute:
-            name = attribute['name']
-            value = attribute['value']
-            order_attribute_dict[name] = value
-
     order_dict = dict()
-    for field in __ORDER_MATCHING:
-        if field in order_attribute_dict:
-            order_dict[__ORDER_MATCHING[field]] = order_attribute_dict[field]
+    for attribute in order_payload['value']:
+        if  'name' in attribute \
+            and 'value' in attribute \
+            and attribute['name'] in __ORDER_MATCHING:
+            order_dict[__ORDER_MATCHING[attribute['name']]] = attribute['value']
 
     order_dict['action'] = __ACTION_MATCHING[order_dict['action']]
 
@@ -140,41 +127,34 @@ def order_to_grpc(
     else:
         return Order(**order_dict)
 
-def update_to_grpc(
-    update_dict:dict
-)->Update:
-
+def build_update_from_payload(update_payload:dict)->Update:
+    update_dict = dict()
+    update_dict['response_datetime'] = str(datetime.datetime.now())
     update = Update()
-    update.response_datetime = str(datetime.datetime.now())
-    
-    # TOTALPORTFOLIO
-    if 'totalPortfolio' in update_dict:
 
-        total_portfolio_dict_values = dict()
-        for attribute in update_dict['totalPortfolio']['value']:
-            if \
-                'name' in attribute \
-                and 'value' in attribute:
-                name = attribute['name']
-                value = attribute['value']
-                total_portfolio_dict_values[name] = value
+    # ORDERS
+    if 'orders' in update_payload:
+        update_dict['orders'] = dict()
+        update_dict['orders']['values'] = list()
+        update_dict['orders']['last_updated'] = \
+            update_payload['orders']['lastUpdated']
 
-
-        total_portfolio_dict = dict()
-        total_portfolio_dict['last_update'] = update_dict['totalPortfolio']['lastUpdated']
-        total_portfolio_dict['values'] = total_portfolio_dict_values
-
-        json_format.ParseDict(
-            js_dict=total_portfolio_dict,
-            message=update.total_portfolio,
-            ignore_unknown_fields=True,
-        )
+        for order in update_payload['orders']['value']:
+            update_dict['orders']['values'].append(
+                build_order_from_payload(
+                    order_payload=order,
+                    return_dict=True,
+                )
+            )
 
     # PORTFOLIO
-    if 'portfolio' in update_dict:
+    if 'portfolio' in update_payload:
+        update_dict['portfolio'] = dict()
+        update_dict['portfolio']['values'] = list()
+        update_dict['portfolio']['last_updated'] = \
+            update_payload['portfolio']['lastUpdated']
 
-        position_row_list = list()
-        for positionrow in update_dict['portfolio']['value']:
+        for positionrow in update_payload['portfolio']['value']:
             positionrow_dict = dict()
             for attribute in positionrow['value']:
                 if \
@@ -183,39 +163,28 @@ def update_to_grpc(
                     name = attribute['name']
                     value = attribute['value']
                     positionrow_dict[name] = value
-            position_row_list.append(positionrow_dict)
-
-        portfolio_dict = dict()
-        portfolio_dict['last_update'] = update_dict['portfolio']['lastUpdated']
-        portfolio_dict['position_row_list'] = position_row_list
-
-        json_format.ParseDict(
-            js_dict=portfolio_dict,
-            message=update.portfolio,
-            ignore_unknown_fields=True,
-        )
-
-    # ORDERS
-    if 'orders' in update_dict:
-
-        order_list = list()
-        for order in update_dict['orders']['value']:
-            order_dict = order_to_grpc(
-                order_dict=order,
-                return_dict=True,
-            )
-            order_list.append(order_dict)
-
-        orders_dict = dict()
-        orders_dict['last_update'] = update_dict['orders']['lastUpdated']
-        orders_dict['order_list'] = order_list
-
-        json_format.ParseDict(
-            js_dict=orders_dict,
-            message=update.orders,
-            ignore_unknown_fields=True,
-        )
+            update_dict['portfolio']['values'].append(positionrow_dict)
     
+    # TOTALPORTFOLIO
+    if 'totalPortfolio' in update_payload:
+        update_dict['total_portfolio'] = dict()
+        update_dict['total_portfolio']['values'] = dict()
+        update_dict['total_portfolio']['last_updated'] = \
+            update_payload['totalPortfolio']['lastUpdated']
+
+        for attribute in update_payload['totalPortfolio']['value']:
+            if  'name' in attribute \
+                and 'value' in attribute:
+                name = attribute['name']
+                value = attribute['value']
+                update_dict['total_portfolio']['values'][name] = value
+
+    json_format.ParseDict(
+        js_dict=update_dict,
+        message=update,
+        ignore_unknown_fields=True,
+    )
+
     return update
 
 def checking_response_to_grpc(
