@@ -91,7 +91,7 @@ message Update {
   // MESSAGES
   message Request {
     Option option = 1;
-    int32 last_update = 2;
+    int32 last_updated = 2;
   }
   message RequestList {
     repeated Request values = 1;
@@ -99,31 +99,31 @@ message Update {
 
   // MESSAGES FOR PROPERTIES
   message Alerts {
-    int32 last_update = 1;
+    int32 last_updated = 1;
     google.protobuf.Struct values = 2;
   }
   message CashFunds {
-    int32 last_update = 1;
+    int32 last_updated = 1;
     google.protobuf.Struct values = 2;
   }
   message HistoricalOrders {
-    int32 last_update = 1;
+    int32 last_updated = 1;
     repeated Order values = 2;
   }
   message Orders {
-    int32 last_update = 1;
+    int32 last_updated = 1;
     repeated Order values = 2; // Order
   }
   message Portfolio {
-    int32 last_update = 1;
+    int32 last_updated = 1;
     repeated google.protobuf.Struct values = 2; // positionrow
   }
   message TotalPortfolio {
-    int32 last_update = 1;
+    int32 last_updated = 1;
     google.protobuf.Struct values = 2;
   }
   message Transactions {
-    int32 last_update = 1;
+    int32 last_updated = 1;
     repeated Transaction values = 2; // Transaction
   }
 
