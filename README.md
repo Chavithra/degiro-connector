@@ -121,12 +121,12 @@ For a more comprehensive example : [realtime_data.py](examples/quotecast/realtim
 ```python
 # ORDER SETUP
 order = Order(
-    action=Action.Value('BUY'),
-    order_type=OrderType.Value('LIMIT'),
+    action=Order.Action.BUY,
+    order_type=Order.OrderType.LIMIT,
     price=10,
     product_id=71981,
     size=1,
-    time_type=TimeType.Value('GOOD_TILL_DAY')
+    time_type=Order.TimeType.GOOD_TILL_DAY,
 )
 
 # FETCH CONFIRMATION_ID
@@ -145,12 +145,12 @@ order = api.confirm_order(
 # ORDER SETUP
 order = Order(
     id=YOUR_ORDER_ID
-    action=Action.Value('BUY'),
-    order_type=OrderType.Value('LIMIT'),
+    action=Order.Action.BUY,
+    order_type=Order.OrderType.LIMIT,
     price=10.60,
     product_id=71981,
     size=1,
-    time_type=TimeType.Value('GOOD_TILL_DAY')
+    time_type=Order.TimeType.GOOD_TILL_DAY,
 )
 
 # UPDATE ORDER
