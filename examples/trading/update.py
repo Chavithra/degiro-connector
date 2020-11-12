@@ -33,21 +33,20 @@ request_list.values.extend(
     [
         Update.Request(
             option=Update.Option.ORDERS,
-            last_update=0,
+            last_updated=0,
         ),
         Update.Request(
             option=Update.Option.PORTFOLIO,
-            last_update=0,
+            last_updated=0,
         ),
         Update.Request(
             option=Update.Option.TOTALPORTFOLIO,
-            last_update=0,
+            last_updated=0,
         ),
     ]
 )
 
 update = trading_api.get_update(request_list=request_list)
-
 update_dict = pb_handler.build_dict_from_message(message=update)
 
 if 'orders' in update_dict:

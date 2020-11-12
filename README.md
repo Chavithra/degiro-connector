@@ -170,7 +170,7 @@ request_list.values.extend(
     [
         Update.Request(
             option=Update.Option.ORDERS,
-            last_update=0,
+            last_updated=0,
         ),
     ]
 )
@@ -195,7 +195,7 @@ request_list.values.extend(
     [
         Update.Request(
             option=Update.Option.TOTALPORTFOLIO,
-            last_update=0,
+            last_updated=0,
         ),
     ]
 )
