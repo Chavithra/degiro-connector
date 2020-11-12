@@ -119,31 +119,31 @@ def get_update(
                     [
                         Update.Request(
                             option=Update.Option.ALERTS,
-                            last_update=0,
+                            last_updated=0,
                         ),
                         Update.Request(
                             option=Update.Option.CASHFUNDS,
-                            last_update=0,
+                            last_updated=0,
                         ),
                         Update.Request(
                             option=Update.Option.HISTORICALORDERS,
-                            last_update=0,
+                            last_updated=0,
                         ),
                         Update.Request(
                             option=Update.Option.ORDERS,
-                            last_update=0,
+                            last_updated=0,
                         ),
                         Update.Request(
                             option=Update.Option.PORTFOLIO,
-                            last_update=0,
+                            last_updated=0,
                         ),
                         Update.Request(
                             option=Update.Option.TOTALPORTFOLIO,
-                            last_update=0,
+                            last_updated=0,
                         ),
                         Update.Request(
                             option=Update.Option.TRANSACTIONS,
-                            last_update=0,
+                            last_updated=0,
                         ),
                     ]
                 )
@@ -191,7 +191,7 @@ def get_update(
         if raw == True:
             response = response_dict
         else:
-            response = payload_handler.update_to_grpc(
+            response = payload_handler.build_update_from_dict(
                 update_dict=response_dict,
             )
     except Exception as e:
@@ -813,27 +813,27 @@ if __name__ == '__main__':
         [
             # Update.Request(
             #     option=Update.Option.CASHFUNDS,
-            #     last_update_number=0,
+            #     last_updated=0,
             # ),
             # Update.Request(
             #     option=Update.Option.HISTORICALORDERS,
-            #     last_update_number=0,
+            #     last_updated=0,
             # ),
             Update.Request(
                 option=Update.Option.ORDERS,
-                last_update=0,
+                last_updated=0,
             ),
             Update.Request(
                 option=Update.Option.PORTFOLIO,
-                last_update=0,
+                last_updated=0,
             ),
             Update.Request(
                 option=Update.Option.TOTALPORTFOLIO,
-                last_update=0,
+                last_updated=0,
             ),
             # Update.Request(
             #     option=Update.Option.TRANSACTIONS,
-            #     last_update_number=0,
+            #     last_updated=0,
             # ),
         ]
     )
