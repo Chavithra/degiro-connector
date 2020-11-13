@@ -191,8 +191,8 @@ def get_update(
         if raw == True:
             response = response_dict
         else:
-            response = payload_handler.build_update_from_dict(
-                update_dict=response_dict,
+            response = payload_handler.build_update_from_payload(
+                update_payload=response_dict,
             )
     except Exception as e:
         logger.fatal(response_raw.status_code)
