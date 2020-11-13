@@ -212,16 +212,6 @@ Example : DataFrame
 
 For a more comprehensive example : [update.py](examples/quotecast/update.py)
 
-# Note
-**A minor issue in Degiro's API** :
-
-    In the payload from the following URL :
-    https://trader.degiro.nl/trading/secure/v5/update
-    In the attribute "orders" of this payload.
-    Inside an Order :
-        * "date" field is the "date of the day" when it's a Sell Order.
-        * "date" field is the "hour of the day" when it's a Buy Order.
-
 # Contributing
 Pull requests are welcome.
 

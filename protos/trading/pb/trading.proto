@@ -50,6 +50,7 @@ message Order {
   int32 contract_type = 9; // called "contractType" by the API
   string currency = 10;
   string hour = 11; // called "date" by the API
+                    // contains %H:%M if the date was not passed
   bool is_deletable = 12; // called "isDeletable" by the API
   bool is_modifiable = 13; // called "isModifiable" by the API
   string product = 14;
