@@ -10,15 +10,15 @@ Degiro's API :
 |Real-time data|Fetch financial product's properties.<br> For instance the real-time stock Price/Volume.|
 |Order|Create, update, delete an ORDER.|
 |Orders|Check the state of pending orders.|
-|Portoflio|Check the state of bought financial products (share/etf...)|
-|TotalPorfolio|Have aggregated information about your assets|
-|OrderHistory||
-|TransactionsHistory||
-|ClientInfo||
-|ClientDetails||
-|AccountOverview||
+|Portoflio|Check the state of bought financial products (share/etf...).|
+|TotalPorfolio|Have aggregated information about your assets.|
+|OrderHistory|Information about all Orders created between two dates.|
+|TransactionsHistory|Information about the Transactions created between two dates.|
+|ClientInfo|Client id and information about currencies.|
+|ClientDetails|Information about the Account.|
+|AccountOverview|Information about the CashMovements between two dates.|
 |ProductLookup|To search information about a specific financial product.|
-|Config|Table with "clientId" and URLs constitutive of Degiro's API |
+|Config|Table with "clientId" and URLs constitutive of Degiro's API.|
 
 ## How to install ?
 
@@ -110,6 +110,8 @@ You can use the following code :
 ```python
 quotecast = api.fetch_data()
 ```
+
+For a more comprehensive example : [realtime_data.py](examples/quotecast/realtime_data.py)
 
 ## 1.6. How can I use this data ?
 
