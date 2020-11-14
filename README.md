@@ -1,67 +1,134 @@
 # **Degiro Connector**
 
-## Features
-This library will allow you to connect to Degiro's website and to use :
-1. **Realtime data** (last price, volume, high, low, open, close,...)
-2. **Order** (creation/update/delete)
-3. **Orders**
-4. **Portfolio** (alerts, cash funds, orders, transactions)
-5. **TotalPortfolio** (free space, porfolio value, total cash,...)
-6. **OrderHistory**
-7. **TransactionsHistory**
-8. **ClientInfo**
-9. **ClientDetails**
-10. **AccountOverview** (cashMovements)
-11. **ProductLookup**
+This is yet another library to access Degiro's API.
+## Which features ?
+This library will allow you to access the following features from
+Degiro's API :
 
-## Install
-You can install it directly from Github, using the command :
+|Feature|Description|
+|:-|:-|
+|Real-time data|Fetch financial product's properties.<br> For instance the real-time stock Price/Volume.|
+|Order|Create, update, delete an ORDER.|
+|Orders|Check the state of pending orders.|
+|Portoflio|Check the state of bought financial products (share/etf...)|
+|TotalPorfolio|Have aggregated information about your assets|
+|OrderHistory||
+|TransactionsHistory||
+|ClientInfo||
+|ClientDetails||
+|AccountOverview||
+|ProductLookup|To search information about a specific financial product.|
+|Config|Table with "clientId" and URLs constitutive of Degiro's API |
+
+## How to install ?
 
 ```bash
 pip install git+https://github.com/chavithra/degiro-connector.git
 ```
 
-## Uninstall
-Here is the command to remove it from your system :
+## How to uninstall
 ```bash
 pip uninstall degiro-connector
 ```
 
-## 1. Realtime data
+# 1. Real-time data
 
+It is possible to fetch a stream of data in real-time from Degiro's API.
 
-### 1.1. Realtime data - Quotecast
+For instance if one needs the following data from the "APPL" stock :
+* LastDate
+* LastTime
+* LastPrice
+* LastVolume
+
+He can use this library to retrieve update like this :
+
+    LastDate    LastTime    LastPrice LastVolume
+    2020-11-13  22:00:00    119.26    4697040
+
+## 1.2 How to login ?
+
+In order to fetch data you need to establish a connection.
+
+You can use the following code :
 
 ```python
-# SUBSCRIBE TO A FEED
-request = Request(
-    action=Request.Action.SUBSCRIBE,
-    vwd_id='360015751',
-    label_list=[
-        'LastDate',
-        'LastTime',
-        'LastPrice',
-        'LastVolume',
-    ],
-)
-api.subscribe(request=request)
+# SETUP API
+quotecast_api = QuotecastAPI(user_token=YOUR_USER_TOKEN) 
 
-# FETCH DATA
+# CONNECTION
+quotecast_api.connection_storage.connect()
+```
+
+Your "user_token" is inside the "config" table.
+
+See section related to "config" table. 
+
+## 1.3 What is the timout ?
+Connection timeout is around 15 seconds.
+
+Which means a connection will cease to work after this timeout.
+
+This timeout is reset each time you use this connection to :
+* Subscribe to a data-stream
+* Fetch the data-stream
+
+So if you use it nonstop (in a loop) you won't need to reconnect.
+
+## 1.4. How to subscribe to a data-stream ?
+To subscribe to a data-stream you need to setup a Request.
+
+A Request has the following parameters :
+
+|Parameter|Type|Description|
+|:-|:-|:-|
+|action|Request.Action|SUBSCRIBE / UNSUBSCRIBE|
+|vwd_id|str|Identifier of the product.|
+|label_list|List[str]|List of data you want to retrieve.|
+
+You can use the following code :
+```python
+request = Request(
+    action = Request.Action.SUBSCRIBE,
+    vwd_id = '360015751',
+    label_list = ['LastDate','LastTime','LastPrice','LastVolume'],
+)
+```
+
+Once you built this Request object you can send it to Degiro's API.
+
+You can use the following code :
+```python
+api.subscribe(request=request)
+```
+
+
+## 1.5. How to fetch the data ?
+
+You can use the following code :
+```python
 quotecast = api.fetch_data()
 ```
 
-For a more comprehensive example : [realtime_data.py](examples/quotecast/realtime_data.py)
+## 1.6. How can I use this data ?
 
-### 1.2. Realtime data - Raw JSON
+Received data is a Quotecast object with the following properties :
 
+|Parameter|Type|Description|
+|:-|:-|:-|
+|json_data|dict|Dictionnary representation of what Degiro's API has sent.|
+|metadata|Metadata|Containing the "response_datetime" and "request_duration".|
+
+Here how to access these properties :
 ```python
-# RAW JSON
-quotecast.json_data
+json_data = quotecast.json_data
+response_datetime = quotecast.metadata.response_datetime
+request_duration= quotecast.metadata.request_duration
 ```
 
 For a more comprehensive example : [realtime_data.py](examples/quotecast/realtime_data.py)
 
-### 1.3. Realtime data - Ticker / Dictionnaries / DataFrame
+## 1.6. Data conversion (Ticker / Dict / DataFrame)
 
 This **quotecast** can be converted into :
 |Type|Description|
