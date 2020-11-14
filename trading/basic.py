@@ -202,7 +202,7 @@ class Basic:
         logger = self._logger
         session = self._session_storage.session
 
-        return utilities.get_client_details(
+        return utilities.get_client_info(
             session_id=session_id,
             credentials=credentials,
             raw=raw,
@@ -220,7 +220,7 @@ class Basic:
         logger = self._logger
         session = self._session_storage.session
 
-        return utilities.get_client_details(
+        return utilities.get_order_history(
             request=request,
             session_id=session_id,
             credentials=credentials,

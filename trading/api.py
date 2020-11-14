@@ -165,7 +165,7 @@ class API:
         basic = self._basic
         session_id = self._connection_storage.session_id
 
-        return basic.get_client_details(
+        return basic.get_client_info(
             session_id=session_id,
             raw=raw,
         )
@@ -178,7 +178,7 @@ class API:
         basic = self._basic
         session_id = self._connection_storage.session_id
 
-        return basic.get_client_details(
+        return basic.get_order_history(
             request=request,
             session_id=session_id,
             raw=raw,
