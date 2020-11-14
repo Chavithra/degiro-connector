@@ -64,6 +64,8 @@ Your "user_token" is inside the "config" table.
 
 See section related to "config" table. 
 
+For a more comprehensive example : [realtime_data.py](examples/quotecast/realtime_data.py)
+
 ## 1.3 What is the timout ?
 Connection timeout is around 15 seconds.
 
@@ -95,13 +97,12 @@ request = Request(
 )
 ```
 
-Once you built this Request object you can send it to Degiro's API.
-
-You can use the following code :
+Once you have built this Request object you can send it to Degiro's API like this :
 ```python
 api.subscribe(request=request)
 ```
 
+For a more comprehensive example : [realtime_data.py](examples/quotecast/realtime_data.py)
 
 ## 1.5. How to fetch the data ?
 
