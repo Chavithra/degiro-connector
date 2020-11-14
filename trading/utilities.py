@@ -436,16 +436,11 @@ def get_client_details(
     if session is None:
         session = build_session()
     
-    url = URLs.CLIENT_DETAILS
-    url = f'{url}?sessionId={session_id}'
-    url = '' + session_id
+    url = f'{URLs.CLIENT_DETAILS}?sessionId={session_id}'
     
     request = requests.Request(method='GET', url=url)
     prepped = session.prepare_request(request)
     response = session.send(prepped, verify=False)
-
-    print('prepared:', prepped.headers)
-    print('response:', response.text)
 
     if response.status_code != 200: return False
     
@@ -456,7 +451,7 @@ def get_client_details(
         or 'data' not in response_payload
     ): return False
 
-    return response_payload['data']
+    return response_payload
 
 def get_client_info(
     session_id:str,
@@ -471,8 +466,7 @@ def get_client_info(
         session = build_session()
 
     int_account = credentials.int_account
-    url = URLs.CLIENT_INFO
-    url = f'{url}/{int_account};jsessionid={session_id}'
+    url = f'{URLs.CLIENT_INFO}/{int_account};jsessionid={session_id}'
     
     request = requests.Request(method='GET', url=url)
     prepped = session.prepare_request(request)
@@ -480,7 +474,7 @@ def get_client_info(
     
     if response.status_code != 200: return False
 
-    return response.json()
+    return response.text
 
 def get_order_history(
     request:OrdersHistory.Request,
