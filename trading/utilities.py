@@ -325,7 +325,7 @@ def update_order(
     raw:bool=False,
     session:requests.Session=None,
     logger:logging.Logger=None,
-)->str:
+)->bool:
     if logger is None:
         logger = build_logger()
     if session is None:
@@ -389,10 +389,7 @@ def delete_order(
         logger.fatal(e)
         return False
     
-    if response.status_code != 200: return False
-
-    return True
-
+    return  response.status_code == 200
 
 def get_config(
     session_id:str,

@@ -70,7 +70,7 @@ class API:
         self,
         request_list:Update.RequestList,
         raw:bool=False,
-    ):
+    )->Update:
         basic = self._basic
         session_id = self._connection_storage.session_id
 
@@ -110,11 +110,7 @@ class API:
             raw=raw,
         )
     
-    def update_order(
-        self, 
-        order:Order,
-        raw:bool=False,
-    ):
+    def update_order(self, order:Order)->bool:
         basic = self._basic
         session_id = self._connection_storage.session_id
 
@@ -124,10 +120,7 @@ class API:
             raw=raw,
         )
 
-    def delete_order(
-        self,
-        order_id:str
-    )->bool:
+    def delete_order(self, order_id:str)->bool:
         basic = self._basic
         session_id = self._connection_storage.session_id
 
@@ -136,9 +129,7 @@ class API:
             session_id=session_id
         )
 
-    def get_config(
-        self,
-    )->dict:
+    def get_config(self,)->dict:
         basic = self._basic
         session_id = self._connection_storage.session_id
 
@@ -146,10 +137,7 @@ class API:
             session_id=session_id,
         )
 
-    def get_client_details(
-        self,
-        raw:bool=False,
-    )->dict:
+    def get_client_details(self, raw:bool=False)->dict:
         basic = self._basic
         session_id = self._connection_storage.session_id
 
@@ -158,10 +146,7 @@ class API:
             raw=raw,
         )
 
-    def get_client_info(
-        self,
-        raw:bool=False,
-    )->dict:
+    def get_client_info(, raw:bool=False)->dict:
         basic = self._basic
         session_id = self._connection_storage.session_id
 

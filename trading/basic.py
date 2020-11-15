@@ -130,7 +130,7 @@ class Basic:
         order:Order,
         session_id:str,
         raw:bool=False,
-    ) -> str:
+    )->bool:
         credentials = self._credentials
         logger = self._logger
         session = self._session_storage.session
@@ -149,7 +149,7 @@ class Basic:
         order_id:str,
         session_id:str,
         raw:bool=False,
-    ) -> bool:
+    )->bool:
         credentials = self._credentials
         logger = self._logger
         session = self._session_storage.session
