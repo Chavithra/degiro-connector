@@ -146,7 +146,7 @@ class API:
             raw=raw,
         )
 
-    def get_client_info(, raw:bool=False)->dict:
+    def get_client_info(self, raw:bool=False)->dict:
         basic = self._basic
         session_id = self._connection_storage.session_id
 
