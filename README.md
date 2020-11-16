@@ -26,7 +26,7 @@ Degiro's API :
 pip install git+https://github.com/chavithra/degiro-connector.git
 ```
 
-## How to uninstall
+## How to uninstall ?
 ```bash
 pip uninstall degiro-connector
 ```
@@ -257,7 +257,7 @@ Example : Orders
 
 For a more comprehensive example : [update.py](examples/quotecast/update.py)
 
-### 5. TotalPortfolio
+### 4. TotalPortfolio
 
 ```python
 request_list = Update.RequestList()
