@@ -1,11 +1,10 @@
 import pandas as pd
+import pickle
 
 from google.protobuf import json_format
-from quotecast.pb.quotecast_pb2 import (
-    Ticker,
-)
-from typing import Dict, List
 from google.protobuf.message import Message
+from quotecast.pb.quotecast_pb2 import Quotecast, NewTicker, Ticker
+from typing import Dict, List
 
 # pylint: disable=no-member
 
@@ -118,216 +117,25 @@ def build_dict_from_message(message:Message)->dict:
     )
     return message_dict
 
-if __name__ == '__main__':
-    from IPython.display import display
+def save_object(
+    obj:object,
+    file_name:str,
+    file_extension:str='.pickle',
+):
+    file_path = file_name + file_extension
+    with open(file_path, 'wb') as f:
+        pickle.dump(
+            obj=obj,
+            file=f,
+            protocol=pickle.HIGHEST_PROTOCOL,
+        )
 
-    ticker = build_sample_ticker()
+def load_object(
+    file_name:str,
+    file_extension:str='.pickle',
+)->object:
+    file_path = file_name + file_extension
+    with open(file_path, 'rb') as f:
+        obj = pickle.load(file=f)
 
-    df = build_df_from_ticker(ticker=ticker)
-    display(df)
-    record_list = build_dict_from_ticker(ticker=ticker)
-    print(record_list)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# TO KEEP : THESE FUNCTIONS MIGHT GET INTEGRATED INSIDE THE CONNECTOR
-
-#     @classmethod
-#     def get_filled_list(cls, ticker_list:list)->List[Ticker]:
-#         if len(ticker_list) < 2:
-#             raise AttributeError('There is nothing to fill.')
-
-#         filled_list = list()
-#         filled = Ticker()
-#         filled.CopyFrom(ticker_list[0])
-
-#         for index in range(1, len(ticker_list)):
-#             filler = ticker_list[index]
-#             filled = cls.fill_ticker(
-#                 filled=filled,
-#                 filler=filler,
-#                 copy=True,
-#             )
-#             filled_list.append(filled)
-        
-#         return filled_list
-
-#     @classmethod
-#     def fill_ticker(
-#             cls,
-#             filled:Ticker,
-#             filler:Ticker,
-#             copy:bool=False,
-#         )->Ticker:
-#         if copy == True:
-#             filled_copy = Ticker()
-#             filled_copy.CopyFrom(filled)
-#             filled = filled_copy
-
-#         filled.metadata.MergeFrom(filler.metadata)
-#         filled.product_list.MergeFrom(filler.product_list)
-
-#         cls.fill_metric_list(
-#             filled=filled,
-#             filler=filler,
-#         )
-
-#         return filled
-
-#     @classmethod
-#     def fill_metric_list(
-#             cls,
-#             filled:Ticker,
-#             filler:Ticker,
-#         ):
-#         metric_list = list()
-
-#         for filler_metric in filler.metric_list:
-#             filled_metric = cls.search_by_label(
-#                 ticker=filled,
-#                 label=filler_metric.label,
-#             )
-
-#             if filled_metric is None:
-#                 metric = Metric()
-#                 metric.CopyFrom(filler_metric)
-#                 metric_list.append(metric)
-#             else:
-#                 filled_metric.value = filler_metric.value
-
-#         filled.metric_list.extend(metric_list)
-
-
-
-#     @classmethod
-#     def build_df(
-#             cls,
-#             product_id:int,
-#             ticker_list:List[Ticker],
-#         )->pd.DataFrame:
-#         """ Transform a list of ticker into a DataFrame. """
-
-#         df_list = list()
-#         for ticker in ticker_list:
-#             df = TickerHelper.build_row(
-#                 ticker=ticker,
-#                 product_id=product_id,
-#             )
-#             df_list.append(df)
-
-#         df = pd.concat(df_list, ignore_index=True)
-
-#         return df
-
-#     @classmethod
-#     def build_row(
-#             cls,
-#             product_id:int,
-#             ticker:Ticker,
-#         )->pd.DataFrame:
-#         """ Transform a Ticker object into a DataFrame. """
-
-#         if ticker.ByteSize() <= 0:
-#             df = pd.DataFrame(
-#                 np.zeros(
-#                     shape=(1, len(labels.MODEL)),
-#                     dtype=np.float64
-#                 ),
-#                 columns=labels.MODEL,
-#             )
-#             return df
-#         else:
-#             rows = cls.build_dict(ticker=ticker)
-#             row = rows[product_id]
-#             row['request_duration'] = ticker.metadata.request_duration
-#             row['response_time'] = cls.datetime_to_seconds(
-#                 ticker.metadata.response_datetime
-#             )
-#             row['last_time'] = cls.time_to_seconds(row['LastTime'])
-#             if 'LastPrice' in row:
-#                 row['LastPrice_bis'] = row['LastPrice']
-    
-#             data = dict()
-#             for label in labels.MODEL:
-#                 if label in row:
-#                     data[label] = row[label]
-#                 else:
-#                     data[label] = None
-
-#             df = pd.DataFrame([data])
-            
-#             return df
-
-#     @staticmethod
-#     def datetime_to_time(date_time:str)->time.time:
-#         t = date_time.split()[1]
-#         return t
-
-#     @staticmethod
-#     def time_to_seconds(t:str)->float:
-#         t = time.strptime(t,'%H:%M:%S')
-#         seconds = datetime.timedelta(
-#             hours=t.tm_hour,
-#             minutes=t.tm_min,
-#             seconds=t.tm_sec
-#         ).total_seconds()
-
-#         return seconds
-    
-#     @classmethod
-#     def datetime_to_seconds(cls, date_time:str)->float:
-#         t = cls.datetime_to_time(date_time)
-#         seconds = cls.time_to_seconds(t)
-
-#         return seconds
-
-#     @staticmethod
-#     def build_dict(
-#             ticker:Ticker,
-#         )->dict:
-#         """ Transform a Ticker object into a dict
-        
-#         A Ticker as a "metric_list" containing Metric object.
-#         Each Metric object as the attributes : "label" & "value".
-#         The dict object key will be : the Metric "label".
-#         The dict object value will be : the Metric "value".
-#         Ticker following attributes are also copied :
-#             * "product_list"
-#             * "metadata"
-#         """
-
-#         groups = dict()
-#         for metric in ticker.metric_list:
-#             if not metric.product_id in groups:
-#                 groups[metric.product_id] = dict()
-#                 groups[metric.product_id]['product_id'] = metric.product_id
-#             if metric.label in labels.METRIC:
-#                 groups[metric.product_id][metric.label] = metric.value
-
-#         groups['product_list'] = ticker.product_list
-#         groups['metadata'] = ticker.metadata
-
-#         return groups
+    return obj

@@ -36,3 +36,13 @@ message Ticker {
   Metadata metadata = 3;
   repeated Metric filled_metric_list = 4;
 }
+
+
+message NewTicker {
+  message Metrics {
+    map<string, double> metrics =1;
+  }
+  Metadata metadata = 1;
+  map<int32, NewTicker.Metrics> products = 2;
+  repeated int32 product_list = 3;
+}
