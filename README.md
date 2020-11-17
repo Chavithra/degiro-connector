@@ -5,7 +5,7 @@ This is yet another library to access Degiro's API.
 This library will allow you to access the following features from
 Degiro's API :
 
-|Feature|Description|
+|**Feature**|**Description**|
 |:-|:-|
 |Real-time data|Fetch financial product's properties.<br> For instance the real-time stock Price/Volume.|
 |Order|Create, update, delete an ORDER.|
@@ -35,7 +35,7 @@ pip uninstall degiro-connector
 
 It is possible to fetch a stream of data in real-time from Degiro's API.
 
-For instance if one needs the following data from the "APPL" stock :
+For instance if one needs the following data from the "AAPL" stock :
 * LastDate
 * LastTime
 * LastPrice
@@ -82,7 +82,7 @@ To subscribe to a data-stream you need to setup a Request.
 
 A Request has the following parameters :
 
-|Parameter|Type|Description|
+|**Parameter**|**Type**|**Description**|
 |:-|:-|:-|
 |action|Request.Action|SUBSCRIBE / UNSUBSCRIBE|
 |vwd_id|str|Identifier of the product.|
@@ -117,7 +117,7 @@ For a more comprehensive example : [realtime_data.py](examples/quotecast/realtim
 
 Received data is a Quotecast object with the following properties :
 
-|Parameter|Type|Description|
+|**Parameter**|**Type**|**Description**|
 |:-|:-|:-|
 |json_data|dict|Dictionnary representation of what Degiro's API has sent.|
 |metadata|Metadata|Containing the "response_datetime" and "request_duration".|
@@ -131,17 +131,22 @@ request_duration= quotecast.metadata.request_duration
 
 For a more comprehensive example : [realtime_data.py](examples/quotecast/realtime_data.py)
 
-## 1.6. Data conversion (Ticker / Dict / DataFrame)
+## 1.6. Which data type ?
 
-This **quotecast** can be converted into :
-|Type|Description|
+This library provides the tools to convert Degiro's JSON data into
+something more programmer-friendly.
+
+Here is the list of available data type :
+
+|**Type**|**Description**|
 |:-|:-|
 |**Ticker**|Protobuf message (for GRPC)|
 |**Dictionnaries**|Standard Python Dictionaries : **dict**|
 |**DataFrame**|DataFrame from the library Pandas|
 
+Here is how to build each type :
 ```python
-# BUILD TICKER (PROTOBUF/GRPC OBJECT)
+# BUILD TICKER
 quotecast_parser.put_quotecast(quotecast=quotecast)
 ticker = quotecast_parser.ticker
 
@@ -151,6 +156,49 @@ ticker_dict = pb_handler.build_dict_from_ticker(ticker=ticker)
 # BUILD PANDAS.DATAFRAME
 ticker_df = pb_handler.build_df_from_ticker(ticker=ticker)
 ```
+
+## 1.7. What is a Ticker ?
+
+The generated Ticker contains :
+
+|**Parameter**|**Type**|**Description**|
+|:-|:-|:-|
+|metadata|Metadata|Containing the "response_datetime" and "request_duration".|
+|products|MessageMap|Dictionnary like object containing the metrics group by "product_id".|
+|product_list|RepeatedScalarFieldContainer|List of available "product_id".|
+
+Here are some operations available :
+
+```python
+product_id = 331868
+metric_name = 'LastPrice'
+
+# ACCESS SPECIFIC PRODUCT
+product = ticker.products[product_id]
+
+# ACCESS SPECIFIC METRIC
+metric = product[metric_name]
+
+# LOOP OVER PRODUCTS
+for product_id in ticker.products:
+    product = ticker.products[product_id]
+
+# LOOP OVER METRICS
+for metric_name in product.metrics:
+    metric = product.metrics[metric_name]
+```
+
+A Ticker is a custom Protocol Buffer Message built for this library.
+
+It can be transmitted over GRPC framework.
+
+## 1.8. What is inside the Dictionnary ?
+
+The generated Dictionnary is actually a list of Python Dictionnaries.
+
+Each Dictionnary depicts a product with :
+* keys has metrics name.
+* values has metrics values
 
 Example - dict :
 
@@ -176,8 +224,14 @@ Example - dict :
     }
 ]
 ```
+## 1.9. What is inside the DataFrame ?
 
-Example - DataFrame :
+The generated DataFrame will content :
+
+* In row : the product, for instance the "AAPL" stock which has "product_id = 331868".
+* In columns : the product's parameters for instance "LastPrice", "LastVolume",...
+
+Example of DataFrame content :
 
        product_id    response_datetime  request_duration    LastDate  LastTime LastPrice LastVolume
     0   360114899  2020-11-08 12:00:27          1.022489  2020-11-06  17:39:57      70.0        100
@@ -185,9 +239,50 @@ Example - DataFrame :
 
 For a more comprehensive example : [realtime_data.py](examples/quotecast/realtime_data.py)
 
-## 2. Order
+# 2. Trading
 
-### 2.1. Order - Create
+This this library contains two connector :
+* quotecast.api : to consume real-time data
+* trading.api : to manage your Degiro's Account
+
+The rest of this document will only refers to "trading.api".
+
+## 2.1. How to Login ?
+In order to use the "trading.api" you need to establish a connection.
+
+Here is how to login :
+```python
+# SETUP CREDENTIALS
+credentials = Credentials(
+    int_account = YOUR_INT_ACCOUNT, # OPTIONAL FOR LOGIN
+                                    # BUT USED FOR SOME OPERATIONS
+    username = YOUR_USERNAME,
+    password = YOUR_PASSWORD,
+)
+
+# SETUP TRADING API
+trading_api = TradingAPI(credentials=credentials)
+
+# ESTABLISH CONNECTION
+trading_api.connection_storage.connect()
+```
+
+The "int_account" is not necessary to login.
+
+But it is required to do some of the operations available in this connector.
+
+## 2.1. How to get the credentials ?
+
+Here are the credentials required :
+* username : the one you use to login on Degiro's website.
+* password : the one you use to login on Degiro's website.
+* int_account : it's the "clientId" parameter you can retrieve from "config" table.
+
+The "config" table is described in the section : "5. Config Table".
+
+# 3. Order
+
+## 3.1. Order - Create
 ```python
 # ORDER SETUP
 order = Order(
@@ -209,7 +304,7 @@ order = api.confirm_order(
 )
 ```
 
-### 2.2. Order - Update
+## 3.2. Order - Update
 
 ```python
 # ORDER SETUP
@@ -227,12 +322,12 @@ order = Order(
 status_code = api.update_order(order=order)
 ```
 
-### 2.2. Order - Delete
+## 3.3. Order - Delete
 
 ```python
 status = api.delete(order_id=YOUR_ORDER_ID)
 ```
-### 3. Orders
+# 4. Orders
 
 ```python
 request_list = Update.RequestList()
@@ -257,7 +352,7 @@ Example : Orders
 
 For a more comprehensive example : [update.py](examples/quotecast/update.py)
 
-### 4. TotalPortfolio
+# 5. TotalPortfolio
 
 ```python
 request_list = Update.RequestList()
@@ -281,6 +376,169 @@ Example : DataFrame
     0           0           1          2                       3                       4  ...            16                   17                  18             19    NO_MARGIN_CALL
 
 For a more comprehensive example : [update.py](examples/quotecast/update.py)
+
+# 6. Config Table
+
+The config table contains the following informations :
+
+|**Parameter**|**Type**|**Description**|
+|:-|:-|:-|
+|sessionId|str|Current session id.|
+|clientId|int|Unique Degiro's Account identifier also called "intAccount"|
+|tradingUrl|str|-|
+|paUrl|str|-|
+|reportingUrl|str|-|
+|paymentServiceUrl|str|-|
+|productSearchUrl|str|-|
+|dictionaryUrl|str|-|
+|productTypesUrl|str|-|
+|companiesServiceUrl|str|-|
+|i18nUrl|str|-|
+|vwdQuotecastServiceUrl|str|-|
+|vwdNewsUrl|str|-|
+|vwdGossipsUrl|str|-|
+|taskManagerUrl|str|-|
+|refinitivNewsUrl|str|-|
+|refinitivAgendaUrl|str|-|
+|refinitivCompanyProfileUrl|str|-|
+|refinitivCompanyRatiosUrl|str|-|
+|refinitivFinancialStatementsUrl|str|-|
+|refinitivClipsUrl|str|-|
+|landingPath|str|-|
+|betaLandingPath|str|-|
+|mobileLandingPath|str|-|
+|loginUrl|str|-|
+
+Here is how to get this table :
+
+```python
+config_table = trading_api.get_config()
+```
+
+For a more comprehensive example : [config_table.py](examples/trading/config_table.py)
+
+# 7. ClientDetails Table
+
+The ClientDetails table contains information about the current Degiro Account.
+
+Example of empty ClientDetails :
+```python
+{
+    'data': {
+        'id': int(),
+        'intAccount': int(),
+        'loggedInPersonId': int(),
+        'clientRole': str(),
+        'effectiveClientRole': str(),
+        'contractType': str(),
+        'username': str(),
+        'displayName': str(),
+        'email': str(),
+        'firstContact': {
+            'firstName': str(),
+            'lastName': str(),
+            'displayName': str(),
+            'nationality': str(),
+            'gender': str(),
+            'dateOfBirth': str(),
+            'placeOfBirth': str(),
+            'countryOfBirth': str()
+        },
+        'address': {
+            'streetAddress': str(),
+            'streetAddressNumber': str(),
+            'zip': str(),
+            'city': str(),
+            'country': str()
+        },
+        'cellphoneNumber': str(),
+        'locale': str(),
+        'language': str(),
+        'culture': str(),
+        'bankAccount': {
+            'bankAccountId': int(),
+            'bic': str(),
+            'iban': str(),
+            'status': str()
+        },
+        'flatexBankAccount': {
+            'bic': str(),
+            'iban': str()
+        },
+        'memberCode': str(),
+        'isWithdrawalAvailable': bool(),
+        'isAllocationAvailable': bool(),
+        'isIskClient': bool(),
+        'isCollectivePortfolio': bool(),
+        'isAmClientActive': bool(),
+        'canUpgrade': bool()
+    }
+}
+```
+
+Here is how to get this table :
+
+```python
+client_details_table = trading_api.get_client_details()
+```
+
+For a more comprehensive example : [client_details_table.py](examples/trading/client_details_table.py)
+
+## 8. ClientInfos Table
+
+The ClientInfos table contains information about currencies.
+
+Example of empty ClientInfos :
+```python
+{
+    'data': {
+        'clientId': int(),
+        'baseCurrency': str(),
+        'currencyPairs': {
+            'HRKEUR': {
+                'id': -1,
+                'price': str()
+            },
+            'USDRUB': {
+                'id': 1331862,
+                'price': str()
+            },
+            ...
+        },
+        'marginType': str(),
+        'cashFunds': {
+            'CHF': [
+                {
+                    'id': 210,
+                    'name': str(),
+                    'productIds': [
+                        4667925
+                    ]
+                }
+            ],
+            'EUR': [
+                {
+                    'id': 2432,
+                    'name': str(),
+                    'productIds': [
+                        17707507
+                    ]
+                }
+            ],
+            ...
+        },
+        'compensationCapping': float()
+    }
+}
+```
+
+Here is how to get this table :
+
+```python
+client_info_table = trading_api.get_client_info()
+```
+
+For a more comprehensive example : [client_info_table.py](examples/trading/client_info_table.py)
 
 # Contributing
 Pull requests are welcome.

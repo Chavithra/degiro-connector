@@ -25,9 +25,6 @@ trading_api = TradingAPI(credentials=credentials)
 
 trading_api.connection_storage.connect()
 
-print(trading_api.connection_storage.session_id)
-
-
 request_list = Update.RequestList()
 request_list.values.extend(
     [
