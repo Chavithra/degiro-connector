@@ -142,7 +142,7 @@ Here is the list of available data type :
 |:-|:-|
 |Ticker|Protobuf message (for GRPC).|
 |Dictionnaries|Standard Python Dictionaries : **dict**.|
-|DataFrame|DataFrame from the library Pandas|
+|DataFrame|DataFrame from the library Pandas.|
 
 Here is how to build each type :
 ```python
