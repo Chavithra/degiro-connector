@@ -131,7 +131,7 @@ request_duration= quotecast.metadata.request_duration
 
 For a more comprehensive example : [realtime_data.py](examples/quotecast/realtime_data.py)
 
-## 1.6. Which data type ? (Ticker / Dictionnaries / DataFrame)
+## 1.6. Which data type ?
 
 This library provides the tools to convert Degiro's JSON data into
 something more programmer-friendly.
