@@ -11,7 +11,6 @@ from google.protobuf import symbol_database as _symbol_database
 _sym_db = _symbol_database.Default()
 
 
-from google.protobuf import struct_pb2 as google_dot_protobuf_dot_struct__pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
@@ -20,9 +19,8 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x1cquotecast/pb/quotecast.proto\x1a\x1cgoogle/protobuf/struct.proto\"?\n\x08Metadata\x12\x19\n\x11response_datetime\x18\x01 \x01(\t\x12\x18\n\x10request_duration\x18\x02 \x01(\x01\"`\n\x06Metric\x12\x11\n\theartbeat\x18\x01 \x01(\x08\x12\r\n\x05label\x18\x05 \x01(\t\x12\x12\n\nproduct_id\x18\x04 \x01(\x05\x12\x11\n\treference\x18\x02 \x01(\x05\x12\r\n\x05value\x18\x03 \x01(\t\";\n\tQuotecast\x12\x11\n\tjson_data\x18\x01 \x01(\t\x12\x1b\n\x08metadata\x18\x02 \x01(\x0b\x32\t.Metadata\"\x8d\x01\n\x07Request\x12\x1f\n\x06\x61\x63tion\x18\x01 \x01(\x0e\x32\x0f.Request.Action\x12\x0e\n\x06vwd_id\x18\x02 \x01(\t\x12\x12\n\nlabel_list\x18\x03 \x03(\t\x12\x13\n\x0bstatus_code\x18\x04 \x01(\x05\"(\n\x06\x41\x63tion\x12\r\n\tSUBSCRIBE\x10\x00\x12\x0f\n\x0bUNSUBSCRIBE\x10\x01\"~\n\x06Ticker\x12\x1c\n\x0bmetric_list\x18\x01 \x03(\x0b\x32\x07.Metric\x12\x14\n\x0cproduct_list\x18\x02 \x03(\x05\x12\x1b\n\x08metadata\x18\x03 \x01(\x0b\x32\t.Metadata\x12#\n\x12\x66illed_metric_list\x18\x04 \x03(\x0b\x32\x07.Metric\"\x9c\x02\n\tNewTicker\x12\x1b\n\x08metadata\x18\x01 \x01(\x0b\x32\t.Metadata\x12*\n\x08products\x18\x02 \x03(\x0b\x32\x18.NewTicker.ProductsEntry\x12\x14\n\x0cproduct_list\x18\x03 \x03(\x05\x1ak\n\x07Metrics\x12\x30\n\x07metrics\x18\x01 \x03(\x0b\x32\x1f.NewTicker.Metrics.MetricsEntry\x1a.\n\x0cMetricsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x01:\x02\x38\x01\x1a\x43\n\rProductsEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12!\n\x05value\x18\x02 \x01(\x0b\x32\x12.NewTicker.Metrics:\x02\x38\x01\x62\x06proto3'
-  ,
-  dependencies=[google_dot_protobuf_dot_struct__pb2.DESCRIPTOR,])
+  serialized_pb=b'\n\x1cquotecast/pb/quotecast.proto\"?\n\x08Metadata\x12\x19\n\x11response_datetime\x18\x01 \x01(\t\x12\x18\n\x10request_duration\x18\x02 \x01(\x01\";\n\tQuotecast\x12\x11\n\tjson_data\x18\x01 \x01(\t\x12\x1b\n\x08metadata\x18\x02 \x01(\x0b\x32\t.Metadata\"\x8d\x01\n\x07Request\x12\x1f\n\x06\x61\x63tion\x18\x01 \x01(\x0e\x32\x0f.Request.Action\x12\x0e\n\x06vwd_id\x18\x02 \x01(\t\x12\x12\n\nlabel_list\x18\x03 \x03(\t\x12\x13\n\x0bstatus_code\x18\x04 \x01(\x05\"(\n\x06\x41\x63tion\x12\r\n\tSUBSCRIBE\x10\x00\x12\x0f\n\x0bUNSUBSCRIBE\x10\x01\"\x90\x02\n\x06Ticker\x12\x1b\n\x08metadata\x18\x01 \x01(\x0b\x32\t.Metadata\x12\'\n\x08products\x18\x02 \x03(\x0b\x32\x15.Ticker.ProductsEntry\x12\x14\n\x0cproduct_list\x18\x03 \x03(\x05\x1ah\n\x07Metrics\x12-\n\x07metrics\x18\x01 \x03(\x0b\x32\x1c.Ticker.Metrics.MetricsEntry\x1a.\n\x0cMetricsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x01:\x02\x38\x01\x1a@\n\rProductsEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\x1e\n\x05value\x18\x02 \x01(\x0b\x32\x0f.Ticker.Metrics:\x02\x38\x01\x62\x06proto3'
+)
 
 
 
@@ -46,8 +44,8 @@ _REQUEST_ACTION = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=388,
-  serialized_end=428,
+  serialized_start=260,
+  serialized_end=300,
 )
 _sym_db.RegisterEnumDescriptor(_REQUEST_ACTION)
 
@@ -86,68 +84,8 @@ _METADATA = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=62,
-  serialized_end=125,
-)
-
-
-_METRIC = _descriptor.Descriptor(
-  name='Metric',
-  full_name='Metric',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='heartbeat', full_name='Metric.heartbeat', index=0,
-      number=1, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='label', full_name='Metric.label', index=1,
-      number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='product_id', full_name='Metric.product_id', index=2,
-      number=4, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='reference', full_name='Metric.reference', index=3,
-      number=2, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='value', full_name='Metric.value', index=4,
-      number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=127,
-  serialized_end=223,
+  serialized_start=32,
+  serialized_end=95,
 )
 
 
@@ -185,8 +123,8 @@ _QUOTECAST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=225,
-  serialized_end=284,
+  serialized_start=97,
+  serialized_end=156,
 )
 
 
@@ -239,81 +177,28 @@ _REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=287,
-  serialized_end=428,
+  serialized_start=159,
+  serialized_end=300,
 )
 
 
-_TICKER = _descriptor.Descriptor(
-  name='Ticker',
-  full_name='Ticker',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='metric_list', full_name='Ticker.metric_list', index=0,
-      number=1, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='product_list', full_name='Ticker.product_list', index=1,
-      number=2, type=5, cpp_type=1, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='metadata', full_name='Ticker.metadata', index=2,
-      number=3, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='filled_metric_list', full_name='Ticker.filled_metric_list', index=3,
-      number=4, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=430,
-  serialized_end=556,
-)
-
-
-_NEWTICKER_METRICS_METRICSENTRY = _descriptor.Descriptor(
+_TICKER_METRICS_METRICSENTRY = _descriptor.Descriptor(
   name='MetricsEntry',
-  full_name='NewTicker.Metrics.MetricsEntry',
+  full_name='Ticker.Metrics.MetricsEntry',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='key', full_name='NewTicker.Metrics.MetricsEntry.key', index=0,
+      name='key', full_name='Ticker.Metrics.MetricsEntry.key', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='value', full_name='NewTicker.Metrics.MetricsEntry.value', index=1,
+      name='value', full_name='Ticker.Metrics.MetricsEntry.value', index=1,
       number=2, type=1, cpp_type=5, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
@@ -331,20 +216,20 @@ _NEWTICKER_METRICS_METRICSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=728,
-  serialized_end=774,
+  serialized_start=463,
+  serialized_end=509,
 )
 
-_NEWTICKER_METRICS = _descriptor.Descriptor(
+_TICKER_METRICS = _descriptor.Descriptor(
   name='Metrics',
-  full_name='NewTicker.Metrics',
+  full_name='Ticker.Metrics',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='metrics', full_name='NewTicker.Metrics.metrics', index=0,
+      name='metrics', full_name='Ticker.Metrics.metrics', index=0,
       number=1, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -353,7 +238,7 @@ _NEWTICKER_METRICS = _descriptor.Descriptor(
   ],
   extensions=[
   ],
-  nested_types=[_NEWTICKER_METRICS_METRICSENTRY, ],
+  nested_types=[_TICKER_METRICS_METRICSENTRY, ],
   enum_types=[
   ],
   serialized_options=None,
@@ -362,27 +247,27 @@ _NEWTICKER_METRICS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=667,
-  serialized_end=774,
+  serialized_start=405,
+  serialized_end=509,
 )
 
-_NEWTICKER_PRODUCTSENTRY = _descriptor.Descriptor(
+_TICKER_PRODUCTSENTRY = _descriptor.Descriptor(
   name='ProductsEntry',
-  full_name='NewTicker.ProductsEntry',
+  full_name='Ticker.ProductsEntry',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='key', full_name='NewTicker.ProductsEntry.key', index=0,
+      name='key', full_name='Ticker.ProductsEntry.key', index=0,
       number=1, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='value', full_name='NewTicker.ProductsEntry.value', index=1,
+      name='value', full_name='Ticker.ProductsEntry.value', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -400,34 +285,34 @@ _NEWTICKER_PRODUCTSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=776,
-  serialized_end=843,
+  serialized_start=511,
+  serialized_end=575,
 )
 
-_NEWTICKER = _descriptor.Descriptor(
-  name='NewTicker',
-  full_name='NewTicker',
+_TICKER = _descriptor.Descriptor(
+  name='Ticker',
+  full_name='Ticker',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='metadata', full_name='NewTicker.metadata', index=0,
+      name='metadata', full_name='Ticker.metadata', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='products', full_name='NewTicker.products', index=1,
+      name='products', full_name='Ticker.products', index=1,
       number=2, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='product_list', full_name='NewTicker.product_list', index=2,
+      name='product_list', full_name='Ticker.product_list', index=2,
       number=3, type=5, cpp_type=1, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -436,7 +321,7 @@ _NEWTICKER = _descriptor.Descriptor(
   ],
   extensions=[
   ],
-  nested_types=[_NEWTICKER_METRICS, _NEWTICKER_PRODUCTSENTRY, ],
+  nested_types=[_TICKER_METRICS, _TICKER_PRODUCTSENTRY, ],
   enum_types=[
   ],
   serialized_options=None,
@@ -445,29 +330,24 @@ _NEWTICKER = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=559,
-  serialized_end=843,
+  serialized_start=303,
+  serialized_end=575,
 )
 
 _QUOTECAST.fields_by_name['metadata'].message_type = _METADATA
 _REQUEST.fields_by_name['action'].enum_type = _REQUEST_ACTION
 _REQUEST_ACTION.containing_type = _REQUEST
-_TICKER.fields_by_name['metric_list'].message_type = _METRIC
+_TICKER_METRICS_METRICSENTRY.containing_type = _TICKER_METRICS
+_TICKER_METRICS.fields_by_name['metrics'].message_type = _TICKER_METRICS_METRICSENTRY
+_TICKER_METRICS.containing_type = _TICKER
+_TICKER_PRODUCTSENTRY.fields_by_name['value'].message_type = _TICKER_METRICS
+_TICKER_PRODUCTSENTRY.containing_type = _TICKER
 _TICKER.fields_by_name['metadata'].message_type = _METADATA
-_TICKER.fields_by_name['filled_metric_list'].message_type = _METRIC
-_NEWTICKER_METRICS_METRICSENTRY.containing_type = _NEWTICKER_METRICS
-_NEWTICKER_METRICS.fields_by_name['metrics'].message_type = _NEWTICKER_METRICS_METRICSENTRY
-_NEWTICKER_METRICS.containing_type = _NEWTICKER
-_NEWTICKER_PRODUCTSENTRY.fields_by_name['value'].message_type = _NEWTICKER_METRICS
-_NEWTICKER_PRODUCTSENTRY.containing_type = _NEWTICKER
-_NEWTICKER.fields_by_name['metadata'].message_type = _METADATA
-_NEWTICKER.fields_by_name['products'].message_type = _NEWTICKER_PRODUCTSENTRY
+_TICKER.fields_by_name['products'].message_type = _TICKER_PRODUCTSENTRY
 DESCRIPTOR.message_types_by_name['Metadata'] = _METADATA
-DESCRIPTOR.message_types_by_name['Metric'] = _METRIC
 DESCRIPTOR.message_types_by_name['Quotecast'] = _QUOTECAST
 DESCRIPTOR.message_types_by_name['Request'] = _REQUEST
 DESCRIPTOR.message_types_by_name['Ticker'] = _TICKER
-DESCRIPTOR.message_types_by_name['NewTicker'] = _NEWTICKER
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 Metadata = _reflection.GeneratedProtocolMessageType('Metadata', (_message.Message,), {
@@ -476,13 +356,6 @@ Metadata = _reflection.GeneratedProtocolMessageType('Metadata', (_message.Messag
   # @@protoc_insertion_point(class_scope:Metadata)
   })
 _sym_db.RegisterMessage(Metadata)
-
-Metric = _reflection.GeneratedProtocolMessageType('Metric', (_message.Message,), {
-  'DESCRIPTOR' : _METRIC,
-  '__module__' : 'quotecast.pb.quotecast_pb2'
-  # @@protoc_insertion_point(class_scope:Metric)
-  })
-_sym_db.RegisterMessage(Metric)
 
 Quotecast = _reflection.GeneratedProtocolMessageType('Quotecast', (_message.Message,), {
   'DESCRIPTOR' : _QUOTECAST,
@@ -499,44 +372,37 @@ Request = _reflection.GeneratedProtocolMessageType('Request', (_message.Message,
 _sym_db.RegisterMessage(Request)
 
 Ticker = _reflection.GeneratedProtocolMessageType('Ticker', (_message.Message,), {
+
+  'Metrics' : _reflection.GeneratedProtocolMessageType('Metrics', (_message.Message,), {
+
+    'MetricsEntry' : _reflection.GeneratedProtocolMessageType('MetricsEntry', (_message.Message,), {
+      'DESCRIPTOR' : _TICKER_METRICS_METRICSENTRY,
+      '__module__' : 'quotecast.pb.quotecast_pb2'
+      # @@protoc_insertion_point(class_scope:Ticker.Metrics.MetricsEntry)
+      })
+    ,
+    'DESCRIPTOR' : _TICKER_METRICS,
+    '__module__' : 'quotecast.pb.quotecast_pb2'
+    # @@protoc_insertion_point(class_scope:Ticker.Metrics)
+    })
+  ,
+
+  'ProductsEntry' : _reflection.GeneratedProtocolMessageType('ProductsEntry', (_message.Message,), {
+    'DESCRIPTOR' : _TICKER_PRODUCTSENTRY,
+    '__module__' : 'quotecast.pb.quotecast_pb2'
+    # @@protoc_insertion_point(class_scope:Ticker.ProductsEntry)
+    })
+  ,
   'DESCRIPTOR' : _TICKER,
   '__module__' : 'quotecast.pb.quotecast_pb2'
   # @@protoc_insertion_point(class_scope:Ticker)
   })
 _sym_db.RegisterMessage(Ticker)
-
-NewTicker = _reflection.GeneratedProtocolMessageType('NewTicker', (_message.Message,), {
-
-  'Metrics' : _reflection.GeneratedProtocolMessageType('Metrics', (_message.Message,), {
-
-    'MetricsEntry' : _reflection.GeneratedProtocolMessageType('MetricsEntry', (_message.Message,), {
-      'DESCRIPTOR' : _NEWTICKER_METRICS_METRICSENTRY,
-      '__module__' : 'quotecast.pb.quotecast_pb2'
-      # @@protoc_insertion_point(class_scope:NewTicker.Metrics.MetricsEntry)
-      })
-    ,
-    'DESCRIPTOR' : _NEWTICKER_METRICS,
-    '__module__' : 'quotecast.pb.quotecast_pb2'
-    # @@protoc_insertion_point(class_scope:NewTicker.Metrics)
-    })
-  ,
-
-  'ProductsEntry' : _reflection.GeneratedProtocolMessageType('ProductsEntry', (_message.Message,), {
-    'DESCRIPTOR' : _NEWTICKER_PRODUCTSENTRY,
-    '__module__' : 'quotecast.pb.quotecast_pb2'
-    # @@protoc_insertion_point(class_scope:NewTicker.ProductsEntry)
-    })
-  ,
-  'DESCRIPTOR' : _NEWTICKER,
-  '__module__' : 'quotecast.pb.quotecast_pb2'
-  # @@protoc_insertion_point(class_scope:NewTicker)
-  })
-_sym_db.RegisterMessage(NewTicker)
-_sym_db.RegisterMessage(NewTicker.Metrics)
-_sym_db.RegisterMessage(NewTicker.Metrics.MetricsEntry)
-_sym_db.RegisterMessage(NewTicker.ProductsEntry)
+_sym_db.RegisterMessage(Ticker.Metrics)
+_sym_db.RegisterMessage(Ticker.Metrics.MetricsEntry)
+_sym_db.RegisterMessage(Ticker.ProductsEntry)
 
 
-_NEWTICKER_METRICS_METRICSENTRY._options = None
-_NEWTICKER_PRODUCTSENTRY._options = None
+_TICKER_METRICS_METRICSENTRY._options = None
+_TICKER_PRODUCTSENTRY._options = None
 # @@protoc_insertion_point(module_scope)

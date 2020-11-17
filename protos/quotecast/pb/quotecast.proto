@@ -6,14 +6,6 @@ message Metadata {
   double request_duration = 2;
 }
 
-message Metric {
-  bool heartbeat = 1;
-  string label = 5;
-  int32 product_id = 4;
-  int32 reference = 2;
-  string value = 3;
-}
-
 message Quotecast {
   string json_data = 1;
   Metadata metadata = 2;
@@ -31,18 +23,10 @@ message Request {
 }
 
 message Ticker {
-  repeated Metric metric_list = 1;
-  repeated int32 product_list = 2;
-  Metadata metadata = 3;
-  repeated Metric filled_metric_list = 4;
-}
-
-
-message NewTicker {
   message Metrics {
     map<string, double> metrics =1;
   }
   Metadata metadata = 1;
-  map<int32, NewTicker.Metrics> products = 2;
+  map<int32, Metrics> products = 2;
   repeated int32 product_list = 3;
 }
