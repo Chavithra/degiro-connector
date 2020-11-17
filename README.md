@@ -140,8 +140,8 @@ Here is the list of available data type :
 
 |**Type**|**Description**|
 |:-|:-|
-|Ticker|Protobuf message (for GRPC)|
-|Dictionnaries|Standard Python Dictionaries : **dict**|
+|Ticker|Protobuf message (for GRPC).|
+|Dictionnaries|Standard Python Dictionaries : **dict**.|
 |DataFrame|DataFrame from the library Pandas|
 
 Here is how to build each type :
