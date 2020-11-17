@@ -2,6 +2,7 @@ import datetime
 import logging
 import orjson as json
 
+from quotecast.models.metrics_storage import MetricsStorage
 from quotecast.pb.quotecast_pb2 import Quotecast, Ticker
 from typing import Dict
 from wrapt.decorators import synchronized
@@ -199,12 +200,12 @@ class QuotecastParser:
         return ticker
 
     @property
-    def ticker(self)->Ticker:
-        return self.__ticker
-
-    @property
     def references(self)->Dict[int, str]:
         return self.__references
+
+    @property
+    def ticker(self)->Ticker:
+        return self.__ticker
 
     def __init__(self, forward_fill:bool=False):
         """
@@ -215,27 +216,25 @@ class QuotecastParser:
         """
 
         self.__forward_fill = forward_fill
-        self.__ticker = Ticker()
+        self.__metrics_storage = MetricsStorage()
         self.__references = dict()
+        self.__ticker = Ticker()
 
         self.__logger = logging.getLogger(self.__module__)
 
     def put_quotecast(self, quotecast:Quotecast):
         forward_fill = self.__forward_fill
+        metrics_storage = self.__metrics_storage
         references = self.__references
 
-        # KEEP OLD TICKER
-        if forward_fill == True:
-            ticker = self.__ticker
-        else:
-            ticker = Ticker()
-
-        # SETUP NEW TICKER
         ticker = self.build_ticker_from_quotecast(
             quotecast=quotecast,
-            ticker=ticker,
+            ticker=Ticker(),
             references=references,
         )
+
+        if forward_fill == True:
+            metrics_storage.fill_ticker(ticker=ticker)
 
         self.__ticker = ticker
 

@@ -82,6 +82,32 @@ def build_sample_ticker(
 
     return ticker
 
+def merge_tickers(
+    ticker1:Ticker,
+    ticker2:Ticker,
+    update_only:bool=False,
+):
+    """ Override metrics of ticker1 with ticker2's metrics.
+
+    Args:
+        ticker1 (Ticker): Ticker to fill.
+        ticker2 (Ticker):Ticker used to fill.
+        update_only (bool, optional):
+            Whether or not we want to add products from Ticker2 to
+            Ticker1.
+    """
+    if update_only == True:
+        for ticker2_product in ticker2.products:
+            if ticker2_product in ticker1.products:
+                ticker1.products[ticker2_product].metrics.update(
+                    ticker2.products[ticker2_product].metrics
+                )
+    else:
+        for ticker2_product in ticker2.products:
+            ticker1.products[ticker2_product].metrics.update(
+                ticker2.products[ticker2_product].metrics
+            )
+
 def build_dict_from_message(message:Message)->dict:
     message_dict = json_format.MessageToDict(
         message=message,
