@@ -424,7 +424,6 @@ def get_config(
 
 def get_client_details(
     session_id:str,
-    raw:bool=False,
     session:requests.Session=None,
     logger:logging.Logger=None,
 )->dict:
@@ -453,7 +452,6 @@ def get_client_details(
 def get_client_info(
     session_id:str,
     credentials:Credentials,
-    raw:bool=False,
     session:requests.Session=None,
     logger:logging.Logger=None,
 )->dict:

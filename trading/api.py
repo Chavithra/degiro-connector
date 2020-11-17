@@ -117,7 +117,6 @@ class API:
         return basic.update_order(
             order=order,
             session_id=session_id,
-            raw=raw,
         )
 
     def delete_order(self, order_id:str)->bool:
@@ -129,7 +128,7 @@ class API:
             session_id=session_id
         )
 
-    def get_config(self,)->dict:
+    def get_config(self)->dict:
         basic = self._basic
         session_id = self._connection_storage.session_id
 
@@ -137,22 +136,20 @@ class API:
             session_id=session_id,
         )
 
-    def get_client_details(self, raw:bool=False)->dict:
+    def get_client_details(self)->dict:
         basic = self._basic
         session_id = self._connection_storage.session_id
 
         return basic.get_client_details(
             session_id=session_id,
-            raw=raw,
         )
 
-    def get_client_info(self, raw:bool=False)->dict:
+    def get_client_info(self)->dict:
         basic = self._basic
         session_id = self._connection_storage.session_id
 
         return basic.get_client_info(
             session_id=session_id,
-            raw=raw,
         )
 
     def get_order_history(

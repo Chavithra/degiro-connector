@@ -180,7 +180,6 @@ class Basic:
     def get_client_details(
         self,
         session_id:str,
-        raw:bool=False,
     )->dict:
         credentials = self._credentials
         logger = self._logger
@@ -188,7 +187,6 @@ class Basic:
 
         return utilities.get_client_details(
             session_id=session_id,
-            raw=raw,
             session=session,
             logger=logger,
         )
@@ -196,7 +194,6 @@ class Basic:
     def get_client_info(
         self,
         session_id:str,
-        raw:bool=False,
     )->dict:
         credentials = self._credentials
         logger = self._logger
@@ -205,7 +202,6 @@ class Basic:
         return utilities.get_client_info(
             session_id=session_id,
             credentials=credentials,
-            raw=raw,
             session=session,
             logger=logger,
         )
