@@ -63,7 +63,7 @@ class QuotecastParser:
 
     The LABEL is the name of the measurements that we retrieve.
 
-    The MATCHING table is only sent the time we call this endpoint
+    The MATCHING table is only sent at the first call of this endpoint.
 
 
     PAYLOAD DATA STRUCTURE
