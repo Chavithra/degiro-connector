@@ -484,7 +484,7 @@ client_details_table = trading_api.get_client_details()
 
 For a more comprehensive example : [client_details_table.py](examples/trading/client_details_table.py)
 
-## 8. ClientInfos Table
+# 8. ClientInfos Table
 
 The ClientInfos table contains information about currencies.
 
