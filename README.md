@@ -46,7 +46,7 @@ He can use this library to retrieve update like this :
     LastDate    LastTime    LastPrice LastVolume
     2020-11-13  22:00:00    119.26    4697040
 
-## 1.2 How to login ?
+## 1.1. How to login ?
 
 In order to fetch data you need to establish a connection.
 
@@ -66,7 +66,7 @@ See section related to "config" table.
 
 For a more comprehensive example : [realtime_data.py](examples/quotecast/realtime_data.py)
 
-## 1.3 What is the timout ?
+## 1.2. What is the timout ?
 Connection timeout is around 15 seconds.
 
 Which means a connection will cease to work after this timeout.
@@ -77,7 +77,7 @@ This timeout is reset each time you use this connection to :
 
 So if you use it nonstop (in a loop) you won't need to reconnect.
 
-## 1.4. How to subscribe to a data-stream ?
+## 1.3. How to subscribe to a data-stream ?
 To subscribe to a data-stream you need to setup a Request.
 
 A Request has the following parameters :
@@ -104,7 +104,7 @@ api.subscribe(request=request)
 
 For a more comprehensive example : [realtime_data.py](examples/quotecast/realtime_data.py)
 
-## 1.5. How to fetch the data ?
+## 1.4. How to fetch the data ?
 
 You can use the following code :
 ```python
@@ -113,7 +113,7 @@ quotecast = api.fetch_data()
 
 For a more comprehensive example : [realtime_data.py](examples/quotecast/realtime_data.py)
 
-## 1.6. How can I use this data ?
+## 1.5. How can I use this data ?
 
 Received data is a Quotecast object with the following properties :
 
