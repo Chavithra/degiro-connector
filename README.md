@@ -286,7 +286,7 @@ Here are the main parameters of an Order.
 
 |**Parameter**|**Type**|**Description**|
 |:-|:-|:-|
-|action|Order.Action|Whether you want to BUY or SELL.|
+|action|Order.Action|Whether you want to : BUY or SELL.|
 |order_type|Order.OrderType|Type of order : LIMIT, STOP_LIMIT, MARKET or STOP_LOSS.|
 |price|float|Price of the order.|
 |product_id|int|Identifier of the product concerned by the order.|
