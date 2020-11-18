@@ -24,16 +24,16 @@ message Order {
 
   // MESSAGES
   message CheckingResponse {
-    string response_datetime = 1;
-    string confirmation_id = 2;
-    double free_space_new = 3;
+    string confirmation_id = 1;
+    double free_space_new = 2;
+    string response_datetime = 3;
     repeated google.protobuf.Struct transaction_fees = 4;
     repeated google.protobuf.Struct transaction_opposite_fees = 5;
     repeated google.protobuf.Struct transaction_taxes = 6;
   }
   message ConfirmationResponse {
-    string response_datetime = 1;
-    string orderId = 2;
+    string orderId = 1;
+    string response_datetime = 2;
   }
 
   // USED TO CHECK ORDER

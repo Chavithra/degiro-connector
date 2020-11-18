@@ -308,14 +308,32 @@ order = Order(
 )
 
 # FETCH CONFIRMATION_ID
-confirmation_id = api.check_order(order=order)
+checking_response = api.check_order(order=order)
 
 # SEND CONFIRMATION
-order = api.confirm_order(
+confirmation_response = api.confirm_order(
     confirmation_id=confirmation_id,
     order=order
 )
 ```
+
+Here are the parameters of a CheckingResponse :
+
+|**Parameter**|**Type**|**Description**|
+|:-|:-|:-|
+|confirmation_id|str|Id necessary to confirm the creation of the Order.|
+|free_space_new|float|New free space (balance) if the Order is confirmed.|
+|response_datetime|str|ISO format datetime of the checking operation.|
+|transaction_fees|repeated google.protobuf.Struct|Transaction fees that will be applied to the Order.|
+|transaction_opposite_fees|repeated google.protobuf.Struct|Other kind of fees that will be applied to the Order.|
+|transaction_taxes|repeated google.protobuf.Struct|Taxes that will be applied to the Order.|
+
+Here are the parameters of a ConfirmationResponse :
+
+|**Parameter**|**Type**|**Description**|
+|:-|:-|:-|
+|orderId|str|Id of the created Order.|
+|response_datetime|str|ISO format datetime of the checking operation.|
 
 ## 3.2. Order - Update
 
@@ -332,13 +350,13 @@ order = Order(
 )
 
 # UPDATE ORDER
-status_code = api.update_order(order=order)
+succcess = api.update_order(order=order)
 ```
 
 ## 3.3. Order - Delete
 
 ```python
-status = api.delete(order_id=YOUR_ORDER_ID)
+succcess = api.delete(order_id=YOUR_ORDER_ID)
 ```
 # 4. Orders
 
