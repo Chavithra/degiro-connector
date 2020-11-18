@@ -282,6 +282,19 @@ The "config" table is described in the section : "5. Config Table".
 
 # 3. Order
 
+Here are the main parameters of an Order.
+
+|**Parameter**|**Type**|**Description**|
+|:-|:-|:-|
+|action|Order.Action|Whether you want to BUY or SELL.|
+|order_type|Order.OrderType|Type of order : LIMIT, STOP_LIMIT, MARKET or STOP_LOSS.|
+|price|float|Price of the order.|
+|product_id|int|Identifier of the product concerned by the order.|
+|size|float|Size of the order.|
+|time_type|Order.TimeType|Duration of the order : GOOD_TILL_DAY or GOOD_TILL_CANCELED|
+
+The full description of an Order is available in : [trading.proto.py](protos/pb/trading/trading.proto)
+
 ## 3.1. Order - Create
 ```python
 # ORDER SETUP
