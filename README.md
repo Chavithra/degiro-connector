@@ -1,6 +1,7 @@
 # **Degiro Connector**
 
 This is yet another library to access Degiro's API.
+
 ## Which features ?
 This library will allow you to access the following features from
 Degiro's API :
@@ -27,6 +28,7 @@ pip install git+https://github.com/chavithra/degiro-connector.git
 ```
 
 ## How to uninstall ?
+
 ```bash
 pip uninstall degiro-connector
 ```
@@ -54,7 +56,7 @@ You can use the following code :
 
 ```python
 # SETUP API
-quotecast_api = QuotecastAPI(user_token=YOUR_USER_TOKEN) 
+quotecast_api = API(user_token=YOUR_USER_TOKEN) 
 
 # CONNECTION
 quotecast_api.connection_storage.connect()
@@ -67,6 +69,7 @@ See section related to "config" table.
 For a more comprehensive example : [realtime_data.py](examples/quotecast/realtime_data.py)
 
 ## 1.2. What is the timout ?
+
 Connection timeout is around 15 seconds.
 
 Which means a connection will cease to work after this timeout.
@@ -78,6 +81,7 @@ This timeout is reset each time you use this connection to :
 So if you use it nonstop (in a loop) you won't need to reconnect.
 
 ## 1.3. How to subscribe to a data-stream ?
+
 To subscribe to a data-stream you need to setup a Request.
 
 A Request has the following parameters :
@@ -99,7 +103,7 @@ request = Request(
 
 Once you have built this Request object you can send it to Degiro's API like this :
 ```python
-api.subscribe(request=request)
+quotecast_api.subscribe(request=request)
 ```
 
 For a more comprehensive example : [realtime_data.py](examples/quotecast/realtime_data.py)
@@ -108,7 +112,7 @@ For a more comprehensive example : [realtime_data.py](examples/quotecast/realtim
 
 You can use the following code :
 ```python
-quotecast = api.fetch_data()
+quotecast = quotecast_api.fetch_data()
 ```
 
 For a more comprehensive example : [realtime_data.py](examples/quotecast/realtime_data.py)
@@ -145,6 +149,7 @@ Here is the list of available data type :
 |DataFrame|DataFrame from the library Pandas.|
 
 Here is how to build each type :
+
 ```python
 # BUILD TICKER
 quotecast_parser.put_quotecast(quotecast=quotecast)
@@ -261,7 +266,7 @@ credentials = Credentials(
 )
 
 # SETUP TRADING API
-trading_api = TradingAPI(credentials=credentials)
+trading_api = API(credentials=credentials)
 
 # ESTABLISH CONNECTION
 trading_api.connection_storage.connect()
@@ -296,26 +301,12 @@ Here are the main parameters of an Order.
 The full description of an Order is available here : [trading.proto](protos/trading/pb/trading.proto)
 
 ## 3.1. Order - Create
-```python
-# ORDER SETUP
-order = Order(
-    action=Order.Action.BUY,
-    order_type=Order.OrderType.LIMIT,
-    price=10,
-    product_id=71981,
-    size=1,
-    time_type=Order.TimeType.GOOD_TILL_DAY,
-)
 
-# FETCH CONFIRMATION_ID
-checking_response = api.check_order(order=order)
+The Order creation is done in two step :
+* Checking : send the Order to the API to check if it is valid.
+* Confirmation : confirm the creation of the Order.
 
-# SEND CONFIRMATION
-confirmation_response = api.confirm_order(
-    confirmation_id=confirmation_id,
-    order=order
-)
-```
+Keeping these two steps (instead of reducing to one single "create" function) provides more options.
 
 Here are the parameters of a CheckingResponse :
 
@@ -333,9 +324,36 @@ Here are the parameters of a ConfirmationResponse :
 |**Parameter**|**Type**|**Description**|
 |:-|:-|:-|
 |orderId|str|Id of the created Order.|
-|response_datetime|str|ISO format datetime of the checking operation.|
+|response_datetime|str|ISO format datetime of the confirmation operation.|
+
+Here is an example :
+
+```python
+# ORDER SETUP
+order = Order(
+    action=Order.Action.BUY,
+    order_type=Order.OrderType.LIMIT,
+    price=10,
+    product_id=71981,
+    size=1,
+    time_type=Order.TimeType.GOOD_TILL_DAY,
+)
+
+# FETCH CONFIRMATION_ID
+checking_response = trading_apicheck_order(order=order)
+
+# SEND CONFIRMATION
+confirmation_response = trading_api.confirm_order(
+    confirmation_id=confirmation_id,
+    order=order
+)
+```
 
 ## 3.2. Order - Update
+
+To modify a specific Order you need to setup it's "id".
+
+Here is an example :
 
 ```python
 # ORDER SETUP
@@ -350,14 +368,20 @@ order = Order(
 )
 
 # UPDATE ORDER
-succcess = api.update_order(order=order)
+succcess = trading_api.update_order(order=order)
 ```
 
 ## 3.3. Order - Delete
 
+To delete a specific Order you just need it's "id".
+
+Here is an example :
+
 ```python
-succcess = api.delete(order_id=YOUR_ORDER_ID)
+# DELETE ORDER
+succcess = trading_api.delete(order_id=YOUR_ORDER_ID)
 ```
+
 # 4. Orders
 
 ```python
