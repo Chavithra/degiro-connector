@@ -195,7 +195,7 @@ class QuotecastParser:
         ticker.product_list.extend(ticker.products)
 
         # SETUP METADATA
-        ticker.metadata.CopyFrom(quotecast.metadata)
+        ticker.metadata.MergeFrom(quotecast.metadata)
 
         return ticker
 
