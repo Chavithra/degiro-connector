@@ -331,12 +331,12 @@ Here is an example :
 ```python
 # ORDER SETUP
 order = Order(
-    action=Order.Action.BUY,
-    order_type=Order.OrderType.LIMIT,
-    price=10,
-    product_id=71981,
-    size=1,
-    time_type=Order.TimeType.GOOD_TILL_DAY,
+    action = Order.Action.BUY,
+    order_type = Order.OrderType.LIMIT,
+    price = 10,
+    product_id = 71981,
+    size = 1,
+    time_type = Order.TimeType.GOOD_TILL_DAY,
 )
 
 # FETCH CONFIRMATION_ID
@@ -344,8 +344,8 @@ checking_response = trading_apicheck_order(order=order)
 
 # SEND CONFIRMATION
 confirmation_response = trading_api.confirm_order(
-    confirmation_id=confirmation_id,
-    order=order
+    confirmation_id = confirmation_id,
+    order = order
 )
 ```
 
@@ -358,13 +358,13 @@ Here is an example :
 ```python
 # ORDER SETUP
 order = Order(
-    id=YOUR_ORDER_ID
-    action=Order.Action.BUY,
-    order_type=Order.OrderType.LIMIT,
-    price=10.60,
-    product_id=71981,
-    size=1,
-    time_type=Order.TimeType.GOOD_TILL_DAY,
+    id = YOUR_ORDER_ID
+    action = Order.Action.BUY,
+    order_type = Order.OrderType.LIMIT,
+    price = 10.60,
+    product_id = 71981,
+    size = 1,
+    time_type = Order.TimeType.GOOD_TILL_DAY,
 )
 
 # UPDATE ORDER
@@ -389,8 +389,8 @@ request_list = Update.RequestList()
 request_list.values.extend(
     [
         Update.Request(
-            option=Update.Option.ORDERS,
-            last_updated=0,
+            option = Update.Option.ORDERS,
+            last_updated = 0,
         ),
     ]
 )
@@ -414,8 +414,8 @@ request_list = Update.RequestList()
 request_list.values.extend(
     [
         Update.Request(
-            option=Update.Option.TOTALPORTFOLIO,
-            last_updated=0,
+            option = Update.Option.TOTALPORTFOLIO,
+            last_updated = 0,
         ),
     ]
 )
