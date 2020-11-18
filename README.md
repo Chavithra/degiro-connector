@@ -293,7 +293,7 @@ Here are the main parameters of an Order.
 |size|float|Size of the order.|
 |time_type|Order.TimeType|Duration of the order : GOOD_TILL_DAY or GOOD_TILL_CANCELED|
 
-The full description of an Order is available here : [trading.proto.py](protos/trading/pb/trading.proto)
+The full description of an Order is available here : [trading.proto](protos/trading/pb/trading.proto)
 
 ## 3.1. Order - Create
 ```python
