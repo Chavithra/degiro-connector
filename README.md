@@ -405,7 +405,7 @@ Example : Orders
        product_id      time_type  price  size                                    id  ...  action  order_type stop_price retained_order  sent_to_exchange
     0           0  GOOD_TILL_DAY      2     3  202cb962-ac59-075b-964b-07152d234b70  ...     BUY       LIMIT         16             17                18
 
-For a more comprehensive example : [update.py](examples/quotecast/update.py)
+For a more comprehensive example : [update.py](examples/trading/update.py)
 
 # 5. TotalPortfolio
 
@@ -430,7 +430,7 @@ Example : DataFrame
        degiroCash  flatexCash  totalCash  totalDepositWithdrawal  todayDepositWithdrawal  ...  reportNetliq  reportOverallMargin  reportTotalLongVal  reportDeficit  marginCallStatus
     0           0           1          2                       3                       4  ...            16                   17                  18             19    NO_MARGIN_CALL
 
-For a more comprehensive example : [update.py](examples/quotecast/update.py)
+For a more comprehensive example : [update.py](examples/trading/update.py)
 
 # 6. Config Table
 
