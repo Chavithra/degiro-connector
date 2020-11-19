@@ -160,7 +160,7 @@ class QuotecastParser:
                 value = data['v'][1]
                 product, name = references[reference].split('.')
 
-                if(isinstance(value, str)):
+                if isinstance(value, str):
                     if value[4] == '-':
                         date = datetime.datetime.strptime(
                             value,
@@ -169,7 +169,7 @@ class QuotecastParser:
                         value = datetime.datetime.timestamp(date)
                     elif value[2] == ':':
                         time = value.split(':')
-                        value = time[0] +  time[1] * 60
+                        value = int(time[0]) +  int(time[1]) / 60 + int(time[2]) / 3600
                 else:
                     ticker\
                     .products[int(product)]\
