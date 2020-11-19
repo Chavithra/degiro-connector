@@ -168,8 +168,8 @@ class QuotecastParser:
                         )
                         value = datetime.datetime.timestamp(date)
                     elif value[2] == ':':
-                        time = value.split(':')
-                        value = int(time[0]) +  int(time[1]) / 60 + int(time[2]) / 3600
+                        time = datetime.time.fromisoformat(value)
+                        value = time.hour * 3600 + time.minute * 60 + time.second
                 else:
                     ticker\
                     .products[int(product)]\
