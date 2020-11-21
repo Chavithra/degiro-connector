@@ -68,8 +68,10 @@ def build_sample_ticker(
 
     # SETUP TICKER
     ticker = Ticker()
-    ticker.metadata.response_datetime = str(datetime.datetime.now())
-    ticker.metadata.request_duration = random.uniform(1., 5.)
+    ticker.metadata.response_datetime.GetCurrentTime()
+    ticker.metadata.request_duration.FromNanoseconds(
+        random.randrange(5*10**9)
+    )
 
     # SETUP CTICKER - WITH EXTRA DATA
 

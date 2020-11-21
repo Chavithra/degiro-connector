@@ -62,19 +62,6 @@ class Basic:
         self,
         session_id:str,
     )->Quotecast:
-        """
-        Fetch data from the feed.
-
-        Parameters :
-        session_id {str} -- API's session id.
-
-        Returns :
-        dict
-            response : JSON encoded string fetched from this endpoint.
-            response_datetime : Datetime at which we received the response.
-            request_duration : Duration of the request.
-        """
-
         logger = self._logger
         session = self._session_storage.session
 

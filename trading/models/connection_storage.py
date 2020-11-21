@@ -80,13 +80,13 @@ class ConnectionStorage:
         if not hasattr(self, '_last_success') :
             return False
 
-        return (time.time() - self._last_success) > self.session_timeout
+        return (time.monotonic() - self._last_success) > self.session_timeout
 
     @synchronized
     def response_hook(self, response, *args, **kwargs):
         """ This hook will intercept all the "requests.Response". """
 
-        timestamp = time.time()
+        timestamp = time.monotonic()
         status_code = response.status_code
 
         if self._last_success < timestamp \

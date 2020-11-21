@@ -71,16 +71,6 @@ class API:
         self._connection_storage = ConnectionStorage(basic=self.basic)
 
     def fetch_data(self)->Quotecast:
-        """
-        Fetch data from the feed.
-
-        Returns :
-        dict
-            response : JSON encoded string fetched from this endpoint.
-            response_datetime : Datetime at which we received the response.
-            request_duration : Duration of the request.
-        """
-
         basic = self.basic
         session_id = self.connection_storage.session_id
 
