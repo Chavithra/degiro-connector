@@ -25,19 +25,22 @@ def build_dict_from_ticker(
         preserving_proto_field_name=True,
     )
 
+    response_datetime = ticker.metadata.response_datetime.ToDatetime()
+    request_duration = \
+        ticker.metadata.request_duration.ToMicroseconds()/10**6
+    empty_list = [None] * len(column_list)
+    empty_metrics = dict(zip(column_list, empty_list))
+    empty_metrics['response_datetime'] = response_datetime
+    empty_metrics['request_duration'] = request_duration
+
     # SETUP TICKER DICT
     ticker_dict = dict()
     for product in message_dict['products']:
         # SETUP EMPTY COLUMNS
-        empty_list = [None] * len(column_list)
-        metrics = dict(zip(column_list, empty_list))
+        metrics = empty_metrics.copy()
 
         # SETUP METADATA
         metrics['product_id'] = product
-        metrics['response_datetime'] = \
-            message_dict['metadata']['response_datetime']
-        metrics['request_duration'] = \
-            message_dict['metadata']['request_duration']
 
         # SETUP METRICS
         metrics.update(message_dict['products'][product]['metrics'])
@@ -93,10 +96,10 @@ def merge_tickers(
 
     Args:
         ticker1 (Ticker): Ticker to fill.
-        ticker2 (Ticker):Ticker used to fill.
+        ticker2 (Ticker): Ticker used to fill.
         update_only (bool, optional):
-            Whether or not we want to add products from Ticker2 to
-            Ticker1.
+            Whether or not we want to add products from "ticker2" to
+            "ticker1".
     """
     if update_only == True:
         for ticker2_product in ticker2.products:
