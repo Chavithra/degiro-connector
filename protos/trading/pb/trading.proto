@@ -1,6 +1,7 @@
 syntax = "proto3";
 
 import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
 
 // MESSAGE(S) DEFINITION
 message Order {
@@ -26,14 +27,14 @@ message Order {
   message CheckingResponse {
     string confirmation_id = 1;
     double free_space_new = 2;
-    string response_datetime = 3;
+    google.protobuf.Timestamp response_datetime = 3;
     repeated google.protobuf.Struct transaction_fees = 4;
     repeated google.protobuf.Struct transaction_opposite_fees = 5;
     repeated google.protobuf.Struct transaction_taxes = 6;
   }
   message ConfirmationResponse {
     string orderId = 1;
-    string response_datetime = 2;
+    google.protobuf.Timestamp response_datetime = 2;
   }
 
   // USED TO CHECK ORDER
@@ -129,7 +130,7 @@ message Update {
   }
 
   // PROPERTIES
-  string response_datetime = 1;
+  google.protobuf.Timestamp response_datetime = 1;
   Alerts alerts = 2;
   CashFunds cash_funds = 3;
   HistoricalOrders historical_orders = 4;
@@ -151,7 +152,7 @@ message OrdersHistory {
   }
 
   // PROPERTIES
-  string response_datetime = 1;
+  google.protobuf.Timestamp response_datetime = 1;
   google.protobuf.Struct values = 2;
 }
 
@@ -168,7 +169,7 @@ message TransactionsHistory {
   }
 
   // PROPERTIES
-  string response_datetime = 1;
+  google.protobuf.Timestamp response_datetime = 1;
   google.protobuf.Struct values = 2;
 }
 
@@ -184,7 +185,7 @@ message AccountOverview {
   }
 
   // PROPERTIES
-  string response_datetime = 1;
+  google.protobuf.Timestamp response_datetime = 1;
   google.protobuf.Struct values = 2;
 }
 
@@ -199,7 +200,7 @@ message ProductsLookup {
   }
 
   // PROPERTIES
-  string response_datetime = 1;
+  google.protobuf.Timestamp response_datetime = 1;
   google.protobuf.Struct values = 2;
 }
 

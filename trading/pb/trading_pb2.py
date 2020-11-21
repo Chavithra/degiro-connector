@@ -12,6 +12,7 @@ _sym_db = _symbol_database.Default()
 
 
 from google.protobuf import struct_pb2 as google_dot_protobuf_dot_struct__pb2
+from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
@@ -20,9 +21,9 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x18trading/pb/trading.proto\x1a\x1cgoogle/protobuf/struct.proto\"\xa9\x07\n\x05Order\x12\x1d\n\x06\x61\x63tion\x18\x02 \x01(\x0e\x32\r.Order.Action\x12\n\n\x02id\x18\x07 \x01(\t\x12$\n\norder_type\x18\x03 \x01(\x0e\x32\x10.Order.OrderType\x12\r\n\x05price\x18\x05 \x01(\x01\x12\x12\n\nproduct_id\x18\x01 \x01(\x05\x12\x0c\n\x04size\x18\x06 \x01(\x01\x12\"\n\ttime_type\x18\x04 \x01(\x0e\x32\x0f.Order.TimeType\x12\x15\n\rcontract_size\x18\x08 \x01(\x01\x12\x15\n\rcontract_type\x18\t \x01(\x05\x12\x10\n\x08\x63urrency\x18\n \x01(\t\x12\x0c\n\x04hour\x18\x0b \x01(\t\x12\x14\n\x0cis_deletable\x18\x0c \x01(\x08\x12\x15\n\ris_modifiable\x18\r \x01(\x08\x12\x0f\n\x07product\x18\x0e \x01(\t\x12\x10\n\x08quantity\x18\x0f \x01(\x01\x12\x12\n\nstop_price\x18\x10 \x01(\x01\x12\x19\n\x11total_order_value\x18\x11 \x01(\x01\x12\x16\n\x0eretained_order\x18\x12 \x01(\x08\x12\x18\n\x10sent_to_exchange\x18\x13 \x01(\x08\x1a\x81\x02\n\x10\x43heckingResponse\x12\x19\n\x11response_datetime\x18\x01 \x01(\t\x12\x17\n\x0f\x63onfirmation_id\x18\x02 \x01(\t\x12\x16\n\x0e\x66ree_space_new\x18\x03 \x01(\x01\x12\x31\n\x10transaction_fees\x18\x04 \x03(\x0b\x32\x17.google.protobuf.Struct\x12:\n\x19transaction_opposite_fees\x18\x05 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x32\n\x11transaction_taxes\x18\x06 \x03(\x0b\x32\x17.google.protobuf.Struct\x1a\x42\n\x14\x43onfirmationResponse\x12\x19\n\x11response_datetime\x18\x01 \x01(\t\x12\x0f\n\x07orderId\x18\x02 \x01(\t\"\x1b\n\x06\x41\x63tion\x12\x07\n\x03\x42UY\x10\x00\x12\x08\n\x04SELL\x10\x01\"A\n\tOrderType\x12\t\n\x05LIMIT\x10\x00\x12\x0e\n\nSTOP_LIMIT\x10\x01\x12\n\n\x06MARKET\x10\x02\x12\r\n\tSTOP_LOSS\x10\x03\"S\n\x08TimeType\x12\r\n\tUNKNOWN_0\x10\x00\x12\x11\n\rGOOD_TILL_DAY\x10\x01\x12\r\n\tUNKNOWN_2\x10\x02\x12\x16\n\x12GOOD_TILL_CANCELED\x10\x03\"\x9e\x01\n\x0bTransaction\x12\x1d\n\x06\x61\x63tion\x18\x01 \x01(\x0e\x32\r.Order.Action\x12\x10\n\x08\x63urrency\x18\x02 \x01(\t\x12\x0c\n\x04hour\x18\x03 \x01(\t\x12\n\n\x02id\x18\x04 \x01(\x05\x12\r\n\x05price\x18\x05 \x01(\x01\x12\x0f\n\x07product\x18\x06 \x01(\t\x12\x12\n\nproduct_id\x18\x07 \x01(\x05\x12\x10\n\x08quantity\x18\x08 \x01(\x01\"\x9f\x08\n\x06Update\x12\x19\n\x11response_datetime\x18\x01 \x01(\t\x12\x1e\n\x06\x61lerts\x18\x02 \x01(\x0b\x32\x0e.Update.Alerts\x12%\n\ncash_funds\x18\x03 \x01(\x0b\x32\x11.Update.CashFunds\x12\x33\n\x11historical_orders\x18\x04 \x01(\x0b\x32\x18.Update.HistoricalOrders\x12\x1e\n\x06orders\x18\x05 \x01(\x0b\x32\x0e.Update.Orders\x12$\n\tportfolio\x18\x06 \x01(\x0b\x32\x11.Update.Portfolio\x12/\n\x0ftotal_portfolio\x18\x07 \x01(\x0b\x32\x16.Update.TotalPortfolio\x12*\n\x0ctransactions\x18\x08 \x01(\x0b\x32\x14.Update.Transactions\x1a?\n\x07Request\x12\x1e\n\x06option\x18\x01 \x01(\x0e\x32\x0e.Update.Option\x12\x14\n\x0clast_updated\x18\x02 \x01(\x05\x1a.\n\x0bRequestList\x12\x1f\n\x06values\x18\x01 \x03(\x0b\x32\x0f.Update.Request\x1aG\n\x06\x41lerts\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1aJ\n\tCashFunds\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1a@\n\x10HistoricalOrders\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\x16\n\x06values\x18\x02 \x03(\x0b\x32\x06.Order\x1a\x36\n\x06Orders\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\x16\n\x06values\x18\x02 \x03(\x0b\x32\x06.Order\x1aJ\n\tPortfolio\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x03(\x0b\x32\x17.google.protobuf.Struct\x1aO\n\x0eTotalPortfolio\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1a\x42\n\x0cTransactions\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\x1c\n\x06values\x18\x02 \x03(\x0b\x32\x0c.Transaction\"z\n\x06Option\x12\n\n\x06\x41LERTS\x10\x00\x12\r\n\tCASHFUNDS\x10\x01\x12\x14\n\x10HISTORICALORDERS\x10\x02\x12\n\n\x06ORDERS\x10\x03\x12\r\n\tPORTFOLIO\x10\x04\x12\x12\n\x0eTOTALPORTFOLIO\x10\x05\x12\x10\n\x0cTRANSACTIONS\x10\x06\"\xab\x01\n\rOrdersHistory\x12\x19\n\x11response_datetime\x18\x01 \x01(\t\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1aV\n\x07Request\x12\x11\n\tfrom_date\x18\x01 \x01(\t\x12\x0f\n\x07to_date\x18\x02 \x01(\t\x12\x13\n\x0bint_account\x18\x03 \x01(\x05\x12\x12\n\nsession_id\x18\x04 \x01(\t\"\xd3\x01\n\x13TransactionsHistory\x12\x19\n\x11response_datetime\x18\x01 \x01(\t\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1ax\n\x07Request\x12\x11\n\tfrom_date\x18\x01 \x01(\t\x12\x0f\n\x07to_date\x18\x02 \x01(\t\x12\x13\n\x0bint_account\x18\x03 \x01(\x05\x12 \n\x18groupTransactionsByOrder\x18\x04 \x01(\x08\x12\x12\n\nsession_id\x18\x05 \x01(\t\"\xad\x01\n\x0f\x41\x63\x63ountOverview\x12\x19\n\x11response_datetime\x18\x01 \x01(\t\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1aV\n\x07Request\x12\x11\n\tfrom_date\x18\x01 \x01(\t\x12\x0f\n\x07to_date\x18\x02 \x01(\t\x12\x13\n\x0bint_account\x18\x03 \x01(\x05\x12\x12\n\nsession_id\x18\x04 \x01(\t\"\xbc\x01\n\x0eProductsLookup\x12\x19\n\x11response_datetime\x18\x01 \x01(\t\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1a\x66\n\x07Request\x12\x13\n\x0bsearch_text\x18\x01 \x01(\t\x12\r\n\x05limit\x18\x02 \x01(\x05\x12\x0e\n\x06offset\x18\x03 \x01(\x05\x12\x13\n\x0bint_account\x18\x04 \x01(\x05\x12\x12\n\nsession_id\x18\x05 \x01(\t\"F\n\x0b\x43redentials\x12\x13\n\x0bint_account\x18\x01 \x01(\x05\x12\x10\n\x08username\x18\x02 \x01(\t\x12\x10\n\x08password\x18\x03 \x01(\tb\x06proto3'
+  serialized_pb=b'\n\x18trading/pb/trading.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xe1\x07\n\x05Order\x12\x1d\n\x06\x61\x63tion\x18\x02 \x01(\x0e\x32\r.Order.Action\x12\n\n\x02id\x18\x07 \x01(\t\x12$\n\norder_type\x18\x03 \x01(\x0e\x32\x10.Order.OrderType\x12\r\n\x05price\x18\x05 \x01(\x01\x12\x12\n\nproduct_id\x18\x01 \x01(\x05\x12\x0c\n\x04size\x18\x06 \x01(\x01\x12\"\n\ttime_type\x18\x04 \x01(\x0e\x32\x0f.Order.TimeType\x12\x15\n\rcontract_size\x18\x08 \x01(\x01\x12\x15\n\rcontract_type\x18\t \x01(\x05\x12\x10\n\x08\x63urrency\x18\n \x01(\t\x12\x0c\n\x04hour\x18\x0b \x01(\t\x12\x14\n\x0cis_deletable\x18\x0c \x01(\x08\x12\x15\n\ris_modifiable\x18\r \x01(\x08\x12\x0f\n\x07product\x18\x0e \x01(\t\x12\x10\n\x08quantity\x18\x0f \x01(\x01\x12\x12\n\nstop_price\x18\x10 \x01(\x01\x12\x19\n\x11total_order_value\x18\x11 \x01(\x01\x12\x16\n\x0eretained_order\x18\x12 \x01(\x08\x12\x18\n\x10sent_to_exchange\x18\x13 \x01(\x08\x1a\x9d\x02\n\x10\x43heckingResponse\x12\x17\n\x0f\x63onfirmation_id\x18\x01 \x01(\t\x12\x16\n\x0e\x66ree_space_new\x18\x02 \x01(\x01\x12\x35\n\x11response_datetime\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x31\n\x10transaction_fees\x18\x04 \x03(\x0b\x32\x17.google.protobuf.Struct\x12:\n\x19transaction_opposite_fees\x18\x05 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x32\n\x11transaction_taxes\x18\x06 \x03(\x0b\x32\x17.google.protobuf.Struct\x1a^\n\x14\x43onfirmationResponse\x12\x0f\n\x07orderId\x18\x01 \x01(\t\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"\x1b\n\x06\x41\x63tion\x12\x07\n\x03\x42UY\x10\x00\x12\x08\n\x04SELL\x10\x01\"A\n\tOrderType\x12\t\n\x05LIMIT\x10\x00\x12\x0e\n\nSTOP_LIMIT\x10\x01\x12\n\n\x06MARKET\x10\x02\x12\r\n\tSTOP_LOSS\x10\x03\"S\n\x08TimeType\x12\r\n\tUNKNOWN_0\x10\x00\x12\x11\n\rGOOD_TILL_DAY\x10\x01\x12\r\n\tUNKNOWN_2\x10\x02\x12\x16\n\x12GOOD_TILL_CANCELED\x10\x03\"\x9e\x01\n\x0bTransaction\x12\x1d\n\x06\x61\x63tion\x18\x01 \x01(\x0e\x32\r.Order.Action\x12\x10\n\x08\x63urrency\x18\x02 \x01(\t\x12\x0c\n\x04hour\x18\x03 \x01(\t\x12\n\n\x02id\x18\x04 \x01(\x05\x12\r\n\x05price\x18\x05 \x01(\x01\x12\x0f\n\x07product\x18\x06 \x01(\t\x12\x12\n\nproduct_id\x18\x07 \x01(\x05\x12\x10\n\x08quantity\x18\x08 \x01(\x01\"\xbb\x08\n\x06Update\x12\x35\n\x11response_datetime\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x1e\n\x06\x61lerts\x18\x02 \x01(\x0b\x32\x0e.Update.Alerts\x12%\n\ncash_funds\x18\x03 \x01(\x0b\x32\x11.Update.CashFunds\x12\x33\n\x11historical_orders\x18\x04 \x01(\x0b\x32\x18.Update.HistoricalOrders\x12\x1e\n\x06orders\x18\x05 \x01(\x0b\x32\x0e.Update.Orders\x12$\n\tportfolio\x18\x06 \x01(\x0b\x32\x11.Update.Portfolio\x12/\n\x0ftotal_portfolio\x18\x07 \x01(\x0b\x32\x16.Update.TotalPortfolio\x12*\n\x0ctransactions\x18\x08 \x01(\x0b\x32\x14.Update.Transactions\x1a?\n\x07Request\x12\x1e\n\x06option\x18\x01 \x01(\x0e\x32\x0e.Update.Option\x12\x14\n\x0clast_updated\x18\x02 \x01(\x05\x1a.\n\x0bRequestList\x12\x1f\n\x06values\x18\x01 \x03(\x0b\x32\x0f.Update.Request\x1aG\n\x06\x41lerts\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1aJ\n\tCashFunds\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1a@\n\x10HistoricalOrders\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\x16\n\x06values\x18\x02 \x03(\x0b\x32\x06.Order\x1a\x36\n\x06Orders\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\x16\n\x06values\x18\x02 \x03(\x0b\x32\x06.Order\x1aJ\n\tPortfolio\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x03(\x0b\x32\x17.google.protobuf.Struct\x1aO\n\x0eTotalPortfolio\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1a\x42\n\x0cTransactions\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\x1c\n\x06values\x18\x02 \x03(\x0b\x32\x0c.Transaction\"z\n\x06Option\x12\n\n\x06\x41LERTS\x10\x00\x12\r\n\tCASHFUNDS\x10\x01\x12\x14\n\x10HISTORICALORDERS\x10\x02\x12\n\n\x06ORDERS\x10\x03\x12\r\n\tPORTFOLIO\x10\x04\x12\x12\n\x0eTOTALPORTFOLIO\x10\x05\x12\x10\n\x0cTRANSACTIONS\x10\x06\"\xc7\x01\n\rOrdersHistory\x12\x35\n\x11response_datetime\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1aV\n\x07Request\x12\x11\n\tfrom_date\x18\x01 \x01(\t\x12\x0f\n\x07to_date\x18\x02 \x01(\t\x12\x13\n\x0bint_account\x18\x03 \x01(\x05\x12\x12\n\nsession_id\x18\x04 \x01(\t\"\xef\x01\n\x13TransactionsHistory\x12\x35\n\x11response_datetime\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1ax\n\x07Request\x12\x11\n\tfrom_date\x18\x01 \x01(\t\x12\x0f\n\x07to_date\x18\x02 \x01(\t\x12\x13\n\x0bint_account\x18\x03 \x01(\x05\x12 \n\x18groupTransactionsByOrder\x18\x04 \x01(\x08\x12\x12\n\nsession_id\x18\x05 \x01(\t\"\xc9\x01\n\x0f\x41\x63\x63ountOverview\x12\x35\n\x11response_datetime\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1aV\n\x07Request\x12\x11\n\tfrom_date\x18\x01 \x01(\t\x12\x0f\n\x07to_date\x18\x02 \x01(\t\x12\x13\n\x0bint_account\x18\x03 \x01(\x05\x12\x12\n\nsession_id\x18\x04 \x01(\t\"\xd8\x01\n\x0eProductsLookup\x12\x35\n\x11response_datetime\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1a\x66\n\x07Request\x12\x13\n\x0bsearch_text\x18\x01 \x01(\t\x12\r\n\x05limit\x18\x02 \x01(\x05\x12\x0e\n\x06offset\x18\x03 \x01(\x05\x12\x13\n\x0bint_account\x18\x04 \x01(\x05\x12\x12\n\nsession_id\x18\x05 \x01(\t\"F\n\x0b\x43redentials\x12\x13\n\x0bint_account\x18\x01 \x01(\x05\x12\x10\n\x08username\x18\x02 \x01(\t\x12\x10\n\x08password\x18\x03 \x01(\tb\x06proto3'
   ,
-  dependencies=[google_dot_protobuf_dot_struct__pb2.DESCRIPTOR,])
+  dependencies=[google_dot_protobuf_dot_struct__pb2.DESCRIPTOR,google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,])
 
 
 
@@ -46,8 +47,8 @@ _ORDER_ACTION = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=817,
-  serialized_end=844,
+  serialized_start=906,
+  serialized_end=933,
 )
 _sym_db.RegisterEnumDescriptor(_ORDER_ACTION)
 
@@ -81,8 +82,8 @@ _ORDER_ORDERTYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=846,
-  serialized_end=911,
+  serialized_start=935,
+  serialized_end=1000,
 )
 _sym_db.RegisterEnumDescriptor(_ORDER_ORDERTYPE)
 
@@ -116,8 +117,8 @@ _ORDER_TIMETYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=913,
-  serialized_end=996,
+  serialized_start=1002,
+  serialized_end=1085,
 )
 _sym_db.RegisterEnumDescriptor(_ORDER_TIMETYPE)
 
@@ -166,8 +167,8 @@ _UPDATE_OPTION = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=2093,
-  serialized_end=2215,
+  serialized_start=2210,
+  serialized_end=2332,
 )
 _sym_db.RegisterEnumDescriptor(_UPDATE_OPTION)
 
@@ -181,23 +182,23 @@ _ORDER_CHECKINGRESPONSE = _descriptor.Descriptor(
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='response_datetime', full_name='Order.CheckingResponse.response_datetime', index=0,
+      name='confirmation_id', full_name='Order.CheckingResponse.confirmation_id', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='confirmation_id', full_name='Order.CheckingResponse.confirmation_id', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
+      name='free_space_new', full_name='Order.CheckingResponse.free_space_new', index=1,
+      number=2, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='free_space_new', full_name='Order.CheckingResponse.free_space_new', index=2,
-      number=3, type=1, cpp_type=5, label=1,
-      has_default_value=False, default_value=float(0),
+      name='response_datetime', full_name='Order.CheckingResponse.response_datetime', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
@@ -234,8 +235,8 @@ _ORDER_CHECKINGRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=490,
-  serialized_end=747,
+  serialized_start=523,
+  serialized_end=808,
 )
 
 _ORDER_CONFIRMATIONRESPONSE = _descriptor.Descriptor(
@@ -247,16 +248,16 @@ _ORDER_CONFIRMATIONRESPONSE = _descriptor.Descriptor(
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='response_datetime', full_name='Order.ConfirmationResponse.response_datetime', index=0,
+      name='orderId', full_name='Order.ConfirmationResponse.orderId', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='orderId', full_name='Order.ConfirmationResponse.orderId', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
+      name='response_datetime', full_name='Order.ConfirmationResponse.response_datetime', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
@@ -272,8 +273,8 @@ _ORDER_CONFIRMATIONRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=749,
-  serialized_end=815,
+  serialized_start=810,
+  serialized_end=904,
 )
 
 _ORDER = _descriptor.Descriptor(
@@ -432,8 +433,8 @@ _ORDER = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=59,
-  serialized_end=996,
+  serialized_start=92,
+  serialized_end=1085,
 )
 
 
@@ -513,8 +514,8 @@ _TRANSACTION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=999,
-  serialized_end=1157,
+  serialized_start=1088,
+  serialized_end=1246,
 )
 
 
@@ -552,8 +553,8 @@ _UPDATE_REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1484,
-  serialized_end=1547,
+  serialized_start=1601,
+  serialized_end=1664,
 )
 
 _UPDATE_REQUESTLIST = _descriptor.Descriptor(
@@ -583,8 +584,8 @@ _UPDATE_REQUESTLIST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1549,
-  serialized_end=1595,
+  serialized_start=1666,
+  serialized_end=1712,
 )
 
 _UPDATE_ALERTS = _descriptor.Descriptor(
@@ -621,8 +622,8 @@ _UPDATE_ALERTS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1597,
-  serialized_end=1668,
+  serialized_start=1714,
+  serialized_end=1785,
 )
 
 _UPDATE_CASHFUNDS = _descriptor.Descriptor(
@@ -659,8 +660,8 @@ _UPDATE_CASHFUNDS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1670,
-  serialized_end=1744,
+  serialized_start=1787,
+  serialized_end=1861,
 )
 
 _UPDATE_HISTORICALORDERS = _descriptor.Descriptor(
@@ -697,8 +698,8 @@ _UPDATE_HISTORICALORDERS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1746,
-  serialized_end=1810,
+  serialized_start=1863,
+  serialized_end=1927,
 )
 
 _UPDATE_ORDERS = _descriptor.Descriptor(
@@ -735,8 +736,8 @@ _UPDATE_ORDERS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1812,
-  serialized_end=1866,
+  serialized_start=1929,
+  serialized_end=1983,
 )
 
 _UPDATE_PORTFOLIO = _descriptor.Descriptor(
@@ -773,8 +774,8 @@ _UPDATE_PORTFOLIO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1868,
-  serialized_end=1942,
+  serialized_start=1985,
+  serialized_end=2059,
 )
 
 _UPDATE_TOTALPORTFOLIO = _descriptor.Descriptor(
@@ -811,8 +812,8 @@ _UPDATE_TOTALPORTFOLIO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1944,
-  serialized_end=2023,
+  serialized_start=2061,
+  serialized_end=2140,
 )
 
 _UPDATE_TRANSACTIONS = _descriptor.Descriptor(
@@ -849,8 +850,8 @@ _UPDATE_TRANSACTIONS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2025,
-  serialized_end=2091,
+  serialized_start=2142,
+  serialized_end=2208,
 )
 
 _UPDATE = _descriptor.Descriptor(
@@ -863,8 +864,8 @@ _UPDATE = _descriptor.Descriptor(
   fields=[
     _descriptor.FieldDescriptor(
       name='response_datetime', full_name='Update.response_datetime', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
@@ -930,8 +931,8 @@ _UPDATE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1160,
-  serialized_end=2215,
+  serialized_start=1249,
+  serialized_end=2332,
 )
 
 
@@ -983,8 +984,8 @@ _ORDERSHISTORY_REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2303,
-  serialized_end=2389,
+  serialized_start=2448,
+  serialized_end=2534,
 )
 
 _ORDERSHISTORY = _descriptor.Descriptor(
@@ -997,8 +998,8 @@ _ORDERSHISTORY = _descriptor.Descriptor(
   fields=[
     _descriptor.FieldDescriptor(
       name='response_datetime', full_name='OrdersHistory.response_datetime', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
@@ -1021,8 +1022,8 @@ _ORDERSHISTORY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2218,
-  serialized_end=2389,
+  serialized_start=2335,
+  serialized_end=2534,
 )
 
 
@@ -1081,8 +1082,8 @@ _TRANSACTIONSHISTORY_REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2483,
-  serialized_end=2603,
+  serialized_start=2656,
+  serialized_end=2776,
 )
 
 _TRANSACTIONSHISTORY = _descriptor.Descriptor(
@@ -1095,8 +1096,8 @@ _TRANSACTIONSHISTORY = _descriptor.Descriptor(
   fields=[
     _descriptor.FieldDescriptor(
       name='response_datetime', full_name='TransactionsHistory.response_datetime', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
@@ -1119,8 +1120,8 @@ _TRANSACTIONSHISTORY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2392,
-  serialized_end=2603,
+  serialized_start=2537,
+  serialized_end=2776,
 )
 
 
@@ -1172,8 +1173,8 @@ _ACCOUNTOVERVIEW_REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2303,
-  serialized_end=2389,
+  serialized_start=2448,
+  serialized_end=2534,
 )
 
 _ACCOUNTOVERVIEW = _descriptor.Descriptor(
@@ -1186,8 +1187,8 @@ _ACCOUNTOVERVIEW = _descriptor.Descriptor(
   fields=[
     _descriptor.FieldDescriptor(
       name='response_datetime', full_name='AccountOverview.response_datetime', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
@@ -1210,8 +1211,8 @@ _ACCOUNTOVERVIEW = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2606,
-  serialized_end=2779,
+  serialized_start=2779,
+  serialized_end=2980,
 )
 
 
@@ -1270,8 +1271,8 @@ _PRODUCTSLOOKUP_REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2868,
-  serialized_end=2970,
+  serialized_start=3097,
+  serialized_end=3199,
 )
 
 _PRODUCTSLOOKUP = _descriptor.Descriptor(
@@ -1284,8 +1285,8 @@ _PRODUCTSLOOKUP = _descriptor.Descriptor(
   fields=[
     _descriptor.FieldDescriptor(
       name='response_datetime', full_name='ProductsLookup.response_datetime', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
@@ -1308,8 +1309,8 @@ _PRODUCTSLOOKUP = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2782,
-  serialized_end=2970,
+  serialized_start=2983,
+  serialized_end=3199,
 )
 
 
@@ -1354,14 +1355,16 @@ _CREDENTIALS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2972,
-  serialized_end=3042,
+  serialized_start=3201,
+  serialized_end=3271,
 )
 
+_ORDER_CHECKINGRESPONSE.fields_by_name['response_datetime'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _ORDER_CHECKINGRESPONSE.fields_by_name['transaction_fees'].message_type = google_dot_protobuf_dot_struct__pb2._STRUCT
 _ORDER_CHECKINGRESPONSE.fields_by_name['transaction_opposite_fees'].message_type = google_dot_protobuf_dot_struct__pb2._STRUCT
 _ORDER_CHECKINGRESPONSE.fields_by_name['transaction_taxes'].message_type = google_dot_protobuf_dot_struct__pb2._STRUCT
 _ORDER_CHECKINGRESPONSE.containing_type = _ORDER
+_ORDER_CONFIRMATIONRESPONSE.fields_by_name['response_datetime'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _ORDER_CONFIRMATIONRESPONSE.containing_type = _ORDER
 _ORDER.fields_by_name['action'].enum_type = _ORDER_ACTION
 _ORDER.fields_by_name['order_type'].enum_type = _ORDER_ORDERTYPE
@@ -1388,6 +1391,7 @@ _UPDATE_TOTALPORTFOLIO.fields_by_name['values'].message_type = google_dot_protob
 _UPDATE_TOTALPORTFOLIO.containing_type = _UPDATE
 _UPDATE_TRANSACTIONS.fields_by_name['values'].message_type = _TRANSACTION
 _UPDATE_TRANSACTIONS.containing_type = _UPDATE
+_UPDATE.fields_by_name['response_datetime'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _UPDATE.fields_by_name['alerts'].message_type = _UPDATE_ALERTS
 _UPDATE.fields_by_name['cash_funds'].message_type = _UPDATE_CASHFUNDS
 _UPDATE.fields_by_name['historical_orders'].message_type = _UPDATE_HISTORICALORDERS
@@ -1397,12 +1401,16 @@ _UPDATE.fields_by_name['total_portfolio'].message_type = _UPDATE_TOTALPORTFOLIO
 _UPDATE.fields_by_name['transactions'].message_type = _UPDATE_TRANSACTIONS
 _UPDATE_OPTION.containing_type = _UPDATE
 _ORDERSHISTORY_REQUEST.containing_type = _ORDERSHISTORY
+_ORDERSHISTORY.fields_by_name['response_datetime'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _ORDERSHISTORY.fields_by_name['values'].message_type = google_dot_protobuf_dot_struct__pb2._STRUCT
 _TRANSACTIONSHISTORY_REQUEST.containing_type = _TRANSACTIONSHISTORY
+_TRANSACTIONSHISTORY.fields_by_name['response_datetime'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _TRANSACTIONSHISTORY.fields_by_name['values'].message_type = google_dot_protobuf_dot_struct__pb2._STRUCT
 _ACCOUNTOVERVIEW_REQUEST.containing_type = _ACCOUNTOVERVIEW
+_ACCOUNTOVERVIEW.fields_by_name['response_datetime'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _ACCOUNTOVERVIEW.fields_by_name['values'].message_type = google_dot_protobuf_dot_struct__pb2._STRUCT
 _PRODUCTSLOOKUP_REQUEST.containing_type = _PRODUCTSLOOKUP
+_PRODUCTSLOOKUP.fields_by_name['response_datetime'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _PRODUCTSLOOKUP.fields_by_name['values'].message_type = google_dot_protobuf_dot_struct__pb2._STRUCT
 DESCRIPTOR.message_types_by_name['Order'] = _ORDER
 DESCRIPTOR.message_types_by_name['Transaction'] = _TRANSACTION

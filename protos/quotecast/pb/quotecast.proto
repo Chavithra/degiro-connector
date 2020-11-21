@@ -1,9 +1,12 @@
 syntax = "proto3";
 
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/duration.proto";
+
 /* MESSAGE(S) DEFINITION */
 message Metadata {
-  string response_datetime = 1;
-  double request_duration = 2;
+  google.protobuf.Timestamp response_datetime = 1;
+  google.protobuf.Duration request_duration = 2;
 }
 
 message Quotecast {
