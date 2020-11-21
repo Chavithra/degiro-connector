@@ -9,8 +9,8 @@ Degiro's API :
 |**Feature**|**Description**|
 |:-|:-|
 |Real-time data|Fetch financial product's properties.<br> For instance the real-time stock Price/Volume.|
-|Order|Create, update, delete an ORDER.|
-|Orders|Check the state of pending orders.|
+|Order|Create, update, delete an Order.|
+|Orders|Check the state of pending Orders.|
 |Portoflio|Check the state of bought financial products (share/etf...).|
 |TotalPorfolio|Have aggregated information about your assets.|
 |OrderHistory|Information about all Orders created between two dates.|
