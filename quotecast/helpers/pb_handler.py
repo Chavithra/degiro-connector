@@ -18,37 +18,20 @@ def build_dict_from_ticker(
     ticker:Ticker,
     column_list:List[str]=[],
 )->List[Dict[str, str]]:
-    # MESSAGE TO DICT
-    message_dict = json_format.MessageToDict(
-        message=ticker,
-        including_default_value_fields=True,
-        preserving_proto_field_name=True,
-    )
 
-    response_datetime = ticker.metadata.response_datetime.ToDatetime()
-    request_duration = \
-        ticker.metadata.request_duration.ToMicroseconds()/10**6
     empty_list = [None] * len(column_list)
     empty_metrics = dict(zip(column_list, empty_list))
-    empty_metrics['response_datetime'] = response_datetime
-    empty_metrics['request_duration'] = request_duration
+    empty_metrics['response_datetime'] = \
+        ticker.metadata.response_datetime.ToJsonString()
+    empty_metrics['request_duration'] = \
+        ticker.metadata.request_duration.ToMicroseconds()/10**6
 
-    # SETUP TICKER DICT
     ticker_dict = dict()
-    for product in message_dict['products']:
-        # SETUP EMPTY COLUMNS
-        metrics = empty_metrics.copy()
-
-        # SETUP METADATA
-        metrics['product_id'] = product
-
-        # SETUP METRICS
-        metrics.update(message_dict['products'][product]['metrics'])
-        
-        ticker_dict[product] = metrics
+    for product in ticker.products:
+        ticker_dict[product] = empty_metrics.copy()
+        ticker_dict[product].update(ticker.products[product].metrics)
 
     return ticker_dict
-
 
 def build_df_from_ticker(
     ticker:Ticker,
