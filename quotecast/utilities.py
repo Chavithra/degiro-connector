@@ -110,9 +110,8 @@ def fetch_data(
         logger = build_logger()
     if session is None:
         session = build_session()
-    
-    url = Endpoint.URL
-    url = f'{url}/{session_id}'
+
+    url = f'{Endpoint.URL}/{session_id}'
 
     request = requests.Request(method='GET', url=url)
     prepped = session.prepare_request(request=request)
@@ -131,19 +130,6 @@ def fetch_data(
     # We could have used : response.cookies._now
     quotecast.metadata.response_datetime.GetCurrentTime()
     quotecast.metadata.request_duration.FromNanoseconds(duration_ns)
-
-    logger.debug(
-        'fetch_data:json_data.response_json: %s',
-        quotecast.json_data
-    )
-    logger.debug(
-        'fetch_data:metadata.response_datetime: %s',
-        quotecast.metadata.response_datetime.ToJsonString()
-    )
-    logger.debug(
-        'fetch_data:metadata.request_duration: %s',
-        quotecast.metadata.request_duration
-    )
 
     return quotecast
 
@@ -186,8 +172,6 @@ def subscribe(
 
     session_request = requests.Request(method='POST', url=url, data=data)
     prepped = session.prepare_request(request=session_request)
-
-    logger.debug('subscribe:payload: %s', data)
     
     try:
         response_raw = session.send(request=prepped, verify=False)
@@ -200,14 +184,5 @@ def subscribe(
     except Exception as e:
         logger.fatal(e)
         return False
-
-    logger.debug(
-        'subscribe:response.text: %s',
-        response_raw.text
-    )
-    logger.debug(
-        'subscribe:response.status_code: %s',
-        response_raw.status_code
-    )
 
     return response

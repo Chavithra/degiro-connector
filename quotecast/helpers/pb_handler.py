@@ -18,7 +18,6 @@ def build_dict_from_ticker(
     ticker:Ticker,
     column_list:List[str]=[],
 )->List[Dict[str, str]]:
-
     empty_list = [None] * len(column_list)
     empty_metrics = dict(zip(column_list, empty_list))
     empty_metrics['response_datetime'] = \
