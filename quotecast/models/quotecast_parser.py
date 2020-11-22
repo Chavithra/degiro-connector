@@ -103,10 +103,10 @@ class QuotecastParser:
     following __values :
         * "a_req" : subscription
         * "a_rel" : unsubscription
-        * "un" : data
-        * "us" : data
         * "d" : rejected subscription
         * "ue" : data not available
+        * "un" : numeric data
+        * "us" : string data
         * ... (this list may not be exhaustive)
 
     Depending on the MESSAGE_TYPE different kind of information are stored
@@ -154,26 +154,25 @@ class QuotecastParser:
         # SETUP PRODUCTS & METRICS
         parsed_json = json.loads(quotecast.json_data)
         for data in parsed_json:
-            if  data['m'] == 'un' \
-            or  data['m'] == 'us':
+            if  data['m'] == 'un' :
                 reference = data['v'][0]
                 value = data['v'][1]
                 product, name = references[reference].split('.')
-
-                if isinstance(value, str):
-                    if value[4] == '-':
-                        date = datetime.datetime.strptime(
-                            value,
-                            '%Y-%m-%d',
-                        )
-                        value = datetime.datetime.timestamp(date)
-                    elif value[2] == ':':
-                        time = datetime.time.fromisoformat(value)
-                        value = time.hour * 3600 + time.minute * 60 + time.second
-                else:
-                    ticker\
-                    .products[int(product)]\
-                    .metrics[name] = float(value)
+                ticker.products[int(product)].metrics[name] = value
+            elif data['m'] == 'us':
+                reference = data['v'][0]
+                value = data['v'][1]
+                product, name = references[reference].split('.')
+                if value[4] == '-':
+                    date = datetime.datetime.strptime(
+                        value,
+                        '%Y-%m-%d',
+                    )
+                    value = datetime.datetime.timestamp(date)
+                elif value[2] == ':':
+                    time = datetime.time.fromisoformat(value)
+                    value = time.hour * 3600 + time.minute * 60 + time.second
+                ticker.products[int(product)].metrics[name] = value
             elif data['m'] == 'a_req':
                 references[data['v'][1]] = data['v'][0]
             elif data['m'] == 'a_rel':
