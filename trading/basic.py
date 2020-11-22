@@ -71,7 +71,7 @@ class Basic:
         request_list:Update.RequestList,
         session_id:str,
         raw:bool=False,
-    ) -> str:
+    )->Union[dict, Update]:
         credentials = self._credentials
         logger = self._logger
         session = self._session_storage.session

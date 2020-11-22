@@ -70,7 +70,7 @@ class API:
         self,
         request_list:Update.RequestList,
         raw:bool=False,
-    )->Update:
+    )->Union[dict, Update]:
         basic = self._basic
         session_id = self._connection_storage.session_id
 

@@ -101,10 +101,10 @@ def account_overview_request_to_api(
     return request_dict
 
 # API TO GRPC
-def build_order_from_payload(
-    order_payload:dict,
-    return_dict:bool=False,
-)->Union[Order, dict]:
+def setup_update_orders(
+    update:Update,
+    update_payload:dict,
+):
     """ Build an "Order" object using "dict" returned by the API.
     Parameters:
         order {dict}
@@ -113,76 +113,70 @@ def build_order_from_payload(
         {Order}
     """
 
-    order_dict = dict()
-    for attribute in order_payload['value']:
-        if  'name' in attribute \
-            and 'value' in attribute \
-            and attribute['name'] in __ORDER_MATCHING:
-            order_dict[__ORDER_MATCHING[attribute['name']]] = attribute['value']
-
-    order_dict['action'] = __ACTION_MATCHING[order_dict['action']]
-
-    if return_dict == True:
-        return order_dict
-    else:
-        return Order(**order_dict)
-
-def build_update_from_payload(update_payload:dict)->Update:
-    update_dict = dict()
-    update_dict['response_datetime'] = str(datetime.datetime.now())
-    update = Update()
-
-    # ORDERS
     if 'orders' in update_payload:
-        update_dict['orders'] = dict()
-        update_dict['orders']['values'] = list()
-        update_dict['orders']['last_updated'] = \
+        update.orders.last_updated = \
             update_payload['orders']['lastUpdated']
 
         for order in update_payload['orders']['value']:
-            update_dict['orders']['values'].append(
-                build_order_from_payload(
-                    order_payload=order,
-                    return_dict=True,
-                )
-            )
+            order_dict = dict()
+            for attribute in order['value']:
+                if  'name' in attribute \
+                and 'value' in attribute \
+                and attribute['name'] in __ORDER_MATCHING:
+                    order_dict[__ORDER_MATCHING[attribute['name']]] = \
+                        attribute['value']
 
-    # PORTFOLIO
+            order_dict['action'] = \
+                __ACTION_MATCHING[order_dict['action']]
+            update.orders.values.append(Order(**order_dict))
+
+def setup_update_portfolio(
+    update:Update,
+    update_payload:dict,
+):
     if 'portfolio' in update_payload:
-        update_dict['portfolio'] = dict()
-        update_dict['portfolio']['values'] = list()
-        update_dict['portfolio']['last_updated'] = \
+        update.portfolio.last_updated = \
             update_payload['portfolio']['lastUpdated']
-
+            
         for positionrow in update_payload['portfolio']['value']:
-            positionrow_dict = dict()
+            value = update.portfolio.values.add()
             for attribute in positionrow['value']:
-                if \
-                    'name' in attribute \
-                    and 'value' in attribute:
-                    name = attribute['name']
-                    value = attribute['value']
-                    positionrow_dict[name] = value
-            update_dict['portfolio']['values'].append(positionrow_dict)
-    
-    # TOTALPORTFOLIO
+                if  'name' in attribute \
+                and 'value' in attribute:
+                    value[attribute['name']] = attribute['value']
+
+def setup_update_total_portfolio(
+    update:Update,
+    update_payload:dict,
+):
     if 'totalPortfolio' in update_payload:
-        update_dict['total_portfolio'] = dict()
-        update_dict['total_portfolio']['values'] = dict()
-        update_dict['total_portfolio']['last_updated'] = \
+        update.total_portfolio.last_updated = \
             update_payload['totalPortfolio']['lastUpdated']
 
         for attribute in update_payload['totalPortfolio']['value']:
             if  'name' in attribute \
-                and 'value' in attribute:
+            and 'value' in attribute:
                 name = attribute['name']
                 value = attribute['value']
-                update_dict['total_portfolio']['values'][name] = value
+                update.total_portfolio.values[name] = value
 
-    json_format.ParseDict(
-        js_dict=update_dict,
-        message=update,
-        ignore_unknown_fields=True,
+def build_update_from_payload(update_payload:dict)->Update:
+    update = Update()
+    update.response_datetime.GetCurrentTime()
+
+    # ORDERS
+    setup_update_orders(update=update, update_payload=update_payload)
+
+    # PORTFOLIO
+    setup_update_portfolio(
+        update=update,
+        update_payload=update_payload,
+    )
+
+    # TOTALPORTFOLIO
+    setup_update_total_portfolio(
+        update=update,
+        update_payload=update_payload,
     )
 
     return update

@@ -195,6 +195,7 @@ def get_update(
                 update_payload=response_dict,
             )
     except Exception as e:
+        logger.fatal('error')
         logger.fatal(response_raw.status_code)
         logger.fatal(response_raw.text)
         logger.fatal(e)
