@@ -10,7 +10,8 @@ from quotecast.pb.quotecast_pb2 import Request
 logging.basicConfig(level=logging.INFO)
 
 # SETUP API
-quotecast_api = QuotecastAPI(user_token=12345) # to replace with your own "user_token"
+user_token = 0 # TO REPLACE WITH YOUR USER TOKEN
+quotecast_api = QuotecastAPI(user_token=user_token)
 
 # CONNECTION
 quotecast_api.connection_storage.connect()
@@ -29,7 +30,7 @@ request = Request(
 quotecast_api.subscribe(request=request)
 
 # SETUP JSON PARSER
-quotecast_parser = QuotecastParser(fill_na=True)
+quotecast_parser = QuotecastParser(forward_fill=True)
 
 while True:
     try:
