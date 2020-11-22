@@ -106,8 +106,8 @@ class QuotecastParser:
         * "un" : data
         * "us" : data
         * "d" : rejected subscription
-        * "ue" : ?
-        * ... (this list is not exhaustive)
+        * "ue" : data not available
+        * ... (this list may not be exhaustive)
 
     Depending on the MESSAGE_TYPE different kind of information are stored
     inside :
@@ -185,6 +185,8 @@ class QuotecastParser:
                 for element in delete_list:
                     del references[element]
             elif data['m'] == 'h':
+                pass
+            elif data['m'] == 'ue':
                 pass
             elif data['m'] == 'd':
                 raise AttributeError(f'Subscription rejected : {data}')
