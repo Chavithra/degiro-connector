@@ -28,6 +28,7 @@ def build_dict_from_ticker(
     ticker_dict = dict()
     for product in ticker.products:
         ticker_dict[product] = empty_metrics.copy()
+        ticker_dict[product]['product_id'] = product
         ticker_dict[product].update(ticker.products[product].metrics)
 
     return ticker_dict
