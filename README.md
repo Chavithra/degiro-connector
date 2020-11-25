@@ -476,60 +476,47 @@ For a more comprehensive example : [config_table.py](examples/trading/config_tab
 
 The ClientDetails table contains information about the current Degiro Account.
 
-Example of empty ClientDetails :
-```python
-{
-    'data': {
-        'id': int(),
-        'intAccount': int(),
-        'loggedInPersonId': int(),
-        'clientRole': str(),
-        'effectiveClientRole': str(),
-        'contractType': str(),
-        'username': str(),
-        'displayName': str(),
-        'email': str(),
-        'firstContact': {
-            'firstName': str(),
-            'lastName': str(),
-            'displayName': str(),
-            'nationality': str(),
-            'gender': str(),
-            'dateOfBirth': str(),
-            'placeOfBirth': str(),
-            'countryOfBirth': str()
-        },
-        'address': {
-            'streetAddress': str(),
-            'streetAddressNumber': str(),
-            'zip': str(),
-            'city': str(),
-            'country': str()
-        },
-        'cellphoneNumber': str(),
-        'locale': str(),
-        'language': str(),
-        'culture': str(),
-        'bankAccount': {
-            'bankAccountId': int(),
-            'bic': str(),
-            'iban': str(),
-            'status': str()
-        },
-        'flatexBankAccount': {
-            'bic': str(),
-            'iban': str()
-        },
-        'memberCode': str(),
-        'isWithdrawalAvailable': bool(),
-        'isAllocationAvailable': bool(),
-        'isIskClient': bool(),
-        'isCollectivePortfolio': bool(),
-        'isAmClientActive': bool(),
-        'canUpgrade': bool()
-    }
-}
-```
+|**Parameter**|**Type**|**Description**|
+|:-|:-|:-|
+|id|int|-|
+|intAccount|int|-|
+|loggedInPersonId|int|-|
+|clientRole|str|-|
+|effectiveClientRole|str|-|
+|contractType|str|-|
+|username|str|-|
+|displayName|str|-|
+|email|str|-|
+|firstContact.firstName|str|-|
+|firstContact.lastName|str|-|
+|firstContact.displayName|str|-|
+|firstContact.nationality|str|-|
+|firstContact.gender|str|-|
+|firstContact.dateOfBirth|str|-|
+|firstContact.placeOfBirth|str|-|
+|firstContact.countryOfBirth|str|-|
+|address.streetAddress|str|-|
+|address.streetAddressNumber|str|-|
+|address.zip|str|-|
+|address.city|str|-|
+|address.country|str|-|
+|cellphoneNumber|str|-|
+|locale|str|-|
+|language|str|-|
+|culture|str|-|
+|bankAccount.bankAccountId|int|-|
+|bankAccount.bic|str|-|
+|bankAccount.iban|str|-|
+|bankAccount.status|str|-|
+|flatexBankAccount.bic|str|-|
+|flatexBankAccount.iban|str|-|
+|memberCode|str|-|
+|isWithdrawalAvailable|bool|-|
+|isAllocationAvailable|bool|-|
+|isIskClient|bool|-|
+|isCollectivePortfolio|bool|-|
+|isAmClientActive|bool|-|
+|canUpgrade|bool|-|
 
 Here is how to get this table :
 
@@ -537,55 +524,21 @@ Here is how to get this table :
 client_details_table = trading_api.get_client_details()
 ```
 
-For a more comprehensive example : [client_details_table.py](examples/trading/client_details_table.py)
+For a more comprehensive example :
+[client_details_table.py](examples/trading/client_details_table.py)
 
 # 8. ClientInfos Table
 
-The ClientInfos table contains information about currencies.
+The ClientInfos table contains the following information about currencies.
 
-Example of empty ClientInfos :
-```python
-{
-    'data': {
-        'clientId': int(),
-        'baseCurrency': str(),
-        'currencyPairs': {
-            'HRKEUR': {
-                'id': -1,
-                'price': str()
-            },
-            'USDRUB': {
-                'id': 1331862,
-                'price': str()
-            },
-            ...
-        },
-        'marginType': str(),
-        'cashFunds': {
-            'CHF': [
-                {
-                    'id': 210,
-                    'name': str(),
-                    'productIds': [
-                        4667925
-                    ]
-                }
-            ],
-            'EUR': [
-                {
-                    'id': 2432,
-                    'name': str(),
-                    'productIds': [
-                        17707507
-                    ]
-                }
-            ],
-            ...
-        },
-        'compensationCapping': float()
-    }
-}
-```
+|**Parameter**|**Type**|**Description**|
+|:-|:-|:-|
+|clientId|int|-|
+|baseCurrency|str|-|
+|currencyPairs|dict|-|
+|marginType|str|-|
+|cashFunds|dict|-|
+|compensationCapping|float|-|
 
 Here is how to get this table :
 
@@ -593,8 +546,104 @@ Here is how to get this table :
 client_info_table = trading_api.get_client_info()
 ```
 
-For a more comprehensive example : [client_info_table.py](examples/trading/client_info_table.py)
+For a more comprehensive example :
+[client_info_table.py](examples/trading/client_info_table.py)
 
+# 9. Orders History
+
+This method returns data about passed orders between two dates.
+
+The result contains a list of "Orders" objects with the following
+attributes :
+
+|**Parameter**|**Type**|**Description**|
+|:-|:-|:-|
+|created|str|RFC 3339 Datetime, example : "2020-10-06T20:07:18+02:00".|
+|orderId|str|MD5 HASH, example : "098f6bcd-4621-d373-cade-4e832627b4f6"|
+|productId|int|Id of the product example : 65156|
+|size|float|Size of the order, example : 10.0000|
+|price|float|Price of the order, example : 8.6800|
+|buysell|str|"B" or "S"|
+|orderTypeId|int|see 3.Order|
+|orderTimeTypeId|int|see 3.Order|
+|stopPrice|float|Price like : 0.0000|
+|totalTradedSize|int|-|
+|type|str|"CREATE", "DELETE" or "MODIFY"|
+|status|str|"CONFIRMED"|
+|last|str|RFC 3339 Datetime, example : "2020-10-06T20:07:18+02:00".|
+|isActive|bool|-|
+
+
+Here is how to get this data :
+
+```python
+# PREPARE REQUEST
+from_date = OrdersHistory.Request.Date(year=2020,month=11,day=15)
+to_date = OrdersHistory.Request.Date(year=2020,month=10,day=15)
+request = OrdersHistory.Request(from_date=from_date, to_date=to_date)
+
+# FETCH DATA
+orders_history = trading_api.get_orders_history(request=request)
+```
+
+For a more comprehensive example :
+[orders_history.py](examples/trading/orders_history.py)
+
+
+# 10. Transactions History
+
+Here is how to get this data :
+
+```python
+# PREPARE REQUEST
+from_date = TransactionsHistory.Request.Date(year=2020,month=11,day=15)
+to_date = TransactionsHistory.Request.Date(year=2020,month=10,day=15)
+request = TransactionsHistory.Request(from_date=from_date, to_date=to_date)
+
+# FETCH DATA
+transactions_history = trading_api.get_transactions_history(request=request)
+```
+
+# 11. Account Overviews
+
+It contains information about cash movements.
+
+Here is how to get this data :
+
+```python
+# PREPARE REQUEST
+from_date = AccountOverview.Request.Date(year=2020,month=11,day=15)
+to_date = AccountOverview.Request.Date(year=2020,month=10,day=15)
+request = AccountOverview.Request(from_date=from_date, to_date=to_date)
+
+# FETCH DATA
+account_overview = trading_api.get_account_overview(request=request)
+```
+
+For a more comprehensive example :
+[account_overview.py](examples/trading/account_overview.py)
+
+
+# 12. Products Lookup
+
+It contains information about available financial products.
+
+Here is how to get this data :
+
+```python
+# PREPARE REQUEST
+request = ProductsLookup.Request(
+    search_text = 'APPLE',
+    limit = 10,
+    offset = 0,
+)
+
+# FETCH DATA
+products_lookup = trading_api.products_lookup(request=request)
+```
+
+For a more comprehensive example :
+[products_lookup.py](examples/trading/products_lookup.py)
 # Contributing
 Pull requests are welcome.
 
