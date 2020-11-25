@@ -3,9 +3,12 @@ import logging
 from trading.basic import Basic
 from trading.models.connection_storage import ConnectionStorage
 from trading.pb.trading_pb2 import (
+    AccountOverview,
     Credentials,
     Order,
     OrdersHistory,
+    ProductsLookup,
+    TransactionsHistory,
     Update,
 )
 from typing import (
@@ -152,7 +155,7 @@ class API:
             session_id=session_id,
         )
 
-    def get_order_history(
+    def get_orders_history(
         self,
         request:OrdersHistory.Request,
         raw:bool=False,
@@ -168,7 +171,7 @@ class API:
 
     def get_transactions_history(
         self,
-        request:OrdersHistory.Request,
+        request:TransactionsHistory.Request,
         raw:bool=False,
     )->Union[dict, Update]:
         basic = self._basic
@@ -182,7 +185,7 @@ class API:
 
     def get_account_overview(
         self,
-        request:OrdersHistory.Request,
+        request:AccountOverview.Request,
         raw:bool=False,
     )->Union[dict, Update]:
         basic = self._basic
@@ -196,7 +199,7 @@ class API:
 
     def products_lookup(
         self,
-        request:OrdersHistory.Request,
+        request:ProductsLookup.Request,
         raw:bool=False,
     )->Union[dict, Update]:
         basic = self._basic

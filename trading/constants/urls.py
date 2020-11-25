@@ -9,5 +9,6 @@ class URLs:
     ORDER_DELETE = 'https://trader.degiro.nl/trading/secure/v5/order'
     ORDERS_HISTORY = 'https://trader.degiro.nl/reporting/secure/v4/order-history'
     ORDER_UPDATE = 'https://trader.degiro.nl/trading/secure/v5/order'
+    PRODUCTS_LOOKUP = 'https://trader.degiro.nl/product_search/secure/v5/products/lookup'
     TRANSACTIONS_HISTORY = 'https://trader.degiro.nl/reporting/secure/v4/transactions'
     UPDATE = 'https://trader.degiro.nl/trading/secure/v5/update'

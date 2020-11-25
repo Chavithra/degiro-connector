@@ -4,7 +4,7 @@ from trading.pb.trading_pb2 import (
     AccountOverview,
     Order,
     OrdersHistory,
-    Transaction,
+    ProductsLookup,
     TransactionsHistory,
     Update,
 )
@@ -245,3 +245,16 @@ def account_overview_to_grpc(
     )
 
     return account_overview
+
+def products_loopkup_to_grpc(
+    payload:dict,
+)->OrdersHistory:
+    products_lookup = ProductsLookup()
+    products_lookup.response_datetime.GetCurrentTime()
+    json_format.ParseDict(
+        js_dict=payload,
+        message=products_lookup,
+        ignore_unknown_fields=True,
+    )
+
+    return products_lookup

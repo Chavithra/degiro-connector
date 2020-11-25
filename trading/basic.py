@@ -8,9 +8,12 @@ from typing import (
 from quotecast.constants.headers import Headers
 from trading.models.session_storage import SessionStorage
 from trading.pb.trading_pb2 import (
+    AccountOverview,
     Credentials,
     Order,
     OrdersHistory,
+    ProductsLookup,
+    TransactionsHistory,
     Update,
 )
 
@@ -206,7 +209,7 @@ class Basic:
             logger=logger,
         )
 
-    def get_order_history(
+    def get_orders_history(
         self,
         request:OrdersHistory.Request,
         session_id:str,
@@ -227,7 +230,7 @@ class Basic:
 
     def get_transactions_history(
         self,
-        request:OrdersHistory.Request,
+        request:TransactionsHistory.Request,
         session_id:str,
         raw:bool=False,
     )->Union[dict, Update]:
@@ -246,7 +249,7 @@ class Basic:
 
     def get_account_overview(
         self,
-        request:OrdersHistory.Request,
+        request:AccountOverview.Request,
         session_id:str,
         raw:bool=False,
     )->Union[dict, Update]:
@@ -265,7 +268,7 @@ class Basic:
 
     def products_lookup(
         self,
-        request:OrdersHistory.Request,
+        request:ProductsLookup.Request,
         session_id:str,
         raw:bool=False,
     )->Union[dict, Update]:

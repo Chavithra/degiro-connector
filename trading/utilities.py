@@ -472,7 +472,7 @@ def get_client_info(
 
     return response.text
 
-def get_order_history(
+def get_orders_history(
     request:OrdersHistory.Request,
     session_id:str,
     credentials:Credentials,
@@ -514,12 +514,12 @@ def get_order_history(
         session = build_session()
 
     url = URLs.ORDERS_HISTORY
-    request.int_account = credentials.int_account
-    request.session_id = session_id
 
     params = payload_handler.orders_history_request_to_api(
         request=request,
     )
+    params['intAccount'] = credentials.int_account
+    params['sessionId'] = session_id
 
     request = requests.Request(method='GET', url=url, params=params)
     prepped = session.prepare_request(request)
@@ -585,12 +585,12 @@ def get_transactions_history(
         session = build_session()
 
     url = URLs.TRANSACTIONS_HISTORY
-    request.int_account = credentials.int_account
-    request.session_id = session_id
 
     params = payload_handler.order_history_request_to_api(
         request=request
     )
+    params['intAccount'] = credentials.int_account
+    params['sessionId'] = session_id
 
     request = requests.Request(method='GET', url=url, params=params)
     prepped = session.prepare_request(request)
@@ -656,12 +656,11 @@ def get_account_overview(
         session = build_session()
 
     url = URLs.ACCOUNT_OVERVIEW
-    request.int_account = credentials.int_account
-    request.session_id = session_id
-
     params = payload_handler.account_overview_request_to_api(
         request=request
     )
+    params['intAccount'] = credentials.int_account
+    params['sessionId'] = session_id
 
     request = requests.Request(method='GET', url=url, params=params)
     prepped = session.prepare_request(request)
@@ -692,16 +691,17 @@ def products_lookup(
     raw:bool=False,
     session:requests.Session=None,
     logger:logging.Logger=None,
-)->Union[dict, Update]:
+)->Union[dict, ProductsLookup]:
     """ Retrieve information about the account.
 
     Args:
-        request (OrdersHistory.Request):
+        request (ProductsLookup.Request):
             List of options that we want to retrieve from the endpoint.
             Example :
-                request = AccountOverview.Request(
-                    from_date='15/10/2020',
-                    to_date='16/10/2020',
+                request = ProductsLookup.Request(
+                    search_text='APPLE',
+                    limit=10,
+                    offset=0,
                 )
         session_id (str):
             Degiro's session id
@@ -726,13 +726,13 @@ def products_lookup(
     if session is None:
         session = build_session()
 
-    url = URLs.ACCOUNT_OVERVIEW
-    request.int_account = credentials.int_account
-    request.session_id = session_id
+    url = URLs.PRODUCTS_LOOKUP
 
     params = payload_handler.account_overview_request_to_api(
         request=request
     )
+    params['intAccount'] = credentials.int_account
+    params['sessionId'] = session_id
 
     request = requests.Request(method='GET', url=url, params=params)
     prepped = session.prepare_request(request)
@@ -745,8 +745,8 @@ def products_lookup(
         if raw == True:
             response = response_dict
         else:
-            response = payload_handler.account_overview_to_grpc(
-                account_overview_dict=response_dict,
+            response = payload_handler.products_loopkup_to_grpc(
+                payload=response_dict,
             )
     except Exception as e:
         logger.fatal(response_raw.status_code)
