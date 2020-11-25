@@ -147,8 +147,6 @@ message OrdersHistory {
   message Request {
     string from_date = 1;
     string to_date = 2;
-    int32 int_account = 3;
-    string session_id = 4;
   }
 
   // PROPERTIES
@@ -163,9 +161,7 @@ message TransactionsHistory {
   message Request {
     string from_date = 1;
     string to_date = 2;
-    int32 int_account = 3;
-    bool groupTransactionsByOrder= 4;
-    string session_id = 5;
+    bool groupTransactionsByOrder= 3;
   }
 
   // PROPERTIES
@@ -180,8 +176,6 @@ message AccountOverview {
   message Request {
     string from_date = 1;
     string to_date = 2;
-    int32 int_account = 3;
-    string session_id = 4;
   }
 
   // PROPERTIES
@@ -195,13 +189,12 @@ message ProductsLookup {
     string search_text = 1;
     int32 limit = 2;
     int32 offset = 3;
-    int32 int_account = 4;
-    string session_id = 5;
   }
 
   // PROPERTIES
   google.protobuf.Timestamp response_datetime = 1;
-  google.protobuf.Struct values = 2;
+  int32 offset = 2;
+  repeated google.protobuf.Struct products = 3;
 }
 
 message Credentials {
