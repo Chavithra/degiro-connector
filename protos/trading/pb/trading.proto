@@ -3,7 +3,12 @@ syntax = "proto3";
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 
-// MESSAGE(S) DEFINITION
+/** For the payload from the following URLs :
+ * https://trader.degiro.nl/trading/secure/v5/checkOrder
+ * https://trader.degiro.nl/trading/secure/v5/order
+ * https://trader.degiro.nl/reporting/secure/v4/order-history
+ * https://trader.degiro.nl/trading/secure/v5/update
+ */
 message Order {
   // ENUMS
   enum Action {
@@ -76,8 +81,9 @@ message Transaction {
 }
 
 
-// For the payload from the following URL :
-// https://trader.degiro.nl/trading/secure/v5/update
+/** For the payload from the following URL :
+ * https://trader.degiro.nl/trading/secure/v5/update
+ */
 message Update {
   // ENUMS
   enum Option {
@@ -140,13 +146,22 @@ message Update {
   Transactions transactions = 8;
 }
 
-// For the payload from the following URL :
-// https://trader.degiro.nl/reporting/secure/v4/order-history
+/** For the payload from the following URL :
+ * https://trader.degiro.nl/reporting/secure/v4/order-history
+ */
 message OrdersHistory {
   // MESSAGES
   message Request {
-    string from_date = 1;
-    string to_date = 2;
+    // MESSAGES
+    message Date {
+      int32 year = 1;
+      int32 month = 2;
+      int32 day = 3;
+    }
+
+    // PROPERTIES
+    Date from_date = 1;
+    Date to_date = 2;
   }
 
   // PROPERTIES
@@ -154,13 +169,22 @@ message OrdersHistory {
   google.protobuf.Struct values = 2;
 }
 
-// For the payload from the following URL :
-//https://trader.degiro.nl/reporting/secure/v4/transactions
+/** For the payload from the following URL :
+ * https://trader.degiro.nl/reporting/secure/v4/transactions
+ */
 message TransactionsHistory { 
   // MESSAGES
   message Request {
-    string from_date = 1;
-    string to_date = 2;
+    // MESSAGES
+    message Date {
+      int32 year = 1;
+      int32 month = 2;
+      int32 day = 3;
+    }
+
+    // PROPERTIES
+    Date from_date = 1;
+    Date to_date = 2;
     bool groupTransactionsByOrder= 3;
   }
 
@@ -169,13 +193,22 @@ message TransactionsHistory {
   google.protobuf.Struct values = 2;
 }
 
-// For the payload from the following URL :
-//https://trader.degiro.nl/reporting/secure/v6/accountoverview
+/** For the payload from the following URL :
+ * https://trader.degiro.nl/reporting/secure/v6/accountoverview
+ */
 message AccountOverview { 
   // MESSAGES
   message Request {
-    string from_date = 1;
-    string to_date = 2;
+    // MESSAGES
+    message Date {
+      int32 year = 1;
+      int32 month = 2;
+      int32 day = 3;
+    }
+
+    // PROPERTIES
+    Date from_date = 1;
+    Date to_date = 2;
   }
 
   // PROPERTIES
@@ -183,8 +216,11 @@ message AccountOverview {
   google.protobuf.Struct values = 2;
 }
 
+/** For the payload from the following URL :
+ * https://trader.degiro.nl/product_search/secure/v5/products/lookup
+ */
 message ProductsLookup { 
-  // MESSAGES
+  /** MESSAGES */
   message Request {
     string search_text = 1;
     int32 limit = 2;

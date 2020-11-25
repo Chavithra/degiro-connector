@@ -90,13 +90,24 @@ def transactions_request_to_api(request:OrdersHistory.Request)->dict:
 
 
 def account_overview_request_to_api(
-    request:OrdersHistory.Request,
+    request:AccountOverview.Request,
 )->dict:
-    request_dict = json_format.MessageToDict(
-        message=request,
-        including_default_value_fields=True,
-        preserving_proto_field_name=False,
-    )
+    datetime.datetime
+    request_dict = dict()
+    request_dict['fromDate'] = \
+        datetime.datetime(
+            year=request.from_date.year,
+            month=request.from_date.month,
+            day=request.from_date.day
+        ) \
+        .strftime('%d/%m/%Y')
+    request_dict['toDate'] = \
+        datetime.datetime(
+            year=request.to_date.year,
+            month=request.to_date.month,
+            day=request.to_date.day
+        ) \
+        .strftime('%d/%m/%Y')
 
     return request_dict
 
@@ -234,14 +245,14 @@ def transactions_history_to_grpc(
     return transactions_history
 
 def account_overview_to_grpc(
-    account_overview_dict:dict,
+    payload:dict,
 )->OrdersHistory:
-    js_dict = account_overview_dict['data']
-    js_dict['response_datetime'] = str(datetime.datetime.now())
     account_overview = AccountOverview()
+    account_overview.response_datetime.GetCurrentTime()
     json_format.ParseDict(
-        js_dict=js_dict,
+        js_dict={'values':payload['data']},
         message=account_overview,
+        ignore_unknown_fields=True,
     )
 
     return account_overview

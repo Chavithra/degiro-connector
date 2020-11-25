@@ -32,7 +32,7 @@ trading_api.connection_storage.connect()
 
 # FETCH DATA
 request = ProductsLookup.Request(
-    search_text='apple',
+    search_text='APPLE',
     limit=10,
     offset=0,
 )

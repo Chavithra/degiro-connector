@@ -625,12 +625,22 @@ def get_account_overview(
     """ Retrieve information about the account.
 
     Args:
-        request (OrdersHistory.Request):
+        request (AccountOverview.Request):
             List of options that we want to retrieve from the endpoint.
             Example :
+                from_date = AccountOverview.Request.Date(
+                    year=2020,
+                    month=10,
+                    day=15,
+                )
+                from_date = AccountOverview.Request.Date(
+                    year=2020,
+                    month=10,
+                    day=16,
+                )
                 request = AccountOverview.Request(
-                    from_date='15/10/2020',
-                    to_date='16/10/2020',
+                    from_date=from_date,
+                    to_date=to_date,
                 )
         session_id (str):
             Degiro's session id
@@ -674,7 +684,7 @@ def get_account_overview(
             response = response_dict
         else:
             response = payload_handler.account_overview_to_grpc(
-                account_overview_dict=response_dict,
+                payload=response_dict,
             )
     except Exception as e:
         logger.fatal(response_raw.status_code)

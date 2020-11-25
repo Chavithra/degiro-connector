@@ -21,7 +21,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x18trading/pb/trading.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xe1\x07\n\x05Order\x12\x1d\n\x06\x61\x63tion\x18\x02 \x01(\x0e\x32\r.Order.Action\x12\n\n\x02id\x18\x07 \x01(\t\x12$\n\norder_type\x18\x03 \x01(\x0e\x32\x10.Order.OrderType\x12\r\n\x05price\x18\x05 \x01(\x01\x12\x12\n\nproduct_id\x18\x01 \x01(\x05\x12\x0c\n\x04size\x18\x06 \x01(\x01\x12\"\n\ttime_type\x18\x04 \x01(\x0e\x32\x0f.Order.TimeType\x12\x15\n\rcontract_size\x18\x08 \x01(\x01\x12\x15\n\rcontract_type\x18\t \x01(\x05\x12\x10\n\x08\x63urrency\x18\n \x01(\t\x12\x0c\n\x04hour\x18\x0b \x01(\t\x12\x14\n\x0cis_deletable\x18\x0c \x01(\x08\x12\x15\n\ris_modifiable\x18\r \x01(\x08\x12\x0f\n\x07product\x18\x0e \x01(\t\x12\x10\n\x08quantity\x18\x0f \x01(\x01\x12\x12\n\nstop_price\x18\x10 \x01(\x01\x12\x19\n\x11total_order_value\x18\x11 \x01(\x01\x12\x16\n\x0eretained_order\x18\x12 \x01(\x08\x12\x18\n\x10sent_to_exchange\x18\x13 \x01(\x08\x1a\x9d\x02\n\x10\x43heckingResponse\x12\x17\n\x0f\x63onfirmation_id\x18\x01 \x01(\t\x12\x16\n\x0e\x66ree_space_new\x18\x02 \x01(\x01\x12\x35\n\x11response_datetime\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x31\n\x10transaction_fees\x18\x04 \x03(\x0b\x32\x17.google.protobuf.Struct\x12:\n\x19transaction_opposite_fees\x18\x05 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x32\n\x11transaction_taxes\x18\x06 \x03(\x0b\x32\x17.google.protobuf.Struct\x1a^\n\x14\x43onfirmationResponse\x12\x0f\n\x07orderId\x18\x01 \x01(\t\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"\x1b\n\x06\x41\x63tion\x12\x07\n\x03\x42UY\x10\x00\x12\x08\n\x04SELL\x10\x01\"A\n\tOrderType\x12\t\n\x05LIMIT\x10\x00\x12\x0e\n\nSTOP_LIMIT\x10\x01\x12\n\n\x06MARKET\x10\x02\x12\r\n\tSTOP_LOSS\x10\x03\"S\n\x08TimeType\x12\r\n\tUNKNOWN_0\x10\x00\x12\x11\n\rGOOD_TILL_DAY\x10\x01\x12\r\n\tUNKNOWN_2\x10\x02\x12\x16\n\x12GOOD_TILL_CANCELED\x10\x03\"\x9e\x01\n\x0bTransaction\x12\x1d\n\x06\x61\x63tion\x18\x01 \x01(\x0e\x32\r.Order.Action\x12\x10\n\x08\x63urrency\x18\x02 \x01(\t\x12\x0c\n\x04hour\x18\x03 \x01(\t\x12\n\n\x02id\x18\x04 \x01(\x05\x12\r\n\x05price\x18\x05 \x01(\x01\x12\x0f\n\x07product\x18\x06 \x01(\t\x12\x12\n\nproduct_id\x18\x07 \x01(\x05\x12\x10\n\x08quantity\x18\x08 \x01(\x01\"\xbb\x08\n\x06Update\x12\x35\n\x11response_datetime\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x1e\n\x06\x61lerts\x18\x02 \x01(\x0b\x32\x0e.Update.Alerts\x12%\n\ncash_funds\x18\x03 \x01(\x0b\x32\x11.Update.CashFunds\x12\x33\n\x11historical_orders\x18\x04 \x01(\x0b\x32\x18.Update.HistoricalOrders\x12\x1e\n\x06orders\x18\x05 \x01(\x0b\x32\x0e.Update.Orders\x12$\n\tportfolio\x18\x06 \x01(\x0b\x32\x11.Update.Portfolio\x12/\n\x0ftotal_portfolio\x18\x07 \x01(\x0b\x32\x16.Update.TotalPortfolio\x12*\n\x0ctransactions\x18\x08 \x01(\x0b\x32\x14.Update.Transactions\x1a?\n\x07Request\x12\x1e\n\x06option\x18\x01 \x01(\x0e\x32\x0e.Update.Option\x12\x14\n\x0clast_updated\x18\x02 \x01(\x05\x1a.\n\x0bRequestList\x12\x1f\n\x06values\x18\x01 \x03(\x0b\x32\x0f.Update.Request\x1aG\n\x06\x41lerts\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1aJ\n\tCashFunds\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1a@\n\x10HistoricalOrders\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\x16\n\x06values\x18\x02 \x03(\x0b\x32\x06.Order\x1a\x36\n\x06Orders\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\x16\n\x06values\x18\x02 \x03(\x0b\x32\x06.Order\x1aJ\n\tPortfolio\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x03(\x0b\x32\x17.google.protobuf.Struct\x1aO\n\x0eTotalPortfolio\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1a\x42\n\x0cTransactions\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\x1c\n\x06values\x18\x02 \x03(\x0b\x32\x0c.Transaction\"z\n\x06Option\x12\n\n\x06\x41LERTS\x10\x00\x12\r\n\tCASHFUNDS\x10\x01\x12\x14\n\x10HISTORICALORDERS\x10\x02\x12\n\n\x06ORDERS\x10\x03\x12\r\n\tPORTFOLIO\x10\x04\x12\x12\n\x0eTOTALPORTFOLIO\x10\x05\x12\x10\n\x0cTRANSACTIONS\x10\x06\"\x9e\x01\n\rOrdersHistory\x12\x35\n\x11response_datetime\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1a-\n\x07Request\x12\x11\n\tfrom_date\x18\x01 \x01(\t\x12\x0f\n\x07to_date\x18\x02 \x01(\t\"\xc6\x01\n\x13TransactionsHistory\x12\x35\n\x11response_datetime\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1aO\n\x07Request\x12\x11\n\tfrom_date\x18\x01 \x01(\t\x12\x0f\n\x07to_date\x18\x02 \x01(\t\x12 \n\x18groupTransactionsByOrder\x18\x03 \x01(\x08\"\xa0\x01\n\x0f\x41\x63\x63ountOverview\x12\x35\n\x11response_datetime\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1a-\n\x07Request\x12\x11\n\tfrom_date\x18\x01 \x01(\t\x12\x0f\n\x07to_date\x18\x02 \x01(\t\"\xc1\x01\n\x0eProductsLookup\x12\x35\n\x11response_datetime\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12)\n\x08products\x18\x03 \x03(\x0b\x32\x17.google.protobuf.Struct\x1a=\n\x07Request\x12\x13\n\x0bsearch_text\x18\x01 \x01(\t\x12\r\n\x05limit\x18\x02 \x01(\x05\x12\x0e\n\x06offset\x18\x03 \x01(\x05\"F\n\x0b\x43redentials\x12\x13\n\x0bint_account\x18\x01 \x01(\x05\x12\x10\n\x08username\x18\x02 \x01(\t\x12\x10\n\x08password\x18\x03 \x01(\tb\x06proto3'
+  serialized_pb=b'\n\x18trading/pb/trading.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xe1\x07\n\x05Order\x12\x1d\n\x06\x61\x63tion\x18\x02 \x01(\x0e\x32\r.Order.Action\x12\n\n\x02id\x18\x07 \x01(\t\x12$\n\norder_type\x18\x03 \x01(\x0e\x32\x10.Order.OrderType\x12\r\n\x05price\x18\x05 \x01(\x01\x12\x12\n\nproduct_id\x18\x01 \x01(\x05\x12\x0c\n\x04size\x18\x06 \x01(\x01\x12\"\n\ttime_type\x18\x04 \x01(\x0e\x32\x0f.Order.TimeType\x12\x15\n\rcontract_size\x18\x08 \x01(\x01\x12\x15\n\rcontract_type\x18\t \x01(\x05\x12\x10\n\x08\x63urrency\x18\n \x01(\t\x12\x0c\n\x04hour\x18\x0b \x01(\t\x12\x14\n\x0cis_deletable\x18\x0c \x01(\x08\x12\x15\n\ris_modifiable\x18\r \x01(\x08\x12\x0f\n\x07product\x18\x0e \x01(\t\x12\x10\n\x08quantity\x18\x0f \x01(\x01\x12\x12\n\nstop_price\x18\x10 \x01(\x01\x12\x19\n\x11total_order_value\x18\x11 \x01(\x01\x12\x16\n\x0eretained_order\x18\x12 \x01(\x08\x12\x18\n\x10sent_to_exchange\x18\x13 \x01(\x08\x1a\x9d\x02\n\x10\x43heckingResponse\x12\x17\n\x0f\x63onfirmation_id\x18\x01 \x01(\t\x12\x16\n\x0e\x66ree_space_new\x18\x02 \x01(\x01\x12\x35\n\x11response_datetime\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x31\n\x10transaction_fees\x18\x04 \x03(\x0b\x32\x17.google.protobuf.Struct\x12:\n\x19transaction_opposite_fees\x18\x05 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x32\n\x11transaction_taxes\x18\x06 \x03(\x0b\x32\x17.google.protobuf.Struct\x1a^\n\x14\x43onfirmationResponse\x12\x0f\n\x07orderId\x18\x01 \x01(\t\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"\x1b\n\x06\x41\x63tion\x12\x07\n\x03\x42UY\x10\x00\x12\x08\n\x04SELL\x10\x01\"A\n\tOrderType\x12\t\n\x05LIMIT\x10\x00\x12\x0e\n\nSTOP_LIMIT\x10\x01\x12\n\n\x06MARKET\x10\x02\x12\r\n\tSTOP_LOSS\x10\x03\"S\n\x08TimeType\x12\r\n\tUNKNOWN_0\x10\x00\x12\x11\n\rGOOD_TILL_DAY\x10\x01\x12\r\n\tUNKNOWN_2\x10\x02\x12\x16\n\x12GOOD_TILL_CANCELED\x10\x03\"\x9e\x01\n\x0bTransaction\x12\x1d\n\x06\x61\x63tion\x18\x01 \x01(\x0e\x32\r.Order.Action\x12\x10\n\x08\x63urrency\x18\x02 \x01(\t\x12\x0c\n\x04hour\x18\x03 \x01(\t\x12\n\n\x02id\x18\x04 \x01(\x05\x12\r\n\x05price\x18\x05 \x01(\x01\x12\x0f\n\x07product\x18\x06 \x01(\t\x12\x12\n\nproduct_id\x18\x07 \x01(\x05\x12\x10\n\x08quantity\x18\x08 \x01(\x01\"\xbb\x08\n\x06Update\x12\x35\n\x11response_datetime\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x1e\n\x06\x61lerts\x18\x02 \x01(\x0b\x32\x0e.Update.Alerts\x12%\n\ncash_funds\x18\x03 \x01(\x0b\x32\x11.Update.CashFunds\x12\x33\n\x11historical_orders\x18\x04 \x01(\x0b\x32\x18.Update.HistoricalOrders\x12\x1e\n\x06orders\x18\x05 \x01(\x0b\x32\x0e.Update.Orders\x12$\n\tportfolio\x18\x06 \x01(\x0b\x32\x11.Update.Portfolio\x12/\n\x0ftotal_portfolio\x18\x07 \x01(\x0b\x32\x16.Update.TotalPortfolio\x12*\n\x0ctransactions\x18\x08 \x01(\x0b\x32\x14.Update.Transactions\x1a?\n\x07Request\x12\x1e\n\x06option\x18\x01 \x01(\x0e\x32\x0e.Update.Option\x12\x14\n\x0clast_updated\x18\x02 \x01(\x05\x1a.\n\x0bRequestList\x12\x1f\n\x06values\x18\x01 \x03(\x0b\x32\x0f.Update.Request\x1aG\n\x06\x41lerts\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1aJ\n\tCashFunds\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1a@\n\x10HistoricalOrders\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\x16\n\x06values\x18\x02 \x03(\x0b\x32\x06.Order\x1a\x36\n\x06Orders\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\x16\n\x06values\x18\x02 \x03(\x0b\x32\x06.Order\x1aJ\n\tPortfolio\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x03(\x0b\x32\x17.google.protobuf.Struct\x1aO\n\x0eTotalPortfolio\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1a\x42\n\x0cTransactions\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\x1c\n\x06values\x18\x02 \x03(\x0b\x32\x0c.Transaction\"z\n\x06Option\x12\n\n\x06\x41LERTS\x10\x00\x12\r\n\tCASHFUNDS\x10\x01\x12\x14\n\x10HISTORICALORDERS\x10\x02\x12\n\n\x06ORDERS\x10\x03\x12\r\n\tPORTFOLIO\x10\x04\x12\x12\n\x0eTOTALPORTFOLIO\x10\x05\x12\x10\n\x0cTRANSACTIONS\x10\x06\"\x8b\x02\n\rOrdersHistory\x12\x35\n\x11response_datetime\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1a\x99\x01\n\x07Request\x12.\n\tfrom_date\x18\x01 \x01(\x0b\x32\x1b.OrdersHistory.Request.Date\x12,\n\x07to_date\x18\x02 \x01(\x0b\x32\x1b.OrdersHistory.Request.Date\x1a\x30\n\x04\x44\x61te\x12\x0c\n\x04year\x18\x01 \x01(\x05\x12\r\n\x05month\x18\x02 \x01(\x05\x12\x0b\n\x03\x64\x61y\x18\x03 \x01(\x05\"\xbf\x02\n\x13TransactionsHistory\x12\x35\n\x11response_datetime\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1a\xc7\x01\n\x07Request\x12\x34\n\tfrom_date\x18\x01 \x01(\x0b\x32!.TransactionsHistory.Request.Date\x12\x32\n\x07to_date\x18\x02 \x01(\x0b\x32!.TransactionsHistory.Request.Date\x12 \n\x18groupTransactionsByOrder\x18\x03 \x01(\x08\x1a\x30\n\x04\x44\x61te\x12\x0c\n\x04year\x18\x01 \x01(\x05\x12\r\n\x05month\x18\x02 \x01(\x05\x12\x0b\n\x03\x64\x61y\x18\x03 \x01(\x05\"\x91\x02\n\x0f\x41\x63\x63ountOverview\x12\x35\n\x11response_datetime\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1a\x9d\x01\n\x07Request\x12\x30\n\tfrom_date\x18\x01 \x01(\x0b\x32\x1d.AccountOverview.Request.Date\x12.\n\x07to_date\x18\x02 \x01(\x0b\x32\x1d.AccountOverview.Request.Date\x1a\x30\n\x04\x44\x61te\x12\x0c\n\x04year\x18\x01 \x01(\x05\x12\r\n\x05month\x18\x02 \x01(\x05\x12\x0b\n\x03\x64\x61y\x18\x03 \x01(\x05\"\xc1\x01\n\x0eProductsLookup\x12\x35\n\x11response_datetime\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12)\n\x08products\x18\x03 \x03(\x0b\x32\x17.google.protobuf.Struct\x1a=\n\x07Request\x12\x13\n\x0bsearch_text\x18\x01 \x01(\t\x12\r\n\x05limit\x18\x02 \x01(\x05\x12\x0e\n\x06offset\x18\x03 \x01(\x05\"F\n\x0b\x43redentials\x12\x13\n\x0bint_account\x18\x01 \x01(\x05\x12\x10\n\x08username\x18\x02 \x01(\t\x12\x10\n\x08password\x18\x03 \x01(\tb\x06proto3'
   ,
   dependencies=[google_dot_protobuf_dot_struct__pb2.DESCRIPTOR,google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,])
 
@@ -936,25 +936,32 @@ _UPDATE = _descriptor.Descriptor(
 )
 
 
-_ORDERSHISTORY_REQUEST = _descriptor.Descriptor(
-  name='Request',
-  full_name='OrdersHistory.Request',
+_ORDERSHISTORY_REQUEST_DATE = _descriptor.Descriptor(
+  name='Date',
+  full_name='OrdersHistory.Request.Date',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='from_date', full_name='OrdersHistory.Request.from_date', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
+      name='year', full_name='OrdersHistory.Request.Date.year', index=0,
+      number=1, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='to_date', full_name='OrdersHistory.Request.to_date', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
+      name='month', full_name='OrdersHistory.Request.Date.month', index=1,
+      number=2, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='day', full_name='OrdersHistory.Request.Date.day', index=2,
+      number=3, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
@@ -970,8 +977,46 @@ _ORDERSHISTORY_REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2448,
-  serialized_end=2493,
+  serialized_start=2554,
+  serialized_end=2602,
+)
+
+_ORDERSHISTORY_REQUEST = _descriptor.Descriptor(
+  name='Request',
+  full_name='OrdersHistory.Request',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='from_date', full_name='OrdersHistory.Request.from_date', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='to_date', full_name='OrdersHistory.Request.to_date', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[_ORDERSHISTORY_REQUEST_DATE, ],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2449,
+  serialized_end=2602,
 )
 
 _ORDERSHISTORY = _descriptor.Descriptor(
@@ -1009,36 +1054,36 @@ _ORDERSHISTORY = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=2335,
-  serialized_end=2493,
+  serialized_end=2602,
 )
 
 
-_TRANSACTIONSHISTORY_REQUEST = _descriptor.Descriptor(
-  name='Request',
-  full_name='TransactionsHistory.Request',
+_TRANSACTIONSHISTORY_REQUEST_DATE = _descriptor.Descriptor(
+  name='Date',
+  full_name='TransactionsHistory.Request.Date',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='from_date', full_name='TransactionsHistory.Request.from_date', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
+      name='year', full_name='TransactionsHistory.Request.Date.year', index=0,
+      number=1, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='to_date', full_name='TransactionsHistory.Request.to_date', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
+      name='month', full_name='TransactionsHistory.Request.Date.month', index=1,
+      number=2, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='groupTransactionsByOrder', full_name='TransactionsHistory.Request.groupTransactionsByOrder', index=2,
-      number=3, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
+      name='day', full_name='TransactionsHistory.Request.Date.day', index=2,
+      number=3, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
@@ -1054,8 +1099,53 @@ _TRANSACTIONSHISTORY_REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2615,
-  serialized_end=2694,
+  serialized_start=2554,
+  serialized_end=2602,
+)
+
+_TRANSACTIONSHISTORY_REQUEST = _descriptor.Descriptor(
+  name='Request',
+  full_name='TransactionsHistory.Request',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='from_date', full_name='TransactionsHistory.Request.from_date', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='to_date', full_name='TransactionsHistory.Request.to_date', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='groupTransactionsByOrder', full_name='TransactionsHistory.Request.groupTransactionsByOrder', index=2,
+      number=3, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[_TRANSACTIONSHISTORY_REQUEST_DATE, ],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2725,
+  serialized_end=2924,
 )
 
 _TRANSACTIONSHISTORY = _descriptor.Descriptor(
@@ -1092,30 +1182,37 @@ _TRANSACTIONSHISTORY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2496,
-  serialized_end=2694,
+  serialized_start=2605,
+  serialized_end=2924,
 )
 
 
-_ACCOUNTOVERVIEW_REQUEST = _descriptor.Descriptor(
-  name='Request',
-  full_name='AccountOverview.Request',
+_ACCOUNTOVERVIEW_REQUEST_DATE = _descriptor.Descriptor(
+  name='Date',
+  full_name='AccountOverview.Request.Date',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='from_date', full_name='AccountOverview.Request.from_date', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
+      name='year', full_name='AccountOverview.Request.Date.year', index=0,
+      number=1, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='to_date', full_name='AccountOverview.Request.to_date', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
+      name='month', full_name='AccountOverview.Request.Date.month', index=1,
+      number=2, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='day', full_name='AccountOverview.Request.Date.day', index=2,
+      number=3, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
@@ -1131,8 +1228,46 @@ _ACCOUNTOVERVIEW_REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2448,
-  serialized_end=2493,
+  serialized_start=2554,
+  serialized_end=2602,
+)
+
+_ACCOUNTOVERVIEW_REQUEST = _descriptor.Descriptor(
+  name='Request',
+  full_name='AccountOverview.Request',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='from_date', full_name='AccountOverview.Request.from_date', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='to_date', full_name='AccountOverview.Request.to_date', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[_ACCOUNTOVERVIEW_REQUEST_DATE, ],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=3043,
+  serialized_end=3200,
 )
 
 _ACCOUNTOVERVIEW = _descriptor.Descriptor(
@@ -1169,8 +1304,8 @@ _ACCOUNTOVERVIEW = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2697,
-  serialized_end=2857,
+  serialized_start=2927,
+  serialized_end=3200,
 )
 
 
@@ -1215,8 +1350,8 @@ _PRODUCTSLOOKUP_REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2992,
-  serialized_end=3053,
+  serialized_start=3335,
+  serialized_end=3396,
 )
 
 _PRODUCTSLOOKUP = _descriptor.Descriptor(
@@ -1260,8 +1395,8 @@ _PRODUCTSLOOKUP = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2860,
-  serialized_end=3053,
+  serialized_start=3203,
+  serialized_end=3396,
 )
 
 
@@ -1306,8 +1441,8 @@ _CREDENTIALS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3055,
-  serialized_end=3125,
+  serialized_start=3398,
+  serialized_end=3468,
 )
 
 _ORDER_CHECKINGRESPONSE.fields_by_name['response_datetime'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
@@ -1351,12 +1486,21 @@ _UPDATE.fields_by_name['portfolio'].message_type = _UPDATE_PORTFOLIO
 _UPDATE.fields_by_name['total_portfolio'].message_type = _UPDATE_TOTALPORTFOLIO
 _UPDATE.fields_by_name['transactions'].message_type = _UPDATE_TRANSACTIONS
 _UPDATE_OPTION.containing_type = _UPDATE
+_ORDERSHISTORY_REQUEST_DATE.containing_type = _ORDERSHISTORY_REQUEST
+_ORDERSHISTORY_REQUEST.fields_by_name['from_date'].message_type = _ORDERSHISTORY_REQUEST_DATE
+_ORDERSHISTORY_REQUEST.fields_by_name['to_date'].message_type = _ORDERSHISTORY_REQUEST_DATE
 _ORDERSHISTORY_REQUEST.containing_type = _ORDERSHISTORY
 _ORDERSHISTORY.fields_by_name['response_datetime'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _ORDERSHISTORY.fields_by_name['values'].message_type = google_dot_protobuf_dot_struct__pb2._STRUCT
+_TRANSACTIONSHISTORY_REQUEST_DATE.containing_type = _TRANSACTIONSHISTORY_REQUEST
+_TRANSACTIONSHISTORY_REQUEST.fields_by_name['from_date'].message_type = _TRANSACTIONSHISTORY_REQUEST_DATE
+_TRANSACTIONSHISTORY_REQUEST.fields_by_name['to_date'].message_type = _TRANSACTIONSHISTORY_REQUEST_DATE
 _TRANSACTIONSHISTORY_REQUEST.containing_type = _TRANSACTIONSHISTORY
 _TRANSACTIONSHISTORY.fields_by_name['response_datetime'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _TRANSACTIONSHISTORY.fields_by_name['values'].message_type = google_dot_protobuf_dot_struct__pb2._STRUCT
+_ACCOUNTOVERVIEW_REQUEST_DATE.containing_type = _ACCOUNTOVERVIEW_REQUEST
+_ACCOUNTOVERVIEW_REQUEST.fields_by_name['from_date'].message_type = _ACCOUNTOVERVIEW_REQUEST_DATE
+_ACCOUNTOVERVIEW_REQUEST.fields_by_name['to_date'].message_type = _ACCOUNTOVERVIEW_REQUEST_DATE
 _ACCOUNTOVERVIEW_REQUEST.containing_type = _ACCOUNTOVERVIEW
 _ACCOUNTOVERVIEW.fields_by_name['response_datetime'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _ACCOUNTOVERVIEW.fields_by_name['values'].message_type = google_dot_protobuf_dot_struct__pb2._STRUCT
@@ -1485,6 +1629,13 @@ _sym_db.RegisterMessage(Update.Transactions)
 OrdersHistory = _reflection.GeneratedProtocolMessageType('OrdersHistory', (_message.Message,), {
 
   'Request' : _reflection.GeneratedProtocolMessageType('Request', (_message.Message,), {
+
+    'Date' : _reflection.GeneratedProtocolMessageType('Date', (_message.Message,), {
+      'DESCRIPTOR' : _ORDERSHISTORY_REQUEST_DATE,
+      '__module__' : 'trading.pb.trading_pb2'
+      # @@protoc_insertion_point(class_scope:OrdersHistory.Request.Date)
+      })
+    ,
     'DESCRIPTOR' : _ORDERSHISTORY_REQUEST,
     '__module__' : 'trading.pb.trading_pb2'
     # @@protoc_insertion_point(class_scope:OrdersHistory.Request)
@@ -1496,10 +1647,18 @@ OrdersHistory = _reflection.GeneratedProtocolMessageType('OrdersHistory', (_mess
   })
 _sym_db.RegisterMessage(OrdersHistory)
 _sym_db.RegisterMessage(OrdersHistory.Request)
+_sym_db.RegisterMessage(OrdersHistory.Request.Date)
 
 TransactionsHistory = _reflection.GeneratedProtocolMessageType('TransactionsHistory', (_message.Message,), {
 
   'Request' : _reflection.GeneratedProtocolMessageType('Request', (_message.Message,), {
+
+    'Date' : _reflection.GeneratedProtocolMessageType('Date', (_message.Message,), {
+      'DESCRIPTOR' : _TRANSACTIONSHISTORY_REQUEST_DATE,
+      '__module__' : 'trading.pb.trading_pb2'
+      # @@protoc_insertion_point(class_scope:TransactionsHistory.Request.Date)
+      })
+    ,
     'DESCRIPTOR' : _TRANSACTIONSHISTORY_REQUEST,
     '__module__' : 'trading.pb.trading_pb2'
     # @@protoc_insertion_point(class_scope:TransactionsHistory.Request)
@@ -1511,10 +1670,18 @@ TransactionsHistory = _reflection.GeneratedProtocolMessageType('TransactionsHist
   })
 _sym_db.RegisterMessage(TransactionsHistory)
 _sym_db.RegisterMessage(TransactionsHistory.Request)
+_sym_db.RegisterMessage(TransactionsHistory.Request.Date)
 
 AccountOverview = _reflection.GeneratedProtocolMessageType('AccountOverview', (_message.Message,), {
 
   'Request' : _reflection.GeneratedProtocolMessageType('Request', (_message.Message,), {
+
+    'Date' : _reflection.GeneratedProtocolMessageType('Date', (_message.Message,), {
+      'DESCRIPTOR' : _ACCOUNTOVERVIEW_REQUEST_DATE,
+      '__module__' : 'trading.pb.trading_pb2'
+      # @@protoc_insertion_point(class_scope:AccountOverview.Request.Date)
+      })
+    ,
     'DESCRIPTOR' : _ACCOUNTOVERVIEW_REQUEST,
     '__module__' : 'trading.pb.trading_pb2'
     # @@protoc_insertion_point(class_scope:AccountOverview.Request)
@@ -1526,6 +1693,7 @@ AccountOverview = _reflection.GeneratedProtocolMessageType('AccountOverview', (_
   })
 _sym_db.RegisterMessage(AccountOverview)
 _sym_db.RegisterMessage(AccountOverview.Request)
+_sym_db.RegisterMessage(AccountOverview.Request.Date)
 
 ProductsLookup = _reflection.GeneratedProtocolMessageType('ProductsLookup', (_message.Message,), {
 
