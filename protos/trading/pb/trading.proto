@@ -64,22 +64,10 @@ message Order {
   double stop_price = 16; // called "stopPrice" by the API
   double total_order_value = 17; // called "totalOrderValue" by the API
 
-  // USED FOR HISTORICAL
+  // USED FOR ORDERS HISTORY
   bool retained_order = 18; // called "retainedOrder" by the API
   bool sent_to_exchange = 19; // called "sentToExchange" by the API
 }
-
-message Transaction {
-  Order.Action action = 1; // called "buysell" by the API
-  string currency = 2;
-  string hour = 3; // called "date" by the API
-  int32 id = 4;
-  double price = 5;
-  string product = 6;
-  int32 product_id = 7;
-  double quantity = 8;
-}
-
 
 /** For the payload from the following URL :
  * https://trader.degiro.nl/trading/secure/v5/update
@@ -132,7 +120,7 @@ message Update {
   }
   message Transactions {
     int32 last_updated = 1;
-    repeated Transaction values = 2; // Transaction
+    repeated google.protobuf.Struct values = 2; // Transaction
   }
 
   // PROPERTIES
@@ -166,7 +154,7 @@ message OrdersHistory {
 
   // PROPERTIES
   google.protobuf.Timestamp response_datetime = 1;
-  google.protobuf.Struct values = 2;
+  repeated google.protobuf.Struct values = 2;
 }
 
 /** For the payload from the following URL :
@@ -190,7 +178,7 @@ message TransactionsHistory {
 
   // PROPERTIES
   google.protobuf.Timestamp response_datetime = 1;
-  google.protobuf.Struct values = 2;
+  repeated google.protobuf.Struct values = 2;
 }
 
 /** For the payload from the following URL :

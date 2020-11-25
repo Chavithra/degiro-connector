@@ -163,7 +163,7 @@ class API:
         basic = self._basic
         session_id = self._connection_storage.session_id
 
-        return basic.get_order_history(
+        return basic.get_orders_history(
             request=request,
             session_id=session_id,
             raw=raw,

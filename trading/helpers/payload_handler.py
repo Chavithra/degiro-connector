@@ -71,28 +71,48 @@ def update_request_list_to_api(request_list:Update.RequestList)->dict:
     return payload
 
 def orders_history_request_to_api(request:OrdersHistory.Request)->dict:
-    request_dict = json_format.MessageToDict(
-        message=request,
-        including_default_value_fields=True,
-        preserving_proto_field_name=False,
-    )
+    request_dict = dict()
+    request_dict['fromDate'] = \
+        datetime.datetime(
+            year=request.from_date.year,
+            month=request.from_date.month,
+            day=request.from_date.day
+        ) \
+        .strftime('%d/%m/%Y')
+    request_dict['toDate'] = \
+        datetime.datetime(
+            year=request.to_date.year,
+            month=request.to_date.month,
+            day=request.to_date.day
+        ) \
+        .strftime('%d/%m/%Y')
 
     return request_dict
-
-def transactions_request_to_api(request:OrdersHistory.Request)->dict:
-    request_dict = json_format.MessageToDict(
-        message=request,
-        including_default_value_fields=True,
-        preserving_proto_field_name=False,
-    )
-
-    return request_dict
-
 
 def account_overview_request_to_api(
     request:AccountOverview.Request,
 )->dict:
-    datetime.datetime
+    request_dict = dict()
+    request_dict['fromDate'] = \
+        datetime.datetime(
+            year=request.from_date.year,
+            month=request.from_date.month,
+            day=request.from_date.day
+        ) \
+        .strftime('%d/%m/%Y')
+    request_dict['toDate'] = \
+        datetime.datetime(
+            year=request.to_date.year,
+            month=request.to_date.month,
+            day=request.to_date.day
+        ) \
+        .strftime('%d/%m/%Y')
+
+    return request_dict
+
+def transactions_history_request_to_api(
+    request:TransactionsHistory.Request,
+)->dict:
     request_dict = dict()
     request_dict['fromDate'] = \
         datetime.datetime(
@@ -219,27 +239,27 @@ def confirmation_response_to_grpc(
     return confirmation_response
 
 def orders_history_to_grpc(
-    orders_history_dict:dict,
+    payload:dict,
 )->OrdersHistory:
-    js_dict = orders_history_dict['data']
-    js_dict['response_datetime'] = str(datetime.datetime.now())
     orders_history = OrdersHistory()
+    orders_history.response_datetime.GetCurrentTime()
     json_format.ParseDict(
-        js_dict=js_dict,
+        js_dict={'values':payload['data']},
         message=orders_history,
+        ignore_unknown_fields=True,
     )
 
     return orders_history
 
 def transactions_history_to_grpc(
-    transactions_history_dict:dict,
+    payload:dict,
 )->TransactionsHistory:
-    js_dict = transactions_history_dict['data']
-    js_dict['response_datetime'] = str(datetime.datetime.now())
     transactions_history = TransactionsHistory()
+    transactions_history.response_datetime.GetCurrentTime()
     json_format.ParseDict(
-        js_dict=js_dict,
+        js_dict={'values':payload['data']},
         message=transactions_history,
+        ignore_unknown_fields=True,
     )
 
     return transactions_history

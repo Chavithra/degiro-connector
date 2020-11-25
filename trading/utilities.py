@@ -486,9 +486,19 @@ def get_orders_history(
         request (OrdersHistory.Request):
             List of options that we want to retrieve from the endpoint.
             Example :
+                from_date = OrdersHistory.Request.Date(
+                    year=2020,
+                    month=10,
+                    day=15,
+                )
+                from_date = OrdersHistory.Request.Date(
+                    year=2020,
+                    month=10,
+                    day=16,
+                )
                 request = OrdersHistory.Request(
-                    from_date='15/10/2020',
-                    to_date='16/10/2020',
+                    from_date=from_date,
+                    to_date=to_date,
                 )
         session_id (str):
             Degiro's session id
@@ -533,7 +543,7 @@ def get_orders_history(
             response = response_dict
         else:
             response = payload_handler.orders_history_to_grpc(
-                orders_history_dict=response_dict,
+                payload=response_dict,
             )
     except Exception as e:
         logger.fatal(response_raw.status_code)
@@ -557,9 +567,19 @@ def get_transactions_history(
         request (TransactionsHistory.Request):
             List of options that we want to retrieve from the endpoint.
             Example :
+                from_date = TransactionsHistory.Request.Date(
+                    year=2020,
+                    month=10,
+                    day=15,
+                )
+                from_date = TransactionsHistory.Request.Date(
+                    year=2020,
+                    month=10,
+                    day=16,
+                )
                 request = TransactionsHistory.Request(
-                    from_date='15/10/2020',
-                    to_date='16/10/2020',
+                    from_date=from_date,
+                    to_date=to_date,
                 )
         session_id (str):
             Degiro's session id
@@ -586,7 +606,7 @@ def get_transactions_history(
 
     url = URLs.TRANSACTIONS_HISTORY
 
-    params = payload_handler.order_history_request_to_api(
+    params = payload_handler.transactions_history_request_to_api(
         request=request
     )
     params['intAccount'] = credentials.int_account
@@ -604,7 +624,7 @@ def get_transactions_history(
             response = response_dict
         else:
             response = payload_handler.transactions_history_to_grpc(
-                transactions_history_dict=response_dict,
+                payload=response_dict,
             )
     except Exception as e:
         logger.fatal(response_raw.status_code)

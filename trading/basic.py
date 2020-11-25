@@ -219,7 +219,7 @@ class Basic:
         logger = self._logger
         session = self._session_storage.session
 
-        return utilities.get_order_history(
+        return utilities.get_orders_history(
             request=request,
             session_id=session_id,
             credentials=credentials,
