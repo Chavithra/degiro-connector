@@ -30,12 +30,14 @@ trading_api = TradingAPI(credentials=credentials)
 # ESTABLISH CONNECTION
 trading_api.connection_storage.connect()
 
-# FETCH DATA
+# PREPARE REQUEST
 request = ProductsLookup.Request(
     search_text='APPLE',
     limit=10,
     offset=0,
 )
+
+# FETCH DATA
 products_lookup = trading_api.products_lookup(request=request)
 
 # LOOP OVER PRODUCTS
