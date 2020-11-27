@@ -114,7 +114,7 @@ if __name__ == '__main__':
 
     # SETUP VARIABLES
     user_token = config['user_token']
-    product_id = 360015751
+    vwd_id = 360015751
     label_list =[
         'LastDate',
         'LastTime',
@@ -126,7 +126,7 @@ if __name__ == '__main__':
     
     request = Request(
         action=Request.Action.SUBSCRIBE,
-        product_id=product_id,
+        vwd_id=vwd_id,
         label_list=label_list,
     )
 

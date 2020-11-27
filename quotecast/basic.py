@@ -129,7 +129,7 @@ if __name__ == '__main__':
 
     # Parameters required for testing
     user_token = config['user_token']
-    product_id = 350000520
+    vwd_id = 350000520
     label_list =[
         'LastDate',
         'LastTime',
@@ -140,7 +140,7 @@ if __name__ == '__main__':
 
     # subscription_request = SubscriptionRequest(
     #     action=Request.Action.SUBSCRIBE,
-    #     product_id=product_id,
+    #     vwd_id=vwd_id,
     #     label_list=label_list,
     # )
     
