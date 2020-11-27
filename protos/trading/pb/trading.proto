@@ -20,6 +20,16 @@ message Order {
     STOP_LIMIT = 1;
     MARKET = 2;
     STOP_LOSS = 3;
+    /**
+    LIMIT_HIT = ?;
+    TRAILING_STOP = ?;
+    JOIN = ?;
+    STANDARD_SIZE = ?;
+    STANDARD_AMOUNT = ?;
+    TAKE_PROFIT = ?;
+    COMBINED = ?;
+    OCO = ?;
+    */
   }
   enum TimeType {
     UNKNOWN_0  = 0;
