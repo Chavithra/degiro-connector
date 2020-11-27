@@ -51,7 +51,7 @@ class QuotecastParser:
 
     A MATCHING is an object with three elements :
         * REFERENCE
-        * PRODUCT_ID
+        * VWID
         * LABEL
 
     The REFERENCE is a unique identifier in Degiro's Quotecast API
@@ -59,8 +59,8 @@ class QuotecastParser:
 
     The VALUE is the value of the financial data.
 
-    THE PRODUCT_ID is the id of the product (etf, option, stock,
-    warrant...) from which we retrieve measurements (LastPrice...).
+    THE VWID is the id of the product (etf, option, stock, warrant...)
+    from which we retrieve measurements (LastPrice, LastVolume...).
 
     The LABEL is the name of the measurements that we retrieve.
 
@@ -115,9 +115,8 @@ class QuotecastParser:
         * CODE2
 
     If MESSAGE_TYPE = "a_req" or "a_rel" :
-        * CODE1 : contains the financial PRODUCT'S ID and the PARAMETER'S
-        NAME.
-        * CODE2 : contains the reference for the parameter in CODE1.
+        * CODE1 : contains the product's VWID and the PARAMETER_NAME.
+        * CODE2 : contains the REFERENCE for the parameter in CODE1.
         * Example of MESSAGE : 
         ```json
         {
@@ -125,10 +124,10 @@ class QuotecastParser:
             "v": ["365004197.B10Volume", 624239]
         }
         ```
-        "365004197.B10Volume" is the CODE1
-        365004197 is the financial PRODUCT'S ID
-        B10Volume is the PARAMETER'S NAME
-        624239 is the CODE2
+        "365004197.B10Volume" <=> CODE1
+        365004197 <=> VWID
+        B10Volume <=> PARAMETER_NAME
+        624239 <=> REFERENCE
 
     If MESSAGE_TYPE = "un" or "us :
         * CODE1 : contains the reference number.
@@ -141,8 +140,8 @@ class QuotecastParser:
             "v": [624239, 115.85]
         }
         ```
-        624239 is the CODE1
-        115.85 is the CODE2
+        624239 <=> CODE1
+        115.85 <=> CODE2
     """
 
     @staticmethod
