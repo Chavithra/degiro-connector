@@ -1,5 +1,6 @@
-import orjson as json
 import logging
+import orjson as json
+import onetimepass as otp
 import requests
 import trading.helpers.payload_handler as payload_handler
 import urllib3
@@ -28,14 +29,17 @@ def build_logger():
 def build_session(
     headers:dict=None
 )->requests.Session:
-    """ Setup a requests.Session object.
+    """ Setup a "requests.Session" object.
 
-    Arguments:
-    headers {dict} -- Headers to used for the Session.
+    Args:
+        headers (dict, optional):
+            Headers to used for the Session.
+            Defaults to None.
 
     Returns:
-    {requests.Session} -- Session object with the right headers.
+        requests.Session: Session object with the right headers.
     """
+    
 
     session = requests.Session()
 
@@ -48,56 +52,92 @@ def build_session(
 
 def get_session_id(
     credentials:Credentials,
+    totp_secret:str=None,
     session:requests.Session=None,
     logger:logging.Logger=None
 )->str:
-    """ Retrieve "session_id".
-    This "session_id" is used by most Degiro's trading endpoint.
-    Parameters:
-        credentials {Credentials}
-            credentials.username is necessary.
-            credentials.password is necessary.
-        session {requests.Session} (default: {None})
+    """ Establish a connection with Degiro's Trading API.
+
+    Args:
+        credentials (Credentials):
+            credentials.int_account is optional.
+            credentials.password is mandatory.
+            credentials.username is mandatory.
+        totp_secret (str, optional):
+            Secret code for Two-factor Authentication (2FA).
+            Defaults to None.
+        session (requests.Session, optional):
             If you one wants to reuse existing "Session" object.
-        logger {logging.Logger} (default: {None})
+            Defaults to None.
+        logger (logging.Logger, optional):
             If you one wants to reuse existing "Logger" object.
+            Defaults to None.
+
     Raises:
-        {ConnectionError}: It means the connection failed.
+        ConnectionError: Connection failed.
+
     Returns:
-        {str} -- Session id
+        str: Session id
     """
 
     if logger is None:
         logger = build_logger()
     if session is None:
         session = build_session()
-    
-    url = URLs.LOGIN
-    username = credentials.username
-    password = credentials.password
 
-    payload_dict = {
-        'username': username,
-        'password': password,
-        'isPassCodeReset': False,
-        'isRedirectToMobile': False,
-        'queryParams': {}
-    }
+    if totp_secret is None:
+        url = URLs.LOGIN
+        username = credentials.username
+        password = credentials.password
 
-    request = requests.Request(method='POST', url=url, json=payload_dict)
+        payload_dict = {
+            'username': username,
+            'password': password,
+            'isPassCodeReset': False,
+            'isRedirectToMobile': False,
+            'queryParams': {},
+        }
+    else:
+        url = URLs.LOGIN + '/totp'
+        username = credentials.username
+        password = credentials.password
+        one_time_password = str(otp.get_totp(totp_secret))
+
+        payload_dict = {
+            'username': username,
+            'password': password,
+            'isPassCodeReset': False,
+            'isRedirectToMobile': False,
+            'queryParams': {},
+            'oneTimePassword': one_time_password,
+        }
+
+    request = requests.Request(
+        method='POST',
+        url=url,
+        json=payload_dict,
+    )
     prepped = session.prepare_request(request)
 
+    response = None
     try:
         response = session.send(prepped, verify=False)
         response_dict = response.json()
     except Exception as e:
+        logger.fatal('response:%s', response)
         raise ConnectionError(e)
     
     logger.info('get_session_id:response_dict: %s', response_dict)
 
     if 'sessionId' in response_dict:
         return response_dict['sessionId']
+    elif 'status' in response_dict and response_dict['status'] == 6:
+        logger.fatal('response_dict:%s', response_dict)
+        raise ConnectionError(
+            '2FA is enabled, please provide the "totp_secret".'
+        )
     else:
+        logger.fatal('response_dict:%s', response_dict)
         raise ConnectionError('No session id returned.')
   
 def get_update(
