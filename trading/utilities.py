@@ -117,7 +117,7 @@ def get_session_id(
             'queryParams': {},
         }
 
-    request  requests.Request(
+    request = requests.Request(
         method='POST',
         url=url,
         json=payload_dict,
