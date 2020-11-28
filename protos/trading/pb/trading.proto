@@ -235,4 +235,5 @@ message Credentials {
   int32 int_account = 1;
   string username = 2;
   string password = 3;
+  string totp_secret_key = 4;
 }

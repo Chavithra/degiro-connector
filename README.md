@@ -1,6 +1,7 @@
-# **Degiro Connector**
+# 1. **Degiro Connector**
 
 This is yet another library to access Degiro's API.
+
 
 ## Which features ?
 This library will allow you to access the following features from
@@ -32,6 +33,42 @@ pip install git+https://github.com/chavithra/degiro-connector.git
 ```bash
 pip uninstall degiro-connector
 ```
+
+## Table of contents
+- [1. Degiro Connector](#1---degiro-connector--)
+  * [Which features ?](#which-features--)
+  * [How to install ?](#how-to-install--)
+  * [How to uninstall ?](#how-to-uninstall--)
+  * [Table of contents](#table-of-contents)
+- [1. Real-time data](#1-real-time-data)
+  * [1.1. How to login ?](#11-how-to-login--)
+  * [1.2. What is the timout ?](#12-what-is-the-timout--)
+  * [1.3. How to subscribe to a data-stream ?](#13-how-to-subscribe-to-a-data-stream--)
+  * [1.4. How to fetch the data ?](#14-how-to-fetch-the-data--)
+  * [1.5. How can I use this data ?](#15-how-can-i-use-this-data--)
+  * [1.6. Which data type ?](#16-which-data-type--)
+  * [1.7. What is a Ticker ?](#17-what-is-a-ticker--)
+  * [1.8. What is inside the Dictionnary ?](#18-what-is-inside-the-dictionnary--)
+  * [1.9. What is inside the DataFrame ?](#19-what-is-inside-the-dataframe--)
+- [2. Trading](#2-trading)
+  * [2.1. What are the credentials ?](#21-what-are-the-credentials--)
+  * [2.2. How to Login ?](#22-how-to-login--)
+  * [2.3. How to use 2FA ?](#23-how-to-use-2fa--)
+- [3. Order](#3-order)
+  * [3.1. Order - Create](#31-order---create)
+  * [3.2. Order - Update](#32-order---update)
+  * [3.3. Order - Delete](#33-order---delete)
+- [4. Orders](#4-orders)
+- [5. TotalPortfolio](#5-totalportfolio)
+- [6. Config Table](#6-config-table)
+- [7. ClientDetails Table](#7-clientdetails-table)
+- [8. ClientInfos Table](#8-clientinfos-table)
+- [9. Orders History](#9-orders-history)
+- [10. Transactions History](#10-transactions-history)
+- [11. Account Overviews](#11-account-overviews)
+- [12. Products Lookup](#12-products-lookup)
+- [13. Contributing](#13-contributing)
+- [14. License](#14-license)
 
 # 1. Real-time data
 
@@ -252,17 +289,43 @@ This this library contains two connector :
 
 The rest of this document will only refers to "trading.api".
 
-## 2.1. How to Login ?
+## 2.1. What are the credentials ?
+
+Some credentials are required use Degiro's API.
+
+Here are these credentials :
+
+|**Parameter**|**Type**|**Description**|
+|:-|:-|:-|
+|username|str| Username used to login on Degiro's website.|
+|password|str| Password used to login on Degiro's website.|
+|int_account|int| Unique identifier of the account : used by Degiro's server.|
+
+The "int_account" is not necessary for login.
+
+But it is required to do some of the operations available in this
+connector.
+
+You can get the "int_account" using the "5. Config Table" feature, it
+is the parameter "clientId".
+
+When you enable 2FA on Degiro's website it shows you some QRCode.
+
+You can use a tool to convert this QRCode to a text, it will look like
+this :
+
+"otpauth://totp/DEGIRO:**YOUR_USERNAME**?algorithm=SHA1&issuer=DEGIRO&secret=**YOUR_2FA_SECRET_KEY**&digits=6&period=30"
+
+## 2.2. How to Login ?
 In order to use the "trading.api" you need to establish a connection.
 
 Here is how to login :
 ```python
 # SETUP CREDENTIALS
 credentials = Credentials(
-    int_account = YOUR_INT_ACCOUNT, # OPTIONAL FOR LOGIN
-                                    # BUT USED FOR SOME OPERATIONS
     username = YOUR_USERNAME,
     password = YOUR_PASSWORD,
+    int_account = YOUR_INT_ACCOUNT, # OPTIONAL FOR LOGIN
 )
 
 # SETUP TRADING API
@@ -272,18 +335,30 @@ trading_api = API(credentials=credentials)
 trading_api.connection_storage.connect()
 ```
 
-The "int_account" is not necessary to login.
+## 2.3. How to use 2FA ?
+If you are using Two-factor Authentication (2FA) you need to provide an
+extra parameter.
 
-But it is required to do some of the operations available in this connector.
+This parameter is the called "totp_secret_key" by the library.
 
-## 2.1. How to get the credentials ?
+See "2.1. What are the credentials" to know how to get this parameter
+from Degiro's website.
 
-Here are the credentials required :
-* username : the one you use to login on Degiro's website.
-* password : the one you use to login on Degiro's website.
-* int_account : it's the "clientId" parameter you can retrieve from "config" table.
+```python
+# SETUP CREDENTIALS
+credentials = Credentials(
+    username = YOUR_USERNAME,
+    password = YOUR_PASSWORD,
+    int_account = YOUR_INT_ACCOUNT, # OPTIONAL FOR LOGIN
+    totp_secret_key = YOUR_2FA_SECRET_KEY, # ONLY IF 2FA IS ENABLED
+)
 
-The "config" table is described in the section : "5. Config Table".
+# SETUP TRADING API
+trading_api = API(credentials=credentials)
+
+# ESTABLISH CONNECTION
+trading_api.connection_storage.connect()
+```
 
 # 3. Order
 
@@ -644,10 +719,10 @@ products_lookup = trading_api.products_lookup(request=request)
 
 For a more comprehensive example :
 [products_lookup.py](examples/trading/products_lookup.py)
-# Contributing
+# 13. Contributing
 Pull requests are welcome.
 
 Feel free to open an issue or send me a message if you have a question.
 
-# License
+# 14. License
 [BSD-3-Clause License](https://raw.githubusercontent.com/Chavithra/degiro_connector/master/LICENSE)

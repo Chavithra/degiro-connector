@@ -52,7 +52,6 @@ def build_session(
 
 def get_session_id(
     credentials:Credentials,
-    totp_secret:str=None,
     session:requests.Session=None,
     logger:logging.Logger=None
 )->str:
@@ -60,12 +59,17 @@ def get_session_id(
 
     Args:
         credentials (Credentials):
-            credentials.int_account is optional.
-            credentials.password is mandatory.
-            credentials.username is mandatory.
-        totp_secret (str, optional):
-            Secret code for Two-factor Authentication (2FA).
-            Defaults to None.
+            credentials.int_account (int)
+                Account unique identifer in Degiro's system.
+                It is optional.
+            credentials.password (str)
+                Password used to log in the website mandatory.
+                It is mandatory.
+            credentials.username (str)
+                Username used to log in the website mandatory.
+            credentials.totp_secret is optional.
+                Secret code for Two-factor Authentication (2FA).
+                It is optional.
         session (requests.Session, optional):
             If you one wants to reuse existing "Session" object.
             Defaults to None.
@@ -85,7 +89,22 @@ def get_session_id(
     if session is None:
         session = build_session()
 
-    if totp_secret is None:
+    if credentials.totp_secret_key:
+        url = URLs.LOGIN + '/totp'
+        username = credentials.username
+        password = credentials.password
+        totp_secret_key = credentials.totp_secret_key
+        one_time_password = str(otp.get_totp(totp_secret_key))
+
+        payload_dict = {
+            'username': username,
+            'password': password,
+            'isPassCodeReset': False,
+            'isRedirectToMobile': False,
+            'queryParams': {},
+            'oneTimePassword': one_time_password,
+        }
+    else:
         url = URLs.LOGIN
         username = credentials.username
         password = credentials.password
@@ -97,22 +116,8 @@ def get_session_id(
             'isRedirectToMobile': False,
             'queryParams': {},
         }
-    else:
-        url = URLs.LOGIN + '/totp'
-        username = credentials.username
-        password = credentials.password
-        one_time_password = str(otp.get_totp(totp_secret))
 
-        payload_dict = {
-            'username': username,
-            'password': password,
-            'isPassCodeReset': False,
-            'isRedirectToMobile': False,
-            'queryParams': {},
-            'oneTimePassword': one_time_password,
-        }
-
-    request = requests.Request(
+    request  requests.Request(
         method='POST',
         url=url,
         json=payload_dict,
