@@ -13,6 +13,7 @@ from trading.pb.trading_pb2 import (
     Order,
     OrdersHistory,
     ProductsLookup,
+    StockList,
     TransactionsHistory,
     Update,
 )
@@ -26,9 +27,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 def build_logger():
     return logging.getLogger(__name__)
 
-def build_session(
-    headers:dict=None
-)->requests.Session:
+def build_session(headers:dict=None)->requests.Session:
     """ Setup a "requests.Session" object.
 
     Args:
@@ -803,7 +802,7 @@ def products_lookup(
 
     url = URLs.PRODUCTS_LOOKUP
 
-    params = payload_handler.account_overview_request_to_api(
+    params = payload_handler.products_loopkup_request_to_grpc(
         request=request
     )
     params['intAccount'] = credentials.int_account
@@ -831,33 +830,106 @@ def products_lookup(
 
     return response
 
-if __name__ == '__main__':
+def get_stock_list(
+    request:StockList.Request,
+    session_id:str,
+    credentials:Credentials,
+    raw:bool=False,
+    session:requests.Session=None,
+    logger:logging.Logger=None,
+)->Union[dict, StockList]:
+    """ Retrieve information about the account.
 
-    # IMPORTATIONS
-    import datetime
-    import logging
-    import time
-    import pandas as pd
+    Args:
+        request (StockList.Request):
+            List of options that we want to retrieve from the endpoint.
+            Example :
+                request = StockList.Request(
+                    indexId=5,
+                    isInUSGreenList=False,
+                    limit=100,
+                    offset=0,
+                    requireTotal=True,
+                    sortColumns='name',
+                    sortTypes='asc',
+                    stockCountryId=886,
+                )
+        session_id (str):
+            Degiro's session id
+        credentials (Credentials):
+            Credentials containing the parameter "int_account".
+        raw (bool, optional):
+            Whether are not we want the raw API response.
+            Defaults to False.
+        session (requests.Session, optional):
+            This object will be generated if None.
+            Defaults to None.
+        logger (logging.Logger, optional):
+            This object will be generated if None.
+            Defaults to None.
 
-    from datetime import date
-    from google.protobuf import json_format
-    from trading.api import API
-    from trading.pb.trading_pb2 import Credentials
-    from trading.pb.trading_pb2 import (
-        Credentials,
-        Update,
-        OrdersHistory,
+    Returns:
+        AccountOverview: API response.
+    """
+    
+    if logger is None:
+        logger = build_logger()
+    if session is None:
+        session = build_session()
+
+    url = URLs.STOCK_LIST
+
+    params = payload_handler.stock_list_request_to_grpc(
+        request=request
     )
+    params['intAccount'] = credentials.int_account
+    params['sessionId'] = session_id
 
-    # SETUP VARIABLES
+    request = requests.Request(method='GET', url=url, params=params)
+    prepped = session.prepare_request(request)
+    response_raw = None
+
+    try:
+        response_raw = session.send(prepped, verify=False)
+        response_dict = response_raw.json()
+
+        if raw == True:
+            response = response_dict
+        else:
+            response = payload_handler.stock_list_to_grpc(
+                payload=response_dict,
+            )
+    except Exception as e:
+        logger.fatal(response_raw.status_code)
+        logger.fatal(response_raw.text)
+        logger.fatal(e)
+        return False
+
+    return response
+
+if __name__ == '__main__':
+    # IMPORTATIONS
+    import json
+    import logging
+
+    from trading.pb.trading_pb2 import Credentials
+
+    # FETCH CONFIG
     with open('config.json') as config_file:
         config = json.load(config_file)
+    
+    # SETUP CREDENTIALS
     username = config['username']
     password = config['password']
     int_account = config['int_account']
-    log_level = logging._nameToLevel['INFO']
+    credentials = Credentials(
+        int_account=int_account,
+        username=username,
+        password=password
+    )
 
     # SETUP LOGS
+    log_level = logging._nameToLevel['INFO']
     log_level = logging.getLevelName(log_level)
     logging.basicConfig(
         level=log_level,
@@ -865,50 +937,15 @@ if __name__ == '__main__':
         datefmt='%Y-%m-%d %H:%M:%S',
         filename='test2.log',
     )
-
-    credentials = Credentials(
-        int_account=int_account,
-        username=username,
-        password=password
-    )
-    api = API(credentials=credentials)
-
-    request_list = Update.RequestList()
-    request_list.values.extend(
-        [
-            # Update.Request(
-            #     option=Update.Option.CASHFUNDS,
-            #     last_updated=0,
-            # ),
-            # Update.Request(
-            #     option=Update.Option.HISTORICALORDERS,
-            #     last_updated=0,
-            # ),
-            Update.Request(
-                option=Update.Option.ORDERS,
-                last_updated=0,
-            ),
-            Update.Request(
-                option=Update.Option.PORTFOLIO,
-                last_updated=0,
-            ),
-            Update.Request(
-                option=Update.Option.TOTALPORTFOLIO,
-                last_updated=0,
-            ),
-            # Update.Request(
-            #     option=Update.Option.TRANSACTIONS,
-            #     last_updated=0,
-            # ),
-        ]
-    )
-
     logger = logging.getLogger(__name__)
-    api.connection_storage.connect()
 
-    # RAW
-    # update_dict = api.get_update(request_list=request_list, raw=True)
-    # update_dict['response_datetime'] = str(datetime.datetime.now())
+    # SETUP SESSION
+    headers = Headers.get_headers()
+    session = build_session(headers=headers)
 
-    # PROTOBUF
-    update = api.get_update(request_list=request_list, raw=False)
+    # ESTABLISH CONNECTION
+    session_id = get_session_id(
+        credentials=credentials,
+        session=session,
+        logger=logger,
+    )

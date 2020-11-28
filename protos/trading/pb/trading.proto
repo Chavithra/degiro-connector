@@ -3,6 +3,13 @@ syntax = "proto3";
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 
+message Credentials {
+  int32 int_account = 1;
+  string username = 2;
+  string password = 3;
+  string totp_secret_key = 4;
+}
+
 /** For the payload from the following URLs :
  * https://trader.degiro.nl/trading/secure/v5/checkOrder
  * https://trader.degiro.nl/trading/secure/v5/order
@@ -231,9 +238,24 @@ message ProductsLookup {
   repeated google.protobuf.Struct products = 3;
 }
 
-message Credentials {
-  int32 int_account = 1;
-  string username = 2;
-  string password = 3;
-  string totp_secret_key = 4;
+/** For the payload from the following URL :
+ * https://trader.degiro.nl/product_search/secure/v5/stocks
+ */
+message StockList { 
+  /** MESSAGES */
+  message Request {
+    int32 indexId = 1;
+    bool isInUSGreenList = 2;
+    int32 limit = 3;
+    int32 offset = 4;
+    bool requireTotal = 5;
+    string sortColumns = 6;
+    string sortTypes = 7;
+    int32 stockCountryId = 8;
+  }
+
+  // PROPERTIES
+  google.protobuf.Timestamp response_datetime = 1;
+  int32 offset = 2;
+  repeated google.protobuf.Struct products = 3;
 }

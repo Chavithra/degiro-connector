@@ -5,6 +5,7 @@ from trading.pb.trading_pb2 import (
     Order,
     OrdersHistory,
     ProductsLookup,
+    StockList,
     TransactionsHistory,
     Update,
 )
@@ -128,6 +129,34 @@ def transactions_history_request_to_api(
             day=request.to_date.day
         ) \
         .strftime('%d/%m/%Y')
+
+    return request_dict
+
+def products_loopkup_request_to_grpc(
+    request:ProductsLookup.Request,
+)->dict:
+    request_dict = json_format.MessageToDict(
+        message=request,
+        including_default_value_fields=True,
+        preserving_proto_field_name=False,
+        use_integers_for_enums=True,
+        descriptor_pool=None,
+        float_precision=None,
+    )
+
+    return request_dict
+
+def stock_list_request_to_grpc(
+    request:StockList.Request,
+)->dict:
+    request_dict = json_format.MessageToDict(
+        message=request,
+        including_default_value_fields=True,
+        preserving_proto_field_name=False,
+        use_integers_for_enums=True,
+        descriptor_pool=None,
+        float_precision=None,
+    )
 
     return request_dict
 
@@ -279,7 +308,7 @@ def account_overview_to_grpc(
 
 def products_loopkup_to_grpc(
     payload:dict,
-)->OrdersHistory:
+)->ProductsLookup:
     products_lookup = ProductsLookup()
     products_lookup.response_datetime.GetCurrentTime()
     json_format.ParseDict(
@@ -289,3 +318,17 @@ def products_loopkup_to_grpc(
     )
 
     return products_lookup
+
+
+def stock_list_to_grpc(
+    payload:dict,
+)->StockList:
+    stock_list = StockList()
+    stock_list.response_datetime.GetCurrentTime()
+    json_format.ParseDict(
+        js_dict=payload,
+        message=stock_list,
+        ignore_unknown_fields=True,
+    )
+
+    return stock_list

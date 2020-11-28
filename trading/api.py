@@ -8,6 +8,7 @@ from trading.pb.trading_pb2 import (
     Order,
     OrdersHistory,
     ProductsLookup,
+    StockList,
     TransactionsHistory,
     Update,
 )
@@ -210,3 +211,44 @@ class API:
             session_id=session_id,
             raw=raw,
         )
+
+    def get_stock_list(
+        self,
+        request:StockList.Request,
+        raw:bool=False,
+    )->Union[dict, StockList]:
+        basic = self._basic
+        session_id = self._connection_storage.session_id
+
+        return basic.get_stock_list(
+            request=request,
+            session_id=session_id,
+            raw=raw,
+        )
+
+if __name__ == '__main__':
+    # IMPORTATIONS
+    import json
+    import logging
+
+    from trading.pb.trading_pb2 import Credentials
+
+    # FETCH CONFIG
+    with open('config.json') as config_file:
+        config = json.load(config_file)
+    
+    # SETUP CREDENTIALS
+    username = config['username']
+    password = config['password']
+    int_account = config['int_account']
+    credentials = Credentials(
+        int_account=int_account,
+        username=username,
+        password=password
+    )
+    # SETUP API
+    api = API(credentials=credentials)
+
+    # ESTABLISH CONNECTION
+    api.connection_storage.connect()
+    session_id = api.connection_storage.session_id

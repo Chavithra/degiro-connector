@@ -67,8 +67,9 @@ pip uninstall degiro-connector
 - [11. Transactions History](#11-transactions-history)
 - [12. Account Overviews](#12-account-overviews)
 - [13. Products Lookup](#13-products-lookup)
-- [14. Contributing](#14-contributing)
-- [15. License](#15-license)
+- [14. Stock List](#14-stock-list)
+- [15. Contributing](#14-contributing)
+- [16. License](#15-license)
 
 # 2. Real-time data
 
@@ -698,10 +699,9 @@ account_overview = trading_api.get_account_overview(request=request)
 For a more comprehensive example :
 [account_overview.py](examples/trading/account_overview.py)
 
-
 # 13. Products Lookup
 
-It contains information about available financial products.
+Text research on a financial product.
 
 Here is how to get this data :
 
@@ -719,10 +719,37 @@ products_lookup = trading_api.products_lookup(request=request)
 
 For a more comprehensive example :
 [products_lookup.py](examples/trading/products_lookup.py)
-# 14. Contributing
+
+# 14. Stock List
+
+It contains information about available stocks.
+
+Here is how to get this data :
+
+```python
+# PREPARE REQUEST
+request = StockList.Request(
+    indexId=5,
+    isInUSGreenList=False,
+    limit=100,
+    offset=0,
+    requireTotal=True,
+    sortColumns='name',
+    sortTypes='asc',
+    stockCountryId=886,
+)
+
+# FETCH DATA
+stock_list = trading_api.get_stock_list(request=request)
+```
+
+For a more comprehensive example :
+[stock_list.py](examples/trading/stock_list.py)
+
+# 15. Contributing
 Pull requests are welcome.
 
 Feel free to open an issue or send me a message if you have a question.
 
-# 15. License
+# 16. License
 [BSD-3-Clause License](https://raw.githubusercontent.com/Chavithra/degiro_connector/master/LICENSE)

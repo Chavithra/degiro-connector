@@ -13,6 +13,7 @@ from trading.pb.trading_pb2 import (
     Order,
     OrdersHistory,
     ProductsLookup,
+    StockList,
     TransactionsHistory,
     Update,
 )
@@ -214,7 +215,7 @@ class Basic:
         request:OrdersHistory.Request,
         session_id:str,
         raw:bool=False,
-    )->Union[dict, Update]:
+    )->Union[dict, OrdersHistory]:
         credentials = self._credentials
         logger = self._logger
         session = self._session_storage.session
@@ -233,7 +234,7 @@ class Basic:
         request:TransactionsHistory.Request,
         session_id:str,
         raw:bool=False,
-    )->Union[dict, Update]:
+    )->Union[dict, TransactionsHistory]:
         credentials = self._credentials
         logger = self._logger
         session = self._session_storage.session
@@ -252,7 +253,7 @@ class Basic:
         request:AccountOverview.Request,
         session_id:str,
         raw:bool=False,
-    )->Union[dict, Update]:
+    )->Union[dict, AccountOverview]:
         credentials = self._credentials
         logger = self._logger
         session = self._session_storage.session
@@ -271,7 +272,7 @@ class Basic:
         request:ProductsLookup.Request,
         session_id:str,
         raw:bool=False,
-    )->Union[dict, Update]:
+    )->Union[dict, ProductsLookup]:
         credentials = self._credentials
         logger = self._logger
         session = self._session_storage.session
@@ -285,32 +286,47 @@ class Basic:
             logger=logger,
         )
 
-if __name__ == '__main__':
-    import json
+    def get_stock_list(
+        self,
+        request:StockList.Request,
+        session_id:str,
+        raw:bool=False,
+    )->Union[dict, StockList]:
+        credentials = self._credentials
+        logger = self._logger
+        session = self._session_storage.session
 
+        return utilities.get_stock_list(
+            request=request,
+            session_id=session_id,
+            credentials=credentials,
+            raw=raw,
+            session=session,
+            logger=logger,
+        )
+
+if __name__ == '__main__':
+    # IMPORTATIONS
+    import json
+    import logging
+
+    from trading.pb.trading_pb2 import Credentials
+
+    # FETCH CONFIG
     with open('config.json') as config_file:
         config = json.load(config_file)
-
-    int_account = config['int_account']
+    
+    # SETUP CREDENTIALS
     username = config['username']
     password = config['password']
+    int_account = config['int_account']
     credentials = Credentials(
         int_account=int_account,
         username=username,
         password=password
     )
-    api = Basic(credentials)
+    # SETUP API
+    basic = Basic(credentials=credentials)
 
-    session_id = api.get_session_id()
-
-    # option_list = [
-    #     UpdateOptions.ALERTS,
-    #     UpdateOptions.CASHFUNDS,
-    #     UpdateOptions.HISTORICALORDERS,
-    #     UpdateOptions.ORDERS,
-    #     UpdateOptions.PORTFOLIO,
-    #     UpdateOptions.TOTALPORTFOLIO,
-    #     UpdateOptions.TRANSACTIONS,
-    # ]
-    # updates = api.get_update(option_list=option_list, session_id=session_id)
-    # print(updates)
+    # ESTABLISH CONNECTION
+    session_id = basic.get_session_id()
