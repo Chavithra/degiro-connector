@@ -3,7 +3,7 @@
 This is yet another library to access Degiro's API.
 
 
-## Which features ?
+## 1.1. Which features ?
 This library will allow you to access the following features from
 Degiro's API :
 
@@ -22,55 +22,55 @@ Degiro's API :
 |ProductLookup|To search information about a specific financial product.|
 |Config|Table with "clientId" and URLs constitutive of Degiro's API.|
 
-## How to install ?
+## 1.2. How to install ?
 
 ```bash
 pip install git+https://github.com/chavithra/degiro-connector.git
 ```
 
-## How to uninstall ?
+## 1.3. How to uninstall ?
 
 ```bash
 pip uninstall degiro-connector
 ```
 
 ## Table of contents
-- [1. Degiro Connector](#1---degiro-connector--)
-  * [Which features ?](#which-features--)
-  * [How to install ?](#how-to-install--)
-  * [How to uninstall ?](#how-to-uninstall--)
+- [1. **Degiro Connector**](#1-degiro-connector)
+  * [1.1. Which features ?](#11-which-features-)
+  * [1.2. How to install ?](#12-how-to-install-)
+  * [1.3. How to uninstall ?](#13-how-to-uninstall-)
   * [Table of contents](#table-of-contents)
-- [1. Real-time data](#1-real-time-data)
-  * [1.1. How to login ?](#11-how-to-login--)
-  * [1.2. What is the timout ?](#12-what-is-the-timout--)
-  * [1.3. How to subscribe to a data-stream ?](#13-how-to-subscribe-to-a-data-stream--)
-  * [1.4. How to fetch the data ?](#14-how-to-fetch-the-data--)
-  * [1.5. How can I use this data ?](#15-how-can-i-use-this-data--)
-  * [1.6. Which data type ?](#16-which-data-type--)
-  * [1.7. What is a Ticker ?](#17-what-is-a-ticker--)
-  * [1.8. What is inside the Dictionnary ?](#18-what-is-inside-the-dictionnary--)
-  * [1.9. What is inside the DataFrame ?](#19-what-is-inside-the-dataframe--)
-- [2. Trading](#2-trading)
-  * [2.1. What are the credentials ?](#21-what-are-the-credentials--)
-  * [2.2. How to Login ?](#22-how-to-login--)
-  * [2.3. How to use 2FA ?](#23-how-to-use-2fa--)
-- [3. Order](#3-order)
-  * [3.1. Order - Create](#31-order---create)
-  * [3.2. Order - Update](#32-order---update)
-  * [3.3. Order - Delete](#33-order---delete)
-- [4. Orders](#4-orders)
-- [5. TotalPortfolio](#5-totalportfolio)
-- [6. Config Table](#6-config-table)
-- [7. ClientDetails Table](#7-clientdetails-table)
-- [8. ClientInfos Table](#8-clientinfos-table)
-- [9. Orders History](#9-orders-history)
-- [10. Transactions History](#10-transactions-history)
-- [11. Account Overviews](#11-account-overviews)
-- [12. Products Lookup](#12-products-lookup)
-- [13. Contributing](#13-contributing)
-- [14. License](#14-license)
+- [2. Real-time data](#2-real-time-data)
+  * [2.1. How to login ?](#21-how-to-login--)
+  * [2.2. What is the timout ?](#22-what-is-the-timout-)
+  * [2.3. How to subscribe to a data-stream ?](#23-how-to-subscribe-to-a-data-stream--)
+  * [2.4. How to fetch the data ?](#24-how-to-fetch-the-data-)
+  * [2.5. How can I use this data ?](#25-how-can-i-use-this-data-)
+  * [2.6. Which data type ?](#26-which-data-type--)
+  * [2.7. What is a Ticker ?](#27-what-is-a-ticker--)
+  * [2.8. What is inside the Dictionnary ?](#28-what-is-inside-the-dictionnary-)
+  * [2.9. What is inside the DataFrame ?](#29-what-is-inside-the-dataframe-)
+- [3. Trading](#3-trading)
+  * [3.1. What are the credentials ?](#31-what-are-the-credentials-)
+  * [3.2. How to Login ?](#32-how-to-login-)
+  * [3.3. How to use 2FA ?](#33-how-to-use-2fa-)
+- [4. Order](#4-order)
+  * [4.1. Order - Create](#41-order---create)
+  * [4.2. Order - Update](#42-order---update)
+  * [4.3. Order - Delete](#43-order---delete)
+- [5. Orders](#5-orders)
+- [6. TotalPortfolio](#6-totalportfolio)
+- [7. Config Table](#7-config-table)
+- [8. ClientDetails Table](#8-clientdetails-table)
+- [9. ClientInfos Table](#9-clientinfos-table)
+- [10. Orders History](#10-orders-history)
+- [11. Transactions History](#11-transactions-history)
+- [12. Account Overviews](#12-account-overviews)
+- [13. Products Lookup](#13-products-lookup)
+- [14. Contributing](#14-contributing)
+- [15. License](#15-license)
 
-# 1. Real-time data
+# 2. Real-time data
 
 It is possible to fetch a stream of data in real-time from Degiro's API.
 
@@ -85,7 +85,7 @@ He can use this library to retrieve update like this :
     LastDate    LastTime    LastPrice LastVolume
     2020-11-13  22:00:00    119.26    4697040
 
-## 1.1. How to login ?
+## 2.1. How to login ?
 
 In order to fetch data you need to establish a connection.
 
@@ -105,7 +105,7 @@ See section related to "config" table.
 
 For a more comprehensive example : [realtime_data.py](examples/quotecast/realtime_data.py)
 
-## 1.2. What is the timout ?
+## 2.2. What is the timout ?
 
 Connection timeout is around 15 seconds.
 
@@ -117,7 +117,7 @@ This timeout is reset each time you use this connection to :
 
 So if you use it nonstop (in a loop) you won't need to reconnect.
 
-## 1.3. How to subscribe to a data-stream ?
+## 2.3. How to subscribe to a data-stream ?
 
 To subscribe to a data-stream you need to setup a Request.
 
@@ -145,7 +145,7 @@ quotecast_api.subscribe(request=request)
 
 For a more comprehensive example : [realtime_data.py](examples/quotecast/realtime_data.py)
 
-## 1.4. How to fetch the data ?
+## 2.4. How to fetch the data ?
 
 You can use the following code :
 ```python
@@ -154,7 +154,7 @@ quotecast = quotecast_api.fetch_data()
 
 For a more comprehensive example : [realtime_data.py](examples/quotecast/realtime_data.py)
 
-## 1.5. How can I use this data ?
+## 2.5. How can I use this data ?
 
 Received data is a Quotecast object with the following properties :
 
@@ -172,7 +172,7 @@ request_duration= quotecast.metadata.request_duration
 
 For a more comprehensive example : [realtime_data.py](examples/quotecast/realtime_data.py)
 
-## 1.6. Which data type ?
+## 2.6. Which data type ?
 
 This library provides the tools to convert Degiro's JSON data into
 something more programmer-friendly.
@@ -199,7 +199,7 @@ ticker_dict = pb_handler.build_dict_from_ticker(ticker=ticker)
 ticker_df = pb_handler.build_df_from_ticker(ticker=ticker)
 ```
 
-## 1.7. What is a Ticker ?
+## 2.7. What is a Ticker ?
 
 The generated Ticker contains :
 
@@ -234,7 +234,7 @@ A Ticker is a custom Protocol Buffer Message built for this library.
 
 It can be transmitted over GRPC framework.
 
-## 1.8. What is inside the Dictionnary ?
+## 2.8. What is inside the Dictionnary ?
 
 The generated Dictionnary is actually a list of Python Dictionnaries.
 
@@ -266,7 +266,7 @@ Example - dict :
     }
 ]
 ```
-## 1.9. What is inside the DataFrame ?
+## 2.9. What is inside the DataFrame ?
 
 The generated DataFrame will content :
 
@@ -281,7 +281,7 @@ Example of DataFrame content :
 
 For a more comprehensive example : [realtime_data.py](examples/quotecast/realtime_data.py)
 
-# 2. Trading
+# 3. Trading
 
 This this library contains two connector :
 * quotecast.api : to consume real-time data
@@ -289,7 +289,7 @@ This this library contains two connector :
 
 The rest of this document will only refers to "trading.api".
 
-## 2.1. What are the credentials ?
+## 3.1. What are the credentials ?
 
 Some credentials are required use Degiro's API.
 
@@ -316,7 +316,7 @@ this :
 
 "otpauth://totp/DEGIRO:**YOUR_USERNAME**?algorithm=SHA1&issuer=DEGIRO&secret=**YOUR_2FA_SECRET_KEY**&digits=6&period=30"
 
-## 2.2. How to Login ?
+## 3.2. How to Login ?
 In order to use the "trading.api" you need to establish a connection.
 
 Here is how to login :
@@ -335,7 +335,7 @@ trading_api = API(credentials=credentials)
 trading_api.connection_storage.connect()
 ```
 
-## 2.3. How to use 2FA ?
+## 3.3. How to use 2FA ?
 If you are using Two-factor Authentication (2FA) you need to provide an
 extra parameter.
 
@@ -360,7 +360,7 @@ trading_api = API(credentials=credentials)
 trading_api.connection_storage.connect()
 ```
 
-# 3. Order
+# 4. Order
 
 Here are the main parameters of an Order.
 
@@ -375,7 +375,7 @@ Here are the main parameters of an Order.
 
 The full description of an Order is available here : [trading.proto](protos/trading/pb/trading.proto)
 
-## 3.1. Order - Create
+## 4.1. Order - Create
 
 The Order creation is done in two step :
 * Checking : send the Order to the API to check if it is valid.
@@ -424,7 +424,7 @@ confirmation_response = trading_api.confirm_order(
 )
 ```
 
-## 3.2. Order - Update
+## 4.2. Order - Update
 
 To modify a specific Order you need to setup it's "id".
 
@@ -446,7 +446,7 @@ order = Order(
 succcess = trading_api.update_order(order=order)
 ```
 
-## 3.3. Order - Delete
+## 4.3. Order - Delete
 
 To delete a specific Order you just need it's "id".
 
@@ -457,7 +457,7 @@ Here is an example :
 succcess = trading_api.delete(order_id=YOUR_ORDER_ID)
 ```
 
-# 4. Orders
+# 5. Orders
 
 ```python
 request_list = Update.RequestList()
@@ -482,7 +482,7 @@ Example : Orders
 
 For a more comprehensive example : [update.py](examples/trading/update.py)
 
-# 5. TotalPortfolio
+# 6. TotalPortfolio
 
 ```python
 request_list = Update.RequestList()
@@ -507,7 +507,7 @@ Example : DataFrame
 
 For a more comprehensive example : [update.py](examples/trading/update.py)
 
-# 6. Config Table
+# 7. Config Table
 
 The config table contains the following informations :
 
@@ -547,7 +547,7 @@ config_table = trading_api.get_config()
 
 For a more comprehensive example : [config_table.py](examples/trading/config_table.py)
 
-# 7. ClientDetails Table
+# 8. ClientDetails Table
 
 The ClientDetails table contains information about the current Degiro Account.
 
@@ -602,7 +602,7 @@ client_details_table = trading_api.get_client_details()
 For a more comprehensive example :
 [client_details_table.py](examples/trading/client_details_table.py)
 
-# 8. ClientInfos Table
+# 9. ClientInfos Table
 
 The ClientInfos table contains the following information about currencies.
 
@@ -624,7 +624,7 @@ client_info_table = trading_api.get_client_info()
 For a more comprehensive example :
 [client_info_table.py](examples/trading/client_info_table.py)
 
-# 9. Orders History
+# 10. Orders History
 
 This method returns data about passed orders between two dates.
 
@@ -665,7 +665,7 @@ For a more comprehensive example :
 [orders_history.py](examples/trading/orders_history.py)
 
 
-# 10. Transactions History
+# 11. Transactions History
 
 Here is how to get this data :
 
@@ -679,7 +679,7 @@ request = TransactionsHistory.Request(from_date=from_date, to_date=to_date)
 transactions_history = trading_api.get_transactions_history(request=request)
 ```
 
-# 11. Account Overviews
+# 12. Account Overviews
 
 It contains information about cash movements.
 
@@ -699,7 +699,7 @@ For a more comprehensive example :
 [account_overview.py](examples/trading/account_overview.py)
 
 
-# 12. Products Lookup
+# 13. Products Lookup
 
 It contains information about available financial products.
 
@@ -719,10 +719,10 @@ products_lookup = trading_api.products_lookup(request=request)
 
 For a more comprehensive example :
 [products_lookup.py](examples/trading/products_lookup.py)
-# 13. Contributing
+# 14. Contributing
 Pull requests are welcome.
 
 Feel free to open an issue or send me a message if you have a question.
 
-# 14. License
+# 15. License
 [BSD-3-Clause License](https://raw.githubusercontent.com/Chavithra/degiro_connector/master/LICENSE)
