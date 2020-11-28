@@ -34,12 +34,12 @@ pip install git+https://github.com/chavithra/degiro-connector.git
 pip uninstall degiro-connector
 ```
 
-## Table of contents
+## 1.4. Table of contents
 - [1. **Degiro Connector**](#1-degiro-connector)
   * [1.1. Which features ?](#11-which-features-)
   * [1.2. How to install ?](#12-how-to-install-)
   * [1.3. How to uninstall ?](#13-how-to-uninstall-)
-  * [Table of contents](#table-of-contents)
+  * [1.4. Table of contents](#14-table-of-contents)
 - [2. Real-time data](#2-real-time-data)
   * [2.1. How to login ?](#21-how-to-login-)
   * [2.2. What is the timout ?](#22-what-is-the-timout-)
