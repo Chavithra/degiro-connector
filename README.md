@@ -2,25 +2,24 @@
 
 This is yet another library to access Degiro's API.
 
-
 ## 1.1. Which features ?
-This library will allow you to access the following features from
-Degiro's API :
+Here is what you can do with this library :
 
-|**Feature**|**Description**|
+|**Category**|**Feature(s)**|
 |:-|:-|
-|Real-time data|Fetch financial product's properties.<br> For instance the real-time stock Price/Volume.|
+|AccountOverview|Retrieve all the CashMovements between two dates.|
+|ClientDetails|Retrieve a table containing : account information.|
+|ClientInfo|Retrieve a table containing : "clientId" and Currencies.|
+|Config|Retrieve a table containing : "clientId" and URLs constitutive of Degiro's API.|
 |Order|Create, update, delete an Order.|
-|Orders|Check the state of pending Orders.|
-|Portoflio|Check the state of bought financial products (share/etf...).|
-|TotalPorfolio|Have aggregated information about your assets.|
-|OrderHistory|Information about all Orders created between two dates.|
-|TransactionsHistory|Information about the Transactions created between two dates.|
-|ClientInfo|Client id and information about currencies.|
-|ClientDetails|Information about the Account.|
-|AccountOverview|Information about the CashMovements between two dates.|
-|ProductLookup|To search information about a specific financial product.|
-|Config|Table with "clientId" and URLs constitutive of Degiro's API.|
+|OrderHistory|Retrieve all Orders created between two dates.|
+|Orders|List pending Orders.|
+|Portoflio|List products in your porfolio.|
+|ProductLookup|Search a product by it's name.|
+|Quotecasts|Fetch real-time data on financial products. <br> For instance the real-time stock Price.|
+|StockList|Search stocks using their : index, country or their name. <br> For instance all the stocks from NASDAQ 100.|
+|TotalPorfolio|Retrieve aggregated information about your assets.|
+|TransactionsHistory|Retrieve all Transactions created between two dates.|
 
 ## 1.2. How to install ?
 
@@ -55,9 +54,9 @@ pip uninstall degiro-connector
   * [3.2. How to Login ?](#32-how-to-login-)
   * [3.3. How to use 2FA ?](#33-how-to-use-2fa-)
 - [4. Order](#4-order)
-  * [4.1. Order - Create](#41-order---create)
-  * [4.2. Order - Update](#42-order---update)
-  * [4.3. Order - Delete](#43-order---delete)
+  * [4.1. How to create an Order ?](#41-how-to-create-an-order-)
+  * [4.2. How to update an Order ?](#41-how-to-update-an-order-)
+  * [4.3. How to delete an Order ?](#41-how-to-delete-an-order-)
 - [5. Orders](#5-orders)
 - [6. TotalPortfolio](#6-totalportfolio)
 - [7. Config Table](#7-config-table)
@@ -175,8 +174,7 @@ For a more comprehensive example : [realtime_data.py](examples/quotecast/realtim
 
 ## 2.6. Which data type ?
 
-This library provides the tools to convert Degiro's JSON data into
-something more programmer-friendly.
+This library provides the tools to convert Degiro's JSON data into something more programmer-friendly.
 
 Here is the list of available data type :
 
@@ -304,16 +302,13 @@ Here are these credentials :
 
 The "int_account" is not necessary for login.
 
-But it is required to do some of the operations available in this
-connector.
+But it is required to do some of the operations available in this connector.
 
-You can get the "int_account" using the "5. Config Table" feature, it
-is the parameter "clientId".
+You can get the "int_account" using the "5. Config Table" feature, it is the parameter "clientId".
 
 When you enable 2FA on Degiro's website it shows you some QRCode.
 
-You can use a tool to convert this QRCode to a text, it will look like
-this :
+You can use a tool to convert this QRCode to a text, it will look like this :
 
 "otpauth://totp/DEGIRO:**YOUR_USERNAME**?algorithm=SHA1&issuer=DEGIRO&secret=**YOUR_2FA_SECRET_KEY**&digits=6&period=30"
 
@@ -337,13 +332,11 @@ trading_api.connection_storage.connect()
 ```
 
 ## 3.3. How to use 2FA ?
-If you are using Two-factor Authentication (2FA) you need to provide an
-extra parameter.
+If you are using Two-factor Authentication (2FA) you need to provide an extra parameter.
 
 This parameter is the called "totp_secret_key" by the library.
 
-See "2.1. What are the credentials" to know how to get this parameter
-from Degiro's website.
+See "2.1. What are the credentials" to know how to get this parameter from Degiro's website.
 
 ```python
 # SETUP CREDENTIALS
@@ -631,8 +624,7 @@ For a more comprehensive example :
 
 This method returns data about passed orders between two dates.
 
-The result contains a list of "Orders" objects with the following
-attributes :
+The result contains a list of "Orders" objects with the following attributes :
 
 |**Parameter**|**Type**|**Description**|
 |:-|:-|:-|
