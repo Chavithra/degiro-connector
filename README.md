@@ -376,7 +376,7 @@ Here are the main parameters of an Order.
 
 The full description of an Order is available here : [trading.proto](protos/trading/pb/trading.proto)
 
-## 4.1. Order - Create
+## 4.1. How to create an Order ?
 
 The Order creation is done in two step :
 * Checking : send the Order to the API to check if it is valid.
@@ -425,7 +425,7 @@ confirmation_response = trading_api.confirm_order(
 )
 ```
 
-## 4.2. Order - Update
+## 4.2. How to update an Order ?
 
 To modify a specific Order you need to setup it's "id".
 
@@ -447,7 +447,7 @@ order = Order(
 succcess = trading_api.update_order(order=order)
 ```
 
-## 4.3. Order - Delete
+## 4.3. How to delete an Order ?
 
 To delete a specific Order you just need it's "id".
 
@@ -460,6 +460,7 @@ succcess = trading_api.delete(order_id=YOUR_ORDER_ID)
 
 # 5. Orders
 
+This is how to get the list of Orders currently created but not yet executed or deleted :
 ```python
 request_list = Update.RequestList()
 request_list.values.extend(
@@ -485,6 +486,7 @@ For a more comprehensive example : [update.py](examples/trading/update.py)
 
 # 6. TotalPortfolio
 
+This is how to list the stocks/products currently in the portfolio :
 ```python
 request_list = Update.RequestList()
 request_list.values.extend(
