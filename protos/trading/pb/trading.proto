@@ -249,9 +249,10 @@ message StockList {
     int32 limit = 3;
     int32 offset = 4;
     bool requireTotal = 5;
-    string sortColumns = 6;
-    string sortTypes = 7;
-    int32 stockCountryId = 8;
+    string searchText = 6;
+    string sortColumns = 7;
+    string sortTypes = 8;
+    int32 stockCountryId = 9;
   }
 
   // PROPERTIES
