@@ -5,6 +5,7 @@ from trading.models.connection_storage import ConnectionStorage
 from trading.pb.trading_pb2 import (
     AccountOverview,
     Credentials,
+    Favourites,
     Order,
     OrdersHistory,
     ProductSearch,
@@ -187,7 +188,7 @@ class API:
         self,
         request:AccountOverview.Request,
         raw:bool=False,
-    )->Union[dict, Update]:
+    )->Union[dict, AccountOverview]:
         basic = self._basic
         session_id = self._connection_storage.session_id
 
@@ -217,6 +218,18 @@ class API:
 
         return basic.product_search(
             request=request,
+            session_id=session_id,
+            raw=raw,
+        )
+
+    def get_favourites_list(
+        self,
+        raw:bool=False,
+    )->Union[dict, Favourites]:
+        basic = self._basic
+        session_id = self._connection_storage.session_id
+
+        return basic.get_favourites_list(
             session_id=session_id,
             raw=raw,
         )

@@ -55,6 +55,7 @@ request = TransactionsHistory.Request(
 # FETCH REQUEST
 transactions_history = trading_api.get_transactions_history(
     request=request,
+    raw=False,
 )
 
 # DISPLAY TRANSACTIONS

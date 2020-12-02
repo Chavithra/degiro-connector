@@ -43,7 +43,7 @@ request_list.values.extend(
     ]
 )
 
-update = trading_api.get_update(request_list=request_list)
+update = trading_api.get_update(request_list=request_list, raw=False)
 update_dict = pb_handler.build_dict_from_message(message=update)
 
 if 'orders' in update_dict:
@@ -57,6 +57,8 @@ if 'portfolio' in update_dict:
     display(portfolio_df)
 
 if 'total_portfolio' in update_dict:
-    total_portfolio_df = pd.DataFrame(update_dict['total_portfolio']['values'])
+    total_portfolio_df = pd.DataFrame(
+        update_dict['total_portfolio']['values']
+    )
     print('total_portfolio')
     display(total_portfolio_df)

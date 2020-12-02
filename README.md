@@ -712,6 +712,15 @@ For a more comprehensive example :[account_overview.py](examples/trading/account
 
 ## 7.1. How to get my favourite products ?
 
+Here is how to get this data :
+
+```python
+# FETCH DATA
+favourites_list = trading_api.get_favourites_list()
+```
+
+For a more comprehensive example :[favourites_list.py](examples/trading/favourites_list.py)
+
 ## 7.2. How to lookup products (search by name) ?
 
 Text research on a financial product.

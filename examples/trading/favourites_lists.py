@@ -1,11 +1,12 @@
 # IMPORTATIONS
 import json
 import logging
+from typing import Dict
 import quotecast.helpers.pb_handler as pb_handler
 
 from IPython.display import display
 from trading.api import API as TradingAPI
-from trading.pb.trading_pb2 import Credentials, ProductsLookup
+from trading.pb.trading_pb2 import Credentials
 
 # SETUP LOGGING LEVEL
 logging.basicConfig(level=logging.DEBUG)
@@ -27,32 +28,22 @@ credentials = Credentials(
 # SETUP TRADING API
 trading_api = TradingAPI(credentials=credentials)
 
-# ESTABLISH CONNECTION
+# CONNECT
 trading_api.connection_storage.connect()
 
-# PREPARE REQUEST
-request = ProductsLookup.Request(
-    search_text='APPLE',
-    limit=10,
-    offset=0,
-)
+# FETCH DATA - MESSAGE
+favourites_list = trading_api.get_favourites_list(raw=False)
 
-# FETCH DATA
-products_lookup = trading_api.products_lookup(
-    request=request,
-    raw=False,
-)
-
-# LOOP OVER PRODUCTS
-for product in products_lookup.products:
-    print('id:', product['id'])
-    print('name:', product['name'])
-    print('productType:', product['productType'])
-    print('symbol:', product['symbol'])
-    print('vwdId:', dict(product).get('vwdId', 'unknown'))
+# DISPLAY - MESSAGE
+for list in favourites_list.values:
+    print('id:', list.id)
+    print('name:', list.name)
+    print('is_default:', list.is_default)
+    print('product_ids:', list.product_ids)
     print('-')
 
-# LOOP OVER COLUMNS
-product = products_lookup.products[0]
-for column in product:
-    print(column, product[column])
+# FETCH DATA - DICT
+favourites_list_dict = trading_api.get_favourites_list(raw=True)
+
+# DISPLAY - DICT
+print(favourites_list_dict)

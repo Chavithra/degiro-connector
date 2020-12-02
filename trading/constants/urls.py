@@ -9,6 +9,7 @@ class URLs:
     ORDER_DELETE = 'https://trader.degiro.nl/trading/secure/v5/order'
     ORDERS_HISTORY = 'https://trader.degiro.nl/reporting/secure/v4/order-history'
     ORDER_UPDATE = 'https://trader.degiro.nl/trading/secure/v5/order'
+    PRODUCT_FAVOURITES_LISTS = 'https://trader.degiro.nl/pa/secure/favourites/lists' #?intAccount=xxxxxxxx&sessionId=FA57111F85C5EE988A7C402F346A311C.prod_a_112_2
     PRODUCT_SEARCH_BONDS = 'https://trader.degiro.nl/product_search/secure/v5/bonds'
     PRODUCT_SEARCH_ETFS = 'https://trader.degiro.nl/product_search/secure/v5/etfs'
     PRODUCT_SEARCH_FUNDS = 'https://trader.degiro.nl/product_search/secure/v5/funds'

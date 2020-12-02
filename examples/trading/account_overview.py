@@ -53,7 +53,10 @@ request = AccountOverview.Request(
 )
 
 # FETCH REQUEST
-account_overview = trading_api.get_account_overview(request=request)
+account_overview = trading_api.get_account_overview(
+    request=request,
+    raw=False,
+)
 
 # DISPLAY CASH MOVEMENTS
 for cash_movement in account_overview.values['cashMovements']:

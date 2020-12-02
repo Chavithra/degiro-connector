@@ -170,8 +170,8 @@ message OrdersHistory {
   }
 
   // PROPERTIES
-  google.protobuf.Timestamp response_datetime = 1;
-  repeated google.protobuf.Struct values = 2;
+  google.protobuf.Struct values = 1;
+  google.protobuf.Timestamp response_datetime = 2;
 }
 
 /** For the payload from the following URL :
@@ -194,8 +194,8 @@ message TransactionsHistory {
   }
 
   // PROPERTIES
-  google.protobuf.Timestamp response_datetime = 1;
-  repeated google.protobuf.Struct values = 2;
+  google.protobuf.Struct values = 1;
+  google.protobuf.Timestamp response_datetime = 2;
 }
 
 /** For the payload from the following URL :
@@ -217,8 +217,8 @@ message AccountOverview {
   }
 
   // PROPERTIES
-  google.protobuf.Timestamp response_datetime = 1;
-  google.protobuf.Struct values = 2;
+  google.protobuf.Struct values = 1;
+  google.protobuf.Timestamp response_datetime = 2;
 }
 
 /** For the payload from the following URLs :
@@ -332,4 +332,23 @@ message ProductSearch {
   repeated google.protobuf.Struct products = 2;
   google.protobuf.Timestamp response_datetime = 3;
   int32 total = 4;
+}
+
+
+/** For the payload from the following URL :
+ * https://trader.degiro.nl/pa/secure/favourites/lists
+ */
+message Favourites { 
+  // MESSAGES
+  message List {
+    // PROPERTIES
+    int32 id = 1;
+    string name = 2;
+    bool is_default = 3;
+    repeated int32 product_ids = 4;
+  }
+
+  // PROPERTIES
+  repeated List values = 1;
+  google.protobuf.Timestamp response_datetime = 2;
 }

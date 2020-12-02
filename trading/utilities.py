@@ -10,6 +10,7 @@ from trading.constants.headers import Headers
 from trading.pb.trading_pb2 import (
     AccountOverview,
     Credentials,
+    Favourites,
     Order,
     OrdersHistory,
     ProductSearch,
@@ -246,8 +247,8 @@ def get_update(
         if raw == True:
             response = response_dict
         else:
-            response = payload_handler.build_update_from_payload(
-                update_payload=response_dict,
+            response = payload_handler.update_to_grpc(
+                payload=response_dict,
             )
     except Exception as e:
         logger.fatal('error')
@@ -306,7 +307,7 @@ def check_order(
             response = response_dict
         else:
             response = payload_handler.checking_response_to_grpc(
-                checking_dict=response_dict,
+                payload=response_dict,
             )
     else:
         logger.fatal(response_raw.status_code)
@@ -367,7 +368,7 @@ def confirm_order(
         else:
             order.id = response_dict['data']['orderId']
             response = payload_handler.confirmation_response_to_grpc(
-                confirmation_dict=response_dict,
+                payload=response_dict,
             )
     else:
         response = False
@@ -696,7 +697,7 @@ def get_account_overview(
     raw:bool=False,
     session:requests.Session=None,
     logger:logging.Logger=None,
-)->Union[dict, Update]:
+)->Union[dict, AccountOverview]:
     """ Retrieve information about the account.
 
     Args:
@@ -732,7 +733,7 @@ def get_account_overview(
             Defaults to None.
 
     Returns:
-        AccountOverview: API response.
+        Update: API response.
     """
     
     if logger is None:
@@ -787,7 +788,7 @@ def product_search(
     session:requests.Session=None,
     logger:logging.Logger=None,
 )->Union[dict, ProductSearch]:
-    """ Retrieve information about the account.
+    """ Search products.
 
     Args:
         request (StockList.Request):
@@ -824,7 +825,7 @@ def product_search(
             Defaults to None.
 
     Returns:
-        AccountOverview: API response.
+        ProductSearch: API response.
     """
     
     if logger is None:
@@ -854,6 +855,67 @@ def product_search(
             response = response_dict
         else:
             response = payload_handler.product_search_to_grpc(
+                payload=response_dict,
+            )
+    except Exception as e:
+        logger.fatal(response_raw.status_code)
+        logger.fatal(response_raw.text)
+        logger.fatal(e)
+        return False
+
+    return response
+
+def get_favourites_list(
+    session_id:str,
+    credentials:Credentials,
+    raw:bool=False,
+    session:requests.Session=None,
+    logger:logging.Logger=None,
+)->Union[dict, Favourites]:
+    """ Retrieve the lists of favourite products.
+
+    Args:
+        session_id (str):
+            Degiro's session id
+        credentials (Credentials):
+            Credentials containing the parameter "int_account".
+        raw (bool, optional):
+            Whether are not we want the raw API response.
+            Defaults to False.
+        session (requests.Session, optional):
+            This object will be generated if None.
+            Defaults to None.
+        logger (logging.Logger, optional):
+            This object will be generated if None.
+            Defaults to None.
+
+    Returns:
+        Favourites: API response.
+    """
+    
+    if logger is None:
+        logger = build_logger()
+    if session is None:
+        session = build_session()
+
+    url = URLs.PRODUCT_FAVOURITES_LISTS
+
+    params = dict()
+    params['intAccount'] = credentials.int_account
+    params['sessionId'] = session_id
+
+    request = requests.Request(method='GET', url=url, params=params)
+    prepped = session.prepare_request(request)
+    response_raw = None
+
+    try:
+        response_raw = session.send(prepped, verify=False)
+        response_dict = response_raw.json()
+
+        if raw == True:
+            response = response_dict
+        else:
+            response = payload_handler.favourites_to_grpc(
                 payload=response_dict,
             )
     except Exception as e:

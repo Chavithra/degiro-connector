@@ -2,6 +2,7 @@ import datetime
 from google.protobuf import json_format
 from trading.pb.trading_pb2 import (
     AccountOverview,
+    Favourites,
     Order,
     OrdersHistory,
     ProductSearch,
@@ -158,7 +159,7 @@ def product_search_request_to_grpc(
 # API TO GRPC
 def setup_update_orders(
     update:Update,
-    update_payload:dict,
+    payload:dict,
 ):
     """ Build an "Order" object using "dict" returned by the API.
     Parameters:
@@ -168,11 +169,11 @@ def setup_update_orders(
         {Order}
     """
 
-    if 'orders' in update_payload:
+    if 'orders' in payload:
         update.orders.last_updated = \
-            update_payload['orders']['lastUpdated']
+            payload['orders']['lastUpdated']
 
-        for order in update_payload['orders']['value']:
+        for order in payload['orders']['value']:
             order_dict = dict()
             for attribute in order['value']:
                 if  'name' in attribute \
@@ -187,13 +188,13 @@ def setup_update_orders(
 
 def setup_update_portfolio(
     update:Update,
-    update_payload:dict,
+    payload:dict,
 ):
-    if 'portfolio' in update_payload:
+    if 'portfolio' in payload:
         update.portfolio.last_updated = \
-            update_payload['portfolio']['lastUpdated']
+            payload['portfolio']['lastUpdated']
             
-        for positionrow in update_payload['portfolio']['value']:
+        for positionrow in payload['portfolio']['value']:
             value = update.portfolio.values.add()
             for attribute in positionrow['value']:
                 if  'name' in attribute \
@@ -202,61 +203,59 @@ def setup_update_portfolio(
 
 def setup_update_total_portfolio(
     update:Update,
-    update_payload:dict,
+    payload:dict,
 ):
-    if 'totalPortfolio' in update_payload:
+    if 'totalPortfolio' in payload:
         update.total_portfolio.last_updated = \
-            update_payload['totalPortfolio']['lastUpdated']
+            payload['totalPortfolio']['lastUpdated']
 
-        for attribute in update_payload['totalPortfolio']['value']:
+        for attribute in payload['totalPortfolio']['value']:
             if  'name' in attribute \
             and 'value' in attribute:
                 name = attribute['name']
                 value = attribute['value']
                 update.total_portfolio.values[name] = value
 
-def build_update_from_payload(update_payload:dict)->Update:
+def update_to_grpc(payload:dict)->Update:
     update = Update()
     update.response_datetime.GetCurrentTime()
 
     # ORDERS
-    setup_update_orders(update=update, update_payload=update_payload)
+    setup_update_orders(update=update, payload=payload)
 
     # PORTFOLIO
     setup_update_portfolio(
         update=update,
-        update_payload=update_payload,
+        payload=payload,
     )
 
     # TOTALPORTFOLIO
     setup_update_total_portfolio(
         update=update,
-        update_payload=update_payload,
+        payload=payload,
     )
 
     return update
 
 def checking_response_to_grpc(
-    checking_dict:dict,
+    payload:dict,
 )->Order.CheckingResponse:
-    js_dict = checking_dict['data']
-    js_dict['response_datetime'] = str(datetime.datetime.now())
     checking_response = Order.CheckingResponse()
+    checking_response.response_datetime.GetCurrentTime()
     json_format.ParseDict(
-        js_dict=js_dict,
+        js_dict=payload['data'],
         message=checking_response,
     )
 
     return checking_response
 
 def confirmation_response_to_grpc(
-    confirmation_dict:dict,
+    payload:dict,
 )->Order.ConfirmationResponse:
-    js_dict = confirmation_dict['data']
-    js_dict['response_datetime'] = str(datetime.datetime.now())
     confirmation_response = Order.ConfirmationResponse()
+    confirmation_response.response_datetime.GetCurrentTime()
     json_format.ParseDict(
-        js_dict=js_dict,
+        js_dict=payload['data'],
         message=confirmation_response,
     )
 
@@ -305,3 +304,14 @@ def product_search_to_grpc(payload:dict)->ProductSearch:
     )
 
     return product_search
+
+
+def favourites_to_grpc(payload:dict)->Favourites:
+    favourites = Favourites()
+    favourites.response_datetime.GetCurrentTime()
+    json_format.ParseDict(
+        js_dict={'values':payload['data']},
+        message=favourites,
+    )
+
+    return favourites

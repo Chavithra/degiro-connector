@@ -10,6 +10,7 @@ from trading.models.session_storage import SessionStorage
 from trading.pb.trading_pb2 import (
     AccountOverview,
     Credentials,
+    Favourites,
     Order,
     OrdersHistory,
     ProductSearch,
@@ -288,6 +289,23 @@ class Basic:
 
         return utilities.product_search(
             request=request,
+            session_id=session_id,
+            credentials=credentials,
+            raw=raw,
+            session=session,
+            logger=logger,
+        )
+
+    def get_favourites_list(
+        self,
+        session_id:str,
+        raw:bool=False,
+    )->Union[dict, Favourites]:
+        credentials = self._credentials
+        logger = self._logger
+        session = self._session_storage.session
+
+        return utilities.get_favourites_list(
             session_id=session_id,
             credentials=credentials,
             raw=raw,
