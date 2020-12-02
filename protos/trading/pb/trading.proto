@@ -227,6 +227,7 @@ message AccountOverview {
  * https://trader.degiro.nl/product_search/secure/v5/funds
  * https://trader.degiro.nl/product_search/secure/v5/futures
  * https://trader.degiro.nl/product_search/secure/v5/leverageds
+ * https://trader.degiro.nl/product_search/secure/v5/lookup
  * https://trader.degiro.nl/product_search/secure/v5/options
  * https://trader.degiro.nl/product_search/secure/v5/stocks
  * https://trader.degiro.nl/product_search/secure/v5/warrants
