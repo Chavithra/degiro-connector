@@ -12,6 +12,7 @@ Here are the features you can access through this library :
 |ClientDetails|Retrieve a table containing : account information.|
 |ClientInfo|Retrieve a table containing : "clientId" and Currencies.|
 |Config|Retrieve a table containing : "clientId" and URLs constitutive of Degiro's API.|
+|Favourites|Retrieve favorite products lists.|
 |Order|Create, update, delete an Order.|
 |OrderHistory|Retrieve all Orders created between two dates.|
 |Orders|List pending Orders.|
