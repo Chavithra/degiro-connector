@@ -5,7 +5,7 @@ import quotecast.helpers.pb_handler as pb_handler
 
 from IPython.display import display
 from trading.api import API as TradingAPI
-from trading.pb.trading_pb2 import Credentials, StockList
+from trading.pb.trading_pb2 import Credentials, ProductSearch
 
 # SETUP LOGGING LEVEL
 logging.basicConfig(level=logging.DEBUG)
@@ -31,15 +31,15 @@ trading_api = TradingAPI(credentials=credentials)
 trading_api.connection_storage.connect()
 
 # PREPARE REQUEST
-request = StockList.Request(
+request = ProductSearch.RequestStocks(
     indexId=5,
     isInUSGreenList=False,
-    limit=100,
+    stockCountryId=886,
     offset=0,
+    limit=100,
     requireTotal=True,
     sortColumns='name',
     sortTypes='asc',
-    stockCountryId=886,
 )
 
 # FETCH DATA

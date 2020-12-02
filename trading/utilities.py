@@ -12,8 +12,7 @@ from trading.pb.trading_pb2 import (
     Credentials,
     Order,
     OrdersHistory,
-    ProductsLookup,
-    StockList,
+    ProductSearch,
     TransactionsHistory,
     Update,
 )
@@ -23,6 +22,18 @@ from typing import (
 )
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+__PRODUCT_SEARCH_REQUEST_URL_MATCHING = {
+    ProductSearch.RequestBonds.DESCRIPTOR.full_name:URLs.PRODUCT_SEARCH_BONDS,
+    ProductSearch.RequestETFs.DESCRIPTOR.full_name:URLs.PRODUCT_SEARCH_ETFS,
+    ProductSearch.RequestFunds.DESCRIPTOR.full_name:URLs.PRODUCT_SEARCH_FUNDS,
+    ProductSearch.RequestFutures.DESCRIPTOR.full_name:URLs.PRODUCT_SEARCH_FUTURES,
+    ProductSearch.RequestLeverageds.DESCRIPTOR.full_name:URLs.PRODUCT_SEARCH_LEVERAGEDS,
+    ProductSearch.RequestLookup.DESCRIPTOR.full_name:URLs.PRODUCT_SEARCH_LOOKUP,
+    ProductSearch.RequestOptions.DESCRIPTOR.full_name:URLs.PRODUCT_SEARCH_OPTIONS,
+    ProductSearch.RequestStocks.DESCRIPTOR.full_name:URLs.PRODUCT_SEARCH_STOCKS,
+    ProductSearch.RequestWarrants.DESCRIPTOR.full_name:URLs.PRODUCT_SEARCH_WARRANTS,
+}
 
 def build_logger():
     return logging.getLogger(__name__)
@@ -758,101 +769,45 @@ def get_account_overview(
 
     return response
 
-def products_lookup(
-    request:ProductsLookup.Request,
+def product_search(
+    request:Union[
+        ProductSearch.RequestBonds,
+        ProductSearch.RequestETFs,
+        ProductSearch.RequestFunds,
+        ProductSearch.RequestFutures,
+        ProductSearch.RequestLeverageds,
+        ProductSearch.RequestLookup,
+        ProductSearch.RequestOptions,
+        ProductSearch.RequestStocks,
+        ProductSearch.RequestWarrants,
+    ],
     session_id:str,
     credentials:Credentials,
     raw:bool=False,
     session:requests.Session=None,
     logger:logging.Logger=None,
-)->Union[dict, ProductsLookup]:
-    """ Retrieve information about the account.
-
-    Args:
-        request (ProductsLookup.Request):
-            List of options that we want to retrieve from the endpoint.
-            Example :
-                request = ProductsLookup.Request(
-                    search_text='APPLE',
-                    limit=10,
-                    offset=0,
-                )
-        session_id (str):
-            Degiro's session id
-        credentials (Credentials):
-            Credentials containing the parameter "int_account".
-        raw (bool, optional):
-            Whether are not we want the raw API response.
-            Defaults to False.
-        session (requests.Session, optional):
-            This object will be generated if None.
-            Defaults to None.
-        logger (logging.Logger, optional):
-            This object will be generated if None.
-            Defaults to None.
-
-    Returns:
-        AccountOverview: API response.
-    """
-    
-    if logger is None:
-        logger = build_logger()
-    if session is None:
-        session = build_session()
-
-    url = URLs.PRODUCTS_LOOKUP
-
-    params = payload_handler.products_loopkup_request_to_grpc(
-        request=request
-    )
-    params['intAccount'] = credentials.int_account
-    params['sessionId'] = session_id
-
-    request = requests.Request(method='GET', url=url, params=params)
-    prepped = session.prepare_request(request)
-    response_raw = None
-
-    try:
-        response_raw = session.send(prepped, verify=False)
-        response_dict = response_raw.json()
-
-        if raw == True:
-            response = response_dict
-        else:
-            response = payload_handler.products_loopkup_to_grpc(
-                payload=response_dict,
-            )
-    except Exception as e:
-        logger.fatal(response_raw.status_code)
-        logger.fatal(response_raw.text)
-        logger.fatal(e)
-        return False
-
-    return response
-
-def get_stock_list(
-    request:StockList.Request,
-    session_id:str,
-    credentials:Credentials,
-    raw:bool=False,
-    session:requests.Session=None,
-    logger:logging.Logger=None,
-)->Union[dict, StockList]:
+)->Union[dict, ProductSearch]:
     """ Retrieve information about the account.
 
     Args:
         request (StockList.Request):
             List of options that we want to retrieve from the endpoint.
-            Example :
-                request = StockList.Request(
+            Example 1:
+                request = ProductSearch.RequestLookup(
+                    search_text='APPLE',
+                    limit=10,
+                    offset=0,
+                )
+            Example 2:
+                request = ProductSearch.RequestStocks(
                     indexId=5,
                     isInUSGreenList=False,
-                    limit=100,
+                    stockCountryId=886,
                     offset=0,
+                    limit=100,
                     requireTotal=True,
                     sortColumns='name',
                     sortTypes='asc',
-                    stockCountryId=886,
                 )
         session_id (str):
             Degiro's session id
@@ -877,9 +832,11 @@ def get_stock_list(
     if session is None:
         session = build_session()
 
-    url = URLs.STOCK_LIST
+    url = __PRODUCT_SEARCH_REQUEST_URL_MATCHING[
+        request.DESCRIPTOR.full_name
+    ]
 
-    params = payload_handler.stock_list_request_to_grpc(
+    params = payload_handler.product_search_request_to_grpc(
         request=request
     )
     params['intAccount'] = credentials.int_account
@@ -896,7 +853,7 @@ def get_stock_list(
         if raw == True:
             response = response_dict
         else:
-            response = payload_handler.stock_list_to_grpc(
+            response = payload_handler.product_search_to_grpc(
                 payload=response_dict,
             )
     except Exception as e:

@@ -12,8 +12,7 @@ from trading.pb.trading_pb2 import (
     Credentials,
     Order,
     OrdersHistory,
-    ProductsLookup,
-    StockList,
+    ProductSearch,
     TransactionsHistory,
     Update,
 )
@@ -267,36 +266,27 @@ class Basic:
             logger=logger,
         )
 
-    def products_lookup(
+    def product_search(
         self,
-        request:ProductsLookup.Request,
+        request:Union[
+            ProductSearch.RequestBonds,
+            ProductSearch.RequestETFs,
+            ProductSearch.RequestFunds,
+            ProductSearch.RequestFutures,
+            ProductSearch.RequestLeverageds,
+            ProductSearch.RequestLookup,
+            ProductSearch.RequestOptions,
+            ProductSearch.RequestStocks,
+            ProductSearch.RequestWarrants,
+        ],
         session_id:str,
         raw:bool=False,
-    )->Union[dict, ProductsLookup]:
+    )->Union[dict, ProductSearch]:
         credentials = self._credentials
         logger = self._logger
         session = self._session_storage.session
 
-        return utilities.products_lookup(
-            request=request,
-            session_id=session_id,
-            credentials=credentials,
-            raw=raw,
-            session=session,
-            logger=logger,
-        )
-
-    def get_stock_list(
-        self,
-        request:StockList.Request,
-        session_id:str,
-        raw:bool=False,
-    )->Union[dict, StockList]:
-        credentials = self._credentials
-        logger = self._logger
-        session = self._session_storage.session
-
-        return utilities.get_stock_list(
+        return utilities.product_search(
             request=request,
             session_id=session_id,
             credentials=credentials,

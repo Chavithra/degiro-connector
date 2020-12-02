@@ -4,8 +4,7 @@ from trading.pb.trading_pb2 import (
     AccountOverview,
     Order,
     OrdersHistory,
-    ProductsLookup,
-    StockList,
+    ProductSearch,
     TransactionsHistory,
     Update,
 )
@@ -132,22 +131,18 @@ def transactions_history_request_to_api(
 
     return request_dict
 
-def products_loopkup_request_to_grpc(
-    request:ProductsLookup.Request,
-)->dict:
-    request_dict = json_format.MessageToDict(
-        message=request,
-        including_default_value_fields=True,
-        preserving_proto_field_name=False,
-        use_integers_for_enums=True,
-        descriptor_pool=None,
-        float_precision=None,
-    )
-
-    return request_dict
-
-def stock_list_request_to_grpc(
-    request:StockList.Request,
+def product_search_request_to_grpc(
+    request:Union[
+        ProductSearch.RequestBonds,
+        ProductSearch.RequestETFs,
+        ProductSearch.RequestFunds,
+        ProductSearch.RequestFutures,
+        ProductSearch.RequestLeverageds,
+        ProductSearch.RequestLookup,
+        ProductSearch.RequestOptions,
+        ProductSearch.RequestStocks,
+        ProductSearch.RequestWarrants,
+    ],
 )->dict:
     request_dict = json_format.MessageToDict(
         message=request,
@@ -267,9 +262,7 @@ def confirmation_response_to_grpc(
 
     return confirmation_response
 
-def orders_history_to_grpc(
-    payload:dict,
-)->OrdersHistory:
+def orders_history_to_grpc(payload:dict)->OrdersHistory:
     orders_history = OrdersHistory()
     orders_history.response_datetime.GetCurrentTime()
     json_format.ParseDict(
@@ -280,9 +273,7 @@ def orders_history_to_grpc(
 
     return orders_history
 
-def transactions_history_to_grpc(
-    payload:dict,
-)->TransactionsHistory:
+def transactions_history_to_grpc(payload:dict)->TransactionsHistory:
     transactions_history = TransactionsHistory()
     transactions_history.response_datetime.GetCurrentTime()
     json_format.ParseDict(
@@ -293,9 +284,7 @@ def transactions_history_to_grpc(
 
     return transactions_history
 
-def account_overview_to_grpc(
-    payload:dict,
-)->OrdersHistory:
+def account_overview_to_grpc(payload:dict)->OrdersHistory:
     account_overview = AccountOverview()
     account_overview.response_datetime.GetCurrentTime()
     json_format.ParseDict(
@@ -306,29 +295,13 @@ def account_overview_to_grpc(
 
     return account_overview
 
-def products_loopkup_to_grpc(
-    payload:dict,
-)->ProductsLookup:
-    products_lookup = ProductsLookup()
-    products_lookup.response_datetime.GetCurrentTime()
+def product_search_to_grpc(payload:dict)->ProductSearch:
+    product_search = ProductSearch()
+    product_search.response_datetime.GetCurrentTime()
     json_format.ParseDict(
         js_dict=payload,
-        message=products_lookup,
+        message=product_search,
         ignore_unknown_fields=True,
     )
 
-    return products_lookup
-
-
-def stock_list_to_grpc(
-    payload:dict,
-)->StockList:
-    stock_list = StockList()
-    stock_list.response_datetime.GetCurrentTime()
-    json_format.ParseDict(
-        js_dict=payload,
-        message=stock_list,
-        ignore_unknown_fields=True,
-    )
-
-    return stock_list
+    return product_search
