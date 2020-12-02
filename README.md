@@ -3,11 +3,12 @@
 This is yet another library to access Degiro's API.
 
 ## 1.1. Which features ?
-Here is what you can do with this library :
+Here are the features you can access through this library :
 
-|**Category**|**Feature(s)**|
+|**Endpoint**|**Feature(s)**|
 |:-|:-|
 |AccountOverview|Retrieve all the CashMovements between two dates.|
+|Bonds<br>ETFs<br>Funds<br>Futures<br>Options<br>Stocks<br>Warrants|Search list of products according their type and other criterias. <br> For instance all the stocks from NASDAQ 100.|
 |ClientDetails|Retrieve a table containing : account information.|
 |ClientInfo|Retrieve a table containing : "clientId" and Currencies.|
 |Config|Retrieve a table containing : "clientId" and URLs constitutive of Degiro's API.|
@@ -17,7 +18,6 @@ Here is what you can do with this library :
 |Portoflio|List products in your porfolio.|
 |ProductLookup|Search a product by it's name.|
 |Quotecasts|Fetch real-time data on financial products. <br> For instance the real-time stock Price.|
-|StockList|Search stocks using their : index, country or their name. <br> For instance all the stocks from NASDAQ 100.|
 |TotalPorfolio|Retrieve aggregated information about your assets.|
 |TransactionsHistory|Retrieve all Transactions created between two dates.|
 
@@ -34,7 +34,7 @@ pip uninstall degiro-connector
 ```
 
 ## 1.4. Table of contents
-- [1. **Degiro Connector**](#1-degiro-connector)
+- [1. **Degiro Connector**](#1-degiro-connector-)
   * [1.1. Which features ?](#11-which-features-)
   * [1.2. How to install ?](#12-how-to-install-)
   * [1.3. How to uninstall ?](#13-how-to-uninstall-)
@@ -45,30 +45,41 @@ pip uninstall degiro-connector
   * [2.3. How to subscribe to a data-stream ?](#23-how-to-subscribe-to-a-data-stream-)
   * [2.4. How to fetch the data ?](#24-how-to-fetch-the-data-)
   * [2.5. How can I use this data ?](#25-how-can-i-use-this-data-)
-  * [2.6. Which data type ?](#26-which-data-type-)
+  * [2.6. Which are the available data types ?](#26-which-are-the-available-data-types-)
   * [2.7. What is a Ticker ?](#27-what-is-a-ticker-)
   * [2.8. What is inside the Dictionnary ?](#28-what-is-inside-the-dictionnary-)
   * [2.9. What is inside the DataFrame ?](#29-what-is-inside-the-dataframe-)
-- [3. Trading](#3-trading)
+- [3. Trading connection](#3-trading-connection)
   * [3.1. What are the credentials ?](#31-what-are-the-credentials-)
   * [3.2. How to Login ?](#32-how-to-login-)
   * [3.3. How to use 2FA ?](#33-how-to-use-2fa-)
 - [4. Order](#4-order)
   * [4.1. How to create an Order ?](#41-how-to-create-an-order-)
-  * [4.2. How to update an Order ?](#41-how-to-update-an-order-)
-  * [4.3. How to delete an Order ?](#41-how-to-delete-an-order-)
-- [5. Orders](#5-orders)
-- [6. TotalPortfolio](#6-totalportfolio)
-- [7. Config Table](#7-config-table)
-- [8. ClientDetails Table](#8-clientdetails-table)
-- [9. ClientInfos Table](#9-clientinfos-table)
-- [10. Orders History](#10-orders-history)
-- [11. Transactions History](#11-transactions-history)
-- [12. Account Overviews](#12-account-overviews)
-- [13. Products Lookup](#13-products-lookup)
-- [14. Stock List](#14-stock-list)
-- [15. Contributing](#14-contributing)
-- [16. License](#15-license)
+  * [4.2. How to update an Order ?](#42-how-to-update-an-order-)
+  * [4.3. How to delete an Order ?](#43-how-to-delete-an-order-)
+- [5. Portfolio](#5-portfolio)
+  * [5.1. How to retrieve pending Orders ?](#51-how-to-retrieve-pending-orders-)
+  * [5.2. How to get the TotalPortfolio ?](#52-how-to-get-the-totalportfolio-)
+  * [5.3. How to retrieve the OrdersHistory ?](#53-how-to-retrieve-the-ordershistory-)
+  * [5.4. How to retrieve the TransactionsHistory ?](#54-how-to-retrieve-the-transactionshistory-)
+- [6. Account](#6-account)
+  * [6.1. How to retrieve the Config table ?](#61-how-to-retrieve-the-config-table-)
+  * [6.2. How to retrieve the ClientDetails table ?](#62-how-to-retrieve-the-clientdetails-table-)
+  * [6.3. How to retrieve the ClientInfos table ?](#63-how-to-retrieve-the-clientinfos-table-)
+  * [6.4. How to get the AccountOverviews table ?](#64-how-to-get-the-accountoverviews-table-)
+- [7. Products](#7-products)
+  * [7.1. How to get my favourite products ?](#71-how-to-get-my-favourite-products-)
+  * [7.2. How to lookup products (search by name) ?](#72-how-to-lookup-products-search-by-name--)
+  * [7.6. How to search bonds ?](#76-how-to-search-bonds-)
+  * [7.8. How to search etfs ?](#78-how-to-search-etfs-)
+  * [7.7. How to search funds ?](#77-how-to-search-funds-)
+  * [7.7. How to search futures ?](#77-how-to-search-futures-)
+  * [7.8. How to search leverageds ?](#78-how-to-search-leverageds-)
+  * [7.4. How to search options ?](#74-how-to-search-options-)
+  * [7.3. How to search stocks ?](#73-how-to-search-stocks-)
+  * [7.9. How to search warrants ?](#79-how-to-search-warrants-)
+- [8. Contributing](#8-contributing)
+- [9. License](#9-license)
 
 # 2. Real-time data
 
@@ -172,7 +183,7 @@ request_duration= quotecast.metadata.request_duration
 
 For a more comprehensive example : [realtime_data.py](examples/quotecast/realtime_data.py)
 
-## 2.6. Which data type ?
+## 2.6. Which are the available data types ?
 
 This library provides the tools to convert Degiro's JSON data into something more programmer-friendly.
 
@@ -280,7 +291,7 @@ Example of DataFrame content :
 
 For a more comprehensive example : [realtime_data.py](examples/quotecast/realtime_data.py)
 
-# 3. Trading
+# 3. Trading connection
 
 This this library contains two connector :
 * quotecast.api : to consume real-time data
@@ -451,7 +462,9 @@ Here is an example :
 succcess = trading_api.delete(order_id=YOUR_ORDER_ID)
 ```
 
-# 5. Orders
+# 5. Portfolio
+
+## 5.1. How to retrieve pending Orders ?
 
 This is how to get the list of Orders currently created but not yet executed or deleted :
 ```python
@@ -477,7 +490,7 @@ Example : Orders
 
 For a more comprehensive example : [update.py](examples/trading/update.py)
 
-# 6. TotalPortfolio
+## 5.2. How to get the TotalPortfolio ?
 
 This is how to list the stocks/products currently in the portfolio :
 ```python
@@ -503,7 +516,64 @@ Example : DataFrame
 
 For a more comprehensive example : [update.py](examples/trading/update.py)
 
-# 7. Config Table
+
+## 5.3. How to retrieve the OrdersHistory ?
+
+This method returns data about passed orders between two dates.
+
+The result contains a list of "Orders" objects with the following attributes :
+
+|**Parameter**|**Type**|**Description**|
+|:-|:-|:-|
+|created|str|RFC 3339 Datetime, example : "2020-10-06T20:07:18+02:00".|
+|orderId|str|MD5 HASH, example : "098f6bcd-4621-d373-cade-4e832627b4f6"|
+|productId|int|Id of the product example : 65156|
+|size|float|Size of the order, example : 10.0000|
+|price|float|Price of the order, example : 8.6800|
+|buysell|str|"B" or "S"|
+|orderTypeId|int|see 3.Order|
+|orderTimeTypeId|int|see 3.Order|
+|stopPrice|float|Price like : 0.0000|
+|totalTradedSize|int|-|
+|type|str|"CREATE", "DELETE" or "MODIFY"|
+|status|str|"CONFIRMED"|
+|last|str|RFC 3339 Datetime, example : "2020-10-06T20:07:18+02:00".|
+|isActive|bool|-|
+
+
+Here is how to get this data :
+
+```python
+# PREPARE REQUEST
+from_date = OrdersHistory.Request.Date(year=2020,month=11,day=15)
+to_date = OrdersHistory.Request.Date(year=2020,month=10,day=15)
+request = OrdersHistory.Request(from_date=from_date, to_date=to_date)
+
+# FETCH DATA
+orders_history = trading_api.get_orders_history(request=request)
+```
+
+For a more comprehensive example :
+[orders_history.py](examples/trading/orders_history.py)
+
+
+## 5.4. How to retrieve the TransactionsHistory ?
+
+Here is how to get this data :
+
+```python
+# PREPARE REQUEST
+from_date = TransactionsHistory.Request.Date(year=2020,month=11,day=15)
+to_date = TransactionsHistory.Request.Date(year=2020,month=10,day=15)
+request = TransactionsHistory.Request(from_date=from_date, to_date=to_date)
+
+# FETCH DATA
+transactions_history = trading_api.get_transactions_history(request=request)
+```
+
+# 6. Account
+
+## 6.1. How to retrieve the Config table ?
 
 The config table contains the following informations :
 
@@ -543,7 +613,7 @@ config_table = trading_api.get_config()
 
 For a more comprehensive example : [config_table.py](examples/trading/config_table.py)
 
-# 8. ClientDetails Table
+## 6.2. How to retrieve the ClientDetails table ?
 
 The ClientDetails table contains information about the current Degiro Account.
 
@@ -598,7 +668,7 @@ client_details_table = trading_api.get_client_details()
 For a more comprehensive example :
 [client_details_table.py](examples/trading/client_details_table.py)
 
-# 9. ClientInfos Table
+## 6.3. How to retrieve the ClientInfos table ?
 
 The ClientInfos table contains the following information about currencies.
 
@@ -620,61 +690,7 @@ client_info_table = trading_api.get_client_info()
 For a more comprehensive example :
 [client_info_table.py](examples/trading/client_info_table.py)
 
-# 10. Orders History
-
-This method returns data about passed orders between two dates.
-
-The result contains a list of "Orders" objects with the following attributes :
-
-|**Parameter**|**Type**|**Description**|
-|:-|:-|:-|
-|created|str|RFC 3339 Datetime, example : "2020-10-06T20:07:18+02:00".|
-|orderId|str|MD5 HASH, example : "098f6bcd-4621-d373-cade-4e832627b4f6"|
-|productId|int|Id of the product example : 65156|
-|size|float|Size of the order, example : 10.0000|
-|price|float|Price of the order, example : 8.6800|
-|buysell|str|"B" or "S"|
-|orderTypeId|int|see 3.Order|
-|orderTimeTypeId|int|see 3.Order|
-|stopPrice|float|Price like : 0.0000|
-|totalTradedSize|int|-|
-|type|str|"CREATE", "DELETE" or "MODIFY"|
-|status|str|"CONFIRMED"|
-|last|str|RFC 3339 Datetime, example : "2020-10-06T20:07:18+02:00".|
-|isActive|bool|-|
-
-
-Here is how to get this data :
-
-```python
-# PREPARE REQUEST
-from_date = OrdersHistory.Request.Date(year=2020,month=11,day=15)
-to_date = OrdersHistory.Request.Date(year=2020,month=10,day=15)
-request = OrdersHistory.Request(from_date=from_date, to_date=to_date)
-
-# FETCH DATA
-orders_history = trading_api.get_orders_history(request=request)
-```
-
-For a more comprehensive example :
-[orders_history.py](examples/trading/orders_history.py)
-
-
-# 11. Transactions History
-
-Here is how to get this data :
-
-```python
-# PREPARE REQUEST
-from_date = TransactionsHistory.Request.Date(year=2020,month=11,day=15)
-to_date = TransactionsHistory.Request.Date(year=2020,month=10,day=15)
-request = TransactionsHistory.Request(from_date=from_date, to_date=to_date)
-
-# FETCH DATA
-transactions_history = trading_api.get_transactions_history(request=request)
-```
-
-# 12. Account Overviews
+## 6.4. How to get the AccountOverviews table ?
 
 It contains information about cash movements.
 
@@ -690,10 +706,13 @@ request = AccountOverview.Request(from_date=from_date, to_date=to_date)
 account_overview = trading_api.get_account_overview(request=request)
 ```
 
-For a more comprehensive example :
-[account_overview.py](examples/trading/account_overview.py)
+For a more comprehensive example :[account_overview.py](examples/trading/account_overview.py)
 
-# 13. Products Lookup
+# 7. Products
+
+## 7.1. How to get my favourite products ?
+
+## 7.2. How to lookup products (search by name) ?
 
 Text research on a financial product.
 
@@ -711,10 +730,155 @@ request = ProductsLookup.Request(
 products_lookup = trading_api.products_lookup(request=request)
 ```
 
-For a more comprehensive example :
-[products_lookup.py](examples/trading/products_lookup.py)
+For a more comprehensive example :[products_lookup.py](examples/trading/products_lookup.py)
 
-# 14. Stock List
+## 7.6. How to search bonds ?
+
+Here is how to get this data :
+
+```python
+# PREPARE REQUEST
+request = ProductSearch.RequestBonds(
+    bondIssuerTypeId=0,
+    bondExchangeId=710,
+
+    searchText='',
+    offset=0,
+    limit=100,
+    requireTotal=True,
+    sortColumns='name',
+    sortTypes='asc',
+)
+
+# FETCH DATA
+bond_list = trading_api.product_search(request=request)
+```
+
+For a more comprehensive example :[product_search.py](examples/trading/product_search.py)
+
+
+## 7.8. How to search etfs ?
+
+Here is how to get this data :
+
+```python
+# PREPARE REQUEST
+request = ProductSearch.RequestETFs(
+    popularOnly=False,
+    inputAggregateTypes='',
+    inputAggregateValues='',
+
+    searchText='',
+    offset=0,
+    limit=100,
+    requireTotal=True,
+    sortColumns='name',
+    sortTypes='asc',
+)
+
+# FETCH DATA
+etf_list = trading_api.product_search(request=request)
+```
+
+For a more comprehensive example :[product_search.py](examples/trading/product_search.py)
+
+## 7.7. How to search funds ?
+
+Here is how to get this data :
+
+```python
+# PREPARE REQUEST
+request = ProductSearch.RequestFunds(
+    searchText='',
+    offset=0,
+    limit=100,
+    requireTotal=True,
+    sortColumns='name',
+    sortTypes='asc',
+)
+
+# FETCH DATA
+fund_list = trading_api.product_search(request=request)
+```
+
+For a more comprehensive example :[product_search.py](examples/trading/product_search.py)
+
+
+## 7.7. How to search futures ?
+
+Here is how to get this data :
+
+```python
+# PREPARE REQUEST
+request = ProductSearch.RequestFunds.Request(
+    futureExchangeId=1,
+    underlyingIsin='FR0003500008',
+
+    searchText='',
+    offset=0,
+    limit=100,
+    requireTotal=True,
+    sortColumns='name',
+    sortTypes='asc',
+)
+
+# FETCH DATA
+fund_list = trading_api.product_search(request=request)
+```
+
+For a more comprehensive example :[product_search.py](examples/trading/product_search.py)
+
+## 7.8. How to search leverageds ?
+
+Here is how to get this data :
+
+```python
+# PREPARE REQUEST
+request = ProductSearch.RequestLeverageds(
+    popularOnly=False,
+    inputAggregateTypes='',
+    inputAggregateValues='',
+
+    searchText='',
+    offset=0,
+    limit=100,
+    requireTotal=True,
+    sortColumns='name',
+    sortTypes='asc',
+)
+
+# FETCH DATA
+etf_list = trading_api.product_search(request=request)
+```
+
+For a more comprehensive example :[product_search.py](examples/trading/product_search.py)
+
+## 7.4. How to search options ?
+Here is how to get this data :
+
+```python
+# PREPARE REQUEST
+request = ProductSearch.RequestOptions(
+    inputAggregateTypes='',
+    inputAggregateValues='',
+    optionExchangeId=3,
+    underlyingIsin='FR0003500008',
+
+    searchText='',
+    offset=0,
+    limit=100,
+    requireTotal=True,
+    sortColumns='name',
+    sortTypes='asc',
+)
+
+# FETCH DATA
+option_list = trading_api.product_search(request=request)
+```
+
+For a more comprehensive example :[product_search.py](examples/trading/product_search.py)
+
+## 7.3. How to search stocks ?
 
 It contains information about available stocks.
 
@@ -722,28 +886,50 @@ Here is how to get this data :
 
 ```python
 # PREPARE REQUEST
-request = StockList.Request(
+request = ProductSearch.RequestStocks(
     indexId=5,
     isInUSGreenList=False,
-    limit=100,
+    stockCountryId=886,
+
+    searchText='',
     offset=0,
+    limit=100,
     requireTotal=True,
     sortColumns='name',
     sortTypes='asc',
-    stockCountryId=886,
 )
 
 # FETCH DATA
-stock_list = trading_api.get_stock_list(request=request)
+stock_list = trading_api.product_search(request=request)
 ```
 
-For a more comprehensive example :
-[stock_list.py](examples/trading/stock_list.py)
+For a more comprehensive example :[product_search.py](examples/trading/product_search.py)
 
-# 15. Contributing
+## 7.9. How to search warrants ?
+
+Here is how to get this data :
+
+```python
+# PREPARE REQUEST
+request = ProductSearch.RequestWarrants(
+    searchText='',
+    offset=0,
+    limit=100,
+    requireTotal=True,
+    sortColumns='name',
+    sortTypes='asc',
+)
+
+# FETCH DATA
+warrant_list = trading_api.product_search(request=request)
+```
+
+For a more comprehensive example :[product_search.py](examples/trading/product_search.py)
+
+# 8. Contributing
 Pull requests are welcome.
 
 Feel free to open an issue or send me a message if you have a question.
 
-# 16. License
+# 9. License
 [BSD-3-Clause License](https://raw.githubusercontent.com/Chavithra/degiro_connector/master/LICENSE)
