@@ -70,14 +70,14 @@ pip uninstall degiro-connector
 - [7. Products](#7-products)
   * [7.1. How to get my favourite products ?](#71-how-to-get-my-favourite-products-)
   * [7.2. How to lookup products (search by name) ?](#72-how-to-lookup-products-search-by-name--)
-  * [7.6. How to search bonds ?](#76-how-to-search-bonds-)
-  * [7.8. How to search etfs ?](#78-how-to-search-etfs-)
-  * [7.7. How to search funds ?](#77-how-to-search-funds-)
-  * [7.7. How to search futures ?](#77-how-to-search-futures-)
-  * [7.8. How to search leverageds ?](#78-how-to-search-leverageds-)
-  * [7.4. How to search options ?](#74-how-to-search-options-)
-  * [7.3. How to search stocks ?](#73-how-to-search-stocks-)
-  * [7.9. How to search warrants ?](#79-how-to-search-warrants-)
+  * [7.3. How to search bonds ?](#73-how-to-search-bonds-)
+  * [7.4. How to search etfs ?](#74-how-to-search-etfs-)
+  * [7.5. How to search funds ?](#75-how-to-search-funds-)
+  * [7.6. How to search futures ?](#76-how-to-search-futures-)
+  * [7.7. How to search leverageds ?](#77-how-to-search-leverageds-)
+  * [7.8. How to search options ?](#78-how-to-search-options-)
+  * [7.9. How to search stocks ?](#79-how-to-search-stocks-)
+  * [7.10. How to search warrants ?](#710-how-to-search-warrants-)
 - [8. Contributing](#8-contributing)
 - [9. License](#9-license)
 
@@ -732,7 +732,7 @@ products_lookup = trading_api.products_lookup(request=request)
 
 For a more comprehensive example :[products_lookup.py](examples/trading/products_lookup.py)
 
-## 7.6. How to search bonds ?
+## 7.3. How to search bonds ?
 
 Here is how to get this data :
 
@@ -757,7 +757,7 @@ bond_list = trading_api.product_search(request=request)
 For a more comprehensive example :[product_search.py](examples/trading/product_search.py)
 
 
-## 7.8. How to search etfs ?
+## 7.4. How to search etfs ?
 
 Here is how to get this data :
 
@@ -782,7 +782,7 @@ etf_list = trading_api.product_search(request=request)
 
 For a more comprehensive example :[product_search.py](examples/trading/product_search.py)
 
-## 7.7. How to search funds ?
+## 7.5. How to search funds ?
 
 Here is how to get this data :
 
@@ -803,8 +803,7 @@ fund_list = trading_api.product_search(request=request)
 
 For a more comprehensive example :[product_search.py](examples/trading/product_search.py)
 
-
-## 7.7. How to search futures ?
+## 7.6. How to search futures ?
 
 Here is how to get this data :
 
@@ -828,7 +827,7 @@ fund_list = trading_api.product_search(request=request)
 
 For a more comprehensive example :[product_search.py](examples/trading/product_search.py)
 
-## 7.8. How to search leverageds ?
+## 7.7. How to search leverageds ?
 
 Here is how to get this data :
 
@@ -853,7 +852,7 @@ etf_list = trading_api.product_search(request=request)
 
 For a more comprehensive example :[product_search.py](examples/trading/product_search.py)
 
-## 7.4. How to search options ?
+## 7.8. How to search options ?
 Here is how to get this data :
 
 ```python
@@ -878,7 +877,7 @@ option_list = trading_api.product_search(request=request)
 
 For a more comprehensive example :[product_search.py](examples/trading/product_search.py)
 
-## 7.3. How to search stocks ?
+## 7.9. How to search stocks ?
 
 It contains information about available stocks.
 
@@ -905,7 +904,7 @@ stock_list = trading_api.product_search(request=request)
 
 For a more comprehensive example :[product_search.py](examples/trading/product_search.py)
 
-## 7.9. How to search warrants ?
+## 7.10. How to search warrants ?
 
 Here is how to get this data :
 
