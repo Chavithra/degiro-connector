@@ -8,7 +8,7 @@ Here are the features you can access through this library :
 |**Endpoint**|**Feature(s)**|
 |:-|:-|
 |AccountOverview|Retrieve all the CashMovements between two dates.|
-|Bonds<br>ETFs<br>Funds<br>Futures<br>Options<br>Stocks<br>Warrants|Search list of products according their type and other criterias. <br> For instance all the stocks from NASDAQ 100.|
+|Bonds<br>ETFs<br>Funds<br>Futures<br>Leverageds<br>Lookup<br>Options<br>Stocks<br>Warrants|Search list of products according their type and other criterias. <br> For instance all the stocks from NASDAQ 100.|
 |ClientDetails|Retrieve a table containing : account information.|
 |ClientInfo|Retrieve a table containing : "clientId" and Currencies.|
 |Config|Retrieve a table containing : "clientId" and URLs constitutive of Degiro's API.|
@@ -69,7 +69,7 @@ pip uninstall degiro-connector
   * [6.4. How to get the AccountOverviews table ?](#64-how-to-get-the-accountoverviews-table-)
 - [7. Products](#7-products)
   * [7.1. How to get my favourite products ?](#71-how-to-get-my-favourite-products-)
-  * [7.2. How to lookup products (search by name) ?](#72-how-to-lookup-products-search-by-name--)
+  * [7.2. How to lookup products (search by name) ?](#72-how-to-lookup-products-search-by-name-)
   * [7.3. How to search bonds ?](#73-how-to-search-bonds-)
   * [7.4. How to search etfs ?](#74-how-to-search-etfs-)
   * [7.5. How to search funds ?](#75-how-to-search-funds-)
