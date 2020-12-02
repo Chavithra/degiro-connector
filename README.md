@@ -315,9 +315,9 @@ The "int_account" is not necessary for login.
 
 But it is required to do some of the operations available in this connector.
 
-You can get the "int_account" using the "5. Config Table" feature, it is the parameter "clientId".
+You can get the "int_account" using the "Config" table, it is the parameter "clientId".
 
-When you enable 2FA on Degiro's website it shows you some QRCode.
+When you enable 2FA on Degiro's website it will display some QRCode.
 
 You can use a tool to convert this QRCode to a text, it will look like this :
 
