@@ -30,8 +30,13 @@ trading_api = TradingAPI(credentials=credentials)
 # ESTABLISH CONNECTION
 trading_api.connection_storage.connect()
 
-# PREPARE REQUEST
-request = ProductSearch.RequestStocks(
+# PREPARE REQUESTS
+request_lookup = ProductSearch.RequestLookup(
+    search_text = 'APPLE',
+    limit = 10,
+    offset = 0,
+)
+request_stock = ProductSearch.RequestStocks(
     indexId=5,
     isInUSGreenList=False,
     stockCountryId=886,
@@ -43,7 +48,8 @@ request = ProductSearch.RequestStocks(
 )
 
 # FETCH DATA
-stock_list = trading_api.get_stock_list(request=request, raw=False)
+products_lookup = trading_api.product_search(request=request_lookup, raw=False)
+stock_list = trading_api.product_search(request=request_stock, raw=False)
 
 # LOOP OVER PRODUCTS
 for product in stock_list.products:
@@ -53,3 +59,7 @@ for product in stock_list.products:
 product = stock_list.products[0]
 for column in product:
     print(column, product[column])
+
+# DISPLAY LOOKUP
+for product in products_lookup.products:
+    print(dict(product))

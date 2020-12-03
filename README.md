@@ -730,14 +730,14 @@ Here is how to get this data :
 
 ```python
 # PREPARE REQUEST
-request = ProductsLookup.Request(
+request = ProductSearch.RequestLookup(
     search_text = 'APPLE',
     limit = 10,
     offset = 0,
 )
 
 # FETCH DATA
-products_lookup = trading_api.products_lookup(request=request)
+products_lookup = trading_api.product_search(request=request)
 ```
 
 For a more comprehensive example :[products_lookup.py](examples/trading/products_lookup.py)
