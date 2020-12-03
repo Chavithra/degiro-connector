@@ -144,9 +144,9 @@ A Request has the following parameters :
 You can use the following code :
 ```python
 request = Request(
-    action = Request.Action.SUBSCRIBE,
-    vwd_id = '360015751',
-    label_list = ['LastDate','LastTime','LastPrice','LastVolume'],
+    action=Request.Action.SUBSCRIBE,
+    vwd_id='360015751',
+    label_list=['LastDate','LastTime','LastPrice','LastVolume'],
 )
 ```
 
@@ -217,24 +217,24 @@ The generated Ticker contains :
 |**Parameter**|**Type**|**Description**|
 |:-|:-|:-|
 |metadata|Metadata|Containing the "response_datetime" and "request_duration".|
-|products|MessageMap|Dictionnary like object containing the metrics group by "product_id".|
-|product_list|RepeatedScalarFieldContainer|List of available "product_id".|
+|products|MessageMap|Dictionnary like object containing the metrics group by "vwd_id".|
+|product_list|RepeatedScalarFieldContainer|List of available "vwd_id".|
 
 Here are some operations available :
 
 ```python
-product_id = '360015751'
+product = '360015751'
 metric_name = 'LastPrice'
 
 # ACCESS SPECIFIC PRODUCT
-product = ticker.products[product_id]
+product = ticker.products[product]
 
 # ACCESS SPECIFIC METRIC
 metric = product[metric_name]
 
 # LOOP OVER PRODUCTS
-for product_id in ticker.products:
-    product = ticker.products[product_id]
+for product in ticker.products:
+    product = ticker.products[product]
 
 # LOOP OVER METRICS
 for metric_name in product.metrics:
@@ -258,7 +258,7 @@ Example - dict :
 ```python
 [
     {
-        'product_id': 360114899,
+        'vwd_id': 360114899,
         'response_datetime': '2020-11-08 12:00:27',
         'request_duration': 1.0224891666870117,
         'LastDate': '2020-11-06',
@@ -267,7 +267,7 @@ Example - dict :
         'LastVolume': '100'
     },
     {
-        'product_id': 360015751,
+        'vwd_id': 360015751,
         'response_datetime': '2020-11-08 12:00:27',
         'request_duration': 1.0224891666870117,
         'LastDate': '2020-11-06',
@@ -281,12 +281,12 @@ Example - dict :
 
 The generated DataFrame will content :
 
-* In row : the product, for instance the "AAPL" stock which has "product_id = 331868".
+* In rows : the product, for instance the "AAPL" stock which has "vwd_id" = "AAPL.BATS,E".
 * In columns : the product's parameters for instance "LastPrice", "LastVolume",...
 
 Example of DataFrame content :
 
-       product_id    response_datetime  request_duration    LastDate  LastTime LastPrice LastVolume
+           vwd_id    response_datetime  request_duration    LastDate  LastTime LastPrice LastVolume
     0   360114899  2020-11-08 12:00:27          1.022489  2020-11-06  17:39:57      70.0        100
     1   360015751  2020-11-08 12:00:27          1.022489  2020-11-06  17:36:17     22.99        470
 

@@ -19,7 +19,7 @@ quotecast_api.connection_storage.connect()
 # SUBSCRIBE TO FEED
 request = Request(
     action=Request.Action.SUBSCRIBE,
-    vwd_id='360015751',
+    vwd_id='AAPL.BATS,E',
     label_list=[
         'LastDate',
         'LastTime',
