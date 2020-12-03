@@ -223,7 +223,7 @@ The generated Ticker contains :
 Here are some operations available :
 
 ```python
-product_id = 331868
+product_id = '360015751'
 metric_name = 'LastPrice'
 
 # ACCESS SPECIFIC PRODUCT
