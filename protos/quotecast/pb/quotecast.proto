@@ -3,7 +3,6 @@ syntax = "proto3";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/duration.proto";
 
-/* MESSAGE(S) DEFINITION */
 message Metadata {
   google.protobuf.Timestamp response_datetime = 1;
   google.protobuf.Duration request_duration = 2;
@@ -27,9 +26,9 @@ message Request {
 
 message Ticker {
   message Metrics {
-    map<string, double> metrics =1;
+    map<string, double> metrics = 1;
   }
   Metadata metadata = 1;
-  map<int32, Metrics> products = 2;
-  repeated int32 product_list = 3;
+  map<string, Metrics> products = 2;
+  repeated string product_list = 3;
 }

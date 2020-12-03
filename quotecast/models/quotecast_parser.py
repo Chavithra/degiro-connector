@@ -4,8 +4,7 @@ import orjson as json
 
 from quotecast.models.metrics_storage import MetricsStorage
 from quotecast.pb.quotecast_pb2 import Quotecast, Ticker
-from typing import Dict
-from wrapt.decorators import synchronized
+from typing import Dict, List
 
 class QuotecastParser:
     """ Handle the payload returned from this endpoint :
@@ -148,40 +147,76 @@ class QuotecastParser:
     def build_ticker_from_quotecast(
         quotecast:Quotecast,
         ticker:Ticker=Ticker(),
-        references:Dict[int, float]=dict(),
-    ):
+        references:Dict[int, List[str]]=dict(),
+    )->Ticker:
+        """ Build or update a Ticker metrics using a Quotecast object.
+
+        Args:
+            quotecast (Quotecast):
+                Object containing the raw metrics.
+            ticker (Ticker, optional):
+                Object to update with the new metrics.
+                Defaults to Ticker().
+            references (Dict[int, List[str]], optional):
+                The references dictionnary is a registry.
+                It links the products :
+                    * reference
+                    * vwd_id
+                    * metric
+                Here is an example of how to populate it :
+                    references[reference] = [vwd_id, metric]
+                Defaults to dict().
+
+        Raises:
+            AttributeError:
+                If the subscription is rejected.
+                Or if the metric is unknown.
+
+        Returns:
+            Ticker: New or updated Ticker.
+        """
         # SETUP PRODUCTS & METRICS
         parsed_json = json.loads(quotecast.json_data)
         for data in parsed_json:
             if  data['m'] == 'un' :
                 reference = data['v'][0]
                 value = data['v'][1]
-                product, name = references[reference].split('.')
-                ticker.products[int(product)].metrics[name] = value
+                product, metric = references[reference]
+                ticker.products[product].metrics[metric] = value
             elif data['m'] == 'us':
                 reference = data['v'][0]
                 value = data['v'][1]
-                product, name = references[reference].split('.')
+                product, metric = references[reference]
+
                 if value[4] == '-':
                     date = datetime.datetime.strptime(
                         value,
                         '%Y-%m-%d',
                     )
                     value = datetime.datetime.timestamp(date)
+                    ticker.products[product].metrics[metric] = value
                 elif value[2] == ':':
                     time = datetime.time.fromisoformat(value)
-                    value = time.hour * 3600 + time.minute * 60 + time.second
-                ticker.products[int(product)].metrics[name] = value
+                    value = \
+                        time.hour * 3600 \
+                        + time.minute * 60 \
+                        + time.second
+                    ticker.products[product].metrics[metric] = value
+                else:
+                    raise AttributeError(f'Unknown metric : {data}')
             elif data['m'] == 'a_req':
-                references[data['v'][1]] = data['v'][0]
+                references[data['v'][1]] = data['v'][0].rsplit(
+                    sep='.',
+                    maxsplit=1,
+                )
             elif data['m'] == 'a_rel':
                 delete_list = []
                 for reference in references:
                     if references[reference] == data['v'][0]:
-                        delete_list.append()
+                        delete_list.append(reference)
 
-                for element in delete_list:
-                    del references[element]
+                for reference in delete_list:
+                    del references[reference]
             elif data['m'] == 'h':
                 pass
             elif data['m'] == 'ue':
