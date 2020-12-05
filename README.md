@@ -618,47 +618,47 @@ For a more comprehensive example : [config_table.py](examples/trading/config_tab
 
 The ClientDetails table contains information about the current Degiro Account.
 
-|**Parameter**|**Type**|**Description**|
-|:-|:-|:-|
-|id|int|-|
-|intAccount|int|-|
-|loggedInPersonId|int|-|
-|clientRole|str|-|
-|effectiveClientRole|str|-|
-|contractType|str|-|
-|username|str|-|
-|displayName|str|-|
-|email|str|-|
-|firstContact.firstName|str|-|
-|firstContact.lastName|str|-|
-|firstContact.displayName|str|-|
-|firstContact.nationality|str|-|
-|firstContact.gender|str|-|
-|firstContact.dateOfBirth|str|-|
-|firstContact.placeOfBirth|str|-|
-|firstContact.countryOfBirth|str|-|
-|address.streetAddress|str|-|
-|address.streetAddressNumber|str|-|
-|address.zip|str|-|
-|address.city|str|-|
-|address.country|str|-|
-|cellphoneNumber|str|-|
-|locale|str|-|
-|language|str|-|
-|culture|str|-|
-|bankAccount.bankAccountId|int|-|
-|bankAccount.bic|str|-|
-|bankAccount.iban|str|-|
-|bankAccount.status|str|-|
-|flatexBankAccount.bic|str|-|
-|flatexBankAccount.iban|str|-|
-|memberCode|str|-|
-|isWithdrawalAvailable|bool|-|
-|isAllocationAvailable|bool|-|
-|isIskClient|bool|-|
-|isCollectivePortfolio|bool|-|
-|isAmClientActive|bool|-|
-|canUpgrade|bool|-|
+|**Parameter**|**Type**|
+|:-|:-|
+|id|int|
+|intAccount|int|
+|loggedInPersonId|int|
+|clientRole|str|
+|effectiveClientRole|str|
+|contractType|str|
+|username|str|
+|displayName|str|
+|email|str|
+|firstContact.firstName|str|
+|firstContact.lastName|str|
+|firstContact.displayName|str|
+|firstContact.nationality|str|
+|firstContact.gender|str|
+|firstContact.dateOfBirth|str|
+|firstContact.placeOfBirth|str|
+|firstContact.countryOfBirth|str|
+|address.streetAddress|str|
+|address.streetAddressNumber|str|
+|address.zip|str|
+|address.city|str|
+|address.country|str|
+|cellphoneNumber|str|
+|locale|str|
+|language|str|
+|culture|str|
+|bankAccount.bankAccountId|int|
+|bankAccount.bic|str|
+|bankAccount.iban|str|
+|bankAccount.status|str|
+|flatexBankAccount.bic|str|
+|flatexBankAccount.iban|str|
+|memberCode|str|
+|isWithdrawalAvailable|bool|
+|isAllocationAvailable|bool|
+|isIskClient|bool|
+|isCollectivePortfolio|bool|
+|isAmClientActive|bool|
+|canUpgrade|bool|
 
 Here is how to get this table :
 
@@ -673,13 +673,13 @@ For a more comprehensive example :
 
 The ClientInfos table contains the following information about currencies.
 
-|**Parameter**|**Type**|**Description**|
-|:-|:-|:-|
-|clientId|int|-|
-|baseCurrency|str|-|
-|currencyPairs|dict|-|
-|marginType|str|-|
-|cashFunds|dict|-|
+|**Parameter**|**Type**|
+|:-|:-|
+|clientId|int|
+|baseCurrency|str|
+|currencyPairs|dict|
+|marginType|str|
+|cashFunds|dict|
 |compensationCapping|float|-|
 
 Here is how to get this table :
