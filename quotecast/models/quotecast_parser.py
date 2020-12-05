@@ -50,7 +50,7 @@ class QuotecastParser:
 
     A MATCHING is an object with three elements :
         * REFERENCE
-        * VWID
+        * VWD_ID
         * LABEL
 
     The REFERENCE is a unique identifier in Degiro's Quotecast API
@@ -58,7 +58,7 @@ class QuotecastParser:
 
     The VALUE is the value of the financial data.
 
-    THE VWID is the id of the product (etf, option, stock, warrant...)
+    THE VWD_ID is the id of the product (etf, option, stock, warrant...)
     from which we retrieve measurements (LastPrice, LastVolume...).
 
     The LABEL is the name of the measurements that we retrieve.
@@ -114,7 +114,7 @@ class QuotecastParser:
         * CODE2
 
     If MESSAGE_TYPE = "a_req" or "a_rel" :
-        * CODE1 : contains the product's VWID and the PARAMETER_NAME.
+        * CODE1 : contains the product's VWD_ID and the PARAMETER_NAME.
         * CODE2 : contains the REFERENCE for the parameter in CODE1.
         * Example of MESSAGE : 
         ```json
@@ -124,7 +124,7 @@ class QuotecastParser:
         }
         ```
         "365004197.B10Volume" <=> CODE1
-        365004197 <=> VWID
+        365004197 <=> VWD_ID
         B10Volume <=> PARAMETER_NAME
         624239 <=> REFERENCE
 
