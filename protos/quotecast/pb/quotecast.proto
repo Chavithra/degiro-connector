@@ -26,9 +26,9 @@ message Request {
 
 message Ticker {
   message Metrics {
-    map<string, double> metrics = 1;
+    map<string, double> metrics = 1; // <metric_name, metric_value>
   }
   Metadata metadata = 1;
-  map<string, Metrics> products = 2;
+  map<string, Metrics> products = 2; // <vwd_id, metric>
   repeated string product_list = 3;
 }
