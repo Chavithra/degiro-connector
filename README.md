@@ -52,8 +52,10 @@ pip uninstall degiro-connector
   * [2.9. What is inside the DataFrame ?](#29-what-is-inside-the-dataframe-)
 - [3. Trading connection](#3-trading-connection)
   * [3.1. What are the credentials ?](#31-what-are-the-credentials-)
-  * [3.2. How to Login ?](#32-how-to-login-)
-  * [3.3. How to use 2FA ?](#33-how-to-use-2fa-)
+  * [3.2. What is the purpose of "in_account" ?](#32-what-is-the-purpose-of--in-account--)
+  * [3.3. What is the purpose of "totp_secret_key" ?](#33-what-is-the-purpose-of--totp-secret-key--)
+  * [3.4. How to Login ?](#34-how-to-login-)
+  * [3.5. How to use 2FA ?](#35-how-to-use-2fa-)
 - [4. Order](#4-order)
   * [4.1. How to create an Order ?](#41-how-to-create-an-order-)
   * [4.2. How to update an Order ?](#42-how-to-update-an-order-)
@@ -310,10 +312,10 @@ Here are these credentials :
 |:-|:-|:-|
 |username|str|Username used to login on Degiro's website.|
 |password|str|Password used to login on Degiro's website.|
-|int_account|int| Unique identifier of the account : used by Degiro's server.|
+|int_account|int|Unique identifier of the account : used by Degiro's server.|
 |totp_secret_key|str|Secret key used for Two-factor Authentication (2FA).|
 
-### 3.1.1 About "in_account"
+## 3.2. What is the purpose of "in_account" ?
 
 The parameter "int_account" is not necessary for login.
 
@@ -321,9 +323,11 @@ But it is required to do some of the operations available in this connector.
 
 You can get the "int_account" using the "Config" table, it is the parameter "clientId".
 
-### 3.1.2 About "totp_secret_key"
+## 3.3. What is the purpose of "totp_secret_key" ?
 
-When you enable 2FA on Degiro's website it will display some QRCode.
+The parameter "totp_secret_key" is only required if you have enabled 2FA on Degiro's website.
+
+When you activate 2FA on Degiro's website, it displays some QRCode.
 
 A QRCode is a picture which can be converted into a text.
 
@@ -337,7 +341,7 @@ Has you can guess the "totp_secret_key" is in this part :
 
     secret=YOUR_TOPT_SECRET_KEY
 
-## 3.2. How to Login ?
+## 3.4. How to Login ?
 In order to use the "trading.api" you need to establish a connection.
 
 Here is how to login :
@@ -356,7 +360,7 @@ trading_api = API(credentials=credentials)
 trading_api.connection_storage.connect()
 ```
 
-## 3.3. How to use 2FA ?
+## 3.5. How to use 2FA ?
 If you are using Two-factor Authentication (2FA) you need to provide an extra parameter.
 
 This parameter is the called "totp_secret_key" by the library.
