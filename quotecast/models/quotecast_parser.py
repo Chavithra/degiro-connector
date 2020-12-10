@@ -103,6 +103,8 @@ class QuotecastParser:
         * "a_req" : subscription
         * "a_rel" : unsubscription
         * "d" : rejected subscription
+        * "h" : heartbeat
+        * "sr" : session invalid
         * "ue" : data not available
         * "un" : numeric data
         * "us" : string data

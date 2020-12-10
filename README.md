@@ -308,21 +308,34 @@ Here are these credentials :
 
 |**Parameter**|**Type**|**Description**|
 |:-|:-|:-|
-|username|str| Username used to login on Degiro's website.|
-|password|str| Password used to login on Degiro's website.|
+|username|str|Username used to login on Degiro's website.|
+|password|str|Password used to login on Degiro's website.|
 |int_account|int| Unique identifier of the account : used by Degiro's server.|
+|totp_secret_key|str|Secret key used for Two-factor Authentication (2FA).|
 
-The "int_account" is not necessary for login.
+### 3.1.1 About "in_account"
+
+The parameter "int_account" is not necessary for login.
 
 But it is required to do some of the operations available in this connector.
 
 You can get the "int_account" using the "Config" table, it is the parameter "clientId".
 
+### 3.1.2 About "totp_secret_key"
+
 When you enable 2FA on Degiro's website it will display some QRCode.
 
-You can use a tool to convert this QRCode to a text, it will look like this :
+A QRCode is a picture which can be converted into a text.
 
-"otpauth://totp/DEGIRO:**YOUR_USERNAME**?algorithm=SHA1&issuer=DEGIRO&secret=**YOUR_2FA_SECRET_KEY**&digits=6&period=30"
+You can download this QRCode and use a tool to extract the text from it.
+
+This extracted text will look like this :
+
+    otpauth://totp/DEGIRO:YOUR_USERNAME?algorithm=SHA1&issuer=DEGIRO&secret=YOUR_TOPT_SECRET_KEY&digits=6&period=30
+
+Has you can guess the "totp_secret_key" is in this part :
+
+    secret=YOUR_TOPT_SECRET_KEY
 
 ## 3.2. How to Login ?
 In order to use the "trading.api" you need to establish a connection.
