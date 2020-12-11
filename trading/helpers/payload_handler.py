@@ -245,6 +245,8 @@ def checking_response_to_grpc(
     json_format.ParseDict(
         js_dict=payload['data'],
         message=checking_response,
+        ignore_unknown_fields=False,
+        descriptor_pool=None,
     )
 
     return checking_response
@@ -257,6 +259,8 @@ def confirmation_response_to_grpc(
     json_format.ParseDict(
         js_dict=payload['data'],
         message=confirmation_response,
+        ignore_unknown_fields=False,
+        descriptor_pool=None,
     )
 
     return confirmation_response
@@ -268,6 +272,7 @@ def orders_history_to_grpc(payload:dict)->OrdersHistory:
         js_dict={'values':payload['data']},
         message=orders_history,
         ignore_unknown_fields=True,
+        descriptor_pool=None,
     )
 
     return orders_history
@@ -279,6 +284,7 @@ def transactions_history_to_grpc(payload:dict)->TransactionsHistory:
         js_dict={'values':payload['data']},
         message=transactions_history,
         ignore_unknown_fields=True,
+        descriptor_pool=None,
     )
 
     return transactions_history
@@ -290,6 +296,7 @@ def account_overview_to_grpc(payload:dict)->OrdersHistory:
         js_dict={'values':payload['data']},
         message=account_overview,
         ignore_unknown_fields=True,
+        descriptor_pool=None,
     )
 
     return account_overview
@@ -301,6 +308,7 @@ def product_search_to_grpc(payload:dict)->ProductSearch:
         js_dict=payload,
         message=product_search,
         ignore_unknown_fields=True,
+        descriptor_pool=None,
     )
 
     return product_search
@@ -312,6 +320,8 @@ def favourites_to_grpc(payload:dict)->Favourites:
     json_format.ParseDict(
         js_dict={'values':payload['data']},
         message=favourites,
+        ignore_unknown_fields=False,
+        descriptor_pool=None,
     )
 
     return favourites

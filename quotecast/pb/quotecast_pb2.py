@@ -13,6 +13,7 @@ _sym_db = _symbol_database.Default()
 
 from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 from google.protobuf import duration_pb2 as google_dot_protobuf_dot_duration__pb2
+from google.protobuf import struct_pb2 as google_dot_protobuf_dot_struct__pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
@@ -21,36 +22,11 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x1cquotecast/pb/quotecast.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/duration.proto\"v\n\x08Metadata\x12\x35\n\x11response_datetime\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x33\n\x10request_duration\x18\x02 \x01(\x0b\x32\x19.google.protobuf.Duration\";\n\tQuotecast\x12\x11\n\tjson_data\x18\x01 \x01(\t\x12\x1b\n\x08metadata\x18\x02 \x01(\x0b\x32\t.Metadata\"\x8d\x01\n\x07Request\x12\x1f\n\x06\x61\x63tion\x18\x01 \x01(\x0e\x32\x0f.Request.Action\x12\x0e\n\x06vwd_id\x18\x02 \x01(\t\x12\x12\n\nlabel_list\x18\x03 \x03(\t\x12\x13\n\x0bstatus_code\x18\x04 \x01(\x05\"(\n\x06\x41\x63tion\x12\r\n\tSUBSCRIBE\x10\x00\x12\x0f\n\x0bUNSUBSCRIBE\x10\x01\"\x90\x02\n\x06Ticker\x12\x1b\n\x08metadata\x18\x01 \x01(\x0b\x32\t.Metadata\x12\'\n\x08products\x18\x02 \x03(\x0b\x32\x15.Ticker.ProductsEntry\x12\x14\n\x0cproduct_list\x18\x03 \x03(\t\x1ah\n\x07Metrics\x12-\n\x07metrics\x18\x01 \x03(\x0b\x32\x1c.Ticker.Metrics.MetricsEntry\x1a.\n\x0cMetricsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x01:\x02\x38\x01\x1a@\n\rProductsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x1e\n\x05value\x18\x02 \x01(\x0b\x32\x0f.Ticker.Metrics:\x02\x38\x01\x62\x06proto3'
+  serialized_pb=b'\n\x1cquotecast/pb/quotecast.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1cgoogle/protobuf/struct.proto\"v\n\x08Metadata\x12\x35\n\x11response_datetime\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x33\n\x10request_duration\x18\x02 \x01(\x0b\x32\x19.google.protobuf.Duration\";\n\tQuotecast\x12\x11\n\tjson_data\x18\x01 \x01(\t\x12\x1b\n\x08metadata\x18\x02 \x01(\x0b\x32\t.Metadata\"\x90\x02\n\x06Ticker\x12\x1b\n\x08metadata\x18\x01 \x01(\x0b\x32\t.Metadata\x12\'\n\x08products\x18\x02 \x03(\x0b\x32\x15.Ticker.ProductsEntry\x12\x14\n\x0cproduct_list\x18\x03 \x03(\t\x1ah\n\x07Metrics\x12-\n\x07metrics\x18\x01 \x03(\x0b\x32\x1c.Ticker.Metrics.MetricsEntry\x1a.\n\x0cMetricsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x01:\x02\x38\x01\x1a@\n\rProductsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x1e\n\x05value\x18\x02 \x01(\x0b\x32\x0f.Ticker.Metrics:\x02\x38\x01\"\x9b\x02\n\x07Request\x12\x32\n\rsubscriptions\x18\x01 \x03(\x0b\x32\x1b.Request.SubscriptionsEntry\x12\x36\n\x0funsubscriptions\x18\x02 \x03(\x0b\x32\x1d.Request.UnsubscriptionsEntry\x1aP\n\x12SubscriptionsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12)\n\x05value\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.ListValue:\x02\x38\x01\x1aR\n\x14UnsubscriptionsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12)\n\x05value\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.ListValue:\x02\x38\x01\x62\x06proto3'
   ,
-  dependencies=[google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,google_dot_protobuf_dot_duration__pb2.DESCRIPTOR,])
+  dependencies=[google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,google_dot_protobuf_dot_duration__pb2.DESCRIPTOR,google_dot_protobuf_dot_struct__pb2.DESCRIPTOR,])
 
 
-
-_REQUEST_ACTION = _descriptor.EnumDescriptor(
-  name='Action',
-  full_name='Request.Action',
-  filename=None,
-  file=DESCRIPTOR,
-  create_key=_descriptor._internal_create_key,
-  values=[
-    _descriptor.EnumValueDescriptor(
-      name='SUBSCRIBE', index=0, number=0,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-    _descriptor.EnumValueDescriptor(
-      name='UNSUBSCRIBE', index=1, number=1,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-  ],
-  containing_type=None,
-  serialized_options=None,
-  serialized_start=380,
-  serialized_end=420,
-)
-_sym_db.RegisterEnumDescriptor(_REQUEST_ACTION)
 
 
 _METADATA = _descriptor.Descriptor(
@@ -87,8 +63,8 @@ _METADATA = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=97,
-  serialized_end=215,
+  serialized_start=127,
+  serialized_end=245,
 )
 
 
@@ -126,62 +102,8 @@ _QUOTECAST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=217,
-  serialized_end=276,
-)
-
-
-_REQUEST = _descriptor.Descriptor(
-  name='Request',
-  full_name='Request',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='action', full_name='Request.action', index=0,
-      number=1, type=14, cpp_type=8, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='vwd_id', full_name='Request.vwd_id', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='label_list', full_name='Request.label_list', index=2,
-      number=3, type=9, cpp_type=9, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='status_code', full_name='Request.status_code', index=3,
-      number=4, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-    _REQUEST_ACTION,
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=279,
-  serialized_end=420,
+  serialized_start=247,
+  serialized_end=306,
 )
 
 
@@ -219,8 +141,8 @@ _TICKER_METRICS_METRICSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=583,
-  serialized_end=629,
+  serialized_start=469,
+  serialized_end=515,
 )
 
 _TICKER_METRICS = _descriptor.Descriptor(
@@ -250,8 +172,8 @@ _TICKER_METRICS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=525,
-  serialized_end=629,
+  serialized_start=411,
+  serialized_end=515,
 )
 
 _TICKER_PRODUCTSENTRY = _descriptor.Descriptor(
@@ -288,8 +210,8 @@ _TICKER_PRODUCTSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=631,
-  serialized_end=695,
+  serialized_start=517,
+  serialized_end=581,
 )
 
 _TICKER = _descriptor.Descriptor(
@@ -333,15 +255,128 @@ _TICKER = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=423,
-  serialized_end=695,
+  serialized_start=309,
+  serialized_end=581,
+)
+
+
+_REQUEST_SUBSCRIPTIONSENTRY = _descriptor.Descriptor(
+  name='SubscriptionsEntry',
+  full_name='Request.SubscriptionsEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='Request.SubscriptionsEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='Request.SubscriptionsEntry.value', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=b'8\001',
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=703,
+  serialized_end=783,
+)
+
+_REQUEST_UNSUBSCRIPTIONSENTRY = _descriptor.Descriptor(
+  name='UnsubscriptionsEntry',
+  full_name='Request.UnsubscriptionsEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='Request.UnsubscriptionsEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='Request.UnsubscriptionsEntry.value', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=b'8\001',
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=785,
+  serialized_end=867,
+)
+
+_REQUEST = _descriptor.Descriptor(
+  name='Request',
+  full_name='Request',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='subscriptions', full_name='Request.subscriptions', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='unsubscriptions', full_name='Request.unsubscriptions', index=1,
+      number=2, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[_REQUEST_SUBSCRIPTIONSENTRY, _REQUEST_UNSUBSCRIPTIONSENTRY, ],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=584,
+  serialized_end=867,
 )
 
 _METADATA.fields_by_name['response_datetime'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _METADATA.fields_by_name['request_duration'].message_type = google_dot_protobuf_dot_duration__pb2._DURATION
 _QUOTECAST.fields_by_name['metadata'].message_type = _METADATA
-_REQUEST.fields_by_name['action'].enum_type = _REQUEST_ACTION
-_REQUEST_ACTION.containing_type = _REQUEST
 _TICKER_METRICS_METRICSENTRY.containing_type = _TICKER_METRICS
 _TICKER_METRICS.fields_by_name['metrics'].message_type = _TICKER_METRICS_METRICSENTRY
 _TICKER_METRICS.containing_type = _TICKER
@@ -349,10 +384,16 @@ _TICKER_PRODUCTSENTRY.fields_by_name['value'].message_type = _TICKER_METRICS
 _TICKER_PRODUCTSENTRY.containing_type = _TICKER
 _TICKER.fields_by_name['metadata'].message_type = _METADATA
 _TICKER.fields_by_name['products'].message_type = _TICKER_PRODUCTSENTRY
+_REQUEST_SUBSCRIPTIONSENTRY.fields_by_name['value'].message_type = google_dot_protobuf_dot_struct__pb2._LISTVALUE
+_REQUEST_SUBSCRIPTIONSENTRY.containing_type = _REQUEST
+_REQUEST_UNSUBSCRIPTIONSENTRY.fields_by_name['value'].message_type = google_dot_protobuf_dot_struct__pb2._LISTVALUE
+_REQUEST_UNSUBSCRIPTIONSENTRY.containing_type = _REQUEST
+_REQUEST.fields_by_name['subscriptions'].message_type = _REQUEST_SUBSCRIPTIONSENTRY
+_REQUEST.fields_by_name['unsubscriptions'].message_type = _REQUEST_UNSUBSCRIPTIONSENTRY
 DESCRIPTOR.message_types_by_name['Metadata'] = _METADATA
 DESCRIPTOR.message_types_by_name['Quotecast'] = _QUOTECAST
-DESCRIPTOR.message_types_by_name['Request'] = _REQUEST
 DESCRIPTOR.message_types_by_name['Ticker'] = _TICKER
+DESCRIPTOR.message_types_by_name['Request'] = _REQUEST
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 Metadata = _reflection.GeneratedProtocolMessageType('Metadata', (_message.Message,), {
@@ -368,13 +409,6 @@ Quotecast = _reflection.GeneratedProtocolMessageType('Quotecast', (_message.Mess
   # @@protoc_insertion_point(class_scope:Quotecast)
   })
 _sym_db.RegisterMessage(Quotecast)
-
-Request = _reflection.GeneratedProtocolMessageType('Request', (_message.Message,), {
-  'DESCRIPTOR' : _REQUEST,
-  '__module__' : 'quotecast.pb.quotecast_pb2'
-  # @@protoc_insertion_point(class_scope:Request)
-  })
-_sym_db.RegisterMessage(Request)
 
 Ticker = _reflection.GeneratedProtocolMessageType('Ticker', (_message.Message,), {
 
@@ -407,7 +441,32 @@ _sym_db.RegisterMessage(Ticker.Metrics)
 _sym_db.RegisterMessage(Ticker.Metrics.MetricsEntry)
 _sym_db.RegisterMessage(Ticker.ProductsEntry)
 
+Request = _reflection.GeneratedProtocolMessageType('Request', (_message.Message,), {
+
+  'SubscriptionsEntry' : _reflection.GeneratedProtocolMessageType('SubscriptionsEntry', (_message.Message,), {
+    'DESCRIPTOR' : _REQUEST_SUBSCRIPTIONSENTRY,
+    '__module__' : 'quotecast.pb.quotecast_pb2'
+    # @@protoc_insertion_point(class_scope:Request.SubscriptionsEntry)
+    })
+  ,
+
+  'UnsubscriptionsEntry' : _reflection.GeneratedProtocolMessageType('UnsubscriptionsEntry', (_message.Message,), {
+    'DESCRIPTOR' : _REQUEST_UNSUBSCRIPTIONSENTRY,
+    '__module__' : 'quotecast.pb.quotecast_pb2'
+    # @@protoc_insertion_point(class_scope:Request.UnsubscriptionsEntry)
+    })
+  ,
+  'DESCRIPTOR' : _REQUEST,
+  '__module__' : 'quotecast.pb.quotecast_pb2'
+  # @@protoc_insertion_point(class_scope:Request)
+  })
+_sym_db.RegisterMessage(Request)
+_sym_db.RegisterMessage(Request.SubscriptionsEntry)
+_sym_db.RegisterMessage(Request.UnsubscriptionsEntry)
+
 
 _TICKER_METRICS_METRICSENTRY._options = None
 _TICKER_PRODUCTSENTRY._options = None
+_REQUEST_SUBSCRIPTIONSENTRY._options = None
+_REQUEST_UNSUBSCRIPTIONSENTRY._options = None
 # @@protoc_insertion_point(module_scope)

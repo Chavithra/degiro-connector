@@ -1,5 +1,4 @@
 import logging
-import time
 import urllib3
 
 from quotecast.basic import Basic
@@ -8,64 +7,35 @@ from quotecast.pb.quotecast_pb2 import (
     Quotecast,
     Request,
 )
-from typing import Union
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 class API:
-    """ Same operation then Basic but with "session_id" management.
+    """ Tools to consume Degiro's QuoteCast API.
+    
+    Same operations then "Basic" but with "session_id" management.
 
     This class should be threadsafe.
     """
 
     @property
     def basic(self)->Basic:
-        """ Getter for the attribute : self.basic
-        
-        Returns:
-            {Basic} -- Current Basic object.
-        """
-
         return self._basic
 
     @basic.setter
     def basic(self, basic:Basic):
-        """ Setter for the attribute : self.basic
-
-        Arguments:
-            basic {Basic} -- New Basic object.
-        """
-
         self._basic = basic
     
     
     @property
     def connection_storage(self)->Basic:
-        """ Getter for the attribute : self.connection_storage
-        
-        Returns:
-            {Basic} -- Current ConnectionStorage object.
-        """
-
         return self._connection_storage
 
     @connection_storage.setter
-    def connection_storage(
-        self,
-        connection_storage:ConnectionStorage,
-    ):
-        """ Setter for the attribute : self.connection_storage
-
-        Arguments:
-            connection_storage {ConnectionStorage} -- New ConnectionStorage object.
-        """
-
+    def connection_storage(self, connection_storage:ConnectionStorage):
         self._connection_storage = connection_storage
 
-    def __init__(
-        self,
-        user_token:int,
-    ):
+    def __init__(self, user_token:int):
         self._logger = logging.getLogger(self.__module__)
         self._basic = Basic(user_token=user_token)
         self._connection_storage = ConnectionStorage(basic=self.basic)
@@ -78,59 +48,47 @@ class API:
             session_id=session_id
         )
 
-    def subscribe(
-        self,
-        request:Request,
-        raw:bool=False,
-    )->Union[Request, int]:
-        """ Subscribe/unsubscribe to a feed from Degiro's QuoteCast API.
-        Parameters :
-        session {requests.Session}
-            Session for the request.
-            A new requests.Session will be generated automatically if None is passed.
-
-        Returns :
-        {bool} -- Whether or not the subscription succeeded.
-        """
-
+    def subscribe(self, request:Request)->bool:
         basic = self.basic
         session_id = self.connection_storage.session_id
 
         return basic.subscribe(
             request=request,
             session_id=session_id,
-            raw=raw,
         )
 
 if __name__ == '__main__':
     # IMPORTATIONS
-    import logging
     import json
+    import logging
+    import time
 
+    # SETUP LOGS
     logging.basicConfig(level=logging.DEBUG)
-    
+
+    # SETUP CREDENTIALS    
     with open('config/subscription_request.json') as config_file:
         config = json.load(config_file)
-
-    # SETUP VARIABLES
     user_token = config['user_token']
-    vwd_id = 360015751
-    label_list =[
+
+    # SETUP API
+    api = API(user_token=user_token)
+
+    # SETUP REQUEST
+    request = Request()
+    request.subscriptions['360015751'].extend([
         'LastDate',
         'LastTime',
         'LastPrice',
         'LastVolume',
-    ]
+    ])
 
-    api = API(user_token=user_token)
-    
-    request = Request(
-        action=Request.Action.SUBSCRIBE,
-        vwd_id=vwd_id,
-        label_list=label_list,
-    )
-
+    # CONNECT
     api.connection_storage.connect()
+
+    # SUBSCRIBE
     api.subscribe(request=request)
+
+    # FETCH DATA
     time.sleep(1)
     api.fetch_data()

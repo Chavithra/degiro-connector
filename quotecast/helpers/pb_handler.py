@@ -1,10 +1,9 @@
 import pandas as pd
-import pickle
 import random
 
 from google.protobuf import json_format
 from google.protobuf.message import Message
-from quotecast.pb.quotecast_pb2 import Ticker
+from quotecast.pb.quotecast_pb2 import Request, Ticker
 from typing import Dict, List
 
 # pylint: disable=no-member
@@ -13,7 +12,7 @@ pd.set_option('display.max_rows', None)
 pd.set_option('display.max_columns', None)
 pd.set_option('display.expand_frame_repr', False)
 
-def build_dict_from_ticker(
+def ticker_to_dict(
     ticker:Ticker,
     column_list:List[str]=[],
 )->List[Dict[str, str]]:
@@ -32,11 +31,11 @@ def build_dict_from_ticker(
 
     return ticker_dict
 
-def build_df_from_ticker(
+def ticker_to_df(
     ticker:Ticker,
     column_list:List[str]=[],
 )->pd.DataFrame:
-    ticker_dict = build_dict_from_ticker(
+    ticker_dict = ticker_to_dict(
         ticker=ticker,
         column_list=column_list,
     )
@@ -45,21 +44,21 @@ def build_df_from_ticker(
 
     return df
 
-def build_sample_ticker(
+def build_ticker_samples(
     number:int=10,
     metric_list:List[str]=['l1', 'l2' ,'l3'],
 ):
     """ Build a Ticker object for testing purpose. """
 
-    # SETUP TICKER
     ticker = Ticker()
+
+    # SETUP METADATA
     ticker.metadata.response_datetime.GetCurrentTime()
     ticker.metadata.request_duration.FromNanoseconds(
         random.randrange(5*10**9)
     )
 
-    # SETUP CTICKER - WITH EXTRA DATA
-
+    # SETUP EXTRA-DATA
     for i in range(number):
         for metric in metric_list:
             ticker.products[i].metrics[metric] = random.uniform(
@@ -83,6 +82,7 @@ def merge_tickers(
             Whether or not we want to add products from "ticker2" to
             "ticker1".
     """
+
     if update_only == True:
         for ticker2_product in ticker2.products:
             if ticker2_product in ticker1.products:
@@ -95,7 +95,7 @@ def merge_tickers(
                 ticker2.products[ticker2_product].metrics
             )
 
-def build_dict_from_message(message:Message)->dict:
+def message_to_dict(message:Message)->dict:
     message_dict = json_format.MessageToDict(
         message=message,
         including_default_value_fields=True,
@@ -103,25 +103,22 @@ def build_dict_from_message(message:Message)->dict:
     )
     return message_dict
 
-def save_object(
-    obj:object,
-    file_name:str,
-    file_extension:str='.pickle',
-):
-    file_path = file_name + file_extension
-    with open(file_path, 'wb') as f:
-        pickle.dump(
-            obj=obj,
-            file=f,
-            protocol=pickle.HIGHEST_PROTOCOL,
-        )
+def update_message_from_dict(message:Message, js_dict:dict)->Message:
+    json_format.ParseDict(
+        js_dict=js_dict,
+        message=message,
+        ignore_unknown_fields=True,
+        descriptor_pool=None,
+    )
 
-def load_object(
-    file_name:str,
-    file_extension:str='.pickle',
-)->object:
-    file_path = file_name + file_extension
-    with open(file_path, 'rb') as f:
-        obj = pickle.load(file=f)
+def request_to_api(request:Request)->str:
+    payload = '{"controlData":"'
+    for vwd_id in request.subscriptions:
+        for metric_name in request.subscriptions[vwd_id].metrics:
+            payload += 'a_req(' + vwd_id + '.' + metric_name + ');'
+    for vwd_id in request.unsubscriptions:
+        for metric_name in request.unsubscriptions[vwd_id].metrics:
+            payload += 'a_rel(' + vwd_id + '.' + metric_name + ');'
+    payload += '"}'
 
-    return obj
+    return payload

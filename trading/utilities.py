@@ -36,7 +36,7 @@ __PRODUCT_SEARCH_REQUEST_URL_MATCHING = {
     ProductSearch.RequestWarrants.DESCRIPTOR.full_name:URLs.PRODUCT_SEARCH_WARRANTS,
 }
 
-def build_logger():
+def build_logger()->logging.Logger:
     return logging.getLogger(__name__)
 
 def build_session(headers:dict=None)->requests.Session:
@@ -204,7 +204,7 @@ def get_update(
                     ]
                 )
         session_id (str):
-            Degiro's session id
+            API's session id.
         credentials (Credentials):
             Credentials containing the parameter "int_account".
         raw (bool, optional):
@@ -557,7 +557,7 @@ def get_orders_history(
                     to_date=to_date,
                 )
         session_id (str):
-            Degiro's session id
+            API's session id.
         credentials (Credentials):
             Credentials containing the parameter "int_account".
         raw (bool, optional):
@@ -638,7 +638,7 @@ def get_transactions_history(
                     to_date=to_date,
                 )
         session_id (str):
-            Degiro's session id
+            API's session id.
         credentials (Credentials):
             Credentials containing the parameter "int_account".
         raw (bool, optional):
@@ -719,7 +719,7 @@ def get_account_overview(
                     to_date=to_date,
                 )
         session_id (str):
-            Degiro's session id
+            API's session id.
         credentials (Credentials):
             Credentials containing the parameter "int_account".
         raw (bool, optional):
@@ -811,7 +811,7 @@ def product_search(
                     sortTypes='asc',
                 )
         session_id (str):
-            Degiro's session id
+            API's session id.
         credentials (Credentials):
             Credentials containing the parameter "int_account".
         raw (bool, optional):
@@ -876,7 +876,7 @@ def get_favourites_list(
 
     Args:
         session_id (str):
-            Degiro's session id
+            API's session id.
         credentials (Credentials):
             Credentials containing the parameter "int_account".
         raw (bool, optional):

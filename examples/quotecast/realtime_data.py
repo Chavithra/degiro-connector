@@ -17,16 +17,13 @@ quotecast_api = QuotecastAPI(user_token=user_token)
 quotecast_api.connection_storage.connect()
 
 # SUBSCRIBE TO FEED
-request = Request(
-    action=Request.Action.SUBSCRIBE,
-    vwd_id='AAPL.BATS,E',
-    label_list=[
-        'LastDate',
-        'LastTime',
-        'LastPrice',
-        'LastVolume',
-    ],
-)
+request = Request()
+request.subscriptions['AAPL.BATS,E'].extend([
+    'LastDate',
+    'LastTime',
+    'LastPrice',
+    'LastVolume',
+])
 quotecast_api.subscribe(request=request)
 
 # SETUP JSON PARSER

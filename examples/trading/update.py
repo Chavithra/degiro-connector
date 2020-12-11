@@ -44,7 +44,7 @@ request_list.values.extend(
 )
 
 update = trading_api.get_update(request_list=request_list, raw=False)
-update_dict = pb_handler.build_dict_from_message(message=update)
+update_dict = pb_handler.message_to_dict(message=update)
 
 if 'orders' in update_dict:
     orders_df = pd.DataFrame(update_dict['orders']['values'])

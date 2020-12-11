@@ -42,14 +42,15 @@ pip uninstall degiro-connector
   * [1.4. Table of contents](#14-table-of-contents)
 - [2. Real-time data](#2-real-time-data)
   * [2.1. How to login ?](#21-how-to-login-)
-  * [2.2. What is the timout ?](#22-what-is-the-timout-)
+  * [2.2. What is the timeout ?](#22-what-is-the-timeout-)
   * [2.3. How to subscribe to a data-stream ?](#23-how-to-subscribe-to-a-data-stream-)
-  * [2.4. How to fetch the data ?](#24-how-to-fetch-the-data-)
-  * [2.5. How can I use this data ?](#25-how-can-i-use-this-data-)
-  * [2.6. Which are the available data types ?](#26-which-are-the-available-data-types-)
-  * [2.7. What is a Ticker ?](#27-what-is-a-ticker-)
-  * [2.8. What is inside the Dictionnary ?](#28-what-is-inside-the-dictionnary-)
-  * [2.9. What is inside the DataFrame ?](#29-what-is-inside-the-dataframe-)
+  * [2.4. How to unsubscribe to a data-stream ?](#24-how-to-unsubscribe-to-a-data-stream-)
+  * [2.5. How to fetch the data ?](#25-how-to-fetch-the-data-)
+  * [2.6. How can I use this data ?](#26-how-can-i-use-this-data-)
+  * [2.7. Which are the available data types ?](#27-which-are-the-available-data-types-)
+  * [2.8. What is a Ticker ?](#28-what-is-a-ticker-)
+  * [2.9. What is inside the Dictionnary ?](#29-what-is-inside-the-dictionnary-)
+  * [2.10. What is inside the DataFrame ?](#210-what-is-inside-the-dataframe-)
 - [3. Trading connection](#3-trading-connection)
   * [3.1. What are the credentials ?](#31-what-are-the-credentials-)
   * [3.2. What is the purpose of "in_account" ?](#32-what-is-the-purpose-of-in_account-)
@@ -119,7 +120,7 @@ See section related to "config" table.
 
 For a more comprehensive example : [realtime_data.py](examples/quotecast/realtime_data.py)
 
-## 2.2. What is the timout ?
+## 2.2. What is the timeout ?
 
 Connection timeout is around 15 seconds.
 
@@ -133,23 +134,25 @@ So if you use it nonstop (in a loop) you won't need to reconnect.
 
 ## 2.3. How to subscribe to a data-stream ?
 
-To subscribe to a data-stream you need to setup a Request.
+To subscribe to a data-stream you need to setup a Request message.
 
 A Request has the following parameters :
-
 |**Parameter**|**Type**|**Description**|
 |:-|:-|:-|
-|action|Request.Action|SUBSCRIBE / UNSUBSCRIBE|
-|vwd_id|str|Identifier of the product.|
-|label_list|List[str]|List of data you want to retrieve.|
+|subscriptions|google.protobuf.internal.containers.MessageMap|List of products & metrics to subscribe to.|
+|unsubscriptions|google.protobuf.internal.containers.MessageMap|List of products & metrics to unsubscribe to.|
 
-You can use the following code :
+Here is an example of request :
 ```python
-request = Request(
-    action=Request.Action.SUBSCRIBE,
-    vwd_id='360015751',
-    label_list=['LastDate','LastTime','LastPrice','LastVolume'],
-)
+request = Request()
+request.subscriptions['360015751'].extend([
+    'LastPrice',
+    'LastVolume',
+])
+request.subscriptions['AAPL.BATS,E'].extend([
+    'LastPrice',
+    'LastVolume',
+])
 ```
 
 Once you have built this Request object you can send it to Degiro's API like this :
@@ -159,7 +162,40 @@ quotecast_api.subscribe(request=request)
 
 For a more comprehensive example : [realtime_data.py](examples/quotecast/realtime_data.py)
 
-## 2.4. How to fetch the data ?
+
+## 2.4. How to unsubscribe to a data-stream ?
+
+As for a subscription, to remove metrics from the data-stream you need to setup a Request message.
+
+If you try to unsubscribe to a metric to which you didn't subscribed previously it will most likely have no impact.
+
+A Request has the following parameters :
+|**Parameter**|**Type**|**Description**|
+|:-|:-|:-|
+|subscriptions|google.protobuf.internal.containers.MessageMap|List of products & metrics to subscribe to.|
+|unsubscriptions|google.protobuf.internal.containers.MessageMap|List of products & metrics to unsubscribe to.|
+
+Here is an example of request :
+```python
+request = Request()
+request.unsubscriptions['360015751'].extend([
+    'LastPrice',
+    'LastVolume',
+])
+request.unsubscriptions['AAPL.BATS,E'].extend([
+    'LastPrice',
+    'LastVolume',
+])
+```
+
+Once you have built this Request object you can send it to Degiro's API like this :
+```python
+quotecast_api.subscribe(request=request)
+```
+
+For a more comprehensive example : [realtime_data.py](examples/quotecast/realtime_data.py)
+
+## 2.5. How to fetch the data ?
 
 You can use the following code :
 ```python
@@ -168,7 +204,7 @@ quotecast = quotecast_api.fetch_data()
 
 For a more comprehensive example : [realtime_data.py](examples/quotecast/realtime_data.py)
 
-## 2.5. How can I use this data ?
+## 2.6. How can I use this data ?
 
 Received data is a Quotecast object with the following properties :
 
@@ -186,7 +222,7 @@ request_duration= quotecast.metadata.request_duration
 
 For a more comprehensive example : [realtime_data.py](examples/quotecast/realtime_data.py)
 
-## 2.6. Which are the available data types ?
+## 2.7. Which are the available data types ?
 
 This library provides the tools to convert Degiro's JSON data into something more programmer-friendly.
 
@@ -206,13 +242,13 @@ quotecast_parser.put_quotecast(quotecast=quotecast)
 ticker = quotecast_parser.ticker
 
 # BUILD DICT
-ticker_dict = pb_handler.build_dict_from_ticker(ticker=ticker)
+ticker_dict = pb_handler.ticker_to_dict(ticker=ticker)
 
 # BUILD PANDAS.DATAFRAME
 ticker_df = pb_handler.build_df_from_ticker(ticker=ticker)
 ```
 
-## 2.7. What is a Ticker ?
+## 2.8. What is a Ticker ?
 
 The generated Ticker contains :
 
@@ -247,7 +283,7 @@ A Ticker is a custom Protocol Buffer Message built for this library.
 
 It can be transmitted over GRPC framework.
 
-## 2.8. What is inside the Dictionnary ?
+## 2.9. What is inside the Dictionnary ?
 
 The generated Dictionnary is actually a list of Python Dictionnaries.
 
@@ -279,7 +315,7 @@ Example - dict :
     }
 ]
 ```
-## 2.9. What is inside the DataFrame ?
+## 2.10. What is inside the DataFrame ?
 
 The generated DataFrame will content :
 
@@ -497,7 +533,7 @@ request_list.values.extend(
 )
 
 update = trading_api.get_update(request_list=request_list)
-update_dict = pb_handler.build_dict_from_message(message=update)
+update_dict = pb_handler.message_to_dict(message=update)
 orders_df = pd.DataFrame(update_dict['orders']['values'])
 ```
 
@@ -523,7 +559,7 @@ request_list.values.extend(
 )
 
 update = trading_api.get_update(request_list=request_list)
-update_dict = pb_handler.build_dict_from_message(message=update)
+update_dict = pb_handler.message_to_dict(message=update)
 total_portfolio_df = pd.DataFrame(update_dict['total_portfolio']['values'])
 ```
 

@@ -1,5 +1,5 @@
-import json
 import logging
+import quotecast.helpers.pb_handler as pb_handler
 import requests
 import time
 import urllib3
@@ -18,16 +18,20 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # pylint: disable=no-member
 
-def build_session(
-    headers:dict=None,
-)->requests.Session:
+def build_logger()->logging.Logger:
+    return logging.getLogger(__name__)
+
+def build_session(headers:dict=None)->requests.Session:
     """ Setup a requests.Session object.
 
-    Arguments:
-    headers {dict} -- Headers to used for the Session.
+    Args:
+        headers (dict, optional):
+            Headers to used for the Session.
+            Defaults to None.
 
     Returns:
-    {requests.Session} -- Session object with the right headers.
+        requests.Session:
+            Session object with the right headers.
     """
 
     session = requests.Session()
@@ -39,19 +43,25 @@ def build_session(
 
     return session
 
-def build_logger():
-    return logging.getLogger(__name__)
-
 def get_session_id(
     user_token:int,
     session:requests.Session=None,
     logger:logging.Logger=None,
 )->str:
-    """ Retrieve "session_id".
-    This "session_id" is used by most Degiro's trading endpoint.
+    """ Retrieve the "session_id" necessary to access the data-stream.
+
+    Args:
+        user_token (int):
+            User identifier in Degiro's API.
+        session (requests.Session, optional):
+            This object will be generated if None.
+            Defaults to None.
+        logger (logging.Logger, optional):
+            This object will be generated if None.
+            Defaults to None.
 
     Returns:
-        str -- Session id
+        str: Session id
     """
 
     if logger is None:
@@ -93,17 +103,27 @@ def fetch_data(
     session:requests.Session=None,
     logger:logging.Logger=None,
 )->Quotecast:
-    """
-    Fetch data from the feed.
+    """ Fetch data from the feed.
 
-    Parameters :
-    session_id {str} -- API's session id.
+    Args:
+        session_id (str):
+            API's session id.
+        session (requests.Session, optional):
+            This object will be generated if None.
+            Defaults to None.
+        logger (logging.Logger, optional):
+            This object will be generated if None.
+            Defaults to None.
+
+    Raises:
+        BrokenPipeError:
+            A new "session_id" is required.
 
     Returns:
-    Quotecast:
-        quotecast.json_data : raw JSON data string.
-        quotecast.metadata.response_datetime : reception timestamp.
-        quotecast.metadata.request_duration : request duration.
+        Quotecast:
+            quotecast.json_data : raw JSON data string.
+            quotecast.metadata.response_datetime : reception timestamp.
+            quotecast.metadata.request_duration : request duration.
     """
 
     if logger is None:
@@ -136,16 +156,44 @@ def fetch_data(
 def subscribe(
     request:Request,
     session_id:str,
-    raw:bool=False,
     session:requests.Session=None,
     logger:logging.Logger=None,
-)->Union[Request, int]:
-    """ Subscribe/unsubscribe to a feed from Degiro's QuoteCast API.
-    Parameters :
-    session_id {str} -- API's session id.
+)->bool:
+    """ Add/remove metric from the data-stream.
 
-    Returns :
-    {bool} -- Whether or not the subscription succeeded.
+    Args:
+        request (Request):
+            List of subscriptions & unsubscriptions to do.
+            Example :
+            request = Request()
+            request.subscriptions['360015751'].extend([
+                'LastPrice',
+                'LastVolume',
+            ])
+            request.subscriptions['AAPL.BATS,E'].extend([
+                'LastPrice',
+                'LastVolume',
+            ])
+            request.unsubscriptions['360015751'].extend([
+                'LastPrice',
+                'LastVolume',
+            ])
+        session_id (str):
+            API's session id.
+        session (requests.Session, optional):
+            This object will be generated if None.
+            Defaults to None.
+        logger (logging.Logger, optional):
+            This object will be generated if None.
+            Defaults to None.
+
+    Raises:
+        BrokenPipeError:
+            A new "session_id" is required.
+
+    Returns:
+        bool:
+            Whether or not the subscription succeeded.
     """
 
     if logger is None:
@@ -155,20 +203,10 @@ def subscribe(
     
     url = Endpoint.URL
     url = f'{url}/{session_id}'
-    vwd_id = request.vwd_id
-    label_list = request.label_list
 
-    if request.action == Request.Action.SUBSCRIBE:
-        action = 'req'
-    elif request.action == Request.Action.UNSUBSCRIBE:
-        action = 'rel'
-    else:
-        raise AttributeError('Unknown "request.action".')
-    
-    data = list()
-    for label in label_list:
-        data.append(f'{action}({vwd_id}.{label})')
-    data = '{"controlData":"' + ';'.join(data) + ';"}'
+    data = pb_handler.request_to_api(request=request)
+
+    logger.info('subscribe:data %s', data[:100])
 
     session_request = requests.Request(method='POST', url=url, data=data)
     prepped = session.prepare_request(request=session_request)
@@ -177,10 +215,10 @@ def subscribe(
         response_raw = session.send(request=prepped, verify=False)
         request.status_code = response_raw.status_code
 
-        if raw == True:
-            response = response_raw.status_code
+        if response_raw.text == '[{"m":"sr"}]' :
+            raise BrokenPipeError('A new "session_id" is required.')
         else:
-            response = request
+            response = True
     except Exception as e:
         logger.fatal(e)
         return False

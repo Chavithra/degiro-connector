@@ -10,20 +10,21 @@ from typing import Union
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 class Basic:
-    """ This class contains the tool necessary to exchange with Degiro's QuoteCast API.
+    """ Tools to consume Degiro's QuoteCast API.
     
+    Same operations then "utilities" but with automatic management of :
+        * requests.Session
+        * logging.Logger
+
     This class should be threadsafe.
-
-    Using this class one can :
-        * Create a session
-        * Subscribe to QuoteCast about financial products available from Degiro's website
-        * Fetch the data stream of the product to which one subscribed
-
-    Attributes :
-    config_api {ConfigAPI} -- Contains parameters required to call the API.
-
-    logger {logging.Logger} -- The information logging system.
     """
+
+    @staticmethod
+    def build_session_storage()->SessionStorage:
+        return SessionStorage(
+            headers=Headers.get_headers(),
+            hooks=None,
+        )
 
     @property
     def user_token(self)->int:
@@ -34,23 +35,10 @@ class Basic:
         return self._session_storage
 
     @session_storage.setter
-    def session_storage(
-        self,
-        session_storage:SessionStorage,
-    ):
+    def session_storage(self, session_storage:SessionStorage):
         self._session_storage = session_storage
 
-    def build_session_storage(self)->SessionStorage:
-        return SessionStorage(
-            headers=Headers.get_headers(),
-            hooks=None,
-        )
-
-    def __init__(
-        self,
-        user_token:int,
-        session_storage=None,
-    ):
+    def __init__(self, user_token:int, session_storage=None):
         if session_storage is None:
             session_storage = self.build_session_storage()
 
@@ -58,10 +46,7 @@ class Basic:
         self._user_token = user_token
         self._session_storage = session_storage
 
-    def fetch_data(
-        self,
-        session_id:str,
-    )->Quotecast:
+    def fetch_data(self, session_id:str)->Quotecast:
         logger = self._logger
         session = self._session_storage.session
 
@@ -72,14 +57,6 @@ class Basic:
         )
 
     def get_session_id(self)->str:
-        """ Get the session id necessary to :
-            * Subscribe to a feed.
-            * Fetch available data.
-       
-        Returns :
-        {str} -- API's session id.
-        """
-
         logger = self._logger
         user_token = self._user_token
         session = self._session_storage.session
@@ -90,63 +67,49 @@ class Basic:
             logger=logger
         )
 
-    def subscribe(
-        self,
-        request:Request,
-        session_id:str,
-        raw:bool=False,
-    )->Union[Request, int]:
-        """ Subscribe/unsubscribe to a feed from Degiro's QuoteCast API.
-        Parameters :
-        session_id {str} -- API's session id.
-
-        Returns :
-        {bool} -- Whether or not the subscription succeeded.
-        """
-
+    def subscribe(self, request:Request, session_id:str)->bool:
         logger = self._logger
         session = self._session_storage.session
         
         return utilities.subscribe(
             request=request,
             session_id=session_id,
-            raw=raw,
             session=session,
             logger=logger,
         )
 
 if __name__ == '__main__':
-    import logging
+    # IMPORTATIONS
     import json
+    import logging
+    import time
 
-    from quotecast.api import API
-    from queue import Queue
-
+    # SETUP LOGS
     logging.basicConfig(level=logging.DEBUG)
-    
-    with open('subscription_request.json') as config_file:
-        config = json.load(config_file)
 
-    # Parameters required for testing
+    # SETUP CREDENTIALS    
+    with open('config/subscription_request.json') as config_file:
+        config = json.load(config_file)
     user_token = config['user_token']
-    vwd_id = 350000520
-    label_list =[
+
+    # SETUP API
+    basic = Basic(user_token=user_token)
+
+    # SETUP REQUEST
+    request = Request()
+    request.subscriptions['360015751'].extend([
         'LastDate',
         'LastTime',
         'LastPrice',
         'LastVolume',
-    ]
+    ])
 
+    # CONNECT
+    session_id = basic.get_session_id()
 
-    # subscription_request = SubscriptionRequest(
-    #     action=Request.Action.SUBSCRIBE,
-    #     vwd_id=vwd_id,
-    #     label_list=label_list,
-    # )
-    
-    # basic = Basic(user_token=user_token)
-    
-    # session_id = basic.get_session_id()
-    # basic.subscribe(subscription_request=subscription_request, session_id=session_id)
-    # data = basic.fetch_data(session_id)
-    # print(json.dumps(data))
+    # SUBSCRIBE
+    basic.subscribe(request=request, session_id=session_id)
+
+    # FETCH DATA
+    time.sleep(1)
+    basic.fetch_data(session_id=session_id)
