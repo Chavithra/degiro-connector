@@ -3,7 +3,7 @@ import logging
 import orjson as json
 
 from quotecast.models.metrics_storage import MetricsStorage
-from quotecast.pb.quotecast_pb2 import Quotecast, Ticker
+from quotecast.pb.quotecast_pb2 import Quotecast, Request, Ticker
 from typing import Dict, List
 
 class QuotecastParser:
@@ -274,6 +274,22 @@ class QuotecastParser:
             metrics_storage.fill_ticker(ticker=ticker)
 
         self.__ticker = ticker
+
+    def rebuild_request(self)->Request:
+        """ Rebuild the request from history (self.__references).
+
+        Returns:
+            Request:
+                Request matching data-stream.
+        """
+
+        references = self.references
+        request = Request()
+
+        for vwd_id, metric in references.values():
+            request.subscriptions[vwd_id].append(metric)
+
+        return request
 
 if __name__ == '__main__':
     data = '[{"m":"h"},{"m":"a_req","v":["360015751.LastPrice",101]},{"m":"un","v":[101,119.900000]}]'

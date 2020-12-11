@@ -44,7 +44,7 @@ def ticker_to_df(
 
     return df
 
-def build_ticker_samples(
+def build_ticker_sample(
     number:int=10,
     metric_list:List[str]=['l1', 'l2' ,'l3'],
 ):
@@ -96,12 +96,14 @@ def merge_tickers(
             )
 
 def message_to_dict(message:Message)->dict:
-    message_dict = json_format.MessageToDict(
+    return json_format.MessageToDict(
         message=message,
         including_default_value_fields=True,
         preserving_proto_field_name=True,
+        use_integers_for_enums=True,
+        descriptor_pool=None,
+        float_precision=None,
     )
-    return message_dict
 
 def update_message_from_dict(message:Message, js_dict:dict)->Message:
     json_format.ParseDict(
