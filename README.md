@@ -401,7 +401,7 @@ If you are using Two-factor Authentication (2FA) you need to provide an extra pa
 
 This parameter is the called "totp_secret_key" by the library.
 
-See "2.1. What are the credentials" to know how to get this parameter from Degiro's website.
+See the section about "totp_secret_key" to know how to get this parameter from Degiro's website.
 
 ```python
 # SETUP CREDENTIALS
@@ -760,7 +760,7 @@ request = AccountOverview.Request(from_date=from_date, to_date=to_date)
 account_overview = trading_api.get_account_overview(request=request)
 ```
 
-For a more comprehensive example :[account_overview.py](examples/trading/account_overview.py)
+For a more comprehensive example : [account_overview.py](examples/trading/account_overview.py)
 
 # 7. Products
 
@@ -773,7 +773,7 @@ Here is how to get this data :
 favourites_list = trading_api.get_favourites_list()
 ```
 
-For a more comprehensive example :[favourites_list.py](examples/trading/favourites_list.py)
+For a more comprehensive example : [favourites_list.py](examples/trading/favourites_list.py)
 
 ## 7.2. How to lookup products (search by name) ?
 
@@ -793,7 +793,7 @@ request = ProductSearch.RequestLookup(
 products_lookup = trading_api.product_search(request=request)
 ```
 
-For a more comprehensive example :[products_lookup.py](examples/trading/products_lookup.py)
+For a more comprehensive example : [products_lookup.py](examples/trading/products_lookup.py)
 
 ## 7.3. How to search bonds ?
 
@@ -817,7 +817,7 @@ request = ProductSearch.RequestBonds(
 bond_list = trading_api.product_search(request=request)
 ```
 
-For a more comprehensive example :[product_search.py](examples/trading/product_search.py)
+For a more comprehensive example : [product_search.py](examples/trading/product_search.py)
 
 
 ## 7.4. How to search etfs ?
@@ -843,7 +843,7 @@ request = ProductSearch.RequestETFs(
 etf_list = trading_api.product_search(request=request)
 ```
 
-For a more comprehensive example :[product_search.py](examples/trading/product_search.py)
+For a more comprehensive example : [product_search.py](examples/trading/product_search.py)
 
 ## 7.5. How to search funds ?
 
@@ -864,7 +864,7 @@ request = ProductSearch.RequestFunds(
 fund_list = trading_api.product_search(request=request)
 ```
 
-For a more comprehensive example :[product_search.py](examples/trading/product_search.py)
+For a more comprehensive example : [product_search.py](examples/trading/product_search.py)
 
 ## 7.6. How to search futures ?
 
@@ -888,7 +888,7 @@ request = ProductSearch.RequestFunds.Request(
 fund_list = trading_api.product_search(request=request)
 ```
 
-For a more comprehensive example :[product_search.py](examples/trading/product_search.py)
+For a more comprehensive example : [product_search.py](examples/trading/product_search.py)
 
 ## 7.7. How to search leverageds ?
 
@@ -913,7 +913,7 @@ request = ProductSearch.RequestLeverageds(
 etf_list = trading_api.product_search(request=request)
 ```
 
-For a more comprehensive example :[product_search.py](examples/trading/product_search.py)
+For a more comprehensive example : [product_search.py](examples/trading/product_search.py)
 
 ## 7.8. How to search options ?
 Here is how to get this data :
@@ -938,7 +938,7 @@ request = ProductSearch.RequestOptions(
 option_list = trading_api.product_search(request=request)
 ```
 
-For a more comprehensive example :[product_search.py](examples/trading/product_search.py)
+For a more comprehensive example : [product_search.py](examples/trading/product_search.py)
 
 ## 7.9. How to search stocks ?
 
@@ -965,7 +965,7 @@ request = ProductSearch.RequestStocks(
 stock_list = trading_api.product_search(request=request)
 ```
 
-For a more comprehensive example :[product_search.py](examples/trading/product_search.py)
+For a more comprehensive example : [product_search.py](examples/trading/product_search.py)
 
 ## 7.10. How to search warrants ?
 
@@ -986,7 +986,7 @@ request = ProductSearch.RequestWarrants(
 warrant_list = trading_api.product_search(request=request)
 ```
 
-For a more comprehensive example :[product_search.py](examples/trading/product_search.py)
+For a more comprehensive example : [product_search.py](examples/trading/product_search.py)
 
 # 8. Contributing
 Pull requests are welcome.
