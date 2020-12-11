@@ -13,7 +13,6 @@ from quotecast.pb.quotecast_pb2 import (
 )
 from typing import Union
 
-
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # pylint: disable=no-member

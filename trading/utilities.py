@@ -17,10 +17,7 @@ from trading.pb.trading_pb2 import (
     TransactionsHistory,
     Update,
 )
-from typing import (
-    List,
-    Union,
-)
+from typing import List, Union
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -50,7 +47,6 @@ def build_session(headers:dict=None)->requests.Session:
     Returns:
         requests.Session: Session object with the right headers.
     """
-    
 
     session = requests.Session()
 
