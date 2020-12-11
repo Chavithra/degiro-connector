@@ -3,10 +3,7 @@ import urllib3
 
 from quotecast.basic import Basic
 from quotecast.models.connection_storage import  ConnectionStorage
-from quotecast.pb.quotecast_pb2 import (
-    Quotecast,
-    Request,
-)
+from quotecast.pb.quotecast_pb2 import Quotecast, Request
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
