@@ -11,8 +11,9 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 class Basic:
     """ Tools to consume Degiro's QuoteCast API.
-    
-    Same operations then "utilities" but with automatic management of :
+
+    Same operations than "utilities" but with automatic management of :
+        * user_token
         * requests.Session
         * logging.Logger
 

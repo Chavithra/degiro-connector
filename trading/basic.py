@@ -19,14 +19,12 @@ from trading.pb.trading_pb2 import (
 )
 
 class Basic:
-    """ Wrapper for "degiro.trading.api.utilities" module.
+    """ Tools to consume Degiro's Trading API.
     
-    Improvements compared to "utilities" module :
-    1/ Credentials
-        No need to re-enter the credentials for each function.
-    2/ Sessions
-        The "requests.Session" object is reuse in a thread safe manner.
-    3/ Logging
+    Same operations than "utilities" but with automatic management of :
+        * credentials
+        * requests.Session
+        * logging.Logger
     """
 
     @property

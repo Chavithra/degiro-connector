@@ -19,7 +19,12 @@ from typing import (
 from wrapt.decorators import synchronized
     
 class API:
-    """ Same operation then Basic but with "session_id" management. """
+    """ Tools to consume Degiro's QuoteCast API.
+    
+    Same operations than "Basic" but with "session_id" management.
+
+    This class should be threadsafe.
+    """
 
     @property
     def basic(self)->Basic:

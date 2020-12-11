@@ -13,7 +13,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 class API:
     """ Tools to consume Degiro's QuoteCast API.
     
-    Same operations then "Basic" but with "session_id" management.
+    Same operations than "Basic" but with "session_id" management.
 
     This class should be threadsafe.
     """
