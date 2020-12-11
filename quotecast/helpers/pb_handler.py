@@ -116,10 +116,10 @@ def update_message_from_dict(message:Message, js_dict:dict)->Message:
 def request_to_api(request:Request)->str:
     payload = '{"controlData":"'
     for vwd_id in request.subscriptions:
-        for metric_name in request.subscriptions[vwd_id].metrics:
+        for metric_name in request.subscriptions[vwd_id]:
             payload += 'a_req(' + vwd_id + '.' + metric_name + ');'
     for vwd_id in request.unsubscriptions:
-        for metric_name in request.unsubscriptions[vwd_id].metrics:
+        for metric_name in request.unsubscriptions[vwd_id]:
             payload += 'a_rel(' + vwd_id + '.' + metric_name + ');'
     payload += '"}'
 
