@@ -4,14 +4,9 @@ import requests
 import time
 import urllib3
 
-from quotecast.constants.endpoint import Endpoint
 from quotecast.constants.headers import Headers
-from quotecast.pb.quotecast_pb2 import (
-    Metadata,
-    Quotecast,
-    Request,
-)
-from typing import Union
+from quotecast.constants.endpoint import Endpoint
+from quotecast.pb.quotecast_pb2 import Quotecast, Request
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
