@@ -194,7 +194,7 @@ def subscribe(
         logger = build_logger()
     if session is None:
         session = build_session()
-    
+
     url = Endpoint.URL
     url = f'{url}/{session_id}'
 
@@ -204,12 +204,11 @@ def subscribe(
 
     session_request = requests.Request(method='POST', url=url, data=data)
     prepped = session.prepare_request(request=session_request)
-    
-    try:
-        response_raw = session.send(request=prepped, verify=False)
-        request.status_code = response_raw.status_code
 
-        if response_raw.text == '[{"m":"sr"}]' :
+    try:
+        response = session.send(request=prepped, verify=False)
+
+        if response.text == '[{"m":"sr"}]' :
             raise BrokenPipeError('A new "session_id" is required.')
         else:
             response = True
