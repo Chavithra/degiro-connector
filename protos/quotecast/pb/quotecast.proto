@@ -16,14 +16,18 @@ message Quotecast {
 
 message Ticker {
   message Metrics {
-    map<string, double> metrics = 1; // <metric_name, metric_value>
+    // <metric_name, metric_value>
+    map<string, double> metrics = 1; 
   }
   Metadata metadata = 1;
-  map<string, Metrics> products = 2; // <vwd_id, metrics>
+  // <vwd_id, metrics>
+  map<string, Metrics> products = 2; 
   repeated string product_list = 3;
 }
 
 message Request {
-  map<string, google.protobuf.ListValue> subscriptions = 1; // <vwd_id, metrics>
-  map<string, google.protobuf.ListValue> unsubscriptions = 2; // <vwd_id, metrics>
+  // <vwd_id, metrics>
+  map<string, google.protobuf.ListValue> subscriptions = 1;
+  // <vwd_id, metrics>
+  map<string, google.protobuf.ListValue> unsubscriptions = 2;
 }
