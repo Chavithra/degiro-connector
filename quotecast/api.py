@@ -92,7 +92,7 @@ if __name__ == '__main__':
     ])
 
     # CONNECT
-    api.connection_storage.connect()
+    api.connect()
 
     # SUBSCRIBE
     api.subscribe(request=request)
