@@ -33,7 +33,7 @@ credentials = Credentials(
 trading_api = TradingAPI(credentials=credentials)
 
 # CONNECT
-trading_api.connection_storage.connect()
+trading_api.connect()
 
 # PREPARE REQUEST
 today = datetime.date.today()

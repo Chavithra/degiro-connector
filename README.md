@@ -393,7 +393,7 @@ credentials = Credentials(
 trading_api = API(credentials=credentials)
 
 # ESTABLISH CONNECTION
-trading_api.connection_storage.connect()
+trading_api.connect()
 ```
 
 ## 3.5. How to use 2FA ?
@@ -416,7 +416,7 @@ credentials = Credentials(
 trading_api = API(credentials=credentials)
 
 # ESTABLISH CONNECTION
-trading_api.connection_storage.connect()
+trading_api.connect()
 ```
 
 # 4. Order

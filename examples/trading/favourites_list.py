@@ -29,7 +29,7 @@ credentials = Credentials(
 trading_api = TradingAPI(credentials=credentials)
 
 # CONNECT
-trading_api.connection_storage.connect()
+trading_api.connect()
 
 # FETCH DATA - MESSAGE
 favourites_list = trading_api.get_favourites_list(raw=False)

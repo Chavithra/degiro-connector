@@ -28,52 +28,28 @@ class API:
 
     @property
     def basic(self)->Basic:
-        """ Getter for the attribute : self._basic
-        
-        Returns:
-            {Basic} -- Current Basic object.
-        """
-
         return self._basic
 
-    @basic.setter
-    def basic(self, basic:Basic):
-        """ Setter for the attribute : self._basic
-
-        Arguments:
-            basic {Basic} -- New Basic object.
-        """
-
-        self._basic = basic
-    
-    
     @property
     def connection_storage(self)->Basic:
-        """ Getter for the attribute : self._connection_storage
-        
-        Returns:
-            {Basic} -- Current ConnectionStorage object.
-        """
-
         return self._connection_storage
 
-    @connection_storage.setter
-    def connection_storage(
-        self,
-        connection_storage:ConnectionStorage,
-    ):
-        """ Setter for the attribute : self._connection_storage
-
-        Arguments:
-            connection_storage {ConnectionStorage} -- New ConnectionStorage object.
-        """
-
-        self._connection_storage = connection_storage
+    @property
+    def credentials(self)->int:
+        return self._basic.credentials
 
     def __init__(self, credentials:Credentials):
         self.logger = logging.getLogger(self.__module__)
         self._basic = Basic(credentials=credentials)
-        self._connection_storage = ConnectionStorage(basic=self._basic)
+        self._connection_storage = ConnectionStorage(
+            session_storage=self._basic.session_storage,
+            connection_timeout=1800,
+        )
+
+    def connect(self):
+        basic = self.basic
+        connection_storage = self._connection_storage
+        connection_storage.session_id = basic.get_session_id()
 
     def get_update(
         self,
@@ -263,5 +239,5 @@ if __name__ == '__main__':
     api = API(credentials=credentials)
 
     # ESTABLISH CONNECTION
-    api.connection_storage.connect()
+    api.connect()
     session_id = api.connection_storage.session_id

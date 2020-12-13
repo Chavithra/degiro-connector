@@ -28,7 +28,7 @@ credentials = Credentials(
 trading_api = TradingAPI(credentials=credentials)
 
 # ESTABLISH CONNECTION
-trading_api.connection_storage.connect()
+trading_api.connect()
 
 # PREPARE REQUEST
 request = ProductsLookup.Request(

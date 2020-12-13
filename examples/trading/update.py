@@ -23,7 +23,7 @@ trading_api = TradingAPI(credentials=credentials)
 
 # INITIALIZATION
 
-trading_api.connection_storage.connect()
+trading_api.connect()
 
 request_list = Update.RequestList()
 request_list.values.extend(

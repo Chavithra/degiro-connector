@@ -24,7 +24,7 @@ credentials = Credentials(
 trading_api = TradingAPI(credentials=credentials)
 
 # CONNECT
-trading_api.connection_storage.connect()
+trading_api.connect()
 
 # FETCH CONFIG TABLE
 client_details_table = trading_api.get_client_details()

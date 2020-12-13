@@ -1,86 +1,62 @@
 import logging
 import requests
 import time
-import threading
 
-from trading.basic import Basic
+from threading import Event
 from trading.constants.headers import Headers
 from trading.models.session_storage import SessionStorage
 from wrapt.decorators import synchronized
 
-class ConnectionStorage:
+class ConnectionStorage:    
     @property
-    def basic(self)->Basic:
-        """ Getter for the attribute : self.basic
-        
-        Returns:
-            {Basic} -- Current Basic object.
-        """
-
-        return self._basic
-
-    @basic.setter
-    def basic(self, basic:Basic):
-        """ Setter for the attribute : self.basic
-
-        Arguments:
-            basic {Basic} -- New Basic object.
-        """
-
-        basic.session_storage = self.build_session_storage()
-
-        self._basic = basic
+    def connection_timeout(self)->int:
+        return self.__connection_timeout
 
     @property
     @synchronized
     def session_id(self) -> str:
-        """ Getter for the attribute : self.session_id
-        
-        Returns:
-            {str} -- Copy of the session id.
-        """
-
-        if not hasattr(self, '_session_id'):
+        if not self.__session_id:
             raise ConnectionAbortedError('Connection required.')
 
         if self.is_timeout_expired():
             raise TimeoutError('Connection have probably expired')
+            self.__connected.clear()
 
-        return self._session_id
+        return self.__session_id
 
     @session_id.setter
     @synchronized
     def session_id(self, session_id:str):
-        """ Setter for the attribute setter : self.session_id
+        if session_id:
+            self.__session_id = session_id
+            self.__connected.set()
 
-        Arguments:
-            session {requests.Session} -- New Session object.
-        """
+    @property
+    def session_storage(self)->SessionStorage:
+        return self.__session_storage
 
-        self._session_id = session_id
+    def __init__(
+        self,
+        session_storage:SessionStorage,
+        connection_timeout:int=1800,
+    ):
+        self.__session_storage = session_storage
+        self.__connection_timeout = connection_timeout
 
-    def build_session_storage(self)->SessionStorage:
-        headers = Headers.get_headers()
-        hooks = {'response':[self.response_hook]}
+        self.__connected = Event()
+        self.__last_success = 0
+        self.__session_id = ''
 
-        session_storage = SessionStorage(
-            headers=headers,
-            hooks=hooks
-        )
-
-        return session_storage
-
-    def __init__(self, basic:Basic, session_timeout=1800):
-        self.basic = basic
-        self.session_timeout = session_timeout
-        self._last_success = 0
+        self.setup_hooks()
 
     @synchronized
     def is_timeout_expired(self):
-        if not hasattr(self, '_last_success') :
+        if not self.__last_success:
             return False
 
-        return (time.monotonic() - self._last_success) > self.session_timeout
+        return \
+            (time.monotonic() - self.__last_success) \
+            > self.__connection_timeout
 
     @synchronized
     def response_hook(self, response, *args, **kwargs):
@@ -89,11 +65,9 @@ class ConnectionStorage:
         timestamp = time.monotonic()
         status_code = response.status_code
 
-        if self._last_success < timestamp \
-        and status_code == 200:
-            self._last_success = timestamp
+        if self.__last_success < timestamp and status_code == 200:
+            self.__last_success = timestamp
 
-    @synchronized
-    def connect(self):
-        basic = self.basic
-        self.session_id = basic.get_session_id()
+    def setup_hooks(self):
+        hooks = {'response':[self.response_hook]}
+        self.__session_storage.session.hooks.update(hooks)
