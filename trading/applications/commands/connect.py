@@ -53,7 +53,7 @@ def cli(
     )
     api = API(credentials=credentials)
 
-    api.connection_storage.connect()
+    api.connect()
 
     click.secho('Connection done !', bg='blue')
 

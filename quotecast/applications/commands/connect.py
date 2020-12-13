@@ -40,6 +40,6 @@ def cli(log_level:str, user_token:int, log_directory:str=None):
     # Setup objects used by the services
     api = API(user_token=user_token)
 
-    api.connection_storage.connect()
+    api.connect()
     
     click.echo(f'Session id : {api.connection_storage.session_id}')

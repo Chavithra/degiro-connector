@@ -25,7 +25,7 @@ def cli(user_token):
     # SETUP API
     api = API(user_token=user_token)
 
-    api.connection_storage.connect()
+    api.connect()
     
     click.echo(f'Session id : {api.connection_storage.session_id}')
     
