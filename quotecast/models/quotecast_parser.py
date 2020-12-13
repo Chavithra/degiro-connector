@@ -205,7 +205,8 @@ class QuotecastParser:
                         + time.second
                     ticker.products[product].metrics[metric] = value
                 else:
-                    raise AttributeError(f'Unknown metric : {data}')
+                    # NO CONVERSION TO FLOAT
+                    raise RuntimeWarning(f'Unused string : {data}')
             elif data['m'] == 'a_req':
                 references[data['v'][1]] = data['v'][0].rsplit(
                     sep='.',
