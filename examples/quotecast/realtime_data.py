@@ -6,17 +6,22 @@ from quotecast.api import API as QuotecastAPI
 from quotecast.models.quotecast_parser import QuotecastParser
 from quotecast.pb.quotecast_pb2 import Request
 
-# SETUP LOGGING LEVEL
+# SETUP LOGGING
 logging.basicConfig(level=logging.INFO)
 
-# SETUP API
+# SETUP CREDENTIALS
 user_token = 0 # TO REPLACE WITH YOUR USER TOKEN
+
+# SETUP API
 quotecast_api = QuotecastAPI(user_token=user_token)
 
 # CONNECTION
-quotecast_api.connection_storage.connect()
+quotecast_api.connect()
 
-# SUBSCRIBE TO FEED
+# ACCESS SESSION_ID
+session_id = quotecast_api.connection_storage.session_id
+
+# SUBSCRIBE TO METRICS
 request = Request()
 request.subscriptions['AAPL.BATS,E'].extend([
     'LastDate',
@@ -43,11 +48,11 @@ while True:
         print(ticker)
 
         # DISPLAY DICT
-        record_list = pb_handler.build_dict_from_ticker(ticker=ticker)
+        record_list = pb_handler.ticker_to_dict(ticker=ticker)
         print(record_list)
 
         # DISPLAY PANDAS.DATAFRAME
-        df = pb_handler.build_df_from_ticker(ticker=ticker)
+        df = pb_handler.ticker_to_df(ticker=ticker)
         print(df)
 
         # REMOVE THIS LINE TO RUN IT IN LOOP

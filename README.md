@@ -111,7 +111,7 @@ You can use the following code :
 quotecast_api = API(user_token=YOUR_USER_TOKEN) 
 
 # CONNECTION
-quotecast_api.connection_storage.connect()
+quotecast_api.connect()
 ```
 
 Your "user_token" is inside the "config" table.

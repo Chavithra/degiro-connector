@@ -23,7 +23,6 @@ class API:
     def basic(self, basic:Basic):
         self._basic = basic
     
-    
     @property
     def connection_storage(self)->Basic:
         return self._connection_storage
@@ -32,10 +31,22 @@ class API:
     def connection_storage(self, connection_storage:ConnectionStorage):
         self._connection_storage = connection_storage
 
+    @property
+    def user_token(self)->int:
+        return self._basic.user_token
+
     def __init__(self, user_token:int):
         self._logger = logging.getLogger(self.__module__)
         self._basic = Basic(user_token=user_token)
-        self._connection_storage = ConnectionStorage(basic=self.basic)
+        self._connection_storage = ConnectionStorage(
+            session_storage=self._basic.session_storage,
+            connection_timeout=15,
+        )
+
+    def connect(self):
+        basic = self.basic
+        connection_storage = self._connection_storage
+        connection_storage.session_id = basic.get_session_id()
 
     def fetch_data(self)->Quotecast:
         basic = self.basic
@@ -47,7 +58,7 @@ class API:
 
     def subscribe(self, request:Request)->bool:
         basic = self.basic
-        session_id = self.connection_storage.session_id
+        session_id = self._connection_storage.session_id
 
         return basic.subscribe(
             request=request,

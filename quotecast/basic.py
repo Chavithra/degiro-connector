@@ -28,16 +28,16 @@ class Basic:
         )
 
     @property
-    def user_token(self)->int:
-        return self._user_token
-
-    @property
     def session_storage(self)->SessionStorage:
         return self._session_storage
 
     @session_storage.setter
     def session_storage(self, session_storage:SessionStorage):
         self._session_storage = session_storage
+
+    @property
+    def user_token(self)->int:
+        return self._user_token
 
     def __init__(self, user_token:int, session_storage=None):
         if session_storage is None:
