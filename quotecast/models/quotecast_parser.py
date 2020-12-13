@@ -177,17 +177,18 @@ class QuotecastParser:
         Returns:
             Ticker: New or updated Ticker.
         """
+    
         # SETUP PRODUCTS & METRICS
-        parsed_json = json.loads(quotecast.json_data)
-        for data in parsed_json:
-            if  data['m'] == 'un' :
-                reference = data['v'][0]
-                value = data['v'][1]
+        message_array = json.loads(quotecast.json_data)
+        for message in message_array:
+            if  message['m'] == 'un' :
+                reference = message['v'][0]
+                value = message['v'][1]
                 product, metric = references[reference]
                 ticker.products[product].metrics[metric] = value
-            elif data['m'] == 'us':
-                reference = data['v'][0]
-                value = data['v'][1]
+            elif message['m'] == 'us':
+                reference = message['v'][0]
+                value = message['v'][1]
                 product, metric = references[reference]
 
                 if value[4] == '-':
@@ -205,29 +206,31 @@ class QuotecastParser:
                         + time.second
                     ticker.products[product].metrics[metric] = value
                 else:
-                    # NO CONVERSION TO FLOAT
-                    raise RuntimeWarning(f'Unused string : {data}')
-            elif data['m'] == 'a_req':
-                references[data['v'][1]] = data['v'][0].rsplit(
+                    # NO CONVERSION TO FLOAT POSSIBLE
+                    raise RuntimeWarning(f'Unused string : {message}')
+            elif message['m'] == 'a_req':
+                references[message['v'][1]] = message['v'][0].rsplit(
                     sep='.',
                     maxsplit=1,
                 )
-            elif data['m'] == 'a_rel':
+            elif message['m'] == 'a_rel':
                 delete_list = []
                 for reference in references:
-                    if references[reference] == data['v'][0]:
+                    if references[reference] == message['v'][0]:
                         delete_list.append(reference)
 
                 for reference in delete_list:
                     del references[reference]
-            elif data['m'] == 'h':
+            elif message['m'] == 'h':
                 pass
-            elif data['m'] == 'ue':
+            elif message['m'] == 'ue':
                 pass
-            elif data['m'] == 'd':
-                raise AttributeError(f'Subscription rejected : {data}')
+            elif message['m'] == 'd':
+                raise AttributeError(
+                    f'Subscription rejected : {message}'
+                )
             else:
-                raise AttributeError(f'Unknown metric : {data}')
+                raise AttributeError(f'Unknown metric : {message}')
 
         # SETUP PRODUCT LIST
         ticker.product_list.extend(ticker.products)
