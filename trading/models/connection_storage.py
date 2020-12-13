@@ -16,10 +16,10 @@ class ConnectionStorage:
     @synchronized
     def session_id(self) -> str:
         if not self.__session_id:
-            raise ConnectionAbortedError('Connection required.')
+            raise ConnectionError('Connection required.')
 
         if self.is_timeout_expired():
-            raise TimeoutError('Connection have probably expired')
+            raise TimeoutError('Connection has probably expired.')
             self.__connected.clear()
 
         return self.__session_id
