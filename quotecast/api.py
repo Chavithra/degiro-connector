@@ -18,18 +18,10 @@ class API:
     @property
     def basic(self)->Basic:
         return self._basic
-
-    @basic.setter
-    def basic(self, basic:Basic):
-        self._basic = basic
     
     @property
     def connection_storage(self)->Basic:
         return self._connection_storage
-
-    @connection_storage.setter
-    def connection_storage(self, connection_storage:ConnectionStorage):
-        self._connection_storage = connection_storage
 
     @property
     def user_token(self)->int:
