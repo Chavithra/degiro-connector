@@ -1,9 +1,7 @@
 import logging
 import requests
 import time
-import threading
 
-from quotecast.api import Basic
 from quotecast.constants.headers import Headers
 from quotecast.models.session_storage import SessionStorage
 from threading import Event
