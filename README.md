@@ -16,7 +16,7 @@ Here are the features you can access through this library :
 |Order|Create, update, delete an Order.|
 |OrderHistory|Retrieve all Orders created between two dates.|
 |Orders|List pending Orders.|
-|Portoflio|List products in your porfolio.|
+|Portoflio|List products in your Portoflio.|
 |ProductLookup|Search a product by it's name.|
 |Quotecasts|Fetch real-time data on financial products. <br> For instance the real-time stock Price.|
 |TotalPorfolio|Retrieve aggregated information about your assets.|
