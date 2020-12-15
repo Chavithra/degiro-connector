@@ -46,7 +46,7 @@ pip uninstall degiro-connector
   * [2.3. How to subscribe to a data-stream ?](#23-how-to-subscribe-to-a-data-stream-)
   * [2.4. How to unsubscribe to a data-stream ?](#24-how-to-unsubscribe-to-a-data-stream-)
   * [2.5. How to fetch the data ?](#25-how-to-fetch-the-data-)
-  * [2.6. How can I use this data ?](#26-how-can-i-use-this-data-)
+  * [2.6. How to use this data ?](#26-how-to-use-this-data-)
   * [2.7. Which are the available data types ?](#27-which-are-the-available-data-types-)
   * [2.8. What is a Ticker ?](#28-what-is-a-ticker-)
   * [2.9. What is inside the Dictionnary ?](#29-what-is-inside-the-dictionnary-)
@@ -204,7 +204,7 @@ quotecast = quotecast_api.fetch_data()
 
 For a more comprehensive example : [realtime_data.py](examples/quotecast/realtime_data.py)
 
-## 2.6. How can I use this data ?
+## 2.6. How to use this data ?
 
 Received data is a Quotecast object with the following properties :
 
