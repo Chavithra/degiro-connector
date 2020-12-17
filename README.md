@@ -127,7 +127,7 @@ Connection timeout is around 15 seconds.
 Which means a connection will cease to work after this timeout.
 
 This timeout is reset each time you use this connection to :
-* Subscribe to a data-stream
+* Subscribe to a metric (for instance a stock Price)
 * Fetch the data-stream
 
 So if you use it nonstop (in a loop) you won't need to reconnect.
