@@ -70,10 +70,11 @@ def get_session_id(
                 Account unique identifer in Degiro's system.
                 It is optional.
             credentials.password (str)
-                Password used to log in the website mandatory.
+                Password used to log in the website.
                 It is mandatory.
             credentials.username (str)
-                Username used to log in the website mandatory.
+                Username used to log in the website.
+                It is mandatory.
             credentials.totp_secret is optional.
                 Secret code for Two-factor Authentication (2FA).
                 It is optional.
