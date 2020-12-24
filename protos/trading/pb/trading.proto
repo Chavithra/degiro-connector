@@ -170,7 +170,7 @@ message OrdersHistory {
   }
 
   // PROPERTIES
-  google.protobuf.Struct values = 1;
+  repeated google.protobuf.Struct values = 1;
   google.protobuf.Timestamp response_datetime = 2;
 }
 
@@ -194,7 +194,7 @@ message TransactionsHistory {
   }
 
   // PROPERTIES
-  google.protobuf.Struct values = 1;
+  repeated google.protobuf.Struct values = 1;
   google.protobuf.Timestamp response_datetime = 2;
 }
 
