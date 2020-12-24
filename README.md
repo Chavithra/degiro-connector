@@ -625,6 +625,9 @@ request = TransactionsHistory.Request(from_date=from_date, to_date=to_date)
 transactions_history = trading_api.get_transactions_history(request=request)
 ```
 
+For a more comprehensive example :
+[transactions_history.py](examples/trading/transactions_history.py)
+
 # 6. Account
 
 ## 6.1. How to retrieve the Config table ?
