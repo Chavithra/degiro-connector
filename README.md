@@ -333,21 +333,21 @@ For a more comprehensive example : [realtime_data.py](examples/quotecast/realtim
 # 3. Trading connection
 
 This this library contains two connector :
-* quotecast.api : to consume real-time data
-* trading.api : to manage your Degiro's Account
+* quotecast.api : to consume real-time data.
+* trading.api : to manage your Degiro's Account.
 
-The rest of this document will only refers to "trading.api".
+The rest of this document will only refer to "trading.api".
 
 ## 3.1. What are the credentials ?
 
-Some credentials are required use Degiro's API.
+Some credentials are required to use Degiro's trading API.
 
 Here are these credentials :
 
 |**Parameter**|**Type**|**Description**|
 |:-|:-|:-|
-|username|str|Username used to login on Degiro's website.|
-|password|str|Password used to login on Degiro's website.|
+|username|str|Username used to log into Degiro's website.|
+|password|str|Password used to log into Degiro's website.|
 |int_account|int|Unique identifier of the account : used by Degiro's server.|
 |totp_secret_key|str|Secret key used for Two-factor Authentication (2FA).|
 
@@ -363,7 +363,9 @@ You can get the "int_account" using the "Config" table, it is the parameter "cli
 
 The parameter "totp_secret_key" is only required if you have enabled 2FA on Degiro's website.
 
-When you activate 2FA on Degiro's website, it displays some QRCode.
+When you try to activate 2FA on Degiro's website, it displays some QRCode.
+
+This QRCode changes at each activation.
 
 A QRCode is a picture which can be converted into a text.
 
@@ -399,7 +401,7 @@ trading_api.connect()
 ## 3.5. How to use 2FA ?
 If you are using Two-factor Authentication (2FA) you need to provide an extra parameter.
 
-This parameter is the called "totp_secret_key" by the library.
+This parameter is called "totp_secret_key" by the library.
 
 See the section about "totp_secret_key" to know how to get this parameter from Degiro's website.
 
