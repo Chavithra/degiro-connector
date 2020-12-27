@@ -63,9 +63,10 @@ pip uninstall degiro-connector
   * [4.3. How to delete an Order ?](#43-how-to-delete-an-order-)
 - [5. Portfolio](#5-portfolio)
   * [5.1. How to retrieve pending Orders ?](#51-how-to-retrieve-pending-orders-)
-  * [5.2. How to get the TotalPortfolio ?](#52-how-to-get-the-totalportfolio-)
-  * [5.3. How to retrieve the OrdersHistory ?](#53-how-to-retrieve-the-ordershistory-)
-  * [5.4. How to retrieve the TransactionsHistory ?](#54-how-to-retrieve-the-transactionshistory-)
+  * [5.2. How to get the Portfolio ?](#52-how-to-get-the-portfolio-)
+  * [5.3. How to get the TotalPortfolio ?](#53-how-to-get-the-totalportfolio-)
+  * [5.4. How to retrieve the OrdersHistory ?](#54-how-to-retrieve-the-ordershistory-)
+  * [5.5. How to retrieve the TransactionsHistory ?](#55-how-to-retrieve-the-transactionshistory-)
 - [6. Account](#6-account)
   * [6.1. How to retrieve the Config table ?](#61-how-to-retrieve-the-config-table-)
   * [6.2. How to retrieve the ClientDetails table ?](#62-how-to-retrieve-the-clientdetails-table-)
@@ -546,9 +547,30 @@ Example : Orders
 
 For a more comprehensive example : [update.py](examples/trading/update.py)
 
-## 5.2. How to get the TotalPortfolio ?
+## 5.2. How to get the Portfolio ?
 
 This is how to list the stocks/products currently in the portfolio :
+```python
+request_list = Update.RequestList()
+request_list.values.extend(
+    [
+        Update.Request(
+            option = Update.Option.PORTFOLIO,
+            last_updated = 0,
+        ),
+    ]
+)
+
+update = trading_api.get_update(request_list=request_list)
+update_dict = pb_handler.message_to_dict(message=update)
+portfolio_df = pd.DataFrame(update_dict['portfolio']['values'])
+```
+
+For a more comprehensive example : [update.py](examples/trading/update.py)
+
+## 5.3. How to get the TotalPortfolio ?
+
+This is how to get aggregated data about the portfolio :
 ```python
 request_list = Update.RequestList()
 request_list.values.extend(
@@ -573,7 +595,7 @@ Example : DataFrame
 For a more comprehensive example : [update.py](examples/trading/update.py)
 
 
-## 5.3. How to retrieve the OrdersHistory ?
+## 5.4. How to retrieve the OrdersHistory ?
 
 This method returns data about passed orders between two dates.
 
@@ -613,7 +635,7 @@ For a more comprehensive example :
 [orders_history.py](examples/trading/orders_history.py)
 
 
-## 5.4. How to retrieve the TransactionsHistory ?
+## 5.5. How to retrieve the TransactionsHistory ?
 
 Here is how to get this data :
 
