@@ -899,7 +899,7 @@ Here is how to get this data :
 
 ```python
 # PREPARE REQUEST
-request = ProductSearch.RequestFunds.Request(
+request = ProductSearch.RequestFutures(
     futureExchangeId=1,
     underlyingIsin='FR0003500008',
 
