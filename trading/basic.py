@@ -193,7 +193,7 @@ class Basic:
             logger=logger,
         )
 
-    def get_client_info(
+    def get_account_info(
         self,
         session_id:str,
     )->dict:
@@ -201,7 +201,7 @@ class Basic:
         logger = self._logger
         session = self._session_storage.session
 
-        return utilities.get_client_info(
+        return utilities.get_account_info(
             session_id=session_id,
             credentials=credentials,
             session=session,

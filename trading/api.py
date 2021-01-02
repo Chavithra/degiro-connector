@@ -129,11 +129,11 @@ class API:
             session_id=session_id,
         )
 
-    def get_client_info(self)->dict:
+    def get_account_info(self)->dict:
         basic = self._basic
         session_id = self._connection_storage.session_id
 
-        return basic.get_client_info(
+        return basic.get_account_info(
             session_id=session_id,
         )
 

@@ -27,6 +27,6 @@ trading_api = TradingAPI(credentials=credentials)
 trading_api.connect()
 
 # FETCH CONFIG TABLE
-client_info_table = trading_api.get_client_info()
+account_info_table = trading_api.get_account_info()
 
-print(client_info_table)
+print(account_info_table)

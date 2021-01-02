@@ -503,7 +503,7 @@ def get_client_details(
 
     return response_payload
 
-def get_client_info(
+def get_account_info(
     session_id:str,
     credentials:Credentials,
     session:requests.Session=None,
@@ -515,7 +515,7 @@ def get_client_info(
         session = build_session()
 
     int_account = credentials.int_account
-    url = f'{URLs.CLIENT_INFO}/{int_account};jsessionid={session_id}'
+    url = f'{URLs.ACCOUNT_INFO}/{int_account};jsessionid={session_id}'
     
     request = requests.Request(method='GET', url=url)
     prepped = session.prepare_request(request)
@@ -523,7 +523,7 @@ def get_client_info(
     
     if response.status_code != 200: return False
 
-    return response.text
+    return response.json()
 
 def get_orders_history(
     request:OrdersHistory.Request,

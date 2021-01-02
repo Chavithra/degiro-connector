@@ -661,7 +661,7 @@ The config table contains the following informations :
 |**Parameter**|**Type**|**Description**|
 |:-|:-|:-|
 |sessionId|str|Current session id.|
-|clientId|int|Unique Degiro's Account identifier also called "intAccount"|
+|clientId|int|Unique Degiro's Account identifier also called "userToken"|
 |tradingUrl|str|-|
 |paUrl|str|-|
 |reportingUrl|str|-|
@@ -765,11 +765,11 @@ The ClientInfos table contains the following information about currencies.
 Here is how to get this table :
 
 ```python
-client_info_table = trading_api.get_client_info()
+account_info_table = trading_api.get_account_info()
 ```
 
 For a more comprehensive example :
-[client_info_table.py](examples/trading/client_info_table.py)
+[account_info_table.py](examples/trading/account_info_table.py)
 
 ## 6.4. How to get the AccountOverviews table ?
 
