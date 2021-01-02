@@ -3,7 +3,7 @@ import logging
 import orjson as json
 
 from quotecast.models.metrics_storage import MetricsStorage
-from quotecast.pb.quotecast_pb2 import Quotecast, Request, Ticker
+from quotecast.pb.quotecast_pb2 import Quotecast, Ticker
 from typing import Dict, List
 
 class QuotecastParser:
@@ -279,11 +279,11 @@ class QuotecastParser:
 
         self.__ticker = ticker
 
-    def rebuild_request(self)->Request:
+    def rebuild_request(self)->Quotecast.Request:
         """ Rebuild the request from history (self.__references).
 
         Returns:
-            Request:
+            Quotecast.Request:
                 Request matching data-stream.
         """
 
