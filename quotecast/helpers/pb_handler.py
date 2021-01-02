@@ -3,7 +3,7 @@ import random
 
 from google.protobuf import json_format
 from google.protobuf.message import Message
-from quotecast.pb.quotecast_pb2 import Request, Ticker
+from quotecast.pb.quotecast_pb2 import Quotecast, Ticker
 from typing import Dict, List
 
 # pylint: disable=no-member
@@ -113,7 +113,7 @@ def update_message_from_dict(message:Message, js_dict:dict)->Message:
         descriptor_pool=None,
     )
 
-def request_to_api(request:Request)->str:
+def request_to_api(request:Quotecast.Request)->str:
     payload = '{"controlData":"'
     for vwd_id in request.subscriptions:
         for metric_name in request.subscriptions[vwd_id]:
