@@ -5,7 +5,7 @@ import time
 import urllib3
 
 from quotecast.constants.headers import Headers
-from quotecast.constants.endpoint import Endpoint
+from quotecast.constants.endpoints import Endpoints
 from quotecast.pb.quotecast_pb2 import Quotecast
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -63,9 +63,9 @@ def get_session_id(
     if session is None:
         session = build_session()
     
-    url = Endpoint.URL
+    url = Endpoints.QUOTECAST_URL
     url = f'{url}/request_session'
-    version = Endpoint.VERSION
+    version = Endpoints.QUOTECAST_VERSION
     
     parameters = {'version': version, 'userToken': user_token}
     data = '{"referrer":"https://trader.degiro.nl"}'
@@ -125,7 +125,7 @@ def fetch_data(
     if session is None:
         session = build_session()
 
-    url = f'{Endpoint.URL}/{session_id}'
+    url = f'{Endpoints.QUOTECAST_URL}/{session_id}'
 
     request = requests.Request(method='GET', url=url)
     prepped = session.prepare_request(request=request)
@@ -195,10 +195,10 @@ def subscribe(
     if session is None:
         session = build_session()
 
-    url = Endpoint.URL
+    url = Endpoints.QUOTECAST_URL
     url = f'{url}/{session_id}'
 
-    data = pb_handler.request_to_api(request=request)
+    data = pb_handler.quotecast_request_to_api(request=request)
 
     logger.info('subscribe:data %s', data[:100])
 

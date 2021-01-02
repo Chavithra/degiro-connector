@@ -113,7 +113,7 @@ def update_message_from_dict(message:Message, js_dict:dict)->Message:
         descriptor_pool=None,
     )
 
-def request_to_api(request:Quotecast.Request)->str:
+def quotecast_request_to_api(request:Quotecast.Request)->str:
     payload = '{"controlData":"'
     for vwd_id in request.subscriptions:
         for metric_name in request.subscriptions[vwd_id]:
