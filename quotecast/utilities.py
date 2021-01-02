@@ -273,7 +273,7 @@ def get_chart(
     url = Endpoints.CHART_URL
     params = pb_handler.chart_request_to_api(request=request)
     params['format'] = 'json'
-    params['callback'] = 'vwd.hchart.seriesRequestManager.sync_response'
+    params['callback'] = ''
     params['userToken'] = user_token
 
     if override is not None:
@@ -286,9 +286,7 @@ def get_chart(
 
     try:
         response_raw = session.send(prepped, verify=False)
-        offset = len('vwd.hchart.seriesRequestManager.sync_response(')
-        limit = -len(')')
-        response_dict = json.loads(response_raw.text[offset:limit])
+        response_dict = json.loads(response_raw.text)
 
         if raw == True:
             response = response_dict
