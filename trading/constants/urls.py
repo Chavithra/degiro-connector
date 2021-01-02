@@ -1,7 +1,7 @@
 class URLs:
+    ACCOUNT_INFO = 'https://trader.degiro.nl/trading/secure/v5/account/info'
     ACCOUNT_OVERVIEW = 'https://trader.degiro.nl/reporting/secure/v6/accountoverview'
     CLIENT_DETAILS = 'https://trader.degiro.nl/pa/secure/client'
-    ACCOUNT_INFO = 'https://trader.degiro.nl/trading/secure/v5/account/info'
     CONFIG = 'https://trader.degiro.nl/login/secure/config'
     LOGIN ='https://trader.degiro.nl/login/secure/login'
     ORDER_CHECK = 'https://trader.degiro.nl/trading/secure/v5/checkOrder'

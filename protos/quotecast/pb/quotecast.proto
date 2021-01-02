@@ -12,6 +12,13 @@ message Metadata {
 message Quotecast {
   string json_data = 1;
   Metadata metadata = 2;
+
+  message Request {
+    // <vwd_id, metrics>
+    map<string, google.protobuf.ListValue> subscriptions = 1;
+    // <vwd_id, metrics>
+    map<string, google.protobuf.ListValue> unsubscriptions = 2;
+  }
 }
 
 message Ticker {
@@ -23,11 +30,4 @@ message Ticker {
   // <vwd_id, metrics>
   map<string, Metrics> products = 2; 
   repeated string product_list = 3;
-}
-
-message Request {
-  // <vwd_id, metrics>
-  map<string, google.protobuf.ListValue> subscriptions = 1;
-  // <vwd_id, metrics>
-  map<string, google.protobuf.ListValue> unsubscriptions = 2;
 }

@@ -4,7 +4,7 @@ import quotecast.helpers.pb_handler as pb_handler
 
 from quotecast.api import API as QuotecastAPI
 from quotecast.models.quotecast_parser import QuotecastParser
-from quotecast.pb.quotecast_pb2 import Request
+from quotecast.pb.quotecast_pb2 import Quotecast
 
 # SETUP LOGGING
 logging.basicConfig(level=logging.INFO)
@@ -22,7 +22,7 @@ quotecast_api.connect()
 session_id = quotecast_api.connection_storage.session_id
 
 # SUBSCRIBE TO METRICS
-request = Request()
+request = Quotecast.Request()
 request.subscriptions['AAPL.BATS,E'].extend([
     'LastDate',
     'LastTime',

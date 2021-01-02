@@ -18,9 +18,7 @@ def cli(user_token):
     import time
     from datetime import date
     from quotecast.api import API
-    from quotecast.pb.quotecast_pb2 import (
-        Request,
-    )
+    from quotecast.pb.quotecast_pb2 import Quotecast
 
     # SETUP API
     api = API(user_token=user_token)
@@ -36,11 +34,8 @@ def cli(user_token):
         'LastPrice',
         'LastVolume',
     ]
-    request = Request(
-        action=Request.Action.SUBSCRIBE,
-        vwd_id=vwd_id,
-        label_list=label_list
-    )
+    request = Quotecast.Request()
+    request.subscriptions[vwd_id].extend(label_list)
 
     api.subscribe(request=request)
 

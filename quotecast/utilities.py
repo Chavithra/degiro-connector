@@ -159,7 +159,7 @@ def subscribe(
         request (Request):
             List of subscriptions & unsubscriptions to do.
             Example :
-            request = Request()
+            request = Quotecast.Request()
             request.subscriptions['360015751'].extend([
                 'LastPrice',
                 'LastVolume',

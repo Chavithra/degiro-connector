@@ -288,7 +288,7 @@ class QuotecastParser:
         """
 
         references = self.references
-        request = Request()
+        request = Quotecast.Request()
 
         for vwd_id, metric in references.values():
             request.subscriptions[vwd_id].append(metric)

@@ -97,7 +97,7 @@ if __name__ == '__main__':
     basic = Basic(user_token=user_token)
 
     # SETUP REQUEST
-    request = Request()
+    request = Quotecast.Request()
     request.subscriptions['360015751'].extend([
         'LastDate',
         'LastTime',

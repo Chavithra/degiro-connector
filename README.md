@@ -7,10 +7,10 @@ Here are the features you can access through this library :
 
 |**Endpoint**|**Feature(s)**|
 |:-|:-|
+|AccountInfo|Retrieve a table containing : "clientId" and Currencies.|
 |AccountOverview|Retrieve all the CashMovements between two dates.|
 |Bonds<br>ETFs<br>Funds<br>Futures<br>Leverageds<br>Lookup<br>Options<br>Stocks<br>Warrants|Search list of products according their type and other criterias. <br> For instance all the stocks from NASDAQ 100.|
-|ClientDetails|Retrieve a table containing : account information.|
-|ClientInfo|Retrieve a table containing : "clientId" and Currencies.|
+|ClientDetails|Retrieve a table containing : "clientId", "intAccount" and other account information.|
 |Config|Retrieve a table containing : "clientId" and URLs constitutive of Degiro's API.|
 |Favourites|Retrieve favorite products lists.|
 |Order|Create, update, delete an Order.|
@@ -70,8 +70,8 @@ pip uninstall degiro-connector
 - [6. Account](#6-account)
   * [6.1. How to retrieve the Config table ?](#61-how-to-retrieve-the-config-table-)
   * [6.2. How to retrieve the ClientDetails table ?](#62-how-to-retrieve-the-clientdetails-table-)
-  * [6.3. How to retrieve the ClientInfos table ?](#63-how-to-retrieve-the-clientinfos-table-)
-  * [6.4. How to get the AccountOverviews table ?](#64-how-to-get-the-accountoverviews-table-)
+  * [6.3. How to retrieve the AccountInfo table ?](#63-how-to-retrieve-the-accountinfo-table-)
+  * [6.4. How to get the AccountOverview table ?](#64-how-to-get-the-accountoverview-table-)
 - [7. Products](#7-products)
   * [7.1. How to get my favourite products ?](#71-how-to-get-my-favourite-products-)
   * [7.2. How to lookup products (search by name) ?](#72-how-to-lookup-products-search-by-name-)
@@ -145,7 +145,7 @@ A Request has the following parameters :
 
 Here is an example of request :
 ```python
-request = Request()
+request = Quotecast.Request()
 request.subscriptions['360015751'].extend([
     'LastPrice',
     'LastVolume',
@@ -178,7 +178,7 @@ A Request has the following parameters :
 
 Here is an example of request :
 ```python
-request = Request()
+request = Quotecast.Request()
 request.unsubscriptions['360015751'].extend([
     'LastPrice',
     'LastVolume',
@@ -358,7 +358,7 @@ The parameter "int_account" is not necessary for login.
 
 But it is required to do some of the operations available in this connector.
 
-You can get the "int_account" using the "Config" table, it is the parameter "clientId".
+You can get the "int_account" using the "ClientDetails" table, it is the parameter "intAccount".
 
 ## 3.3. What is the purpose of "totp_secret_key" ?
 
@@ -749,9 +749,9 @@ client_details_table = trading_api.get_client_details()
 For a more comprehensive example :
 [client_details_table.py](examples/trading/client_details_table.py)
 
-## 6.3. How to retrieve the ClientInfos table ?
+## 6.3. How to retrieve the AccountInfo table ?
 
-The ClientInfos table contains the following information about currencies.
+The AccountInfo table contains the following information about currencies.
 
 |**Parameter**|**Type**|
 |:-|:-|
@@ -771,7 +771,7 @@ account_info_table = trading_api.get_account_info()
 For a more comprehensive example :
 [account_info_table.py](examples/trading/account_info_table.py)
 
-## 6.4. How to get the AccountOverviews table ?
+## 6.4. How to get the AccountOverview table ?
 
 It contains information about cash movements.
 
