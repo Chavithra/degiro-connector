@@ -21,7 +21,6 @@ quotecast_api = QuotecastAPI(user_token=user_token)
 
 # SUBSCRIBE TO METRICS
 request = Chart.Request()
-request = Chart.Request()
 request.requestid = '1'
 request.resolution = Chart.Resolution.PT1M
 request.culture = 'fr-FR'

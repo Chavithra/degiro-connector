@@ -10,6 +10,7 @@ Here are the features you can access through this library :
 |AccountInfo|Retrieve a table containing : "clientId" and Currencies.|
 |AccountOverview|Retrieve all the CashMovements between two dates.|
 |Bonds<br>ETFs<br>Funds<br>Futures<br>Leverageds<br>Lookup<br>Options<br>Stocks<br>Warrants|Search list of products according their type and other criterias. <br> For instance all the stocks from NASDAQ 100.|
+|Chart|Retrieve chart data.|
 |ClientDetails|Retrieve a table containing : "clientId", "intAccount" and other account information.|
 |Config|Retrieve a table containing : "clientId" and URLs constitutive of Degiro's API.|
 |Favourites|Retrieve favorite products lists.|
@@ -51,6 +52,7 @@ pip uninstall degiro-connector
   * [2.8. What is a Ticker ?](#28-what-is-a-ticker-)
   * [2.9. What is inside the Dictionnary ?](#29-what-is-inside-the-dictionnary-)
   * [2.10. What is inside the DataFrame ?](#210-what-is-inside-the-dataframe-)
+  * [2.11. How to get chart data ?](#211-how-to-get-chart-data-)
 - [3. Trading connection](#3-trading-connection)
   * [3.1. What are the credentials ?](#31-what-are-the-credentials-)
   * [3.2. What is the purpose of "in_account" ?](#32-what-is-the-purpose-of-in_account-)
@@ -330,6 +332,31 @@ Example of DataFrame content :
     1   360015751  2020-11-08 12:00:27          1.022489  2020-11-06  17:36:17     22.99        470
 
 For a more comprehensive example : [realtime_data.py](examples/quotecast/realtime_data.py)
+
+
+## 2.11. How to get chart data ?
+You can fetch an object containing the same data than in Degiro's website graph.
+
+Example of code :
+
+```python
+request = Chart.Request()
+request.requestid = '1'
+request.resolution = Chart.Resolution.PT1M
+request.culture = 'fr-FR'
+request.series.append('issueid:360148977')
+request.series.append('price:issueid:360148977')
+request.series.append('ohlc:issueid:360148977')
+request.series.append('volume:issueid:360148977')
+request.period = Chart.Period.P1D
+request.tz = 'Europe/Paris'
+
+chart = quotecast_api.get_chart()
+```
+
+For a more comprehensive example :
+[chart.py](examples/quotecast/chart.py)
+
 
 # 3. Trading connection
 
