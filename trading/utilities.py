@@ -376,7 +376,6 @@ def update_order(
     order:Order,
     session_id:str,
     credentials:Credentials,
-    raw:bool=False,
     session:requests.Session=None,
     logger:logging.Logger=None,
 )->bool:
@@ -417,7 +416,6 @@ def delete_order(
     order_id:str,
     session_id:str,
     credentials:Credentials,
-    raw:bool=False,
     session:requests.Session=None,
     logger:logging.Logger=None,
 )->bool:

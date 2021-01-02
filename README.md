@@ -516,7 +516,7 @@ Here is an example :
 
 ```python
 # DELETE ORDER
-succcess = trading_api.delete(order_id=YOUR_ORDER_ID)
+succcess = trading_api.delete_order(order_id=YOUR_ORDER_ID)
 ```
 
 # 5. Portfolio

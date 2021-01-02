@@ -131,7 +131,6 @@ class Basic:
         self, 
         order:Order,
         session_id:str,
-        raw:bool=False,
     )->bool:
         credentials = self._credentials
         logger = self._logger
@@ -141,7 +140,6 @@ class Basic:
             order=order,
             session_id=session_id,
             credentials=credentials,
-            raw=raw,
             session=session,
             logger=logger,
         )
@@ -150,7 +148,6 @@ class Basic:
         self,
         order_id:str,
         session_id:str,
-        raw:bool=False,
     )->bool:
         credentials = self._credentials
         logger = self._logger
@@ -160,7 +157,6 @@ class Basic:
             order_id=order_id,
             session_id=session_id,
             credentials=credentials,
-            raw=raw,
             session=session,
             logger=logger,
         )
