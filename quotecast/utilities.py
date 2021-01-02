@@ -1,4 +1,5 @@
 import logging
+import orjson as json
 import quotecast.helpers.pb_handler as pb_handler
 import requests
 import time
@@ -6,7 +7,8 @@ import urllib3
 
 from quotecast.constants.headers import Headers
 from quotecast.constants.endpoints import Endpoints
-from quotecast.pb.quotecast_pb2 import Quotecast
+from quotecast.pb.quotecast_pb2 import Chart, Quotecast
+from typing import Dict
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -80,7 +82,7 @@ def get_session_id(
 
     try:
         response = session.send(request=prepped, verify=False)
-        response_dict = response.json()
+        response_dict = json.loads(response.text)
     except Exception as e:
         logger.fatal(e)
         return False
@@ -197,7 +199,6 @@ def subscribe(
 
     url = Endpoints.QUOTECAST_URL
     url = f'{url}/{session_id}'
-
     data = pb_handler.quotecast_request_to_api(request=request)
 
     logger.info('subscribe:data %s', data[:100])
@@ -213,6 +214,90 @@ def subscribe(
         else:
             response = True
     except Exception as e:
+        logger.fatal(e)
+        return False
+
+    return response
+
+def get_chart(
+    request:Chart.Request,
+    user_token:int,
+    override:Dict[str, str]=None,
+    raw:bool=False,
+    session:requests.Session=None,
+    logger:logging.Logger=None,
+)->Chart:
+    """ Fetch chart's data.
+
+    Args:
+        request (Chart.Request):
+            Example :
+            request = Chart.Request()
+            request.requestid = '1'
+            request.resolution = Chart.Resolution.PT1M
+            request.culture = 'fr-FR'
+            request.series.append('issueid:360148977')
+            request.series.append('price:issueid:360148977')
+            request.series.append('ohlc:issueid:360148977')
+            request.series.append('volume:issueid:360148977')
+            request.period = Chart.Period.P1D
+            request.tz = 'Europe/Paris'
+        user_token (int):
+            User identifier in Degiro's API.
+        override (Dict[str], optional):
+            Override the request sent to Degiro's API.
+            Example :
+            override = {
+                'period':'P6D',
+            }
+            Defaults to None.
+        raw (bool, optional):
+            Whether are not we want the raw API response.
+            Defaults to False.
+        session (requests.Session, optional):
+            This object will be generated if None.
+            Defaults to None.
+        logger (logging.Logger, optional):
+            This object will be generated if None.
+            Defaults to None.
+
+    Returns:
+        Chart: Data of the chart.
+    """
+
+    if logger is None:
+        logger = build_logger()
+    if session is None:
+        session = build_session()
+
+    url = Endpoints.CHART_URL
+    params = pb_handler.chart_request_to_api(request=request)
+    params['format'] = 'json'
+    params['callback'] = 'vwd.hchart.seriesRequestManager.sync_response'
+    params['userToken'] = user_token
+
+    if override is not None:
+        for key, value in override.items():
+            params[key] = value
+
+    request = requests.Request(method='GET', url=url, params=params)
+    prepped = session.prepare_request(request)
+    response_raw = None
+
+    try:
+        response_raw = session.send(prepped, verify=False)
+        offset = len('vwd.hchart.seriesRequestManager.sync_response(')
+        limit = -len(')')
+        response_dict = json.loads(response_raw.text[offset:limit])
+
+        if raw == True:
+            response = response_dict
+        else:
+            response = pb_handler.api_to_chart(payload=response_dict)
+
+    except Exception as e:
+        logger.fatal(response_raw.status_code)
+        logger.fatal(response_raw.text)
         logger.fatal(e)
         return False
 

@@ -4,8 +4,8 @@ import urllib3
 
 from quotecast.constants.headers import Headers
 from quotecast.models.session_storage import SessionStorage
-from quotecast.pb.quotecast_pb2 import Quotecast
-from typing import Union
+from quotecast.pb.quotecast_pb2 import Chart, Quotecast
+from typing import Dict
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -59,8 +59,8 @@ class Basic:
 
     def get_session_id(self)->str:
         logger = self._logger
-        user_token = self._user_token
         session = self._session_storage.session
+        user_token = self._user_token
 
         return utilities.get_session_id(
             user_token=user_token,
@@ -68,13 +68,36 @@ class Basic:
             logger=logger
         )
 
-    def subscribe(self, request:Quotecast.Request, session_id:str)->bool:
+    def subscribe(
+        self,
+        request:Quotecast.Request,
+        session_id:str,
+    )->bool:
         logger = self._logger
         session = self._session_storage.session
         
         return utilities.subscribe(
             request=request,
             session_id=session_id,
+            session=session,
+            logger=logger,
+        )
+
+    def get_chart(
+        self,
+        request:Chart.Request,
+        override:Dict[str, str]=None,
+        raw:bool=False,
+    )->bool:
+        logger = self._logger
+        session = self._session_storage.session
+        user_token = self._user_token
+        
+        return utilities.get_chart(
+            request=request,
+            user_token=user_token,
+            override=override,
+            raw=raw,
             session=session,
             logger=logger,
         )

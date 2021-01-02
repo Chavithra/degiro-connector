@@ -1,4 +1,5 @@
 # IMPORTATIONS
+import json
 import logging
 import quotecast.helpers.pb_handler as pb_handler
 
@@ -9,8 +10,12 @@ from quotecast.pb.quotecast_pb2 import Quotecast
 # SETUP LOGGING
 logging.basicConfig(level=logging.INFO)
 
-# SETUP CREDENTIALS
-user_token = 0 # TO REPLACE WITH YOUR USER TOKEN
+# SETUP CONFIG DICT
+with open('config/config.json') as config_file:
+    config_dict = json.load(config_file)
+
+# SETUP CREDENTIALS 
+user_token = config_dict['user_token'] # TO REPLACE WITH YOUR USER TOKEN
 
 # SETUP API
 quotecast_api = QuotecastAPI(user_token=user_token)

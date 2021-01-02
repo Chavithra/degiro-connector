@@ -3,7 +3,7 @@ import random
 
 from google.protobuf import json_format
 from google.protobuf.message import Message
-from quotecast.pb.quotecast_pb2 import Quotecast, Ticker
+from quotecast.pb.quotecast_pb2 import Chart, Quotecast, Ticker
 from typing import Dict, List
 
 # pylint: disable=no-member
@@ -113,6 +113,7 @@ def update_message_from_dict(message:Message, js_dict:dict)->Message:
         descriptor_pool=None,
     )
 
+# GRPC TO API
 def quotecast_request_to_api(request:Quotecast.Request)->str:
     payload = '{"controlData":"'
     for vwd_id in request.subscriptions:
@@ -124,3 +125,27 @@ def quotecast_request_to_api(request:Quotecast.Request)->str:
     payload += '"}'
 
     return payload
+
+def chart_request_to_api(request:Chart.Request)->dict:
+    request_dict = json_format.MessageToDict(
+        message=request,
+        including_default_value_fields=True,
+        preserving_proto_field_name=False,
+        use_integers_for_enums=False,
+        descriptor_pool=None,
+        float_precision=None,
+    )
+
+    return request_dict
+
+# API TO GRPC
+def api_to_chart(payload:dict)->Chart:
+    chart = Chart()
+    json_format.ParseDict(
+        js_dict=payload,
+        message=chart,
+        ignore_unknown_fields=True,
+        descriptor_pool=None,
+    )
+
+    return chart

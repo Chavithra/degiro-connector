@@ -3,7 +3,8 @@ import urllib3
 
 from quotecast.basic import Basic
 from quotecast.models.connection_storage import  ConnectionStorage
-from quotecast.pb.quotecast_pb2 import Quotecast
+from quotecast.pb.quotecast_pb2 import Chart, Quotecast
+from typing import Dict
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -55,6 +56,20 @@ class API:
         return basic.subscribe(
             request=request,
             session_id=session_id,
+        )
+
+    def get_chart(
+        self,
+        request:Chart.Request,
+        override:Dict[str, str]=None,
+        raw:bool=False,
+    )->bool:
+        basic = self.basic
+        
+        return basic.get_chart(
+            request=request,
+            override=override,
+            raw=raw,
         )
 
 if __name__ == '__main__':

@@ -10,24 +10,72 @@ message Metadata {
 }
 
 message Quotecast {
-  string json_data = 1;
-  Metadata metadata = 2;
-
+  // MESSAGES
   message Request {
     // <vwd_id, metrics>
     map<string, google.protobuf.ListValue> subscriptions = 1;
     // <vwd_id, metrics>
     map<string, google.protobuf.ListValue> unsubscriptions = 2;
   }
+
+  // PROPERTIES
+  string json_data = 1;
+  Metadata metadata = 2;
 }
 
 message Ticker {
+  // MESSAGES
   message Metrics {
     // <metric_name, metric_value>
     map<string, double> metrics = 1; 
   }
+
+  // PROPERTIES
   Metadata metadata = 1;
   // <vwd_id, metrics>
   map<string, Metrics> products = 2; 
   repeated string product_list = 3;
+}
+
+message Chart {
+  // ENUMS
+  enum Resolution {
+    PT1S = 0;
+    PT15S = 1;
+    PT30S = 2;
+    PT1M = 3;
+    PT5M = 4;
+    PT15M = 5;
+    PT30M = 6;
+    PT60M = 7;
+  }
+  enum Period {
+    P1D = 0;
+    P1W = 1;
+    P1M = 2;
+    P3M = 3;
+    P6M = 4;
+    P1Y = 5;
+    P3Y = 6;
+    P5Y = 7;
+    P10Y = 8;
+    YTD = 9;
+  }
+  
+  // MESSAGES
+  message Request {
+    string requestid = 1;
+    Resolution resolution = 2;
+    string culture = 3;
+    Period period = 4;
+    repeated string series = 5;
+    string tz = 6;
+  }
+  
+  // PROPERTIES
+  string requestid = 1;
+  string start = 2;
+  string end = 3;
+  string resolution = 4;
+  repeated google.protobuf.Struct series = 5;
 }
