@@ -4,7 +4,7 @@ import urllib3
 
 from quotecast.constants.headers import Headers
 from quotecast.models.session_storage import SessionStorage
-from quotecast.pb.quotecast_pb2 import Quotecast, Request
+from quotecast.pb.quotecast_pb2 import Quotecast
 from typing import Union
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -68,7 +68,7 @@ class Basic:
             logger=logger
         )
 
-    def subscribe(self, request:Request, session_id:str)->bool:
+    def subscribe(self, request:Quotecast.Request, session_id:str)->bool:
         logger = self._logger
         session = self._session_storage.session
         

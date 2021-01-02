@@ -3,7 +3,7 @@ import urllib3
 
 from quotecast.basic import Basic
 from quotecast.models.connection_storage import  ConnectionStorage
-from quotecast.pb.quotecast_pb2 import Quotecast, Request
+from quotecast.pb.quotecast_pb2 import Quotecast
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -48,7 +48,7 @@ class API:
             session_id=session_id
         )
 
-    def subscribe(self, request:Request)->bool:
+    def subscribe(self, request:Quotecast.Request)->bool:
         basic = self.basic
         session_id = self._connection_storage.session_id
 

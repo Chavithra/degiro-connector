@@ -6,7 +6,7 @@ import urllib3
 
 from quotecast.constants.headers import Headers
 from quotecast.constants.endpoint import Endpoint
-from quotecast.pb.quotecast_pb2 import Quotecast, Request
+from quotecast.pb.quotecast_pb2 import Quotecast
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -148,7 +148,7 @@ def fetch_data(
     return quotecast
 
 def subscribe(
-    request:Request,
+    request:Quotecast.Request,
     session_id:str,
     session:requests.Session=None,
     logger:logging.Logger=None,
