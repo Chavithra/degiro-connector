@@ -337,6 +337,18 @@ For a more comprehensive example : [realtime_data.py](examples/quotecast/realtim
 ## 2.11. How to get chart data ?
 You can fetch an object containing the same data than in Degiro's website graph.
 
+For that you need to prepare a Chart.Request object.
+
+Here is a table with the available attributes for Chart.Request.
+|**Parameter**|**Type**|**Description**|
+|:-|:-|:-|
+|requestid|str|It sends you back whatever string you put here, you can set it to : "1".|
+|resolution|Chart.Resolution|Resolution of the chart like : Chart.Resolution.PT1M.|
+|culture|str|Country code like : "en-US" or "fr-FR".|
+|period|Chart.Period|Period of the chart, like : Chart.Period.P1D.|
+|series|repeated google.protobuf.Struct|Data to get like : ['issueid:36014897', 'price:issueid:360148977'].|
+|tz|str|Timezone like : "Europe/Paris"|
+
 Example of code :
 
 ```python
@@ -351,8 +363,11 @@ request.series.append('volume:issueid:360148977')
 request.period = Chart.Period.P1D
 request.tz = 'Europe/Paris'
 
-chart = quotecast_api.get_chart()
+chart = quotecast_api.get_chart(request=request)
 ```
+
+All the options for the enumerations are available in this file :
+[quotecast.proto](protos/quotecast/pb/quotecast.proto)
 
 For a more comprehensive example :
 [chart.py](examples/quotecast/chart.py)
