@@ -374,7 +374,7 @@ For a more comprehensive example :
 
 # 3. Trading connection
 
-This this library contains two connector :
+This library contains two connectors :
 * quotecast.api : to consume real-time data.
 * trading.api : to manage your Degiro's Account.
 
