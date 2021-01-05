@@ -167,7 +167,7 @@ For a more comprehensive example : [realtime_data.py](examples/quotecast/realtim
 
 ## 2.4. How to unsubscribe to a data-stream ?
 
-As for a subscription, to remove metrics from the data-stream you need to setup a Request message.
+To remove metrics from the data-stream you need to setup a Request message.
 
 If you try to unsubscribe to a metric to which you didn't subscribed previously it will most likely have no impact.
 
