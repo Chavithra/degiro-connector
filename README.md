@@ -9,16 +9,15 @@ Here are the features you can access through this library :
 |:-|:-|
 |AccountInfo|Retrieve a table containing : "clientId" and Currencies.|
 |AccountOverview|Retrieve all the CashMovements between two dates.|
-|Bonds<br>ETFs<br>Funds<br>Futures<br>Leverageds<br>Lookup<br>Options<br>Stocks<br>Warrants|Search list of products according their type and other criterias. <br> For instance all the stocks from NASDAQ 100.|
+|Bonds<br>ETFs<br>Funds<br>Futures<br>Leverageds<br>Lookup<br>Options<br>Stocks<br>Warrants|Search list of products according their name, type and other criterias. <br> For instance all the stocks from NASDAQ 100.|
 |Chart|Retrieve chart data.|
 |ClientDetails|Retrieve a table containing : "clientId", "intAccount" and other account information.|
-|Config|Retrieve a table containing : "clientId" and URLs constitutive of Degiro's API.|
+|Config|Retrieve a table containing : "clientId" and URLs which are constitutive of Degiro's API.|
 |Favourites|Retrieve favorite products lists.|
 |Order|Create, update, delete an Order.|
 |OrderHistory|Retrieve all Orders created between two dates.|
 |Orders|List pending Orders.|
 |Portoflio|List products in your Portoflio.|
-|ProductLookup|Search a product by it's name.|
 |Quotecasts|Fetch real-time data on financial products. <br> For instance the real-time stock Price.|
 |TotalPorfolio|Retrieve aggregated information about your assets.|
 |TransactionsHistory|Retrieve all Transactions created between two dates.|
@@ -291,8 +290,8 @@ It can be transmitted over GRPC framework.
 The generated Dictionnary is actually a list of Python Dictionnaries.
 
 Each Dictionnary depicts a product with :
-* keys has metrics name.
-* values has metrics values
+* keys as metrics names.
+* values as metrics values
 
 Example - dict :
 
@@ -862,7 +861,7 @@ request = ProductSearch.RequestLookup(
 products_lookup = trading_api.product_search(request=request)
 ```
 
-For a more comprehensive example : [products_lookup.py](examples/trading/products_lookup.py)
+For a more comprehensive example : [product_search.py](examples/trading/product_search.py)
 
 ## 7.3. How to search bonds ?
 
