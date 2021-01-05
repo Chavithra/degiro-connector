@@ -120,7 +120,8 @@ Your "user_token" is inside the "config" table.
 
 See section related to "config" table. 
 
-For a more comprehensive example : [realtime_data.py](examples/quotecast/realtime_data.py)
+For a more comprehensive example :
+[realtime_data.py](examples/quotecast/realtime_data.py)
 
 ## 2.2. What is the timeout ?
 
@@ -162,7 +163,8 @@ Once you have built this Request object you can send it to Degiro's API like thi
 quotecast_api.subscribe(request=request)
 ```
 
-For a more comprehensive example : [realtime_data.py](examples/quotecast/realtime_data.py)
+For a more comprehensive example :
+[realtime_data.py](examples/quotecast/realtime_data.py)
 
 
 ## 2.4. How to unsubscribe to a data-stream ?
@@ -195,7 +197,8 @@ Once you have built this Request object you can send it to Degiro's API like thi
 quotecast_api.subscribe(request=request)
 ```
 
-For a more comprehensive example : [realtime_data.py](examples/quotecast/realtime_data.py)
+For a more comprehensive example :
+[realtime_data.py](examples/quotecast/realtime_data.py)
 
 ## 2.5. How to fetch the data ?
 
@@ -204,7 +207,8 @@ You can use the following code :
 quotecast = quotecast_api.fetch_data()
 ```
 
-For a more comprehensive example : [realtime_data.py](examples/quotecast/realtime_data.py)
+For a more comprehensive example :
+[realtime_data.py](examples/quotecast/realtime_data.py)
 
 ## 2.6. How to use this data ?
 
@@ -222,7 +226,8 @@ response_datetime = quotecast.metadata.response_datetime
 request_duration= quotecast.metadata.request_duration
 ```
 
-For a more comprehensive example : [realtime_data.py](examples/quotecast/realtime_data.py)
+For a more comprehensive example :
+[realtime_data.py](examples/quotecast/realtime_data.py)
 
 ## 2.7. Which are the available data types ?
 
@@ -330,7 +335,8 @@ Example of DataFrame content :
     0   360114899  2020-11-08 12:00:27          1.022489  2020-11-06  17:39:57      70.0        100
     1   360015751  2020-11-08 12:00:27          1.022489  2020-11-06  17:36:17     22.99        470
 
-For a more comprehensive example : [realtime_data.py](examples/quotecast/realtime_data.py)
+For a more comprehensive example :
+[realtime_data.py](examples/quotecast/realtime_data.py)
 
 
 ## 2.11. How to get chart data ?
@@ -476,7 +482,8 @@ Here are the main parameters of an Order.
 |size|float|Size of the order.|
 |time_type|Order.TimeType|Duration of the order : GOOD_TILL_DAY or GOOD_TILL_CANCELED|
 
-The full description of an Order is available here : [trading.proto](protos/trading/pb/trading.proto)
+The full description of an Order is available here :
+[trading.proto](protos/trading/pb/trading.proto)
 
 ## 4.1. How to create an Order ?
 
@@ -493,9 +500,9 @@ Here are the parameters of a CheckingResponse :
 |confirmation_id|str|Id necessary to confirm the creation of the Order.|
 |free_space_new|float|New free space (balance) if the Order is confirmed.|
 |response_datetime|str|ISO format datetime of the checking operation.|
-|transaction_fees|repeated google.protobuf.Struct|Transaction fees that will be applied to the Order.|
-|transaction_opposite_fees|repeated google.protobuf.Struct|Other kind of fees that will be applied to the Order.|
-|transaction_taxes|repeated google.protobuf.Struct|Taxes that will be applied to the Order.|
+|transaction_fees|repeated Struct|Transaction fees that will be applied to the Order.|
+|transaction_opposite_fees|repeated Struct|Other kind of fees that will be applied to the Order.|
+|transaction_taxes|repeated Struct|Taxes that will be applied to the Order.|
 
 Here are the parameters of a ConfirmationResponse :
 
@@ -507,25 +514,31 @@ Here are the parameters of a ConfirmationResponse :
 Here is an example :
 
 ```python
-# ORDER SETUP
+# SETUP ORDER
 order = Order(
-    action = Order.Action.BUY,
-    order_type = Order.OrderType.LIMIT,
-    price = 10,
-    product_id = 71981,
-    size = 1,
-    time_type = Order.TimeType.GOOD_TILL_DAY,
+    action=Order.Action.BUY,
+    order_type=Order.OrderType.LIMIT,
+    price=10,
+    product_id=71981,
+    size=1,
+    time_type=Order.TimeType.GOOD_TILL_DAY,
 )
 
-# FETCH CONFIRMATION_ID
-checking_response = trading_apicheck_order(order=order)
+# FETCH CHECKING_RESPONSE
+checking_response = trading_api.check_order(order=order)
+
+# EXTRACT CONFIRMATION_ID
+confirmation_id = checking_response.confirmation_id
 
 # SEND CONFIRMATION
 confirmation_response = trading_api.confirm_order(
-    confirmation_id = confirmation_id,
-    order = order
+    confirmation_id=confirmation_id,
+    order=order
 )
 ```
+
+For a more comprehensive example :
+[order.py](examples/trading/order.py)
 
 ## 4.2. How to update an Order ?
 
@@ -536,13 +549,13 @@ Here is an example :
 ```python
 # ORDER SETUP
 order = Order(
-    id = YOUR_ORDER_ID
-    action = Order.Action.BUY,
-    order_type = Order.OrderType.LIMIT,
-    price = 10.60,
-    product_id = 71981,
-    size = 1,
-    time_type = Order.TimeType.GOOD_TILL_DAY,
+    id=YOUR_ORDER_ID
+    action=Order.Action.BUY,
+    order_type=Order.OrderType.LIMIT,
+    price=10.60,
+    product_id=71981,
+    size=1,
+    time_type=Order.TimeType.GOOD_TILL_DAY,
 )
 
 # UPDATE ORDER
@@ -586,7 +599,8 @@ Example : Orders
        product_id      time_type  price  size                                    id  ...  action  order_type stop_price retained_order  sent_to_exchange
     0           0  GOOD_TILL_DAY      2     3  202cb962-ac59-075b-964b-07152d234b70  ...     BUY       LIMIT         16             17                18
 
-For a more comprehensive example : [update.py](examples/trading/update.py)
+For a more comprehensive example :
+[update.py](examples/trading/update.py)
 
 ## 5.2. How to get the Portfolio ?
 
@@ -607,7 +621,8 @@ update_dict = pb_handler.message_to_dict(message=update)
 portfolio_df = pd.DataFrame(update_dict['portfolio']['values'])
 ```
 
-For a more comprehensive example : [update.py](examples/trading/update.py)
+For a more comprehensive example :
+[update.py](examples/trading/update.py)
 
 ## 5.3. How to get the TotalPortfolio ?
 
@@ -633,7 +648,8 @@ Example : DataFrame
        degiroCash  flatexCash  totalCash  totalDepositWithdrawal  todayDepositWithdrawal  ...  reportNetliq  reportOverallMargin  reportTotalLongVal  reportDeficit  marginCallStatus
     0           0           1          2                       3                       4  ...            16                   17                  18             19    NO_MARGIN_CALL
 
-For a more comprehensive example : [update.py](examples/trading/update.py)
+For a more comprehensive example :
+[update.py](examples/trading/update.py)
 
 
 ## 5.4. How to retrieve the OrdersHistory ?
@@ -733,7 +749,8 @@ Here is how to get this table :
 config_table = trading_api.get_config()
 ```
 
-For a more comprehensive example : [config_table.py](examples/trading/config_table.py)
+For a more comprehensive example :
+[config_table.py](examples/trading/config_table.py)
 
 ## 6.2. How to retrieve the ClientDetails table ?
 
@@ -828,7 +845,8 @@ request = AccountOverview.Request(from_date=from_date, to_date=to_date)
 account_overview = trading_api.get_account_overview(request=request)
 ```
 
-For a more comprehensive example : [account_overview.py](examples/trading/account_overview.py)
+For a more comprehensive example :
+[account_overview.py](examples/trading/account_overview.py)
 
 # 7. Products
 
@@ -841,7 +859,8 @@ Here is how to get this data :
 favourites_list = trading_api.get_favourites_list()
 ```
 
-For a more comprehensive example : [favourites_list.py](examples/trading/favourites_list.py)
+For a more comprehensive example :
+[favourites_list.py](examples/trading/favourites_list.py)
 
 ## 7.2. How to lookup products (search by name) ?
 
@@ -861,7 +880,8 @@ request = ProductSearch.RequestLookup(
 products_lookup = trading_api.product_search(request=request)
 ```
 
-For a more comprehensive example : [product_search.py](examples/trading/product_search.py)
+For a more comprehensive example :
+[product_search.py](examples/trading/product_search.py)
 
 ## 7.3. How to search bonds ?
 
@@ -885,7 +905,8 @@ request = ProductSearch.RequestBonds(
 bond_list = trading_api.product_search(request=request)
 ```
 
-For a more comprehensive example : [product_search.py](examples/trading/product_search.py)
+For a more comprehensive example :
+[product_search.py](examples/trading/product_search.py)
 
 
 ## 7.4. How to search etfs ?
@@ -911,7 +932,8 @@ request = ProductSearch.RequestETFs(
 etf_list = trading_api.product_search(request=request)
 ```
 
-For a more comprehensive example : [product_search.py](examples/trading/product_search.py)
+For a more comprehensive example :
+[product_search.py](examples/trading/product_search.py)
 
 ## 7.5. How to search funds ?
 
@@ -932,7 +954,8 @@ request = ProductSearch.RequestFunds(
 fund_list = trading_api.product_search(request=request)
 ```
 
-For a more comprehensive example : [product_search.py](examples/trading/product_search.py)
+For a more comprehensive example :
+[product_search.py](examples/trading/product_search.py)
 
 ## 7.6. How to search futures ?
 
@@ -956,7 +979,8 @@ request = ProductSearch.RequestFutures(
 fund_list = trading_api.product_search(request=request)
 ```
 
-For a more comprehensive example : [product_search.py](examples/trading/product_search.py)
+For a more comprehensive example :
+[product_search.py](examples/trading/product_search.py)
 
 ## 7.7. How to search leverageds ?
 
@@ -981,7 +1005,8 @@ request = ProductSearch.RequestLeverageds(
 etf_list = trading_api.product_search(request=request)
 ```
 
-For a more comprehensive example : [product_search.py](examples/trading/product_search.py)
+For a more comprehensive example :
+[product_search.py](examples/trading/product_search.py)
 
 ## 7.8. How to search options ?
 Here is how to get this data :
@@ -1006,7 +1031,8 @@ request = ProductSearch.RequestOptions(
 option_list = trading_api.product_search(request=request)
 ```
 
-For a more comprehensive example : [product_search.py](examples/trading/product_search.py)
+For a more comprehensive example :
+[product_search.py](examples/trading/product_search.py)
 
 ## 7.9. How to search stocks ?
 
@@ -1033,7 +1059,8 @@ request = ProductSearch.RequestStocks(
 stock_list = trading_api.product_search(request=request)
 ```
 
-For a more comprehensive example : [product_search.py](examples/trading/product_search.py)
+For a more comprehensive example :
+[product_search.py](examples/trading/product_search.py)
 
 ## 7.10. How to search warrants ?
 
@@ -1054,7 +1081,8 @@ request = ProductSearch.RequestWarrants(
 warrant_list = trading_api.product_search(request=request)
 ```
 
-For a more comprehensive example : [product_search.py](examples/trading/product_search.py)
+For a more comprehensive example :
+[product_search.py](examples/trading/product_search.py)
 
 # 8. Contributing
 Pull requests are welcome.
