@@ -215,7 +215,7 @@ Received data is a Quotecast object with the following properties :
 |json_data|dict|Dictionnary representation of what Degiro's API has sent.|
 |metadata|Metadata|Containing the "response_datetime" and "request_duration".|
 
-Here how to access these properties :
+Here is how to access these properties :
 ```python
 json_data = quotecast.json_data
 response_datetime = quotecast.metadata.response_datetime
@@ -247,7 +247,7 @@ ticker = quotecast_parser.ticker
 ticker_dict = pb_handler.ticker_to_dict(ticker=ticker)
 
 # BUILD PANDAS.DATAFRAME
-ticker_df = pb_handler.build_df_from_ticker(ticker=ticker)
+ticker_df = pb_handler.ticker_to_df(ticker=ticker)
 ```
 
 ## 2.8. What is a Ticker ?
