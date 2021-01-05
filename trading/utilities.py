@@ -295,11 +295,9 @@ def check_order(
         logger.fatal(e)
         return False
 
-    if \
-        isinstance(response_dict, dict) \
-        and 'data' in response_dict \
-        and 'confirmationId' in response_dict['data']:
-
+    if  isinstance(response_dict, dict) \
+    and 'data' in response_dict \
+    and 'confirmationId' in response_dict['data']:
         if raw == True:
             response = response_dict
         else:
@@ -346,7 +344,6 @@ def confirm_order(
 
     try:
         response_raw = session.send(prepped, verify=False)
-
         response_dict = response_raw.json()
     except Exception as e:
         logger.fatal(response_raw.status_code)
@@ -354,11 +351,9 @@ def confirm_order(
         logger.fatal(e)
         return False
 
-    if \
-        isinstance(response_dict, dict) \
-        and 'data' in response_dict \
-        and 'orderId' in response_dict['data']:
-
+    if  isinstance(response_dict, dict) \
+    and 'data' in response_dict \
+    and 'orderId' in response_dict['data']:
         if raw == True:
             order.id = response_dict['data']['orderId']
             response = response_dict
