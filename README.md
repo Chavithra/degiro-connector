@@ -345,7 +345,7 @@ Here is a table with the available attributes for Chart.Request.
 |resolution|Chart.Resolution|Resolution of the chart like : Chart.Resolution.PT1M.|
 |culture|str|Country code like : "en-US" or "fr-FR".|
 |period|Chart.Period|Period of the chart, like : Chart.Period.P1D.|
-|series|repeated google.protobuf.Struct|Data to get like : ['issueid:36014897', 'price:issueid:360148977'].|
+|series|repeated string|Data to get like : ['issueid:36014897', 'price:issueid:360148977'].|
 |tz|str|Timezone like : "Europe/Paris"|
 
 Example of code :
