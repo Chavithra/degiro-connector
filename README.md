@@ -533,7 +533,7 @@ confirmation_id = checking_response.confirmation_id
 # SEND CONFIRMATION
 confirmation_response = trading_api.confirm_order(
     confirmation_id=confirmation_id,
-    order=order
+    order=order,
 )
 ```
 
