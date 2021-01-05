@@ -141,8 +141,8 @@ To subscribe to a data-stream you need to setup a Request message.
 A Request has the following parameters :
 |**Parameter**|**Type**|**Description**|
 |:-|:-|:-|
-|subscriptions|google.protobuf.internal.containers.MessageMap|List of products & metrics to subscribe to.|
-|unsubscriptions|google.protobuf.internal.containers.MessageMap|List of products & metrics to unsubscribe to.|
+|subscriptions|MessageMap|List of products & metrics to subscribe to.|
+|unsubscriptions|MessageMap|List of products & metrics to unsubscribe to.|
 
 Here is an example of request :
 ```python
@@ -174,8 +174,8 @@ If you try to unsubscribe to a metric to which you didn't subscribed previously 
 A Request has the following parameters :
 |**Parameter**|**Type**|**Description**|
 |:-|:-|:-|
-|subscriptions|google.protobuf.internal.containers.MessageMap|List of products & metrics to subscribe to.|
-|unsubscriptions|google.protobuf.internal.containers.MessageMap|List of products & metrics to unsubscribe to.|
+|subscriptions|MessageMap|List of products & metrics to subscribe to.|
+|unsubscriptions|MessageMap|List of products & metrics to unsubscribe to.|
 
 Here is an example of request :
 ```python
