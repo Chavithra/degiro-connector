@@ -18,7 +18,7 @@ def build_logger()->logging.Logger:
     return logging.getLogger(__name__)
 
 def build_session(headers:dict=None)->requests.Session:
-    """ Setup a requests.Session object.
+    """ Setups a requests.Session object.
 
     Args:
         headers (dict, optional):
@@ -44,7 +44,7 @@ def get_session_id(
     session:requests.Session=None,
     logger:logging.Logger=None,
 )->str:
-    """ Retrieve the "session_id" necessary to access the data-stream.
+    """ Retrieves the "session_id" necessary to access the data-stream.
 
     Args:
         user_token (int):
@@ -99,7 +99,7 @@ def fetch_data(
     session:requests.Session=None,
     logger:logging.Logger=None,
 )->Quotecast:
-    """ Fetch data from the feed.
+    """ Fetches data from the feed.
 
     Args:
         session_id (str):
@@ -155,7 +155,7 @@ def subscribe(
     session:requests.Session=None,
     logger:logging.Logger=None,
 )->bool:
-    """ Add/remove metric from the data-stream.
+    """ Adds/removes metric from the data-stream.
 
     Args:
         request (Request):
@@ -227,7 +227,7 @@ def get_chart(
     session:requests.Session=None,
     logger:logging.Logger=None,
 )->Chart:
-    """ Fetch chart's data.
+    """ Fetches chart's data.
 
     Args:
         request (Chart.Request):
