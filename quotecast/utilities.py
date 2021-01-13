@@ -158,7 +158,7 @@ def subscribe(
     """ Adds/removes metric from the data-stream.
 
     Args:
-        request (Request):
+        request (QuotecastAPI.Request):
             List of subscriptions & unsubscriptions to do.
             Example :
             request = Quotecast.Request()

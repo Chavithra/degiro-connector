@@ -8,7 +8,6 @@ from threading import Event
 from wrapt.decorators import synchronized
 
 class ConnectionStorage:
-    
     @property
     def connected(self)->Event:
         return self.__connected

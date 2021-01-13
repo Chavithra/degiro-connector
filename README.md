@@ -121,7 +121,7 @@ Your "user_token" is inside the "config" table.
 See section related to "config" table. 
 
 For a more comprehensive example :
-[realtime_data.py](examples/quotecast/realtime_data.py)
+[connection.py](examples/quotecast/connection.py)
 
 ## 2.2. What is the timeout ?
 
@@ -149,12 +149,22 @@ Here is an example of request :
 ```python
 request = Quotecast.Request()
 request.subscriptions['360015751'].extend([
+    'LastDate',
+    'LastTime',
     'LastPrice',
     'LastVolume',
+    'LastPrice',
+    'AskPrice',
+    'BidPrice',
 ])
 request.subscriptions['AAPL.BATS,E'].extend([
+    'LastDate',
+    'LastTime',
     'LastPrice',
     'LastVolume',
+    'LastPrice',
+    'AskPrice',
+    'BidPrice',
 ])
 ```
 
@@ -163,8 +173,9 @@ Once you have built this Request object you can send it to Degiro's API like thi
 quotecast_api.subscribe(request=request)
 ```
 
-For a more comprehensive example :
-[realtime_data.py](examples/quotecast/realtime_data.py)
+For more comprehensive examples :
+[realtime_poller.py](examples/quotecast/realtime_poller.py) /
+[realtime_one_shot.py](examples/quotecast/realtime_one_shot.py)
 
 
 ## 2.4. How to unsubscribe to a data-stream ?
@@ -183,12 +194,22 @@ Here is an example of request :
 ```python
 request = Quotecast.Request()
 request.unsubscriptions['360015751'].extend([
+    'LastDate',
+    'LastTime',
     'LastPrice',
     'LastVolume',
+    'LastPrice',
+    'AskPrice',
+    'BidPrice',
 ])
 request.unsubscriptions['AAPL.BATS,E'].extend([
+    'LastDate',
+    'LastTime',
     'LastPrice',
     'LastVolume',
+    'LastPrice',
+    'AskPrice',
+    'BidPrice',
 ])
 ```
 
@@ -197,8 +218,9 @@ Once you have built this Request object you can send it to Degiro's API like thi
 quotecast_api.subscribe(request=request)
 ```
 
-For a more comprehensive example :
-[realtime_data.py](examples/quotecast/realtime_data.py)
+For more comprehensive examples :
+[realtime_poller.py](examples/quotecast/realtime_poller.py) /
+[realtime_one_shot.py](examples/quotecast/realtime_one_shot.py)
 
 ## 2.5. How to fetch the data ?
 
@@ -208,7 +230,7 @@ quotecast = quotecast_api.fetch_data()
 ```
 
 For a more comprehensive example :
-[realtime_data.py](examples/quotecast/realtime_data.py)
+[realtime_poller.py](examples/quotecast/realtime_poller.py)
 
 ## 2.6. How to use this data ?
 
@@ -226,9 +248,6 @@ response_datetime = quotecast.metadata.response_datetime
 request_duration= quotecast.metadata.request_duration
 ```
 
-For a more comprehensive example :
-[realtime_data.py](examples/quotecast/realtime_data.py)
-
 ## 2.7. Which are the available data types ?
 
 This library provides the tools to convert Degiro's JSON data into something more programmer-friendly.
@@ -244,15 +263,17 @@ Here is the list of available data type :
 Here is how to build each type :
 
 ```python
-# BUILD TICKER
+# UPDATE PARSER
 quotecast_parser.put_quotecast(quotecast=quotecast)
+
+# BUILD TICKER
 ticker = quotecast_parser.ticker
 
 # BUILD DICT
-ticker_dict = pb_handler.ticker_to_dict(ticker=ticker)
+ticker_dict = quotecast_parser.ticker_dict
 
 # BUILD PANDAS.DATAFRAME
-ticker_df = pb_handler.ticker_to_df(ticker=ticker)
+ticker_df = quotecast_parser.ticker_df
 ```
 
 ## 2.8. What is a Ticker ?
@@ -292,17 +313,15 @@ It can be transmitted over GRPC framework.
 
 ## 2.9. What is inside the Dictionnary ?
 
-The generated Dictionnary is actually a list of Python Dictionnaries.
+The dictionnary representation of a ticker contains the metrics grouped by "vwd_id" (product id), with :
+* keys : vwd_id
+* values : another dictionnary with the metrics concerning this specific product.
 
-Each Dictionnary depicts a product with :
-* keys as metrics names.
-* values as metrics values
-
-Example - dict :
+Example - Dictionnary :
 
 ```python
-[
-    {
+{
+    '360114899' : {
         'vwd_id': 360114899,
         'response_datetime': '2020-11-08 12:00:27',
         'request_duration': 1.0224891666870117,
@@ -311,7 +330,7 @@ Example - dict :
         'LastPrice': '70.0',
         'LastVolume': '100'
     },
-    {
+    '360015751' : {
         'vwd_id': 360015751,
         'response_datetime': '2020-11-08 12:00:27',
         'request_duration': 1.0224891666870117,
@@ -320,24 +339,21 @@ Example - dict :
         'LastPrice': '22.99',
         'LastVolume': '470'
     }
-]
+}
 ```
+
 ## 2.10. What is inside the DataFrame ?
 
 The generated DataFrame will content :
 
 * In rows : the product, for instance the "AAPL" stock which has "vwd_id" = "AAPL.BATS,E".
-* In columns : the product's parameters for instance "LastPrice", "LastVolume",...
+* In columns : the product's parameters for instance "LastPrice", "LastVolume"...
 
-Example of DataFrame content :
+Example - DataFrame :
 
            vwd_id    response_datetime  request_duration    LastDate  LastTime LastPrice LastVolume
     0   360114899  2020-11-08 12:00:27          1.022489  2020-11-06  17:39:57      70.0        100
     1   360015751  2020-11-08 12:00:27          1.022489  2020-11-06  17:36:17     22.99        470
-
-For a more comprehensive example :
-[realtime_data.py](examples/quotecast/realtime_data.py)
-
 
 ## 2.11. How to get chart data ?
 You can fetch an object containing the same data than in Degiro's website graph.

@@ -4,7 +4,7 @@ import random
 from google.protobuf import json_format
 from google.protobuf.message import Message
 from quotecast.pb.quotecast_pb2 import Chart, Quotecast, Ticker
-from typing import Dict, List
+from typing import Dict, List, Union
 
 # pylint: disable=no-member
 
@@ -15,7 +15,24 @@ pd.set_option('display.expand_frame_repr', False)
 def ticker_to_dict(
     ticker:Ticker,
     column_list:List[str]=[],
-)->List[Dict[str, str]]:
+)->Dict[
+    Union[str, int], # VWD_ID
+    Dict[str, Union[str, int]] # METRICS : NAME / VALUE
+]:
+    """ Converts a ticker to a "dict".
+    
+    Args:
+        ticker (Ticker):
+            Ticker to convert.
+        column_list (List[str]):
+            Mandatory fields : will be set to "None" if empty.
+            Default to [].
+
+    Returns:
+        Dict[Union[str, int], Dict[str, Union[str, int]]]:
+            Dict containing all the metrics grouped by "vwd_id".
+    """
+
     empty_list = [None] * len(column_list)
     empty_metrics = dict(zip(column_list, empty_list))
     empty_metrics['response_datetime'] = \
@@ -35,6 +52,22 @@ def ticker_to_df(
     ticker:Ticker,
     column_list:List[str]=[],
 )->pd.DataFrame:
+    """ Converts a ticker to a "pandas.DataFrame".
+    
+    Args:
+        ticker (Ticker):
+            Ticker to convert.
+        column_list (List[str]):
+            Mandatory fields : will be set to "None" if empty.
+            Default to [].
+
+    Returns:
+        pandas.DataFrame:
+            "pandas.DataFrame" containing the metrics.
+            Each row depicts a specific product.
+            Each column depicts a specific metric.
+    """
+
     ticker_dict = ticker_to_dict(
         ticker=ticker,
         column_list=column_list,

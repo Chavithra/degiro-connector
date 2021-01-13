@@ -1,10 +1,12 @@
 import datetime
 import logging
 import orjson as json
+import quotecast.helpers.pb_handler as pb_handler
+import pandas as pd
 
 from quotecast.models.metrics_storage import MetricsStorage
 from quotecast.pb.quotecast_pb2 import Quotecast, Ticker
-from typing import Dict, List
+from typing import Dict, List, Union
 
 class QuotecastParser:
     """ Handle the payload returned from this endpoint :
@@ -248,12 +250,28 @@ class QuotecastParser:
     def ticker(self)->Ticker:
         return self.__ticker
 
+    @property
+    def ticker_df(self)->pd.DataFrame:
+        ticker = self.__ticker
+        ticker_df = pb_handler.ticker_to_df(ticker=ticker)
+        return ticker_df
+
+    @property
+    def ticker_dict(self)->Dict[
+        Union[str, int], # VWD_ID
+        Dict[str, Union[str, int]] # METRICS : NAME / VALUE
+    ]:
+        ticker = self.__ticker
+        ticker_dict = pb_handler.ticker_to_dict(ticker=ticker)
+        return ticker_dict
+
     def __init__(self, forward_fill:bool=False):
         """
         Args:
             forward_fill (bool, optional):
                 Whether or not we want to fill the new Ticker with
                 previous received metrics.
+                Default to False.
         """
 
         self.__forward_fill = forward_fill

@@ -3,8 +3,9 @@ import urllib3
 
 from quotecast.basic import Basic
 from quotecast.models.connection_storage import  ConnectionStorage
+from quotecast.models.quotecast_parser import QuotecastParser
 from quotecast.pb.quotecast_pb2 import Chart, Quotecast
-from typing import Dict
+from typing import Dict, Union
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -12,6 +13,9 @@ class API:
     """ Tools to consume Degiro's QuoteCast API.
     
     Same operations than "Basic" but with "session_id" management.
+
+    Additional methods :
+        * fetch_metrics
 
     This class should be threadsafe.
     """
@@ -48,6 +52,49 @@ class API:
         return basic.fetch_data(
             session_id=session_id
         )
+
+    def fetch_metrics(
+        self,
+        request:Quotecast.Request,
+    )->Dict[
+        Union[str, int], # VWD_ID
+        Dict[str, Union[str, int]] # METRICS : NAME / VALUE
+    ]:
+        """ Fetch metrics from a request.
+
+        If you seek realtime it's better to use "fetch_data".
+        Since "fetch_data" consumes less ressources.
+
+        Args:
+            request (QuotecastAPI.Request):
+                List of subscriptions & unsubscriptions to do.
+
+        Returns:
+            Dict[Union[str, int], Dict[str, Union[str, int]]]:
+                Dict containing all the metrics grouped by "vwd_id".
+        """
+
+        logger = self._logger
+
+        connection_attempts = 0
+        ticker_dict = dict()
+        while connection_attempts < 2:
+            try:
+                self.subscribe(request=request)
+                quotecast = self.fetch_data()
+                quotecast_parser = QuotecastParser(forward_fill=True)
+                quotecast_parser.put_quotecast(quotecast=quotecast)
+                ticker_dict = quotecast_parser.ticker_dict
+                break
+            except (ConnectionError, BrokenPipeError, TimeoutError) as e:
+                logger.info(e)
+                self.connect()
+                connection_attempts += 1
+            except Exception as e:
+                logger.fatal(e)
+                break
+            
+        return ticker_dict
 
     def subscribe(self, request:Quotecast.Request)->bool:
         basic = self.basic

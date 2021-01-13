@@ -23,9 +23,6 @@ quotecast_api = QuotecastAPI(user_token=user_token)
 # CONNECTION
 quotecast_api.connect()
 
-# ACCESS SESSION_ID
-session_id = quotecast_api.connection_storage.session_id
-
 # SUBSCRIBE TO METRICS
 request = Quotecast.Request()
 request.subscriptions['AAPL.BATS,E'].extend([
@@ -33,11 +30,14 @@ request.subscriptions['AAPL.BATS,E'].extend([
     'LastTime',
     'LastPrice',
     'LastVolume',
+    'LastPrice',
+    'AskPrice',
+    'BidPrice',
 ])
 quotecast_api.subscribe(request=request)
 
 # SETUP JSON PARSER
-quotecast_parser = QuotecastParser(forward_fill=True)
+quotecast_parser = QuotecastParser()
 
 while True:
     try:
@@ -53,12 +53,12 @@ while True:
         print(ticker)
 
         # DISPLAY DICT
-        record_list = pb_handler.ticker_to_dict(ticker=ticker)
-        print(record_list)
+        ticker_dict = quotecast_parser.ticker_dict
+        print(ticker_dict)
 
         # DISPLAY PANDAS.DATAFRAME
-        df = pb_handler.ticker_to_df(ticker=ticker)
-        print(df)
+        ticker_df = quotecast_parser.ticker_df
+        print(ticker_df)
 
         # REMOVE THIS LINE TO RUN IT IN LOOP
         # USE : CTRL+C TO QUIT
@@ -66,5 +66,7 @@ while True:
 
     except Exception as e:
         print(e)
+        break
     except KeyboardInterrupt:
         print('KeyboardInterrupt')
+        break
