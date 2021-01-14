@@ -897,7 +897,7 @@ products_lookup = trading_api.product_search(request=request)
 ```
 
 For a more comprehensive example :
-[product_search.py](examples/trading/product_search.py)
+[product_lookup.py](examples/trading/product_lookup.py)
 
 ## 7.3. How to search bonds ?
 
