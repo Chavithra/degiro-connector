@@ -28,18 +28,25 @@ Here are the features you can access through this library :
 pip install git+https://github.com/chavithra/degiro-connector.git
 ```
 
-## 1.3. How to uninstall ?
+## 1.3. How to upgrade ?
+
+```bash
+pip install --no-cache-dir --upgrade git+https://github.com/chavithra/degiro-connector.git
+```
+
+## 1.4. How to uninstall ?
 
 ```bash
 pip uninstall degiro-connector
 ```
 
-## 1.4. Table of contents
+## 1.5. Table of contents
 - [1. **Degiro Connector**](#1-degiro-connector-)
   * [1.1. Which features ?](#11-which-features-)
   * [1.2. How to install ?](#12-how-to-install-)
-  * [1.3. How to uninstall ?](#13-how-to-uninstall-)
-  * [1.4. Table of contents](#14-table-of-contents)
+  * [1.3. How to upgrade ?](#13-how-to-upgrade-)
+  * [1.4. How to uninstall ?](#14-how-to-uninstall-)
+  * [1.5. Table of contents](#15-table-of-contents)
 - [2. Real-time data](#2-real-time-data)
   * [2.1. How to login ?](#21-how-to-login-)
   * [2.2. What is the timeout ?](#22-what-is-the-timeout-)
@@ -56,7 +63,7 @@ pip uninstall degiro-connector
   * [3.1. What are the credentials ?](#31-what-are-the-credentials-)
   * [3.2. What is the purpose of "in_account" ?](#32-what-is-the-purpose-of-in_account-)
   * [3.3. What is the purpose of "totp_secret_key" ?](#33-what-is-the-purpose-of-totp_secret_key-)
-  * [3.4. How to Login ?](#34-how-to-login-)
+  * [3.4. How to login ?](#34-how-to-login-)
   * [3.5. How to use 2FA ?](#35-how-to-use-2fa-)
 - [4. Order](#4-order)
   * [4.1. How to create an Order ?](#41-how-to-create-an-order-)
@@ -443,7 +450,7 @@ Has you can guess the "totp_secret_key" is in this part :
 
     secret=YOUR_TOPT_SECRET_KEY
 
-## 3.4. How to Login ?
+## 3.4. How to login ?
 In order to use the "trading.api" you need to establish a connection.
 
 Here is how to login :
