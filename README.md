@@ -42,7 +42,7 @@ pip uninstall degiro-connector
 ```
 
 ## 1.5. Table of contents
-- [1. **Degiro Connector**](#1-degiro-connector-)
+- [1. **Degiro Connector**](#1-degiro-connector)
   * [1.1. Which features ?](#11-which-features-)
   * [1.2. How to install ?](#12-how-to-install-)
   * [1.3. How to upgrade ?](#13-how-to-upgrade-)
@@ -50,7 +50,7 @@ pip uninstall degiro-connector
   * [1.5. Table of contents](#15-table-of-contents)
 - [2. Real-time data](#2-real-time-data)
   * [2.1. What are the credentials ?](#21-what-are-the-credentials-)
-  * [2.2. How to get the : user_token ?](#22-how-to-get-the---user-token-)
+  * [2.2. How to get the : user_token ?](#22-how-to-get-the--user_token-)
   * [2.3. How to login ?](#23-how-to-login-)
   * [2.4. Is there a timeout ?](#24-is-there-a-timeout-)
   * [2.5. How to subscribe to a data-stream ?](#25-how-to-subscribe-to-a-data-stream-)
@@ -64,8 +64,8 @@ pip uninstall degiro-connector
   * [2.13. How to get chart data ?](#213-how-to-get-chart-data-)
 - [3. Trading connection](#3-trading-connection)
   * [3.1. What are the credentials ?](#31-what-are-the-credentials-)
-  * [3.2. What is the : in_account ?](#32-what-is-the---in-account-)
-  * [3.3. What is the : totp_secret_key ?](#33-what-is-the---totp-secret-key-)
+  * [3.2. What is the : in_account ?](#32-what-is-the--in_account-)
+  * [3.3. What is the : totp_secret_key ?](#33-what-is-the--totp_secret_key-)
   * [3.4. How to login ?](#34-how-to-login-)
   * [3.5. How to use 2FA ?](#35-how-to-use-2fa-)
 - [4. Order](#4-order)
@@ -84,7 +84,7 @@ pip uninstall degiro-connector
   * [6.3. How to retrieve the AccountInfo table ?](#63-how-to-retrieve-the-accountinfo-table-)
   * [6.4. How to get the AccountOverview table ?](#64-how-to-get-the-accountoverview-table-)
 - [7. Products](#7-products)
-  * [7.1. How to get the table : ProductsConfig ?](#71-how-to-get-the-table---productsconfig-)
+  * [7.1. How to get the table : ProductsConfig ?](#71-how-to-get-the-table--productsconfig-)
   * [7.2. How to get my favourite products ?](#72-how-to-get-my-favourite-products-)
   * [7.3. How to lookup products (search by name) ?](#73-how-to-lookup-products--search-by-name--)
   * [7.4. How to search bonds ?](#74-how-to-search-bonds-)
