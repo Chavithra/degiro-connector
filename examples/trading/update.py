@@ -1,16 +1,18 @@
+# IMPORTATIONS
 import json
 import quotecast.helpers.pb_handler as pb_handler
 import pandas as pd
 
 from IPython.display import display
 from trading.api import API as TradingAPI
-from trading.pb.trading_pb2 import (
-    Credentials,
-    Update,
-)
+from trading.pb.trading_pb2 import Credentials, Update
+
+# SETUP CONFIG DICT
 with open('config/config.json') as config_file:
     config = json.load(config_file)
 
+
+# SETUP CREDENTIALS 
 int_account = config['int_account']
 username = config['username']
 password = config['password']
@@ -19,29 +21,20 @@ credentials = Credentials(
     username=username,
     password=password
 )
+
+# SETUP TRADING API
 trading_api = TradingAPI(credentials=credentials)
 
-# INITIALIZATION
-
+# CONNECT
 trading_api.connect()
 
+# SETUP REQUEST
 request_list = Update.RequestList()
-request_list.values.extend(
-    [
-        Update.Request(
-            option=Update.Option.ORDERS,
-            last_updated=0,
-        ),
-        Update.Request(
-            option=Update.Option.PORTFOLIO,
-            last_updated=0,
-        ),
-        Update.Request(
-            option=Update.Option.TOTALPORTFOLIO,
-            last_updated=0,
-        ),
-    ]
-)
+request_list.values.extend([
+    Update.Request(option=Update.Option.ORDERS, last_updated=0),
+    Update.Request(option=Update.Option.PORTFOLIO, last_updated=0),
+    Update.Request(option=Update.Option.TOTALPORTFOLIO, last_updated=0),
+])
 
 update = trading_api.get_update(request_list=request_list, raw=False)
 update_dict = pb_handler.message_to_dict(message=update)

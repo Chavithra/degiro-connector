@@ -1,13 +1,9 @@
 # IMPORTATIONS
-import datetime
 import json
 import logging
 
 from trading.api import API as TradingAPI
-from trading.pb.trading_pb2 import (
-    Credentials,
-    OrdersHistory,
-)
+from trading.pb.trading_pb2 import Credentials
 
 # SETUP LOGGING LEVEL
 logging.basicConfig(level=logging.DEBUG)
@@ -32,29 +28,15 @@ trading_api = TradingAPI(credentials=credentials)
 # CONNECT
 trading_api.connect()
 
-# PREPARE REQUEST
-today = datetime.date.today()
-from_date = OrdersHistory.Request.Date(
-    year=2020,
-    month=10,
-    day=1,
-)
-to_date = OrdersHistory.Request.Date(
-    year=today.year,
-    month=today.month,
-    day=today.day,
-)
-request = OrdersHistory.Request(
-    from_date=from_date,
-    to_date=to_date,
-)
+# FETCH DATA - MESSAGE
+products_config = trading_api.get_products_config(raw=False)
 
-# FETCH REQUEST
-orders_history = trading_api.get_orders_history(
-    request=request,
-    raw=False,
-)
+# DISPLAY - MESSAGE
+for item in products_config.values:
+    print(item)
 
-# DISPLAY TRANSACTIONS
-for order in orders_history.values:
-    print(dict(order))
+# FETCH DATA - DICT
+products_config_dict = trading_api.get_products_config(raw=True)
+
+# DISPLAY - DICT
+print(products_config_dict)

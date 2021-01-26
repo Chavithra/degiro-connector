@@ -18,6 +18,7 @@ Here are the features you can access through this library :
 |OrderHistory|Retrieve all Orders created between two dates.|
 |Orders|List pending Orders.|
 |Portoflio|List products in your Portoflio.|
+|ProductsConfig|Retrieve a table containing : useful parameters to filter products.|
 |Quotecasts|Fetch real-time data on financial products. <br> For instance the real-time stock Price.|
 |TotalPorfolio|Retrieve aggregated information about your assets.|
 |TransactionsHistory|Retrieve all Transactions created between two dates.|
@@ -48,21 +49,23 @@ pip uninstall degiro-connector
   * [1.4. How to uninstall ?](#14-how-to-uninstall-)
   * [1.5. Table of contents](#15-table-of-contents)
 - [2. Real-time data](#2-real-time-data)
-  * [2.1. How to login ?](#21-how-to-login-)
-  * [2.2. What is the timeout ?](#22-what-is-the-timeout-)
-  * [2.3. How to subscribe to a data-stream ?](#23-how-to-subscribe-to-a-data-stream-)
-  * [2.4. How to unsubscribe to a data-stream ?](#24-how-to-unsubscribe-to-a-data-stream-)
-  * [2.5. How to fetch the data ?](#25-how-to-fetch-the-data-)
-  * [2.6. How to use this data ?](#26-how-to-use-this-data-)
-  * [2.7. Which are the available data types ?](#27-which-are-the-available-data-types-)
-  * [2.8. What is a Ticker ?](#28-what-is-a-ticker-)
-  * [2.9. What is inside the Dictionnary ?](#29-what-is-inside-the-dictionnary-)
-  * [2.10. What is inside the DataFrame ?](#210-what-is-inside-the-dataframe-)
-  * [2.11. How to get chart data ?](#211-how-to-get-chart-data-)
+  * [2.1. What are the credentials ?](#21-what-are-the-credentials-)
+  * [2.2. How to get the : user_token ?](#22-how-to-get-the-user-token-)
+  * [2.3. How to login ?](#23-how-to-login-)
+  * [2.4. Is there a timeout ?](#24-Is-there-a-timeout-)
+  * [2.5. How to subscribe to a data-stream ?](#25-how-to-subscribe-to-a-data-stream-)
+  * [2.6. How to unsubscribe to a data-stream ?](#26-how-to-unsubscribe-to-a-data-stream-)
+  * [2.7. How to fetch the data ?](#27-how-to-fetch-the-data-)
+  * [2.8. How to use this data ?](#28-how-to-use-this-data-)
+  * [2.9. Which are the available data types ?](#29-which-are-the-available-data-types-)
+  * [2.10. What is a Ticker ?](#210-what-is-a-ticker-)
+  * [2.11. What is inside the Dictionnary ?](#211-what-is-inside-the-dictionnary-)
+  * [2.12. What is inside the DataFrame ?](#212-what-is-inside-the-dataframe-)
+  * [2.13. How to get chart data ?](#213-how-to-get-chart-data-)
 - [3. Trading connection](#3-trading-connection)
   * [3.1. What are the credentials ?](#31-what-are-the-credentials-)
-  * [3.2. What is the purpose of "in_account" ?](#32-what-is-the-purpose-of-in_account-)
-  * [3.3. What is the purpose of "totp_secret_key" ?](#33-what-is-the-purpose-of-totp_secret_key-)
+  * [3.2. What is the : in_account ?](#32-what-is-the-in_account-)
+  * [3.3. What is the : totp_secret_key ?](#33-what-is-the-totp_secret_key-)
   * [3.4. How to login ?](#34-how-to-login-)
   * [3.5. How to use 2FA ?](#35-how-to-use-2fa-)
 - [4. Order](#4-order)
@@ -109,28 +112,37 @@ He can use this library to retrieve update like this :
     LastDate    LastTime    LastPrice LastVolume
     2020-11-13  22:00:00    119.26    4697040
 
-## 2.1. How to login ?
+## 2.1. What are the credentials ?
+
+The only credential you need in order to fetch real-time data and charts is the :
+* user_token
+
+Beware, these two identifiers are not the same thing :
+* user_token : used to fetch real-time data and charts.
+* int_account : used for some trading operations.
+
+## 2.2. How to get the : user_token ?
+You can find your "user_token" is inside one of these table:
+* "Config" : attribute "clientId"
+* "ClientDetails" : attribute "id"
+
+See section related to "Config" & "ClientDetails" tables.
+
+## 2.3. How to login ?
 
 In order to fetch data you need to establish a connection.
 
-You can use the following code :
+You can use the following code to connect :
 
 ```python
-# SETUP API
+# SETUP QUOTECAST API
 quotecast_api = API(user_token=YOUR_USER_TOKEN) 
 
 # CONNECTION
 quotecast_api.connect()
 ```
 
-Your "user_token" is inside the "config" table.
-
-See section related to "config" table. 
-
-For a more comprehensive example :
-[connection.py](examples/quotecast/connection.py)
-
-## 2.2. What is the timeout ?
+## 2.4. Is there a timeout ?
 
 Connection timeout is around 15 seconds.
 
@@ -142,7 +154,7 @@ This timeout is reset each time you use this connection to :
 
 So if you use it nonstop (in a loop) you won't need to reconnect.
 
-## 2.3. How to subscribe to a data-stream ?
+## 2.5. How to subscribe to a data-stream ?
 
 To subscribe to a data-stream you need to setup a Request message.
 
@@ -185,7 +197,7 @@ For more comprehensive examples :
 [realtime_one_shot.py](examples/quotecast/realtime_one_shot.py)
 
 
-## 2.4. How to unsubscribe to a data-stream ?
+## 2.6. How to unsubscribe to a data-stream ?
 
 To remove metrics from the data-stream you need to setup a Request message.
 
@@ -229,7 +241,7 @@ For more comprehensive examples :
 [realtime_poller.py](examples/quotecast/realtime_poller.py) /
 [realtime_one_shot.py](examples/quotecast/realtime_one_shot.py)
 
-## 2.5. How to fetch the data ?
+## 2.7. How to fetch the data ?
 
 You can use the following code :
 ```python
@@ -239,7 +251,7 @@ quotecast = quotecast_api.fetch_data()
 For a more comprehensive example :
 [realtime_poller.py](examples/quotecast/realtime_poller.py)
 
-## 2.6. How to use this data ?
+## 2.8. How to use this data ?
 
 Received data is a Quotecast object with the following properties :
 
@@ -255,7 +267,7 @@ response_datetime = quotecast.metadata.response_datetime
 request_duration= quotecast.metadata.request_duration
 ```
 
-## 2.7. Which are the available data types ?
+## 2.9. Which are the available data types ?
 
 This library provides the tools to convert Degiro's JSON data into something more programmer-friendly.
 
@@ -283,7 +295,7 @@ ticker_dict = quotecast_parser.ticker_dict
 ticker_df = quotecast_parser.ticker_df
 ```
 
-## 2.8. What is a Ticker ?
+## 2.10. What is a Ticker ?
 
 The generated Ticker contains :
 
@@ -318,7 +330,7 @@ A Ticker is a custom Protocol Buffer Message built for this library.
 
 It can be transmitted over GRPC framework.
 
-## 2.9. What is inside the Dictionnary ?
+## 2.11. What is inside the Dictionnary ?
 
 The dictionnary representation of a ticker contains the metrics grouped by "vwd_id" (product id), with :
 * keys : vwd_id
@@ -349,7 +361,7 @@ Example - Dictionnary :
 }
 ```
 
-## 2.10. What is inside the DataFrame ?
+## 2.12. What is inside the DataFrame ?
 
 The generated DataFrame will content :
 
@@ -362,7 +374,7 @@ Example - DataFrame :
     0   360114899  2020-11-08 12:00:27          1.022489  2020-11-06  17:39:57      70.0        100
     1   360015751  2020-11-08 12:00:27          1.022489  2020-11-06  17:36:17     22.99        470
 
-## 2.11. How to get chart data ?
+## 2.13. How to get chart data ?
 You can fetch an object containing the same data than in Degiro's website graph.
 
 For that you need to prepare a Chart.Request object.
@@ -422,15 +434,21 @@ Here are these credentials :
 |int_account|int|Unique identifier of the account : used by Degiro's server.|
 |totp_secret_key|str|Secret key used for Two-factor Authentication (2FA).|
 
-## 3.2. What is the purpose of "in_account" ?
+## 3.2. What is the : in_account ?
 
 The parameter "int_account" is not necessary for login.
 
 But it is required to do some of the operations available in this connector.
 
-You can get the "int_account" using the "ClientDetails" table, it is the parameter "intAccount".
+You can get the "int_account" using the "ClientDetails" table, it is the attribute "intAccount".
 
-## 3.3. What is the purpose of "totp_secret_key" ?
+See section related to "ClientDetails" table for more details.
+
+Beware, these two identifiers are not the same thing :
+* user_token : used to fetch real-time data and charts.
+* int_account : used for some trading operations.
+
+## 3.3. What is the : totp_secret_key ?
 
 The parameter "totp_secret_key" is only required if you have enabled 2FA on Degiro's website.
 
@@ -603,14 +621,9 @@ succcess = trading_api.delete_order(order_id=YOUR_ORDER_ID)
 This is how to get the list of Orders currently created but not yet executed or deleted :
 ```python
 request_list = Update.RequestList()
-request_list.values.extend(
-    [
-        Update.Request(
-            option = Update.Option.ORDERS,
-            last_updated = 0,
-        ),
-    ]
-)
+request_list.values.extend([
+    Update.Request(option=Update.Option.ORDERS, last_updated=0),
+])
 
 update = trading_api.get_update(request_list=request_list)
 update_dict = pb_handler.message_to_dict(message=update)
@@ -630,14 +643,9 @@ For a more comprehensive example :
 This is how to list the stocks/products currently in the portfolio :
 ```python
 request_list = Update.RequestList()
-request_list.values.extend(
-    [
-        Update.Request(
-            option = Update.Option.PORTFOLIO,
-            last_updated = 0,
-        ),
-    ]
-)
+request_list.values.extend([
+    Update.Request(option=Update.Option.PORTFOLIO, last_updated=0),
+])
 
 update = trading_api.get_update(request_list=request_list)
 update_dict = pb_handler.message_to_dict(message=update)
@@ -652,14 +660,9 @@ For a more comprehensive example :
 This is how to get aggregated data about the portfolio :
 ```python
 request_list = Update.RequestList()
-request_list.values.extend(
-    [
-        Update.Request(
-            option = Update.Option.TOTALPORTFOLIO,
-            last_updated = 0,
-        ),
-    ]
-)
+request_list.values.extend([
+    Update.Request(option=Update.Option.TOTALPORTFOLIO, last_updated=0),
+])
 
 update = trading_api.get_update(request_list=request_list)
 update_dict = pb_handler.message_to_dict(message=update)
@@ -769,7 +772,12 @@ The config table contains the following informations :
 Here is how to get this table :
 
 ```python
+# FETCH DATA
 config_table = trading_api.get_config()
+
+# EXTRACT SOME DATA
+user_token = config_table['clientId']
+session_id = config_table['sessionId']
 ```
 
 For a more comprehensive example :
@@ -824,7 +832,12 @@ The ClientDetails table contains information about the current Degiro Account.
 Here is how to get this table :
 
 ```python
+# FETCH DATA
 client_details_table = trading_api.get_client_details()
+
+# EXTRACT SOME DATA
+int_account = client_details_table['data']['intAccount']
+user_token = client_details_table['data']['id']
 ```
 
 For a more comprehensive example :
@@ -873,7 +886,51 @@ For a more comprehensive example :
 
 # 7. Products
 
-## 7.1. How to get my favourite products ?
+## 7.1. How to get the table : ProductsConfig ?
+
+This table contains useful parameters to filter products.
+
+Here are the parameters which are inside this table :
+
+|**Parameter**|**Type**|
+|:-|:-|
+|stockCountries|list|
+|bondExchanges|list|
+|bondIssuerTypes|list|
+|eurexCountries|list|
+|futureExchanges|list|
+|optionExchanges|list|
+|combinationExchanges|list|
+|cfdExchanges|list|
+|exchanges|list|
+|indices|list|
+|regions|list|
+|countries|list|
+|productTypes|list|
+|etfFeeTypes|list|
+|investmentFundFeeTypes|list|
+|optionAggregateTypes|list|
+|leveragedAggregateTypes|list|
+|etfAggregateTypes|list|
+|investmentFundAggregateTypes|list|
+|lookupSortColumns|list|
+|stockSortColumns|list|
+|bondSortColumns|list|
+|cfdSortColumns|list|
+|etfSortColumns|list|
+|futureSortColumns|list|
+
+Here is how to get this data :
+
+```python
+# FETCH DATA
+products_config = trading_api.get_products_config()
+```
+
+For a more comprehensive example :
+[products_config.py](examples/trading/products_config.py)
+
+## 7.2. How to get my favourite products ?
 
 Here is how to get this data :
 
@@ -885,7 +942,7 @@ favourites_list = trading_api.get_favourites_list()
 For a more comprehensive example :
 [favourites_list.py](examples/trading/favourites_list.py)
 
-## 7.2. How to lookup products (search by name) ?
+## 7.3. How to lookup products (search by name) ?
 
 Text research on a financial product.
 
@@ -906,7 +963,7 @@ products_lookup = trading_api.product_search(request=request)
 For a more comprehensive example :
 [product_lookup.py](examples/trading/product_lookup.py)
 
-## 7.3. How to search bonds ?
+## 7.4. How to search bonds ?
 
 Here is how to get this data :
 
@@ -932,7 +989,7 @@ For a more comprehensive example :
 [product_search.py](examples/trading/product_search.py)
 
 
-## 7.4. How to search etfs ?
+## 7.5. How to search etfs ?
 
 Here is how to get this data :
 
@@ -958,7 +1015,7 @@ etf_list = trading_api.product_search(request=request)
 For a more comprehensive example :
 [product_search.py](examples/trading/product_search.py)
 
-## 7.5. How to search funds ?
+## 7.6. How to search funds ?
 
 Here is how to get this data :
 
@@ -980,7 +1037,7 @@ fund_list = trading_api.product_search(request=request)
 For a more comprehensive example :
 [product_search.py](examples/trading/product_search.py)
 
-## 7.6. How to search futures ?
+## 7.7. How to search futures ?
 
 Here is how to get this data :
 
@@ -1005,7 +1062,7 @@ fund_list = trading_api.product_search(request=request)
 For a more comprehensive example :
 [product_search.py](examples/trading/product_search.py)
 
-## 7.7. How to search leverageds ?
+## 7.8. How to search leverageds ?
 
 Here is how to get this data :
 
@@ -1031,7 +1088,7 @@ etf_list = trading_api.product_search(request=request)
 For a more comprehensive example :
 [product_search.py](examples/trading/product_search.py)
 
-## 7.8. How to search options ?
+## 7.9. How to search options ?
 Here is how to get this data :
 
 ```python
@@ -1057,7 +1114,7 @@ option_list = trading_api.product_search(request=request)
 For a more comprehensive example :
 [product_search.py](examples/trading/product_search.py)
 
-## 7.9. How to search stocks ?
+## 7.10. How to search stocks ?
 
 It contains information about available stocks.
 
@@ -1085,7 +1142,7 @@ stock_list = trading_api.product_search(request=request)
 For a more comprehensive example :
 [product_search.py](examples/trading/product_search.py)
 
-## 7.10. How to search warrants ?
+## 7.11. How to search warrants ?
 
 Here is how to get this data :
 

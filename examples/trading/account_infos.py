@@ -1,8 +1,6 @@
+# IMPORTATIONS
 import json
-import quotecast.helpers.pb_handler as pb_handler
-import pandas as pd
 
-from IPython.display import display
 from trading.api import API as TradingAPI
 from trading.pb.trading_pb2 import Credentials
 
@@ -26,7 +24,9 @@ trading_api = TradingAPI(credentials=credentials)
 # CONNECT
 trading_api.connect()
 
-# FETCH CONFIG TABLE
+# FETCH DATA
 account_info_table = trading_api.get_account_info()
 
-print(account_info_table)
+# DISPLAY DATA
+account_info_pretty = json.dumps(account_info_table, sort_keys=True, indent=4)
+print(account_info_pretty)

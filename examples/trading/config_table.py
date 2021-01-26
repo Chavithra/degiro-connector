@@ -1,8 +1,6 @@
+# IMPORTATIONS
 import json
-import quotecast.helpers.pb_handler as pb_handler
-import pandas as pd
 
-from IPython.display import display
 from trading.api import API as TradingAPI
 from trading.pb.trading_pb2 import Credentials
 
@@ -15,7 +13,7 @@ int_account = config_dict['int_account']
 username = config_dict['username']
 password = config_dict['password']
 credentials = Credentials(
-    int_account=int_account,
+    int_account=None,
     username=username,
     password=password,
 )
@@ -29,4 +27,10 @@ trading_api.connect()
 # FETCH CONFIG TABLE
 config_table = trading_api.get_config()
 
-print(config_table)
+# EXTRACT DATA
+user_token = config_table['clientId']
+config_pretty = json.dumps(config_table, sort_keys=True, indent=4)
+
+# DISPLAY DATA
+print('Your "user_token" is :', user_token)
+print('Here is the rest of config :', config_pretty)
