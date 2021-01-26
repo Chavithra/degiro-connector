@@ -13,6 +13,7 @@ from trading.pb.trading_pb2 import (
     Favourites,
     Order,
     OrdersHistory,
+    ProductsInfo,
     ProductSearch,
     TransactionsHistory,
     Update,
@@ -300,6 +301,42 @@ class Basic:
         session = self._session_storage.session
 
         return utilities.get_favourites_list(
+            session_id=session_id,
+            credentials=credentials,
+            raw=raw,
+            session=session,
+            logger=logger,
+        )
+
+    def get_products_config(
+        self,
+        session_id:str,
+        raw:bool=False,
+    )->Union[dict, ProductSearch.Config]:
+        credentials = self._credentials
+        logger = self._logger
+        session = self._session_storage.session
+
+        return utilities.get_products_config(
+            session_id=session_id,
+            credentials=credentials,
+            raw=raw,
+            session=session,
+            logger=logger,
+        )
+
+    def get_products_info(
+        self,
+        request:ProductsInfo.Request,
+        session_id:str,
+        raw:bool=False,
+    )->Union[dict, ProductsInfo]:
+        credentials = self._credentials
+        logger = self._logger
+        session = self._session_storage.session
+
+        return utilities.get_products_info(
+            request=request,
             session_id=session_id,
             credentials=credentials,
             raw=raw,

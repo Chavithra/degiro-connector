@@ -13,6 +13,7 @@ from trading.pb.trading_pb2 import (
     Favourites,
     Order,
     OrdersHistory,
+    ProductsInfo,
     ProductSearch,
     TransactionsHistory,
     Update,
@@ -271,7 +272,12 @@ def check_order(
 
     int_account = credentials.int_account
     url = URLs.ORDER_CHECK
-    url = f'{url};jsessionid={session_id}?intAccount={int_account}&sessionId={session_id}'
+    url = f'{url};jsessionid={session_id}'
+
+    params = {
+        'intAccount' : int_account,
+        'sessionId' : session_id,
+    }
 
     order_dict = {
         'buySell' : order.action,
@@ -282,7 +288,12 @@ def check_order(
         'timeType' : order.time_type,
     }
 
-    request = requests.Request(method='POST', url=url, json=order_dict)
+    request = requests.Request(
+        method='POST',
+        url=url,
+        json=order_dict,
+        params=params,
+    )
     prepped = session.prepare_request(request)
     response_raw = None
 
@@ -327,7 +338,12 @@ def confirm_order(
 
     int_account = credentials.int_account
     url = URLs.ORDER_CONFIRM
-    url = f'{url}/{confirmation_id};jsessionid={session_id}?intAccount={int_account}&sessionId={session_id}'
+    url = f'{url}/{confirmation_id};jsessionid={session_id}'
+
+    params = {
+        'intAccount' : int_account,
+        'sessionId' : session_id,
+    }
     
     order_dict = {
         'buySell' : order.action,
@@ -338,7 +354,12 @@ def confirm_order(
         'timeType' : order.time_type,
     }
 
-    request = requests.Request(method='POST', url=url, json=order_dict)
+    request = requests.Request(
+        method='POST',
+        url=url,
+        json=order_dict,
+        params=params,
+    )
     prepped = session.prepare_request(request)
     response_raw = None
 
@@ -382,7 +403,12 @@ def update_order(
     int_account = credentials.int_account
     order_id = order.id
     url = URLs.ORDER_UPDATE
-    url = f'{url}/{order_id};jsessionid={session_id}?intAccount={int_account}&sessionId={session_id}'
+    url = f'{url}/{order_id};jsessionid={session_id}'
+    
+    params = {
+        'intAccount' : int_account,
+        'sessionId' : session_id,
+    }
 
     order_dict = {
         'buySell' : order.action,
@@ -393,7 +419,12 @@ def update_order(
         'timeType' : order.time_type,
     }
 
-    request = requests.Request(method='PUT', url=url, json=order_dict)
+    request = requests.Request(
+        method='PUT',
+        url=url,
+        json=order_dict,
+        params=params,
+    )
     prepped = session.prepare_request(request)
     response = None
 
@@ -421,9 +452,14 @@ def delete_order(
 
     int_account = credentials.int_account
     url = URLs.ORDER_DELETE
-    url = f'{url}/{order_id};jsessionid={session_id}?intAccount={int_account}&sessionId={session_id}'
+    url = f'{url}/{order_id};jsessionid={session_id}'
 
-    request = requests.Request(method='DELETE', url=url)
+    params = {
+        'intAccount' : int_account,
+        'sessionId' : session_id,
+    }
+
+    request = requests.Request(method='DELETE', url=url, params=params)
     prepped = session.prepare_request(request)
     response = None
 
@@ -479,9 +515,13 @@ def get_client_details(
     if session is None:
         session = build_session()
     
-    url = f'{URLs.CLIENT_DETAILS}?sessionId={session_id}'
+    url = URLs.CLIENT_DETAILS
     
-    request = requests.Request(method='GET', url=url)
+    params = {
+        'sessionId' : session_id,
+    }
+
+    request = requests.Request(method='GET', url=url, params=params)
     prepped = session.prepare_request(request)
     response = session.send(prepped, verify=False)
 
@@ -827,7 +867,7 @@ def product_search(
         request.DESCRIPTOR.full_name
     ]
 
-    params = payload_handler.product_search_request_to_grpc(
+    params = payload_handler.product_search_request_to_api(
         request=request
     )
     params['intAccount'] = credentials.int_account
@@ -888,11 +928,13 @@ def get_favourites_list(
     if session is None:
         session = build_session()
 
+    int_account = credentials.int_account
     url = URLs.PRODUCT_FAVOURITES_LISTS
 
-    params = dict()
-    params['intAccount'] = credentials.int_account
-    params['sessionId'] = session_id
+    params = {
+        'intAccount' : int_account,
+        'sessionId' : session_id,
+    }
 
     request = requests.Request(method='GET', url=url, params=params)
     prepped = session.prepare_request(request)
@@ -906,6 +948,124 @@ def get_favourites_list(
             response = response_dict
         else:
             response = payload_handler.favourites_to_grpc(
+                payload=response_dict,
+            )
+    except Exception as e:
+        logger.fatal(response_raw.status_code)
+        logger.fatal(response_raw.text)
+        logger.fatal(e)
+        return False
+
+    return response
+
+def get_products_config(
+    session_id:str,
+    credentials:Credentials,
+    raw:bool=False,
+    session:requests.Session=None,
+    logger:logging.Logger=None,
+)->Union[dict, ProductSearch.Config]:
+    """ Fetch the product search config table.
+
+    No credentials or logging seems to be required for this endpoint.
+    Just adding the credentials and session_id because the website is
+    doing it.
+
+    Args:
+        session_id (str):
+            API's session id.
+        credentials (Credentials):
+            Credentials containing the parameter "int_account".
+        raw (bool, optional):
+            Whether are not we want the raw API response.
+            Defaults to False.
+        session (requests.Session, optional):
+            This object will be generated if None.
+            Defaults to None.
+        logger (logging.Logger, optional):
+            This object will be generated if None.
+            Defaults to None.
+
+    Returns:
+        ProductSearch.Config: API response.
+    """
+    
+    if logger is None:
+        logger = build_logger()
+    if session is None:
+        session = build_session()
+
+    int_account = credentials.int_account
+    url = URLs.PRODUCTS_CONFIG
+
+    params = {
+        'intAccount' : int_account,
+        'sessionId' : session_id,
+    }
+
+    request = requests.Request(method='GET', url=url, params=params)
+    prepped = session.prepare_request(request)
+    response_raw = None
+
+    try:
+        response_raw = session.send(prepped, verify=False)
+        response_dict = response_raw.json()
+
+        if raw == True:
+            response = response_dict
+        else:
+            response = payload_handler.products_config_to_grpc(
+                payload=response_dict,
+            )
+    except Exception as e:
+        logger.fatal(response_raw.status_code)
+        logger.fatal(response_raw.text)
+        logger.fatal(e)
+        return False
+
+    return response
+
+def get_products_info(
+    request:ProductsInfo.Request,
+    session_id:str,
+    credentials:Credentials,
+    raw:bool=False,
+    session:requests.Session=None,
+    logger:logging.Logger=None,
+)->ProductsInfo:
+    if logger is None:
+        logger = build_logger()
+    if session is None:
+        session = build_session()
+
+    int_account = credentials.int_account
+    url = URLs.PRODUCTS_INFO
+
+    params = {
+        'intAccount' : int_account,
+        'sessionId' : session_id,
+    }
+
+    payload = payload_handler.products_info_to_api(request=request)
+
+    request = requests.Request(
+        method='POST',
+        url=url,
+        json=payload,
+        params=params,
+    )
+
+    prepped = session.prepare_request(request)
+    response_raw = None
+
+    try:
+        response_raw = session.send(prepped, verify=False)
+        response_dict = response_raw.json()
+
+        if raw == True:
+            response = response_dict
+        else:
+            response = payload_handler.products_info_to_grpc(
                 payload=response_dict,
             )
     except Exception as e:

@@ -233,7 +233,10 @@ message AccountOverview {
  * https://trader.degiro.nl/product_search/secure/v5/warrants
  */
 message ProductSearch { 
-  /** MESSAGES */
+  // MESSAGES
+  message Config {
+    google.protobuf.Struct values = 1;
+  }
   message RequestBonds {
     int32 bondIssuerTypeId = 1;
     int32 bondExchangeId = 2;
@@ -351,4 +354,15 @@ message Favourites {
   // PROPERTIES
   repeated List values = 1;
   google.protobuf.Timestamp response_datetime = 2;
+}
+
+message ProductsInfo {
+  // MESSAGES
+  message Request {
+    // PROPERTIES
+    repeated int32 products = 1;
+  }
+
+  // PROPERTIES
+  google.protobuf.Struct values = 1;
 }

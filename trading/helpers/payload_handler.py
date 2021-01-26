@@ -1,18 +1,17 @@
 import datetime
+
 from google.protobuf import json_format
 from trading.pb.trading_pb2 import (
     AccountOverview,
     Favourites,
     Order,
     OrdersHistory,
+    ProductsInfo,
     ProductSearch,
     TransactionsHistory,
     Update,
 )
-from typing import (
-    List,
-    Union,
-)
+from typing import List, Union
 
 # MATCHINGS
 __ACTION_MATCHING = {
@@ -72,7 +71,23 @@ def account_overview_request_to_api(
 
     return request_dict
 
-def product_search_request_to_grpc(
+def products_info_to_api(
+    request:ProductsInfo.Request,
+)->List[str]:
+    request_dict = json_format.MessageToDict(
+        message=request,
+        including_default_value_fields=True,
+        preserving_proto_field_name=False,
+        use_integers_for_enums=True,
+        descriptor_pool=None,
+        float_precision=None,
+    )
+    payload = request_dict['products']
+    payload = list(map(str, payload))
+
+    return payload
+
+def product_search_request_to_api(
     request:Union[
         ProductSearch.RequestBonds,
         ProductSearch.RequestETFs,
@@ -218,6 +233,27 @@ def orders_history_to_grpc(payload:dict)->OrdersHistory:
     )
 
     return orders_history
+
+def products_config_to_grpc(payload:dict)->ProductSearch.Config:
+    products_config = ProductSearch.Config()
+    json_format.ParseDict(
+        js_dict={'values':payload},
+        message=products_config,
+        ignore_unknown_fields=False,
+        descriptor_pool=None,
+    )
+
+    return products_config
+
+def products_info_to_grpc(payload:dict)->ProductsInfo:
+    products_info = ProductsInfo()
+    json_format.ParseDict(
+        js_dict={'values':payload['data']},
+        message=products_info,
+        ignore_unknown_fields=False,
+        descriptor_pool=None,
+    )
+    return products_info
 
 def product_search_to_grpc(payload:dict)->ProductSearch:
     product_search = ProductSearch()

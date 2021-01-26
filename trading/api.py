@@ -8,6 +8,7 @@ from trading.pb.trading_pb2 import (
     Favourites,
     Order,
     OrdersHistory,
+    ProductsInfo,
     ProductSearch,
     TransactionsHistory,
     Update,
@@ -211,6 +212,32 @@ class API:
         session_id = self._connection_storage.session_id
 
         return basic.get_favourites_list(
+            session_id=session_id,
+            raw=raw,
+        )
+
+    def get_products_config(
+        self,
+        raw:bool=False,
+    )->Union[dict, ProductSearch.Config]:
+        basic = self._basic
+        session_id = self._connection_storage.session_id
+
+        return basic.get_products_config(
+            session_id=session_id,
+            raw=raw,
+        )
+
+    def get_products_info(
+        self,
+        request:ProductsInfo.Request,
+        raw:bool=False,
+    )->Union[dict, ProductsInfo]:
+        basic = self._basic
+        session_id = self._connection_storage.session_id
+
+        return basic.get_products_info(
+            request=request,
             session_id=session_id,
             raw=raw,
         )

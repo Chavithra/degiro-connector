@@ -19,5 +19,7 @@ class URLs:
     PRODUCT_SEARCH_OPTIONS = 'https://trader.degiro.nl/product_search/secure/v5/options'
     PRODUCT_SEARCH_STOCKS = 'https://trader.degiro.nl/product_search/secure/v5/stocks'
     PRODUCT_SEARCH_WARRANTS = 'https://trader.degiro.nl/product_search/secure/v5/warrants'
+    PRODUCTS_INFO = 'https://trader.degiro.nl/product_search/secure/v5/products/info'
+    PRODUCTS_CONFIG = 'https://trader.degiro.nl/product_search/config/dictionary'
     TRANSACTIONS_HISTORY = 'https://trader.degiro.nl/reporting/secure/v4/transactions'
     UPDATE = 'https://trader.degiro.nl/trading/secure/v5/update'
