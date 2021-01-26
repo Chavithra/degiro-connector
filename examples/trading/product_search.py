@@ -30,7 +30,7 @@ trading_api = TradingAPI(credentials=credentials)
 # ESTABLISH CONNECTION
 trading_api.connect()
 
-# PREPARE REQUEST
+# SETUP REQUEST
 request_stock = ProductSearch.RequestStocks(
     indexId=5,
     isInUSGreenList=False,

@@ -32,7 +32,7 @@ trading_api = TradingAPI(credentials=credentials)
 # CONNECT
 trading_api.connect()
 
-# PREPARE REQUEST
+# SETUP REQUEST
 today = datetime.date.today()
 from_date = OrdersHistory.Request.Date(
     year=2020,
@@ -49,7 +49,7 @@ request = OrdersHistory.Request(
     to_date=to_date,
 )
 
-# FETCH REQUEST
+# FETCH DATA
 orders_history = trading_api.get_orders_history(
     request=request,
     raw=False,

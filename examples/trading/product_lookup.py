@@ -30,7 +30,7 @@ trading_api = TradingAPI(credentials=credentials)
 # ESTABLISH CONNECTION
 trading_api.connect()
 
-# PREPARE REQUESTS
+# SETUP REQUEST
 request_lookup = ProductSearch.RequestLookup(
     search_text = 'APPLE',
     limit = 2,

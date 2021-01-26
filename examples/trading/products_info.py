@@ -36,7 +36,7 @@ trading_api.connect()
 request = ProductsInfo.Request()
 request.products.extend([96008, 1153605, 5462588])
 
-# FETCH REQUEST
+# FETCH DATA
 products_info = trading_api.get_products_info(
     request=request,
     raw=True,

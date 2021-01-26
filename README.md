@@ -50,9 +50,9 @@ pip uninstall degiro-connector
   * [1.5. Table of contents](#15-table-of-contents)
 - [2. Real-time data](#2-real-time-data)
   * [2.1. What are the credentials ?](#21-what-are-the-credentials-)
-  * [2.2. How to get the : user_token ?](#22-how-to-get-the-user-token-)
+  * [2.2. How to get the : user_token ?](#22-how-to-get-the---user-token-)
   * [2.3. How to login ?](#23-how-to-login-)
-  * [2.4. Is there a timeout ?](#24-Is-there-a-timeout-)
+  * [2.4. Is there a timeout ?](#24-is-there-a-timeout-)
   * [2.5. How to subscribe to a data-stream ?](#25-how-to-subscribe-to-a-data-stream-)
   * [2.6. How to unsubscribe to a data-stream ?](#26-how-to-unsubscribe-to-a-data-stream-)
   * [2.7. How to fetch the data ?](#27-how-to-fetch-the-data-)
@@ -64,8 +64,8 @@ pip uninstall degiro-connector
   * [2.13. How to get chart data ?](#213-how-to-get-chart-data-)
 - [3. Trading connection](#3-trading-connection)
   * [3.1. What are the credentials ?](#31-what-are-the-credentials-)
-  * [3.2. What is the : in_account ?](#32-what-is-the-in_account-)
-  * [3.3. What is the : totp_secret_key ?](#33-what-is-the-totp_secret_key-)
+  * [3.2. What is the : in_account ?](#32-what-is-the---in-account-)
+  * [3.3. What is the : totp_secret_key ?](#33-what-is-the---totp-secret-key-)
   * [3.4. How to login ?](#34-how-to-login-)
   * [3.5. How to use 2FA ?](#35-how-to-use-2fa-)
 - [4. Order](#4-order)
@@ -84,16 +84,18 @@ pip uninstall degiro-connector
   * [6.3. How to retrieve the AccountInfo table ?](#63-how-to-retrieve-the-accountinfo-table-)
   * [6.4. How to get the AccountOverview table ?](#64-how-to-get-the-accountoverview-table-)
 - [7. Products](#7-products)
-  * [7.1. How to get my favourite products ?](#71-how-to-get-my-favourite-products-)
-  * [7.2. How to lookup products (search by name) ?](#72-how-to-lookup-products-search-by-name-)
-  * [7.3. How to search bonds ?](#73-how-to-search-bonds-)
-  * [7.4. How to search etfs ?](#74-how-to-search-etfs-)
-  * [7.5. How to search funds ?](#75-how-to-search-funds-)
-  * [7.6. How to search futures ?](#76-how-to-search-futures-)
-  * [7.7. How to search leverageds ?](#77-how-to-search-leverageds-)
-  * [7.8. How to search options ?](#78-how-to-search-options-)
-  * [7.9. How to search stocks ?](#79-how-to-search-stocks-)
-  * [7.10. How to search warrants ?](#710-how-to-search-warrants-)
+  * [7.1. How to get the table : ProductsConfig ?](#71-how-to-get-the-table---productsconfig-)
+  * [7.2. How to get my favourite products ?](#72-how-to-get-my-favourite-products-)
+  * [7.3. How to lookup products (search by name) ?](#73-how-to-lookup-products--search-by-name--)
+  * [7.4. How to search bonds ?](#74-how-to-search-bonds-)
+  * [7.5. How to search etfs ?](#75-how-to-search-etfs-)
+  * [7.6. How to search funds ?](#76-how-to-search-funds-)
+  * [7.7. How to search futures ?](#77-how-to-search-futures-)
+  * [7.8. How to search leverageds ?](#78-how-to-search-leverageds-)
+  * [7.9. How to search options ?](#79-how-to-search-options-)
+  * [7.10. How to search stocks ?](#710-how-to-search-stocks-)
+  * [7.11. How to search warrants ?](#711-how-to-search-warrants-)
+  * [7.12. How to search products from ids ?](#712-how-to-search-products-from-ids-)
 - [8. Contributing](#8-contributing)
 - [9. License](#9-license)
 
@@ -705,7 +707,7 @@ The result contains a list of "Orders" objects with the following attributes :
 Here is how to get this data :
 
 ```python
-# PREPARE REQUEST
+# SETUP REQUEST
 from_date = OrdersHistory.Request.Date(year=2020,month=11,day=15)
 to_date = OrdersHistory.Request.Date(year=2020,month=10,day=15)
 request = OrdersHistory.Request(from_date=from_date, to_date=to_date)
@@ -723,7 +725,7 @@ For a more comprehensive example :
 Here is how to get this data :
 
 ```python
-# PREPARE REQUEST
+# SETUP REQUEST
 from_date = TransactionsHistory.Request.Date(year=2020,month=11,day=15)
 to_date = TransactionsHistory.Request.Date(year=2020,month=10,day=15)
 request = TransactionsHistory.Request(from_date=from_date, to_date=to_date)
@@ -872,7 +874,7 @@ It contains information about cash movements.
 Here is how to get this data :
 
 ```python
-# PREPARE REQUEST
+# SETUP REQUEST
 from_date = AccountOverview.Request.Date(year=2020,month=11,day=15)
 to_date = AccountOverview.Request.Date(year=2020,month=10,day=15)
 request = AccountOverview.Request(from_date=from_date, to_date=to_date)
@@ -949,7 +951,7 @@ Text research on a financial product.
 Here is how to get this data :
 
 ```python
-# PREPARE REQUEST
+# SETUP REQUEST
 request = ProductSearch.RequestLookup(
     search_text = 'APPLE',
     limit = 10,
@@ -968,7 +970,7 @@ For a more comprehensive example :
 Here is how to get this data :
 
 ```python
-# PREPARE REQUEST
+# SETUP REQUEST
 request = ProductSearch.RequestBonds(
     bondIssuerTypeId=0,
     bondExchangeId=710,
@@ -994,7 +996,7 @@ For a more comprehensive example :
 Here is how to get this data :
 
 ```python
-# PREPARE REQUEST
+# SETUP REQUEST
 request = ProductSearch.RequestETFs(
     popularOnly=False,
     inputAggregateTypes='',
@@ -1020,7 +1022,7 @@ For a more comprehensive example :
 Here is how to get this data :
 
 ```python
-# PREPARE REQUEST
+# SETUP REQUEST
 request = ProductSearch.RequestFunds(
     searchText='',
     offset=0,
@@ -1042,7 +1044,7 @@ For a more comprehensive example :
 Here is how to get this data :
 
 ```python
-# PREPARE REQUEST
+# SETUP REQUEST
 request = ProductSearch.RequestFutures(
     futureExchangeId=1,
     underlyingIsin='FR0003500008',
@@ -1067,7 +1069,7 @@ For a more comprehensive example :
 Here is how to get this data :
 
 ```python
-# PREPARE REQUEST
+# SETUP REQUEST
 request = ProductSearch.RequestLeverageds(
     popularOnly=False,
     inputAggregateTypes='',
@@ -1092,7 +1094,7 @@ For a more comprehensive example :
 Here is how to get this data :
 
 ```python
-# PREPARE REQUEST
+# SETUP REQUEST
 request = ProductSearch.RequestOptions(
     inputAggregateTypes='',
     inputAggregateValues='',
@@ -1121,7 +1123,7 @@ It contains information about available stocks.
 Here is how to get this data :
 
 ```python
-# PREPARE REQUEST
+# SETUP REQUEST
 request = ProductSearch.RequestStocks(
     indexId=5,
     isInUSGreenList=False,
@@ -1147,7 +1149,7 @@ For a more comprehensive example :
 Here is how to get this data :
 
 ```python
-# PREPARE REQUEST
+# SETUP REQUEST
 request = ProductSearch.RequestWarrants(
     searchText='',
     offset=0,
@@ -1163,6 +1165,26 @@ warrant_list = trading_api.product_search(request=request)
 
 For a more comprehensive example :
 [product_search.py](examples/trading/product_search.py)
+
+
+## 7.12. How to search products from ids ?
+
+Here is how to get this data :
+
+```python
+# SETUP REQUEST
+request = ProductsInfo.Request()
+request.products.extend([96008, 1153605, 5462588])
+
+# FETCH DATA
+products_info = trading_api.get_products_info(
+    request=request,
+    raw=True,
+)
+```
+
+For a more comprehensive example :
+[products_info.py](examples/trading/products_info.py)
 
 # 8. Contributing
 Pull requests are welcome.

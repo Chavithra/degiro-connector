@@ -35,7 +35,7 @@ trading_api = TradingAPI(credentials=credentials)
 # CONNECT
 trading_api.connect()
 
-# PREPARE REQUEST
+# SETUP REQUEST
 today = datetime.date.today()
 from_date = AccountOverview.Request.Date(
     year=2020,
@@ -52,7 +52,7 @@ request = AccountOverview.Request(
     to_date=to_date,
 )
 
-# FETCH REQUEST
+# FETCH DATA
 account_overview = trading_api.get_account_overview(
     request=request,
     raw=False,
