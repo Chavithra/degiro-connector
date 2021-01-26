@@ -19,6 +19,7 @@ Here are the features you can access through this library :
 |Orders|List pending Orders.|
 |Portoflio|List products in your Portoflio.|
 |ProductsConfig|Retrieve a table containing : useful parameters to filter products.|
+|ProductsInfo|Search for products using their ids.|
 |Quotecasts|Fetch real-time data on financial products. <br> For instance the real-time stock Price.|
 |TotalPorfolio|Retrieve aggregated information about your assets.|
 |TransactionsHistory|Retrieve all Transactions created between two dates.|
