@@ -504,7 +504,6 @@ def get_config(
 
     return response['data']
 
-
 def get_client_details(
     session_id:str,
     session:requests.Session=None,
@@ -1033,6 +1032,32 @@ def get_products_info(
     session:requests.Session=None,
     logger:logging.Logger=None,
 )->ProductsInfo:
+    """ Search for products using their ids.
+
+    Args:
+        request (ProductsInfo.Request):
+            List of products ids.
+            Example :
+                request = ProductsInfo.Request()
+                request.products.extend([96008, 1153605, 5462588])
+        session_id (str):
+            API's session id.
+        credentials (Credentials):
+            Credentials containing the parameter "int_account".
+        raw (bool, optional):
+            Whether are not we want the raw API response.
+            Defaults to False.
+        session (requests.Session, optional):
+            This object will be generated if None.
+            Defaults to None.
+        logger (logging.Logger, optional):
+            This object will be generated if None.
+            Defaults to None.
+
+    Returns:
+        ProductsInfo: API response.
+    """
+
     if logger is None:
         logger = build_logger()
     if session is None:

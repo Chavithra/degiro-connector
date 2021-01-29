@@ -50,19 +50,20 @@ pip uninstall degiro-connector
   * [1.4. How to uninstall ?](#14-how-to-uninstall-)
   * [1.5. Table of contents](#15-table-of-contents)
 - [2. Real-time data](#2-real-time-data)
-  * [2.1. What are the credentials ?](#21-what-are-the-credentials-)
-  * [2.2. How to get the : user_token ?](#22-how-to-get-the--user_token-)
-  * [2.3. How to login ?](#23-how-to-login-)
-  * [2.4. Is there a timeout ?](#24-is-there-a-timeout-)
-  * [2.5. How to subscribe to a data-stream ?](#25-how-to-subscribe-to-a-data-stream-)
-  * [2.6. How to unsubscribe to a data-stream ?](#26-how-to-unsubscribe-to-a-data-stream-)
-  * [2.7. How to fetch the data ?](#27-how-to-fetch-the-data-)
-  * [2.8. How to use this data ?](#28-how-to-use-this-data-)
-  * [2.9. Which are the available data types ?](#29-which-are-the-available-data-types-)
-  * [2.10. What is a Ticker ?](#210-what-is-a-ticker-)
-  * [2.11. What is inside the Dictionnary ?](#211-what-is-inside-the-dictionnary-)
-  * [2.12. What is inside the DataFrame ?](#212-what-is-inside-the-dataframe-)
-  * [2.13. How to get chart data ?](#213-how-to-get-chart-data-)
+  * [2.1. What are the workflows ?](#21-what-are-the-common-workflows-)
+  * [2.2. What are the credentials ?](#22-what-are-the-credentials-)
+  * [2.3. How to get the : user_token ?](#23-how-to-get-the--user_token-)
+  * [2.4. How to login ?](#24-how-to-login-)
+  * [2.5. Is there a timeout ?](#25-is-there-a-timeout-)
+  * [2.6. How to subscribe to a data-stream ?](#26-how-to-subscribe-to-a-data-stream-)
+  * [2.7. How to unsubscribe to a data-stream ?](#27-how-to-unsubscribe-to-a-data-stream-)
+  * [2.8. How to fetch the data ?](#28-how-to-fetch-the-data-)
+  * [2.9. How to use this data ?](#29-how-to-use-this-data-)
+  * [2.10. Which are the available data types ?](#210-which-are-the-available-data-types-)
+  * [2.11. What is a Ticker ?](#211-what-is-a-ticker-)
+  * [2.12. What is inside the Dictionnary ?](#212-what-is-inside-the-dictionnary-)
+  * [2.13. What is inside the DataFrame ?](#213-what-is-inside-the-dataframe-)
+  * [2.14. How to get chart data ?](#214-how-to-get-chart-data-)
 - [3. Trading connection](#3-trading-connection)
   * [3.1. What are the credentials ?](#31-what-are-the-credentials-)
   * [3.2. What is the : in_account ?](#32-what-is-the--in_account-)
@@ -115,7 +116,26 @@ He can use this library to retrieve update like this :
     LastDate    LastTime    LastPrice LastVolume
     2020-11-13  22:00:00    119.26    4697040
 
-## 2.1. What are the credentials ?
+## 2.1. What are the workflows ?
+
+This is the workflow for consuming real-time data-stream :
+
+    A. Find your "user_token".
+    B. Setup the API object with your "user_token".
+    C. Connect.
+    D. Subscribe to data-stream.
+    E. Fetch data-stream.
+
+This is the worflow for consuming charts :
+
+    A. Find your "user_token".
+    B. Setup the API object with your "user_token".
+    C. Connect.
+    D. Fetch charts.
+
+All the details of these steps are explained in the rest of this section.
+
+## 2.2. What are the credentials ?
 
 The only credential you need in order to fetch real-time data and charts is the :
 * user_token
@@ -124,14 +144,14 @@ Beware, these two identifiers are not the same thing :
 * user_token : used to fetch real-time data and charts.
 * int_account : used for some trading operations.
 
-## 2.2. How to get the : user_token ?
+## 2.3. How to get the : user_token ?
 You can find your "user_token" is inside one of these table:
 * "Config" : attribute "clientId"
 * "ClientDetails" : attribute "id"
 
 See section related to "Config" & "ClientDetails" tables.
 
-## 2.3. How to login ?
+## 2.4. How to login ?
 
 In order to fetch data you need to establish a connection.
 
@@ -145,7 +165,7 @@ quotecast_api = API(user_token=YOUR_USER_TOKEN)
 quotecast_api.connect()
 ```
 
-## 2.4. Is there a timeout ?
+## 2.5. Is there a timeout ?
 
 Connection timeout is around 15 seconds.
 
@@ -157,7 +177,7 @@ This timeout is reset each time you use this connection to :
 
 So if you use it nonstop (in a loop) you won't need to reconnect.
 
-## 2.5. How to subscribe to a data-stream ?
+## 2.6. How to subscribe to a data-stream ?
 
 To subscribe to a data-stream you need to setup a Request message.
 
@@ -200,7 +220,7 @@ For more comprehensive examples :
 [realtime_one_shot.py](examples/quotecast/realtime_one_shot.py)
 
 
-## 2.6. How to unsubscribe to a data-stream ?
+## 2.7. How to unsubscribe to a data-stream ?
 
 To remove metrics from the data-stream you need to setup a Request message.
 
@@ -244,7 +264,7 @@ For more comprehensive examples :
 [realtime_poller.py](examples/quotecast/realtime_poller.py) /
 [realtime_one_shot.py](examples/quotecast/realtime_one_shot.py)
 
-## 2.7. How to fetch the data ?
+## 2.8. How to fetch the data ?
 
 You can use the following code :
 ```python
@@ -254,7 +274,7 @@ quotecast = quotecast_api.fetch_data()
 For a more comprehensive example :
 [realtime_poller.py](examples/quotecast/realtime_poller.py)
 
-## 2.8. How to use this data ?
+## 2.9. How to use this data ?
 
 Received data is a Quotecast object with the following properties :
 
@@ -270,7 +290,7 @@ response_datetime = quotecast.metadata.response_datetime
 request_duration= quotecast.metadata.request_duration
 ```
 
-## 2.9. Which are the available data types ?
+## 2.10. Which are the available data types ?
 
 This library provides the tools to convert Degiro's JSON data into something more programmer-friendly.
 
@@ -298,7 +318,7 @@ ticker_dict = quotecast_parser.ticker_dict
 ticker_df = quotecast_parser.ticker_df
 ```
 
-## 2.10. What is a Ticker ?
+## 2.11. What is a Ticker ?
 
 The generated Ticker contains :
 
@@ -333,7 +353,7 @@ A Ticker is a custom Protocol Buffer Message built for this library.
 
 It can be transmitted over GRPC framework.
 
-## 2.11. What is inside the Dictionnary ?
+## 2.12. What is inside the Dictionnary ?
 
 The dictionnary representation of a ticker contains the metrics grouped by "vwd_id" (product id), with :
 * keys : vwd_id
@@ -364,7 +384,7 @@ Example - Dictionnary :
 }
 ```
 
-## 2.12. What is inside the DataFrame ?
+## 2.13. What is inside the DataFrame ?
 
 The generated DataFrame will content :
 
@@ -377,7 +397,7 @@ Example - DataFrame :
     0   360114899  2020-11-08 12:00:27          1.022489  2020-11-06  17:39:57      70.0        100
     1   360015751  2020-11-08 12:00:27          1.022489  2020-11-06  17:36:17     22.99        470
 
-## 2.13. How to get chart data ?
+## 2.14. How to get chart data ?
 You can fetch an object containing the same data than in Degiro's website graph.
 
 For that you need to prepare a Chart.Request object.
@@ -439,9 +459,12 @@ Here are these credentials :
 
 ## 3.2. What is the : in_account ?
 
-The parameter "int_account" is not necessary for login.
+This "int_account" is required to do most of the operations available in this connector.
 
-But it is required to do some of the operations available in this connector.
+Here are some operations for which "int_account" is not required :
+* Connection
+* Fetch table : ClientDetails
+* Fetch table : Config
 
 You can get the "int_account" using the "ClientDetails" table, it is the attribute "intAccount".
 
@@ -489,6 +512,9 @@ trading_api = API(credentials=credentials)
 # ESTABLISH CONNECTION
 trading_api.connect()
 ```
+
+For a more comprehensive example :
+[connection.py](examples/trading/connection.py)
 
 ## 3.5. How to use 2FA ?
 If you are using Two-factor Authentication (2FA) you need to provide an extra parameter.
@@ -543,7 +569,7 @@ Here are the parameters of a CheckingResponse :
 |:-|:-|:-|
 |confirmation_id|str|Id necessary to confirm the creation of the Order.|
 |free_space_new|float|New free space (balance) if the Order is confirmed.|
-|response_datetime|str|ISO format datetime of the checking operation.|
+|response_datetime|Timestamp|Timestamp can be converted to date string using : ToJsonString().|
 |transaction_fees|repeated Struct|Transaction fees that will be applied to the Order.|
 |transaction_opposite_fees|repeated Struct|Other kind of fees that will be applied to the Order.|
 |transaction_taxes|repeated Struct|Taxes that will be applied to the Order.|
@@ -553,7 +579,7 @@ Here are the parameters of a ConfirmationResponse :
 |**Parameter**|**Type**|**Description**|
 |:-|:-|:-|
 |orderId|str|Id of the created Order.|
-|response_datetime|str|ISO format datetime of the confirmation operation.|
+|response_datetime|Timestamp|Timestamp can be converted to date string using : ToJsonString().|
 
 Here is an example :
 

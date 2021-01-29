@@ -1,5 +1,6 @@
 # IMPORTATIONS
 import json
+import os
 
 from trading.api import API as TradingAPI
 from trading.pb.trading_pb2 import Credentials
@@ -23,13 +24,7 @@ trading_api = TradingAPI(credentials=credentials)
 # CONNECT
 trading_api.connect()
 
-# FETCH CONFIG TABLE
-config_table = trading_api.get_config()
+# ACCESS SESSION_ID
+session_id = trading_api.connection_storage.session_id
 
-# EXTRACT DATA
-user_token = config_table['clientId']
-config_pretty = json.dumps(config_table, sort_keys=True, indent=4)
-
-# DISPLAY DATA
-print('Your "user_token" is :', user_token)
-print('Here is the rest of config :', config_pretty)
+print('You are now connected, with the session id :', session_id)

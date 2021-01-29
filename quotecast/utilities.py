@@ -161,19 +161,19 @@ def subscribe(
         request (QuotecastAPI.Request):
             List of subscriptions & unsubscriptions to do.
             Example :
-            request = Quotecast.Request()
-            request.subscriptions['360015751'].extend([
-                'LastPrice',
-                'LastVolume',
-            ])
-            request.subscriptions['AAPL.BATS,E'].extend([
-                'LastPrice',
-                'LastVolume',
-            ])
-            request.unsubscriptions['360015751'].extend([
-                'LastPrice',
-                'LastVolume',
-            ])
+                request = Quotecast.Request()
+                request.subscriptions['360015751'].extend([
+                    'LastPrice',
+                    'LastVolume',
+                ])
+                request.subscriptions['AAPL.BATS,E'].extend([
+                    'LastPrice',
+                    'LastVolume',
+                ])
+                request.unsubscriptions['360015751'].extend([
+                    'LastPrice',
+                    'LastVolume',
+                ])
         session_id (str):
             API's session id.
         session (requests.Session, optional):
@@ -232,24 +232,24 @@ def get_chart(
     Args:
         request (Chart.Request):
             Example :
-            request = Chart.Request()
-            request.requestid = '1'
-            request.resolution = Chart.Resolution.PT1M
-            request.culture = 'fr-FR'
-            request.series.append('issueid:360148977')
-            request.series.append('price:issueid:360148977')
-            request.series.append('ohlc:issueid:360148977')
-            request.series.append('volume:issueid:360148977')
-            request.period = Chart.Period.P1D
-            request.tz = 'Europe/Paris'
+                request = Chart.Request()
+                request.requestid = '1'
+                request.resolution = Chart.Resolution.PT1M
+                request.culture = 'fr-FR'
+                request.series.append('issueid:360148977')
+                request.series.append('price:issueid:360148977')
+                request.series.append('ohlc:issueid:360148977')
+                request.series.append('volume:issueid:360148977')
+                request.period = Chart.Period.P1D
+                request.tz = 'Europe/Paris'
         user_token (int):
             User identifier in Degiro's API.
         override (Dict[str], optional):
             Override the request sent to Degiro's API.
             Example :
-            override = {
-                'period':'P6D',
-            }
+                override = {
+                    'period':'P6D',
+                }
             Defaults to None.
         raw (bool, optional):
             Whether are not we want the raw API response.

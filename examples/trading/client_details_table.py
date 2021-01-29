@@ -9,7 +9,6 @@ with open('config/config.json') as config_file:
     config_dict = json.load(config_file)
 
 # SETUP CREDENTIALS
-int_account = config_dict['int_account']
 username = config_dict['username']
 password = config_dict['password']
 credentials = Credentials(
