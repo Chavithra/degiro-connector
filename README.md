@@ -131,8 +131,7 @@ This is the worflow for consuming charts :
 
     A. Find your "user_token".
     B. Setup the API object with your "user_token".
-    C. Connect.
-    D. Fetch charts.
+    C. Fetch charts.
 
 All the details of these steps are explained in the rest of this section.
 
