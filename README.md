@@ -70,6 +70,7 @@ pip uninstall degiro-connector
   * [3.3. What is the : totp_secret_key ?](#33-what-is-the--totp_secret_key-)
   * [3.4. How to login ?](#34-how-to-login-)
   * [3.5. How to use 2FA ?](#35-how-to-use-2fa-)
+  * [3.6. Is there a timeout ?](#36-is-there-a-timeout-)
 - [4. Order](#4-order)
   * [4.1. How to create an Order ?](#41-how-to-create-an-order-)
   * [4.2. How to update an Order ?](#42-how-to-update-an-order-)
@@ -459,7 +460,7 @@ Here are these credentials :
 
 ## 3.2. What is the : in_account ?
 
-This "int_account" is required to do most of the operations available in this connector.
+This "int_account" is required to do most of the trading operations available in this connector.
 
 Here are some operations for which "int_account" is not required :
 * Connection
@@ -538,6 +539,13 @@ trading_api = API(credentials=credentials)
 # ESTABLISH CONNECTION
 trading_api.connect()
 ```
+
+## 3.6. Is there a timeout ?
+The connection for trading operations seems to have a timeout of : around 30 minutes.
+
+If this connection is left unused for this amount of time it will cease to work.
+
+Each time you do an operation using this connection Degiro's API seems to reset the timeout.
 
 # 4. Order
 

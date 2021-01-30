@@ -1,6 +1,5 @@
 # IMPORTATIONS
 import json
-import os
 
 from trading.api import API as TradingAPI
 from trading.pb.trading_pb2 import Credentials
