@@ -50,7 +50,7 @@ pip uninstall degiro-connector
   * [1.4. How to uninstall ?](#14-how-to-uninstall-)
   * [1.5. Table of contents](#15-table-of-contents)
 - [2. Real-time data](#2-real-time-data)
-  * [2.1. What are the workflows ?](#21-what-are-the-common-workflows-)
+  * [2.1. What are the workflows ?](#21-what-are-the-workflows-)
   * [2.2. What are the credentials ?](#22-what-are-the-credentials-)
   * [2.3. How to get the : user_token ?](#23-how-to-get-the--user_token-)
   * [2.4. How to login ?](#24-how-to-login-)
