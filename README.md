@@ -145,7 +145,7 @@ Beware, these two identifiers are not the same thing :
 * int_account : used for some trading operations.
 
 ## 2.3. How to get the : user_token ?
-You can find your "user_token" inside one of these table:
+You can find your "user_token" inside one of these tables :
 * "Config" : attribute "clientId"
 * "ClientDetails" : attribute "id"
 
