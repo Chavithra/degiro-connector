@@ -1,7 +1,6 @@
 # IMPORTATIONS
 import json
 import logging
-import trading.helpers.payload_handler as payload_handler
 
 from trading.api import API as TradingAPI
 from trading.pb.trading_pb2 import (

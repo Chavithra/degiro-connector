@@ -1,9 +1,7 @@
 # IMPORTATIONS
 import json
 import logging
-import quotecast.helpers.pb_handler as pb_handler
 
-from IPython.display import display
 from trading.api import API as TradingAPI
 from trading.pb.trading_pb2 import Credentials, ProductSearch
 

@@ -1,7 +1,7 @@
 # IMPORTATIONS
 import json
 import logging
-import quotecast.helpers.pb_handler as pb_handler
+import trading.helpers.payload_handler as payload_handler
 
 from IPython.display import display
 from trading.api import API as TradingAPI
@@ -39,7 +39,7 @@ request_lookup = ProductSearch.RequestLookup(
 
 # FETCH DATA
 products_lookup = trading_api.product_search(request=request_lookup, raw=False)
-products_lookup_dict = pb_handler.message_to_dict(message=products_lookup)
+products_lookup_dict = payload_handler.message_to_dict(message=products_lookup)
 pretty_json = json.dumps(products_lookup_dict, sort_keys=True, indent=4)
 
 print(pretty_json)
