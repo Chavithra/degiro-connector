@@ -220,7 +220,6 @@ For more comprehensive examples :
 [realtime_poller.py](examples/quotecast/realtime_poller.py) /
 [realtime_one_shot.py](examples/quotecast/realtime_one_shot.py)
 
-
 ## 2.7. How to unsubscribe to a data-stream ?
 
 To remove metrics from the data-stream you need to setup a Request message.
@@ -435,7 +434,6 @@ All the options for the enumerations are available in this file :
 
 For a more comprehensive example :
 [chart.py](examples/quotecast/chart.py)
-
 
 # 3. Trading connection
 
@@ -714,7 +712,6 @@ Example : DataFrame
 For a more comprehensive example :
 [update.py](examples/trading/update.py)
 
-
 ## 5.4. How to retrieve the OrdersHistory ?
 
 This method returns data about passed orders between two dates.
@@ -738,7 +735,6 @@ The result contains a list of "Orders" objects with the following attributes :
 |last|str|RFC 3339 Datetime, example : "2020-10-06T20:07:18+02:00".|
 |isActive|bool|-|
 
-
 Here is how to get this data :
 
 ```python
@@ -753,7 +749,6 @@ orders_history = trading_api.get_orders_history(request=request)
 
 For a more comprehensive example :
 [orders_history.py](examples/trading/orders_history.py)
-
 
 ## 5.5. How to retrieve the TransactionsHistory ?
 
@@ -1025,7 +1020,6 @@ bond_list = trading_api.product_search(request=request)
 For a more comprehensive example :
 [product_search.py](examples/trading/product_search.py)
 
-
 ## 7.5. How to search etfs ?
 
 Here is how to get this data :
@@ -1200,7 +1194,6 @@ warrant_list = trading_api.product_search(request=request)
 
 For a more comprehensive example :
 [product_search.py](examples/trading/product_search.py)
-
 
 ## 7.12. How to search products from ids ?
 

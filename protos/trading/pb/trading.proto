@@ -337,7 +337,6 @@ message ProductSearch {
   int32 total = 4;
 }
 
-
 /** For the payload from the following URL :
  * https://trader.degiro.nl/pa/secure/favourites/lists
  */

@@ -30,7 +30,6 @@ trading_api = TradingAPI(credentials=credentials)
 # ESTABLISH CONNECTION
 trading_api.connect()
 
-
 # SETUP ORDER
 order = Order(
     action=Order.Action.BUY,

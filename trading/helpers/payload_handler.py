@@ -305,7 +305,6 @@ def setup_update_portfolio(update:Update, payload:dict):
                 and 'value' in attribute:
                     value[attribute['name']] = attribute['value']
 
-
 def setup_update_total_portfolio(update:Update, payload:dict):
     if 'totalPortfolio' in payload:
         update.total_portfolio.last_updated = \

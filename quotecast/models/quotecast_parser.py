@@ -13,7 +13,6 @@ class QuotecastParser:
 
     "https://degiro.quotecast.vwdservices.com/CORS/{session_id}"
 
-
     OVERALL EXPLANATION
     The endpoint aforementioned returns financial data measurement
     such as :
@@ -34,7 +33,6 @@ class QuotecastParser:
     5 seconds.
 
     The session timeout is approximativaly 15 seconds.
-
 
     PAYLOAD DATA DESCRIPTION
     The payload sent from this endpoint can contain three kind of
@@ -66,7 +64,6 @@ class QuotecastParser:
     The LABEL is the name of the measurements that we retrieve.
 
     The MATCHING table is only sent at the first call of this endpoint.
-
 
     PAYLOAD DATA STRUCTURE
     The payload is a list of messages serialized in JSON, as follows :

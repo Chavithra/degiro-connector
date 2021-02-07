@@ -11,7 +11,6 @@ from trading.pb.trading_pb2 import Credentials, Update
 with open('config/config.json') as config_file:
     config = json.load(config_file)
 
-
 # SETUP CREDENTIALS 
 int_account = config['int_account']
 username = config['username']
