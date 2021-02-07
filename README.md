@@ -12,6 +12,7 @@ Here are the features you can access through this library :
 |Bonds<br>ETFs<br>Funds<br>Futures<br>Leverageds<br>Lookup<br>Options<br>Stocks<br>Warrants|Search list of products according their name, type and other criterias. <br> For instance all the stocks from NASDAQ 100.|
 |Chart|Retrieve chart data.|
 |ClientDetails|Retrieve a table containing : "clientId", "intAccount" and other account information.|
+|CompanyRatios|With a company's ISIN code, retrieve a table containing this company's : "totalFloat", "sharesOut", "consRecommendationTrend", "forecastData" and "currentRatios".|
 |Config|Retrieve a table containing : "clientId" and URLs which are constitutive of Degiro's API.|
 |Favourites|Retrieve favorite products lists.|
 |Order|Create, update, delete an Order.|
@@ -88,17 +89,18 @@ pip uninstall degiro-connector
   * [6.4. How to get the AccountOverview table ?](#64-how-to-get-the-accountoverview-table-)
 - [7. Products](#7-products)
   * [7.1. How to get the table : ProductsConfig ?](#71-how-to-get-the-table--productsconfig-)
-  * [7.2. How to get my favourite products ?](#72-how-to-get-my-favourite-products-)
-  * [7.3. How to lookup products (search by name) ?](#73-how-to-lookup-products--search-by-name--)
-  * [7.4. How to search bonds ?](#74-how-to-search-bonds-)
-  * [7.5. How to search etfs ?](#75-how-to-search-etfs-)
-  * [7.6. How to search funds ?](#76-how-to-search-funds-)
-  * [7.7. How to search futures ?](#77-how-to-search-futures-)
-  * [7.8. How to search leverageds ?](#78-how-to-search-leverageds-)
-  * [7.9. How to search options ?](#79-how-to-search-options-)
-  * [7.10. How to search stocks ?](#710-how-to-search-stocks-)
-  * [7.11. How to search warrants ?](#711-how-to-search-warrants-)
-  * [7.12. How to search products from ids ?](#712-how-to-search-products-from-ids-)
+  * [7.2. How to get the table : CompanyRatios ?](#72-how-to-get-the-table--companyratios-)
+  * [7.3. How to get my favourite products ?](#73-how-to-get-my-favourite-products-)
+  * [7.4. How to lookup products (search by name) ?](#74-how-to-lookup-products--search-by-name--)
+  * [7.5. How to search bonds ?](#75-how-to-search-bonds-)
+  * [7.6. How to search etfs ?](#76-how-to-search-etfs-)
+  * [7.7. How to search funds ?](#77-how-to-search-funds-)
+  * [7.8. How to search futures ?](#78-how-to-search-futures-)
+  * [7.9. How to search leverageds ?](#79-how-to-search-leverageds-)
+  * [7.10. How to search options ?](#710-how-to-search-options-)
+  * [7.11. How to search stocks ?](#711-how-to-search-stocks-)
+  * [7.12. How to search warrants ?](#712-how-to-search-warrants-)
+  * [7.13. How to search products from ids ?](#713-how-to-search-products-from-ids-)
 - [8. Contributing](#8-contributing)
 - [9. License](#9-license)
 
@@ -150,7 +152,7 @@ You can find your "user_token" is inside one of these table:
 * "Config" : attribute "clientId"
 * "ClientDetails" : attribute "id"
 
-See section related to "Config" & "ClientDetails" tables.
+See section related to "Config" and "ClientDetails" tables.
 
 ## 2.4. How to login ?
 
@@ -185,8 +187,8 @@ To subscribe to a data-stream you need to setup a Request message.
 A Request has the following parameters :
 |**Parameter**|**Type**|**Description**|
 |:-|:-|:-|
-|subscriptions|MessageMap|List of products & metrics to subscribe to.|
-|unsubscriptions|MessageMap|List of products & metrics to unsubscribe to.|
+|subscriptions|MessageMap|List of products and metrics to subscribe to.|
+|unsubscriptions|MessageMap|List of products and metrics to unsubscribe to.|
 
 Here is an example of request :
 ```python
@@ -229,8 +231,8 @@ If you try to unsubscribe to a metric to which you didn't subscribed previously 
 A Request has the following parameters :
 |**Parameter**|**Type**|**Description**|
 |:-|:-|:-|
-|subscriptions|MessageMap|List of products & metrics to subscribe to.|
-|unsubscriptions|MessageMap|List of products & metrics to unsubscribe to.|
+|subscriptions|MessageMap|List of products and metrics to subscribe to.|
+|unsubscriptions|MessageMap|List of products and metrics to unsubscribe to.|
 
 Here is an example of request :
 ```python
@@ -962,7 +964,33 @@ products_config = trading_api.get_products_config()
 For a more comprehensive example :
 [products_config.py](examples/trading/products_config.py)
 
-## 7.2. How to get my favourite products ?
+## 7.2. How to get the table : CompanyRatios
+
+This table contains information about the company.
+
+Here are the parameters which are inside this table :
+
+|**Parameter**|**Type**|
+|:-|:-|
+|totalFloat|str|
+|sharesOut|str|
+|consRecommendationTrend|dict|
+|forecastData|dict|
+|currentRatios|dict|
+
+Here is how to get this data :
+
+```python
+# FETCH DATA
+company_ratios = trading_api.get_company_ratios(
+    product_isin='FR0000131906',
+)
+```
+
+For a more comprehensive example :
+[favourites_list.py](examples/trading/favourites_list.py)
+
+## 7.3. How to get my favourite products ?
 
 Here is how to get this data :
 
@@ -974,7 +1002,7 @@ favourites_list = trading_api.get_favourites_list()
 For a more comprehensive example :
 [favourites_list.py](examples/trading/favourites_list.py)
 
-## 7.3. How to lookup products (search by name) ?
+## 7.4. How to lookup products (search by name) ?
 
 Text research on a financial product.
 
@@ -983,9 +1011,9 @@ Here is how to get this data :
 ```python
 # SETUP REQUEST
 request = ProductSearch.RequestLookup(
-    search_text = 'APPLE',
-    limit = 10,
-    offset = 0,
+    search_text='APPLE',
+    limit=10,
+    offset=0,
 )
 
 # FETCH DATA
@@ -995,7 +1023,7 @@ products_lookup = trading_api.product_search(request=request)
 For a more comprehensive example :
 [product_lookup.py](examples/trading/product_lookup.py)
 
-## 7.4. How to search bonds ?
+## 7.5. How to search bonds ?
 
 Here is how to get this data :
 
@@ -1020,7 +1048,7 @@ bond_list = trading_api.product_search(request=request)
 For a more comprehensive example :
 [product_search.py](examples/trading/product_search.py)
 
-## 7.5. How to search etfs ?
+## 7.6. How to search etfs ?
 
 Here is how to get this data :
 
@@ -1046,7 +1074,7 @@ etf_list = trading_api.product_search(request=request)
 For a more comprehensive example :
 [product_search.py](examples/trading/product_search.py)
 
-## 7.6. How to search funds ?
+## 7.7. How to search funds ?
 
 Here is how to get this data :
 
@@ -1068,7 +1096,7 @@ fund_list = trading_api.product_search(request=request)
 For a more comprehensive example :
 [product_search.py](examples/trading/product_search.py)
 
-## 7.7. How to search futures ?
+## 7.8. How to search futures ?
 
 Here is how to get this data :
 
@@ -1093,7 +1121,7 @@ fund_list = trading_api.product_search(request=request)
 For a more comprehensive example :
 [product_search.py](examples/trading/product_search.py)
 
-## 7.8. How to search leverageds ?
+## 7.9. How to search leverageds ?
 
 Here is how to get this data :
 
@@ -1119,7 +1147,7 @@ etf_list = trading_api.product_search(request=request)
 For a more comprehensive example :
 [product_search.py](examples/trading/product_search.py)
 
-## 7.9. How to search options ?
+## 7.10. How to search options ?
 Here is how to get this data :
 
 ```python
@@ -1145,7 +1173,7 @@ option_list = trading_api.product_search(request=request)
 For a more comprehensive example :
 [product_search.py](examples/trading/product_search.py)
 
-## 7.10. How to search stocks ?
+## 7.11. How to search stocks ?
 
 It contains information about available stocks.
 
@@ -1173,7 +1201,7 @@ stock_list = trading_api.product_search(request=request)
 For a more comprehensive example :
 [product_search.py](examples/trading/product_search.py)
 
-## 7.11. How to search warrants ?
+## 7.12. How to search warrants ?
 
 Here is how to get this data :
 
@@ -1195,7 +1223,7 @@ warrant_list = trading_api.product_search(request=request)
 For a more comprehensive example :
 [product_search.py](examples/trading/product_search.py)
 
-## 7.12. How to search products from ids ?
+## 7.13. How to search products from ids ?
 
 Here is how to get this data :
 

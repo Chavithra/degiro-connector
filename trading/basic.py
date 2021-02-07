@@ -344,6 +344,25 @@ class Basic:
             logger=logger,
         )
 
+    def get_company_ratios(
+        self,
+        product_isin:str,
+        session_id:str,
+        raw:bool=False,
+    )->Union[dict, ProductsInfo]:
+        credentials = self._credentials
+        logger = self._logger
+        session = self._session_storage.session
+
+        return utilities.get_company_ratios(
+            product_isin=product_isin,
+            session_id=session_id,
+            credentials=credentials,
+            raw=raw,
+            session=session,
+            logger=logger,
+        )
+
 if __name__ == '__main__':
     # IMPORTATIONS
     import json

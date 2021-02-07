@@ -1,8 +1,10 @@
 import datetime
 
 from google.protobuf import json_format
+from google.protobuf.message import Message
 from trading.pb.trading_pb2 import (
     AccountOverview,
+    CompanyRatios,
     Favourites,
     Order,
     OrdersHistory,
@@ -196,6 +198,16 @@ def checking_response_to_grpc(payload:dict)->Order.CheckingResponse:
 
     return checking_response
 
+def company_ratios_to_grpc(payload:dict)->CompanyRatios:
+    company_ratios = CompanyRatios()
+    json_format.ParseDict(
+        js_dict={'values':payload['data']},
+        message=company_ratios,
+        ignore_unknown_fields=False,
+        descriptor_pool=None,
+    )
+    return company_ratios
+
 def confirmation_response_to_grpc(
     payload:dict,
 )->Order.ConfirmationResponse:
@@ -221,6 +233,16 @@ def favourites_to_grpc(payload:dict)->Favourites:
     )
 
     return favourites
+
+def message_to_dict(message:Message)->dict:
+    return json_format.MessageToDict(
+        message=message,
+        including_default_value_fields=True,
+        preserving_proto_field_name=True,
+        use_integers_for_enums=True,
+        descriptor_pool=None,
+        float_precision=None,
+    )
 
 def orders_history_to_grpc(payload:dict)->OrdersHistory:
     orders_history = OrdersHistory()

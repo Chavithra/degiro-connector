@@ -365,3 +365,8 @@ message ProductsInfo {
   // PROPERTIES
   google.protobuf.Struct values = 1;
 }
+
+message CompanyRatios {
+  // PROPERTIES
+  google.protobuf.Struct values = 1;
+}

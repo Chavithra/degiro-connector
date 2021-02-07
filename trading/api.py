@@ -242,6 +242,20 @@ class API:
             raw=raw,
         )
 
+    def get_company_ratios(
+        self,
+        product_isin:str,
+        raw:bool=False,
+    )->Union[dict, ProductsInfo]:
+        basic = self._basic
+        session_id = self._connection_storage.session_id
+
+        return basic.get_company_ratios(
+            product_isin=product_isin,
+            session_id=session_id,
+            raw=raw,
+        )
+
 if __name__ == '__main__':
     # IMPORTATIONS
     import json
