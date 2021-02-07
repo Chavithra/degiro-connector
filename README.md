@@ -91,7 +91,7 @@ pip uninstall degiro-connector
   * [7.1. How to get the table : ProductsConfig ?](#71-how-to-get-the-table--productsconfig-)
   * [7.2. How to get the table : CompanyRatios ?](#72-how-to-get-the-table--companyratios-)
   * [7.3. How to get my favourite products ?](#73-how-to-get-my-favourite-products-)
-  * [7.4. How to lookup products (search by name) ?](#74-how-to-lookup-products--search-by-name--)
+  * [7.4. How to lookup products (search by name) ?](#74-how-to-lookup-products-search-by-name-)
   * [7.5. How to search bonds ?](#75-how-to-search-bonds-)
   * [7.6. How to search etfs ?](#76-how-to-search-etfs-)
   * [7.7. How to search funds ?](#77-how-to-search-funds-)
