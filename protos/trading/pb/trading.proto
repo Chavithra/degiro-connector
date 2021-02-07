@@ -355,6 +355,9 @@ message Favourites {
   google.protobuf.Timestamp response_datetime = 2;
 }
 
+/** For the payload from the following URL :
+ * https://trader.degiro.nl/product_search/secure/v5/products/info
+ */
 message ProductsInfo {
   // MESSAGES
   message Request {
@@ -366,6 +369,9 @@ message ProductsInfo {
   google.protobuf.Struct values = 1;
 }
 
+/** For the payload from the following URL :
+ * https://trader.degiro.nl/dgtbxdsservice/company-ratios
+ */
 message CompanyRatios {
   // PROPERTIES
   google.protobuf.Struct values = 1;
