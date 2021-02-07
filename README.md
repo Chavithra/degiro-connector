@@ -963,7 +963,7 @@ products_config = trading_api.get_products_config()
 For a more comprehensive example :
 [products_config.py](examples/trading/products_config.py)
 
-## 7.2. How to get the table : CompanyRatios
+## 7.2. How to get the table : CompanyRatios ?
 
 This table contains information about the company.
 
