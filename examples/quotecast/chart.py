@@ -35,7 +35,7 @@ request.tz = 'Europe/Paris'
 chart = quotecast_api.get_chart(
     request=request,
     override=None,
-    raw=False,
+    raw=True,
 )
 
 print(chart)
