@@ -104,7 +104,7 @@ def product_search_request_to_api(
 )->dict:
     request_dict = json_format.MessageToDict(
         message=request,
-        including_default_value_fields=True,
+        including_default_value_fields=False,
         preserving_proto_field_name=False,
         use_integers_for_enums=True,
         descriptor_pool=None,
