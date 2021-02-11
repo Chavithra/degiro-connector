@@ -987,7 +987,7 @@ company_ratios = trading_api.get_company_ratios(
 ```
 
 For a more comprehensive example :
-[favourites_list.py](examples/trading/favourites_list.py)
+[company_ratios.py](examples/trading/company_ratios.py)
 
 ## 7.3. How to get my favourite products ?
 
