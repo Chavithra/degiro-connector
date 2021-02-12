@@ -32,7 +32,7 @@ class API:
         return self._basic
 
     @property
-    def connection_storage(self)->Basic:
+    def connection_storage(self)->ConnectionStorage:
         return self._connection_storage
 
     @property
