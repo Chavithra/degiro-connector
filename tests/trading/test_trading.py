@@ -13,14 +13,14 @@ from trading.pb.trading_pb2 import Credentials
 logging.basicConfig(level=logging.FATAL)
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-@pytest.fixture
+@pytest.fixture(scope='module')
 def config_dict():
     with open('config/config.json') as config_file:
         config_dict = json.load(config_file)
     
     return config_dict
 
-@pytest.fixture
+@pytest.fixture(scope='module')
 def credentials(config_dict):
     username = config_dict['username']
     password = config_dict['password']
@@ -32,7 +32,7 @@ def credentials(config_dict):
 
     return credentials
 
-@pytest.fixture
+@pytest.fixture(scope='module')
 def trading_api(credentials):
     trading_api = TradingAPI(credentials=credentials)
     trading_api.connect()

@@ -13,20 +13,20 @@ from quotecast.pb.quotecast_pb2 import Chart
 logging.basicConfig(level=logging.FATAL)
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-@pytest.fixture
+@pytest.fixture(scope='module')
 def config_dict():
     with open('config/config.json') as config_file:
         config_dict = json.load(config_file)
 
     return config_dict
 
-@pytest.fixture
+@pytest.fixture(scope='module')
 def user_token(config_dict):
     user_token = config_dict['user_token']
 
     return user_token
 
-@pytest.fixture
+@pytest.fixture(scope='module')
 def quotecast_api(user_token):
     quotecast_api = QuotecastAPI(user_token=user_token)
     quotecast_api.connect()
