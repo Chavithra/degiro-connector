@@ -15,6 +15,7 @@ from quotecast.pb.quotecast_pb2 import Chart, Quotecast
 logging.basicConfig(level=logging.FATAL)
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
+
 # SETUP FIXTURES
 @pytest.fixture(scope='module')
 def config_dict():
@@ -23,11 +24,13 @@ def config_dict():
 
     return config_dict
 
+
 @pytest.fixture(scope='module')
 def user_token(config_dict):
     user_token = config_dict['user_token']
 
     return user_token
+
 
 @pytest.fixture(scope='module')
 def quotecast_api(user_token):
@@ -36,16 +39,19 @@ def quotecast_api(user_token):
 
     return quotecast_api
 
+
 # TESTS FIXTURES
 def test_fixture_user_token(user_token):
     assert isinstance(user_token, int)
     assert user_token > 0
+
 
 def test_fixture_quotecast_api(quotecast_api):
     session_id = quotecast_api.connection_storage.session_id
 
     assert isinstance(session_id, str)
     assert len(session_id) == 36
+
 
 # TESTS FEATURES
 def test_chart(quotecast_api):
@@ -65,7 +71,7 @@ def test_chart(quotecast_api):
     # FETCH DATA
     chart = quotecast_api.get_chart(
         request=request,
-        override = None,
+        override=None,
         raw=True,
     )
 
@@ -117,11 +123,12 @@ def test_chart(quotecast_api):
 
     series_0_data_keys = list(chart['series'][0]['data'].keys())
 
-    assert  b_series_0_data_keys == series_0_data_keys
+    assert b_series_0_data_keys == series_0_data_keys
     assert chart['requestid'] == '1'
     assert chart['resolution'] == 'PT1M'
     assert chart['series'][0]['data']['quality'] == 'REALTIME'
     assert chart['series'][0]['data']['issueId'] == 360148977
+
 
 def test_quotecast(quotecast_api):
     time.sleep(random.uniform(0, 2))
