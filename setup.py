@@ -1,8 +1,18 @@
 from setuptools import setup, find_packages
 setup(
-    name='degiro-connector',
-    version='0.0.4',
-    packages=find_packages(),
+    author='Chavithra PARANA',
+    author_email='chavithra@gmail.com',
+    classifiers=[
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: BSD-3-Clause",
+        "Operating System :: OS Independent",
+    ],
+    entry_points={
+        'console_scripts': [
+            'quotecast = quotecast.applications.cli:cli',
+            'trading = trading.applications.cli:cli',
+        ],
+    },
     install_requires=[
         'wheel',
         'click',
@@ -13,12 +23,13 @@ setup(
         'requests',
         'wrapt',
     ],
-    author='Chavithra PARANA',
-    author_email='chavithra@gmail.com',
-    entry_points={
-        'console_scripts': [
-            'quotecast = quotecast.applications.cli:cli',
-            'trading = trading.applications.cli:cli',
+    name='degiro-connector',
+    packages=find_packages(),
+    python_requires='>=3.7',
+    extras_requires={
+        'tests':[
+            'pytest',
         ],
-    }
+    },
+    version='0.0.4',
 )

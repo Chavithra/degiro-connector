@@ -83,10 +83,10 @@ pip uninstall degiro-connector
   * [5.4. How to retrieve the OrdersHistory ?](#54-how-to-retrieve-the-ordershistory-)
   * [5.5. How to retrieve the TransactionsHistory ?](#55-how-to-retrieve-the-transactionshistory-)
 - [6. Account](#6-account)
-  * [6.1. How to retrieve the Config table ?](#61-how-to-retrieve-the-config-table-)
-  * [6.2. How to retrieve the ClientDetails table ?](#62-how-to-retrieve-the-clientdetails-table-)
-  * [6.3. How to retrieve the AccountInfo table ?](#63-how-to-retrieve-the-accountinfo-table-)
-  * [6.4. How to get the AccountOverview table ?](#64-how-to-get-the-accountoverview-table-)
+  * [6.1. How to retrieve the table : Config ?](#61-how-to-retrieve-the-table--config-)
+  * [6.2. How to retrieve the table : ClientDetails ?](#62-how-to-retrieve-the-table--clientdetails-)
+  * [6.3. How to retrieve the table : AccountInfo ?](#63-how-to-retrieve-the-table--accountinfo-)
+  * [6.4. How to get the table : AccountOverview ?](#64-how-to-get-the-table--accountoverview-)
 - [7. Products](#7-products)
   * [7.1. How to get the table : ProductsConfig ?](#71-how-to-get-the-table--productsconfig-)
   * [7.2. How to get the table : CompanyRatios ?](#72-how-to-get-the-table--companyratios-)
@@ -770,7 +770,7 @@ For a more comprehensive example :
 
 # 6. Account
 
-## 6.1. How to retrieve the Config table ?
+## 6.1. How to retrieve the table : Config ?
 
 The config table contains the following informations :
 
@@ -816,7 +816,7 @@ session_id = config_table['sessionId']
 For a more comprehensive example :
 [config_table.py](examples/trading/config_table.py)
 
-## 6.2. How to retrieve the ClientDetails table ?
+## 6.2. How to retrieve the table : ClientDetails ?
 
 The ClientDetails table contains information about the current Degiro Account.
 
@@ -876,7 +876,7 @@ user_token = client_details_table['data']['id']
 For a more comprehensive example :
 [client_details_table.py](examples/trading/client_details_table.py)
 
-## 6.3. How to retrieve the AccountInfo table ?
+## 6.3. How to retrieve the table : AccountInfo ?
 
 The AccountInfo table contains the following information about currencies.
 
@@ -898,7 +898,7 @@ account_info_table = trading_api.get_account_info()
 For a more comprehensive example :
 [account_info_table.py](examples/trading/account_info_table.py)
 
-## 6.4. How to get the AccountOverview table ?
+## 6.4. How to get the table : AccountOverview ?
 
 It contains information about cash movements.
 

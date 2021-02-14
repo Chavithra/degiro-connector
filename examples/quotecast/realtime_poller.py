@@ -30,7 +30,6 @@ request.subscriptions['AAPL.BATS,E'].extend([
     'LastTime',
     'LastPrice',
     'LastVolume',
-    'LastPrice',
     'AskPrice',
     'BidPrice',
 ])

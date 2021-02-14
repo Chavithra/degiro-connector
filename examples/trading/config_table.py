@@ -15,6 +15,7 @@ with open('config/config.json') as config_file:
 # SETUP CREDENTIALS
 username = config_dict['username']
 password = config_dict['password']
+
 credentials = Credentials(
     int_account=None,
     username=username,
@@ -32,8 +33,10 @@ config_table = trading_api.get_config()
 
 # EXTRACT DATA
 user_token = config_table['clientId']
-config_pretty = json.dumps(config_table, sort_keys=True, indent=4)
+session_id = config_table['sessionId']
 
 # DISPLAY DATA
+config_pretty = json.dumps(config_table, sort_keys=True, indent=4)
+
 print('Your "user_token" is :', user_token)
 print('Here is the rest of config :', config_pretty)
