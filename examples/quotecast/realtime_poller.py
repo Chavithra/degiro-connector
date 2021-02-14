@@ -14,8 +14,8 @@ logging.basicConfig(level=logging.INFO)
 with open('config/config.json') as config_file:
     config_dict = json.load(config_file)
 
-# SETUP CREDENTIALS 
-user_token = config_dict['user_token'] # TO REPLACE WITH YOUR USER TOKEN
+# SETUP CREDENTIALS
+user_token = config_dict['user_token']  # HERE GOES YOUR USER_TOKEN
 
 # SETUP API
 quotecast_api = QuotecastAPI(user_token=user_token)
@@ -61,7 +61,7 @@ while True:
 
         # REMOVE THIS LINE TO RUN IT IN LOOP
         # USE : CTRL+C TO QUIT
-        break 
+        break
 
     except Exception as e:
         print(e)

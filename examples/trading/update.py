@@ -15,7 +15,7 @@ logging.basicConfig(level=logging.DEBUG)
 with open('config/config.json') as config_file:
     config = json.load(config_file)
 
-# SETUP CREDENTIALS 
+# SETUP CREDENTIALS
 int_account = config['int_account']
 username = config['username']
 password = config['password']

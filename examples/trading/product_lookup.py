@@ -31,9 +31,9 @@ trading_api.connect()
 
 # SETUP REQUEST
 request_lookup = ProductSearch.RequestLookup(
-    search_text = 'APPLE',
-    limit = 2,
-    offset = 0,
+    search_text='APPLE',
+    limit=2,
+    offset=0,
 )
 
 # FETCH DATA
