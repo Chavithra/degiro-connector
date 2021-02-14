@@ -27,13 +27,13 @@ message Ticker {
   // MESSAGES
   message Metrics {
     // <metric_name, metric_value>
-    map<string, double> metrics = 1; 
+    map<string, double> metrics = 1;
   }
 
   // PROPERTIES
   Metadata metadata = 1;
   // <vwd_id, metrics>
-  map<string, Metrics> products = 2; 
+  map<string, Metrics> products = 2;
   repeated string product_list = 3;
 }
 
@@ -61,7 +61,7 @@ message Chart {
     P10Y = 8;
     YTD = 9;
   }
-  
+
   // MESSAGES
   message Request {
     string requestid = 1;
@@ -71,7 +71,7 @@ message Chart {
     repeated string series = 5;
     string tz = 6;
   }
-  
+
   // PROPERTIES
   string requestid = 1;
   string start = 2;
