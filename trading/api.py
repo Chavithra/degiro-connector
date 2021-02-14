@@ -18,28 +18,29 @@ from typing import (
     Union,
 )
 from wrapt.decorators import synchronized
-    
+
+
 class API:
     """ Tools to consume Degiro's QuoteCast API.
-    
+
     Same operations than "Basic" but with "session_id" management.
 
     This class should be threadsafe.
     """
 
     @property
-    def basic(self)->Basic:
+    def basic(self) -> Basic:
         return self._basic
 
     @property
-    def connection_storage(self)->ConnectionStorage:
+    def connection_storage(self) -> ConnectionStorage:
         return self._connection_storage
 
     @property
-    def credentials(self)->int:
+    def credentials(self) -> int:
         return self._basic.credentials
 
-    def __init__(self, credentials:Credentials):
+    def __init__(self, credentials: Credentials):
         self.logger = logging.getLogger(self.__module__)
         self._basic = Basic(credentials=credentials)
         self._connection_storage = ConnectionStorage(
@@ -54,9 +55,9 @@ class API:
 
     def get_update(
         self,
-        request_list:Update.RequestList,
-        raw:bool=False,
-    )->Union[dict, Update]:
+        request_list: Update.RequestList,
+        raw: bool = False,
+    ) -> Union[dict, Update]:
         basic = self._basic
         session_id = self._connection_storage.session_id
 
@@ -67,10 +68,10 @@ class API:
         )
 
     def check_order(
-        self, 
-        order:Order,
-        raw:bool=False,
-    )->Union[Order.ConfirmationResponse, bool]:
+        self,
+        order: Order,
+        raw: bool = False,
+    ) -> Union[Order.ConfirmationResponse, bool]:
         basic = self._basic
         session_id = self._connection_storage.session_id
 
@@ -82,10 +83,10 @@ class API:
 
     def confirm_order(
         self,
-        confirmation_id:str,
-        order:Order,
-        raw:bool=False,
-    )->Union[Order.ConfirmationResponse, bool]:
+        confirmation_id: str,
+        order: Order,
+        raw: bool = False,
+    ) -> Union[Order.ConfirmationResponse, bool]:
         basic = self._basic
         session_id = self._connection_storage.session_id
 
@@ -95,8 +96,8 @@ class API:
             session_id=session_id,
             raw=raw,
         )
-    
-    def update_order(self, order:Order)->bool:
+
+    def update_order(self, order: Order) -> bool:
         basic = self._basic
         session_id = self._connection_storage.session_id
 
@@ -105,7 +106,7 @@ class API:
             session_id=session_id,
         )
 
-    def delete_order(self, order_id:str)->bool:
+    def delete_order(self, order_id: str) -> bool:
         basic = self._basic
         session_id = self._connection_storage.session_id
 
@@ -114,7 +115,7 @@ class API:
             session_id=session_id
         )
 
-    def get_config(self)->dict:
+    def get_config(self) -> dict:
         basic = self._basic
         session_id = self._connection_storage.session_id
 
@@ -122,7 +123,7 @@ class API:
             session_id=session_id,
         )
 
-    def get_client_details(self)->dict:
+    def get_client_details(self) -> dict:
         basic = self._basic
         session_id = self._connection_storage.session_id
 
@@ -130,7 +131,7 @@ class API:
             session_id=session_id,
         )
 
-    def get_account_info(self)->dict:
+    def get_account_info(self) -> dict:
         basic = self._basic
         session_id = self._connection_storage.session_id
 
@@ -140,9 +141,9 @@ class API:
 
     def get_orders_history(
         self,
-        request:OrdersHistory.Request,
-        raw:bool=False,
-    )->Union[dict, Update]:
+        request: OrdersHistory.Request,
+        raw: bool = False,
+    ) -> Union[dict, Update]:
         basic = self._basic
         session_id = self._connection_storage.session_id
 
@@ -154,9 +155,9 @@ class API:
 
     def get_transactions_history(
         self,
-        request:TransactionsHistory.Request,
-        raw:bool=False,
-    )->Union[dict, Update]:
+        request: TransactionsHistory.Request,
+        raw: bool = False,
+    ) -> Union[dict, Update]:
         basic = self._basic
         session_id = self._connection_storage.session_id
 
@@ -168,9 +169,9 @@ class API:
 
     def get_account_overview(
         self,
-        request:AccountOverview.Request,
-        raw:bool=False,
-    )->Union[dict, AccountOverview]:
+        request: AccountOverview.Request,
+        raw: bool = False,
+    ) -> Union[dict, AccountOverview]:
         basic = self._basic
         session_id = self._connection_storage.session_id
 
@@ -182,7 +183,7 @@ class API:
 
     def product_search(
         self,
-        request:Union[
+        request: Union[
             ProductSearch.RequestBonds,
             ProductSearch.RequestETFs,
             ProductSearch.RequestFunds,
@@ -193,8 +194,8 @@ class API:
             ProductSearch.RequestStocks,
             ProductSearch.RequestWarrants,
         ],
-        raw:bool=False,
-    )->Union[dict, ProductSearch]:
+        raw: bool = False,
+    ) -> Union[dict, ProductSearch]:
         basic = self._basic
         session_id = self._connection_storage.session_id
 
@@ -206,8 +207,8 @@ class API:
 
     def get_favourites_list(
         self,
-        raw:bool=False,
-    )->Union[dict, Favourites]:
+        raw: bool = False,
+    ) -> Union[dict, Favourites]:
         basic = self._basic
         session_id = self._connection_storage.session_id
 
@@ -218,8 +219,8 @@ class API:
 
     def get_products_config(
         self,
-        raw:bool=False,
-    )->Union[dict, ProductSearch.Config]:
+        raw: bool = False,
+    ) -> Union[dict, ProductSearch.Config]:
         basic = self._basic
         session_id = self._connection_storage.session_id
 
@@ -230,9 +231,9 @@ class API:
 
     def get_products_info(
         self,
-        request:ProductsInfo.Request,
-        raw:bool=False,
-    )->Union[dict, ProductsInfo]:
+        request: ProductsInfo.Request,
+        raw: bool = False,
+    ) -> Union[dict, ProductsInfo]:
         basic = self._basic
         session_id = self._connection_storage.session_id
 
@@ -244,9 +245,9 @@ class API:
 
     def get_company_ratios(
         self,
-        product_isin:str,
-        raw:bool=False,
-    )->Union[dict, ProductsInfo]:
+        product_isin: str,
+        raw: bool = False,
+    ) -> Union[dict, ProductsInfo]:
         basic = self._basic
         session_id = self._connection_storage.session_id
 
@@ -255,6 +256,7 @@ class API:
             session_id=session_id,
             raw=raw,
         )
+
 
 if __name__ == '__main__':
     # IMPORTATIONS
@@ -266,7 +268,7 @@ if __name__ == '__main__':
     # FETCH CONFIG
     with open('config.json') as config_file:
         config = json.load(config_file)
-    
+
     # SETUP CREDENTIALS
     username = config['username']
     password = config['password']

@@ -19,9 +19,10 @@ from trading.pb.trading_pb2 import (
     Update,
 )
 
+
 class Basic:
     """ Tools to consume Degiro's Trading API.
-    
+
     Same operations than "utilities" but with automatic management of :
         * credentials
         * requests.Session
@@ -29,18 +30,18 @@ class Basic:
     """
 
     @property
-    def credentials(self)->Credentials:
+    def credentials(self) -> Credentials:
         return self._credentials
 
     @property
-    def session_storage(self)->SessionStorage:
+    def session_storage(self) -> SessionStorage:
         return self._session_storage
 
     @session_storage.setter
-    def session_storage(self, session_storage:SessionStorage):
+    def session_storage(self, session_storage: SessionStorage):
         self._session_storage = session_storage
 
-    def build_session_storage(self)->SessionStorage:
+    def build_session_storage(self) -> SessionStorage:
         return SessionStorage(
             headers=Headers.get_headers(),
             hooks=None
@@ -48,8 +49,8 @@ class Basic:
 
     def __init__(
         self,
-        credentials:Credentials,
-        session_storage=None,
+        credentials: Credentials,
+        session_storage: SessionStorage = None,
     ):
         if session_storage is None:
             session_storage = self.build_session_storage()
@@ -57,8 +58,8 @@ class Basic:
         self._logger = logging.getLogger(self.__module__)
         self._credentials = credentials
         self._session_storage = session_storage
-    
-    def get_session_id(self)->str:
+
+    def get_session_id(self) -> str:
         credentials = self._credentials
         logger = self._logger
         session = self._session_storage.session
@@ -70,11 +71,11 @@ class Basic:
         )
 
     def get_update(
-        self, 
-        request_list:Update.RequestList,
-        session_id:str,
-        raw:bool=False,
-    )->Union[dict, Update]:
+        self,
+        request_list: Update.RequestList,
+        session_id: str,
+        raw: bool = False,
+    ) -> Union[dict, Update]:
         credentials = self._credentials
         logger = self._logger
         session = self._session_storage.session
@@ -89,11 +90,11 @@ class Basic:
         )
 
     def check_order(
-        self, 
-        order:Order,
-        session_id:str,
-        raw:bool=False,
-    )->Union[Order.CheckingResponse, bool]:
+        self,
+        order: Order,
+        session_id: str,
+        raw: bool = False,
+    ) -> Union[Order.CheckingResponse, bool]:
         credentials = self._credentials
         logger = self._logger
         session = self._session_storage.session
@@ -109,11 +110,11 @@ class Basic:
 
     def confirm_order(
         self,
-        confirmation_id:str,
-        order:Order,
-        session_id:str,
-        raw:bool=False,
-    )->Union[Order.ConfirmationResponse, bool]:
+        confirmation_id: str,
+        order: Order,
+        session_id: str,
+        raw: bool = False,
+    ) -> Union[Order.ConfirmationResponse, bool]:
         credentials = self._credentials
         logger = self._logger
         session = self._session_storage.session
@@ -129,10 +130,10 @@ class Basic:
         )
 
     def update_order(
-        self, 
-        order:Order,
-        session_id:str,
-    )->bool:
+        self,
+        order: Order,
+        session_id: str,
+    ) -> bool:
         credentials = self._credentials
         logger = self._logger
         session = self._session_storage.session
@@ -147,9 +148,9 @@ class Basic:
 
     def delete_order(
         self,
-        order_id:str,
-        session_id:str,
-    )->bool:
+        order_id: str,
+        session_id: str,
+    ) -> bool:
         credentials = self._credentials
         logger = self._logger
         session = self._session_storage.session
@@ -164,8 +165,8 @@ class Basic:
 
     def get_config(
         self,
-        session_id:str,
-    )->dict:
+        session_id: str,
+    ) -> dict:
         credentials = self._credentials
         logger = self._logger
         session = self._session_storage.session
@@ -178,8 +179,8 @@ class Basic:
 
     def get_client_details(
         self,
-        session_id:str,
-    )->dict:
+        session_id: str,
+    ) -> dict:
         credentials = self._credentials
         logger = self._logger
         session = self._session_storage.session
@@ -192,8 +193,8 @@ class Basic:
 
     def get_account_info(
         self,
-        session_id:str,
-    )->dict:
+        session_id: str,
+    ) -> dict:
         credentials = self._credentials
         logger = self._logger
         session = self._session_storage.session
@@ -207,10 +208,10 @@ class Basic:
 
     def get_orders_history(
         self,
-        request:OrdersHistory.Request,
-        session_id:str,
-        raw:bool=False,
-    )->Union[dict, OrdersHistory]:
+        request: OrdersHistory.Request,
+        session_id: str,
+        raw: bool = False,
+    ) -> Union[dict, OrdersHistory]:
         credentials = self._credentials
         logger = self._logger
         session = self._session_storage.session
@@ -226,10 +227,10 @@ class Basic:
 
     def get_transactions_history(
         self,
-        request:TransactionsHistory.Request,
-        session_id:str,
-        raw:bool=False,
-    )->Union[dict, TransactionsHistory]:
+        request: TransactionsHistory.Request,
+        session_id: str,
+        raw: bool = False,
+    ) -> Union[dict, TransactionsHistory]:
         credentials = self._credentials
         logger = self._logger
         session = self._session_storage.session
@@ -245,10 +246,10 @@ class Basic:
 
     def get_account_overview(
         self,
-        request:AccountOverview.Request,
-        session_id:str,
-        raw:bool=False,
-    )->Union[dict, AccountOverview]:
+        request: AccountOverview.Request,
+        session_id: str,
+        raw: bool = False,
+    ) -> Union[dict, AccountOverview]:
         credentials = self._credentials
         logger = self._logger
         session = self._session_storage.session
@@ -264,7 +265,7 @@ class Basic:
 
     def product_search(
         self,
-        request:Union[
+        request: Union[
             ProductSearch.RequestBonds,
             ProductSearch.RequestETFs,
             ProductSearch.RequestFunds,
@@ -275,9 +276,9 @@ class Basic:
             ProductSearch.RequestStocks,
             ProductSearch.RequestWarrants,
         ],
-        session_id:str,
-        raw:bool=False,
-    )->Union[dict, ProductSearch]:
+        session_id: str,
+        raw: bool = False,
+    ) -> Union[dict, ProductSearch]:
         credentials = self._credentials
         logger = self._logger
         session = self._session_storage.session
@@ -293,9 +294,9 @@ class Basic:
 
     def get_favourites_list(
         self,
-        session_id:str,
-        raw:bool=False,
-    )->Union[dict, Favourites]:
+        session_id: str,
+        raw: bool = False,
+    ) -> Union[dict, Favourites]:
         credentials = self._credentials
         logger = self._logger
         session = self._session_storage.session
@@ -310,9 +311,9 @@ class Basic:
 
     def get_products_config(
         self,
-        session_id:str,
-        raw:bool=False,
-    )->Union[dict, ProductSearch.Config]:
+        session_id: str,
+        raw: bool = False,
+    ) -> Union[dict, ProductSearch.Config]:
         credentials = self._credentials
         logger = self._logger
         session = self._session_storage.session
@@ -327,10 +328,10 @@ class Basic:
 
     def get_products_info(
         self,
-        request:ProductsInfo.Request,
-        session_id:str,
-        raw:bool=False,
-    )->Union[dict, ProductsInfo]:
+        request: ProductsInfo.Request,
+        session_id: str,
+        raw: bool = False,
+    ) -> Union[dict, ProductsInfo]:
         credentials = self._credentials
         logger = self._logger
         session = self._session_storage.session
@@ -346,10 +347,10 @@ class Basic:
 
     def get_company_ratios(
         self,
-        product_isin:str,
-        session_id:str,
-        raw:bool=False,
-    )->Union[dict, ProductsInfo]:
+        product_isin: str,
+        session_id: str,
+        raw: bool = False,
+    ) -> Union[dict, ProductsInfo]:
         credentials = self._credentials
         logger = self._logger
         session = self._session_storage.session
@@ -363,6 +364,7 @@ class Basic:
             logger=logger,
         )
 
+
 if __name__ == '__main__':
     # IMPORTATIONS
     import json
@@ -373,7 +375,7 @@ if __name__ == '__main__':
     # FETCH CONFIG
     with open('config.json') as config_file:
         config = json.load(config_file)
-    
+
     # SETUP CREDENTIALS
     username = config['username']
     password = config['password']

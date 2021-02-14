@@ -23,21 +23,32 @@ from typing import List, Union
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 __PRODUCT_SEARCH_REQUEST_URL_MATCHING = {
-    ProductSearch.RequestBonds.DESCRIPTOR.full_name:URLs.PRODUCT_SEARCH_BONDS,
-    ProductSearch.RequestETFs.DESCRIPTOR.full_name:URLs.PRODUCT_SEARCH_ETFS,
-    ProductSearch.RequestFunds.DESCRIPTOR.full_name:URLs.PRODUCT_SEARCH_FUNDS,
-    ProductSearch.RequestFutures.DESCRIPTOR.full_name:URLs.PRODUCT_SEARCH_FUTURES,
-    ProductSearch.RequestLeverageds.DESCRIPTOR.full_name:URLs.PRODUCT_SEARCH_LEVERAGEDS,
-    ProductSearch.RequestLookup.DESCRIPTOR.full_name:URLs.PRODUCT_SEARCH_LOOKUP,
-    ProductSearch.RequestOptions.DESCRIPTOR.full_name:URLs.PRODUCT_SEARCH_OPTIONS,
-    ProductSearch.RequestStocks.DESCRIPTOR.full_name:URLs.PRODUCT_SEARCH_STOCKS,
-    ProductSearch.RequestWarrants.DESCRIPTOR.full_name:URLs.PRODUCT_SEARCH_WARRANTS,
+    ProductSearch.RequestBonds.DESCRIPTOR.full_name:
+        URLs.PRODUCT_SEARCH_BONDS,
+    ProductSearch.RequestETFs.DESCRIPTOR.full_name:
+        URLs.PRODUCT_SEARCH_ETFS,
+    ProductSearch.RequestFunds.DESCRIPTOR.full_name:
+        URLs.PRODUCT_SEARCH_FUNDS,
+    ProductSearch.RequestFutures.DESCRIPTOR.full_name:
+        URLs.PRODUCT_SEARCH_FUTURES,
+    ProductSearch.RequestLeverageds.DESCRIPTOR.full_name:
+        URLs.PRODUCT_SEARCH_LEVERAGEDS,
+    ProductSearch.RequestLookup.DESCRIPTOR.full_name:
+        URLs.PRODUCT_SEARCH_LOOKUP,
+    ProductSearch.RequestOptions.DESCRIPTOR.full_name:
+        URLs.PRODUCT_SEARCH_OPTIONS,
+    ProductSearch.RequestStocks.DESCRIPTOR.full_name:
+        URLs.PRODUCT_SEARCH_STOCKS,
+    ProductSearch.RequestWarrants.DESCRIPTOR.full_name:
+        URLs.PRODUCT_SEARCH_WARRANTS,
 }
 
-def build_logger()->logging.Logger:
+
+def build_logger() -> logging.Logger:
     return logging.getLogger(__name__)
 
-def build_session(headers:dict=None)->requests.Session:
+
+def build_session(headers: dict = None) -> requests.Session:
     """ Setup a "requests.Session" object.
 
     Args:
@@ -51,18 +62,19 @@ def build_session(headers:dict=None)->requests.Session:
 
     session = requests.Session()
 
-    if isinstance(headers, dict) :
+    if isinstance(headers, dict):
         session.headers.update(headers)
     else:
         session.headers.update(Headers.get_headers())
 
     return session
 
+
 def get_session_id(
-    credentials:Credentials,
-    session:requests.Session=None,
-    logger:logging.Logger=None
-)->str:
+    credentials: Credentials,
+    session: requests.Session = None,
+    logger: logging.Logger = None,
+) -> str:
     """ Establish a connection with Degiro's Trading API.
 
     Args:
@@ -140,7 +152,7 @@ def get_session_id(
     except Exception as e:
         logger.fatal('response:%s', response)
         raise ConnectionError(e)
-    
+
     logger.info('get_session_id:response_dict: %s', response_dict)
 
     if 'sessionId' in response_dict:
@@ -153,15 +165,16 @@ def get_session_id(
     else:
         logger.fatal('response_dict:%s', response_dict)
         raise ConnectionError('No session id returned.')
-  
+
+
 def get_update(
-    request_list:Update.RequestList,
-    session_id:str,
-    credentials:Credentials,
-    raw:bool=False,
-    session:requests.Session=None,
-    logger:logging.Logger=None,
-)->Union[dict, Update]:
+    request_list: Update.RequestList,
+    session_id: str,
+    credentials: Credentials,
+    raw: bool = False,
+    session: requests.Session = None,
+    logger: logging.Logger = None,
+) -> Union[dict, Update]:
     """ Retrieve information from Degiro's Trading Update endpoint.
 
     Args:
@@ -218,7 +231,7 @@ def get_update(
     Returns:
         Update: API response.
     """
-    
+
     if logger is None:
         logger = build_logger()
     if session is None:
@@ -242,7 +255,7 @@ def get_update(
         response_raw = session.send(prepped, verify=False)
         response_dict = response_raw.json()
 
-        if raw == True:
+        if raw is True:
             response = response_dict
         else:
             response = payload_handler.update_to_grpc(
@@ -257,14 +270,15 @@ def get_update(
 
     return response
 
+
 def check_order(
-    order:Order,
-    session_id:str,
-    credentials:Credentials,
-    raw:bool=False,
-    session:requests.Session=None,
-    logger:logging.Logger=None,
-)->Union[Order.CheckingResponse, bool]:
+    order: Order,
+    session_id: str,
+    credentials: Credentials,
+    raw: bool = False,
+    session: requests.Session = None,
+    logger: logging.Logger = None,
+) -> Union[Order.CheckingResponse, bool]:
     if logger is None:
         logger = build_logger()
     if session is None:
@@ -275,17 +289,17 @@ def check_order(
     url = f'{url};jsessionid={session_id}'
 
     params = {
-        'intAccount' : int_account,
-        'sessionId' : session_id,
+        'intAccount': int_account,
+        'sessionId': session_id,
     }
 
     order_dict = {
-        'buySell' : order.action,
-        'orderType' : order.order_type,
-        'price' : order.price,
-        'productId' : order.product_id,
-        'size' : order.size,
-        'timeType' : order.time_type,
+        'buySell': order.action,
+        'orderType': order.order_type,
+        'price': order.price,
+        'productId': order.product_id,
+        'size': order.size,
+        'timeType': order.time_type,
     }
 
     request = requests.Request(
@@ -306,10 +320,10 @@ def check_order(
         logger.fatal(e)
         return False
 
-    if  isinstance(response_dict, dict) \
-    and 'data' in response_dict \
-    and 'confirmationId' in response_dict['data']:
-        if raw == True:
+    if isinstance(response_dict, dict) \
+            and 'data' in response_dict \
+            and 'confirmationId' in response_dict['data']:
+        if raw is True:
             response = response_dict
         else:
             response = payload_handler.checking_response_to_grpc(
@@ -322,15 +336,16 @@ def check_order(
 
     return response
 
+
 def confirm_order(
-    confirmation_id:str,
-    order:Order,
-    session_id:str,
-    credentials:Credentials,
-    raw:bool=False,
-    session:requests.Session=None,
-    logger:logging.Logger=None,
-)->Union[Order.ConfirmationResponse, bool]:
+    confirmation_id: str,
+    order: Order,
+    session_id: str,
+    credentials: Credentials,
+    raw: bool = False,
+    session: requests.Session = None,
+    logger: logging.Logger = None,
+) -> Union[Order.ConfirmationResponse, bool]:
     if logger is None:
         logger = build_logger()
     if session is None:
@@ -341,17 +356,17 @@ def confirm_order(
     url = f'{url}/{confirmation_id};jsessionid={session_id}'
 
     params = {
-        'intAccount' : int_account,
-        'sessionId' : session_id,
+        'intAccount': int_account,
+        'sessionId': session_id,
     }
-    
+
     order_dict = {
-        'buySell' : order.action,
-        'orderType' : order.order_type,
-        'price' : order.price,
-        'productId' : order.product_id,
-        'size' : order.size,
-        'timeType' : order.time_type,
+        'buySell': order.action,
+        'orderType': order.order_type,
+        'price': order.price,
+        'productId': order.product_id,
+        'size': order.size,
+        'timeType': order.time_type,
     }
 
     request = requests.Request(
@@ -372,10 +387,10 @@ def confirm_order(
         logger.fatal(e)
         return False
 
-    if  isinstance(response_dict, dict) \
-    and 'data' in response_dict \
-    and 'orderId' in response_dict['data']:
-        if raw == True:
+    if isinstance(response_dict, dict) \
+            and 'data' in response_dict \
+            and 'orderId' in response_dict['data']:
+        if raw is True:
             order.id = response_dict['data']['orderId']
             response = response_dict
         else:
@@ -388,13 +403,14 @@ def confirm_order(
 
     return response
 
+
 def update_order(
-    order:Order,
-    session_id:str,
-    credentials:Credentials,
-    session:requests.Session=None,
-    logger:logging.Logger=None,
-)->bool:
+    order: Order,
+    session_id: str,
+    credentials: Credentials,
+    session: requests.Session = None,
+    logger: logging.Logger = None,
+) -> bool:
     if logger is None:
         logger = build_logger()
     if session is None:
@@ -404,19 +420,19 @@ def update_order(
     order_id = order.id
     url = URLs.ORDER_UPDATE
     url = f'{url}/{order_id};jsessionid={session_id}'
-    
+
     params = {
-        'intAccount' : int_account,
-        'sessionId' : session_id,
+        'intAccount': int_account,
+        'sessionId': session_id,
     }
 
     order_dict = {
-        'buySell' : order.action,
-        'orderType' : order.order_type,
-        'price' : order.price,
-        'productId' : order.product_id,
-        'size' : order.size,
-        'timeType' : order.time_type,
+        'buySell': order.action,
+        'orderType': order.order_type,
+        'price': order.price,
+        'productId': order.product_id,
+        'size': order.size,
+        'timeType': order.time_type,
     }
 
     request = requests.Request(
@@ -438,13 +454,14 @@ def update_order(
 
     return response.status_code == 200
 
+
 def delete_order(
-    order_id:str,
-    session_id:str,
-    credentials:Credentials,
-    session:requests.Session=None,
-    logger:logging.Logger=None,
-)->bool:
+    order_id: str,
+    session_id: str,
+    credentials: Credentials,
+    session: requests.Session = None,
+    logger: logging.Logger = None,
+) -> bool:
     if logger is None:
         logger = build_logger()
     if session is None:
@@ -455,8 +472,8 @@ def delete_order(
     url = f'{url}/{order_id};jsessionid={session_id}'
 
     params = {
-        'intAccount' : int_account,
-        'sessionId' : session_id,
+        'intAccount': int_account,
+        'sessionId': session_id,
     }
 
     request = requests.Request(method='DELETE', url=url, params=params)
@@ -471,19 +488,20 @@ def delete_order(
         logger.fatal(response.text)
         logger.fatal(e)
         return False
-    
-    return  response.status_code == 200
+
+    return response.status_code == 200
+
 
 def get_config(
-    session_id:str,
-    session:requests.Session=None,
-    logger:logging.Logger=None,
-)->dict:
+    session_id: str,
+    session: requests.Session = None,
+    logger: logging.Logger = None,
+) -> dict:
     if logger is None:
         logger = build_logger()
     if session is None:
         session = build_session()
-    
+
     url = URLs.CONFIG
 
     request = requests.Request(method='GET', url=url)
@@ -497,50 +515,49 @@ def get_config(
         logger.fatal(e)
         return False
 
-    if (
-        type(response) != dict
-        or 'data' not in response
-    ): return False
+    if type(response) != dict:
+        return False
 
-    return response['data']
+    return response.get('data', default=False)
+
 
 def get_client_details(
-    session_id:str,
-    session:requests.Session=None,
-    logger:logging.Logger=None,
-)->dict:
+    session_id: str,
+    session: requests.Session = None,
+    logger: logging.Logger = None,
+) -> dict:
     if logger is None:
         logger = build_logger()
     if session is None:
         session = build_session()
-    
+
     url = URLs.CLIENT_DETAILS
-    
+
     params = {
-        'sessionId' : session_id,
+        'sessionId': session_id,
     }
 
     request = requests.Request(method='GET', url=url, params=params)
     prepped = session.prepare_request(request)
     response = session.send(prepped, verify=False)
 
-    if response.status_code != 200: return False
-    
-    response_payload = response.json()
+    if response.status_code != 200:
+        return False
 
-    if (
-        type(response_payload) != dict
-        or 'data' not in response_payload
-    ): return False
+    response = response.json()
 
-    return response_payload
+    if type(response) != dict:
+        return False
+
+    return response
+
 
 def get_account_info(
-    session_id:str,
-    credentials:Credentials,
-    session:requests.Session=None,
-    logger:logging.Logger=None,
-)->dict:
+    session_id: str,
+    credentials: Credentials,
+    session: requests.Session = None,
+    logger: logging.Logger = None,
+) -> dict:
     if logger is None:
         logger = build_logger()
     if session is None:
@@ -548,23 +565,25 @@ def get_account_info(
 
     int_account = credentials.int_account
     url = f'{URLs.ACCOUNT_INFO}/{int_account};jsessionid={session_id}'
-    
+
     request = requests.Request(method='GET', url=url)
     prepped = session.prepare_request(request)
     response = session.send(prepped, verify=False)
-    
-    if response.status_code != 200: return False
+
+    if response.status_code != 200:
+        return False
 
     return response.json()
 
+
 def get_orders_history(
-    request:OrdersHistory.Request,
-    session_id:str,
-    credentials:Credentials,
-    raw:bool=False,
-    session:requests.Session=None,
-    logger:logging.Logger=None,
-)->Union[dict, Update]:
+    request: OrdersHistory.Request,
+    session_id: str,
+    credentials: Credentials,
+    raw: bool = False,
+    session: requests.Session = None,
+    logger: logging.Logger = None,
+) -> Union[dict, Update]:
     """ Retrieve history about orders.
 
     Args:
@@ -602,7 +621,7 @@ def get_orders_history(
     Returns:
         OrdersHistory: API response.
     """
-    
+
     if logger is None:
         logger = build_logger()
     if session is None:
@@ -624,7 +643,7 @@ def get_orders_history(
         response_raw = session.send(prepped, verify=False)
         response_dict = response_raw.json()
 
-        if raw == True:
+        if raw is True:
             response = response_dict
         else:
             response = payload_handler.orders_history_to_grpc(
@@ -638,14 +657,15 @@ def get_orders_history(
 
     return response
 
+
 def get_transactions_history(
-    request:TransactionsHistory.Request,
-    session_id:str,
-    credentials:Credentials,
-    raw:bool=False,
-    session:requests.Session=None,
-    logger:logging.Logger=None,
-)->Union[dict, Update]:
+    request: TransactionsHistory.Request,
+    session_id: str,
+    credentials: Credentials,
+    raw: bool = False,
+    session: requests.Session = None,
+    logger: logging.Logger = None,
+) -> Union[dict, Update]:
     """ Retrieve history about transactions.
 
     Args:
@@ -683,7 +703,7 @@ def get_transactions_history(
     Returns:
         TransactionsHistory: API response.
     """
-    
+
     if logger is None:
         logger = build_logger()
     if session is None:
@@ -705,7 +725,7 @@ def get_transactions_history(
         response_raw = session.send(prepped, verify=False)
         response_dict = response_raw.json()
 
-        if raw == True:
+        if raw is True:
             response = response_dict
         else:
             response = payload_handler.transactions_history_to_grpc(
@@ -719,14 +739,15 @@ def get_transactions_history(
 
     return response
 
+
 def get_account_overview(
-    request:AccountOverview.Request,
-    session_id:str,
-    credentials:Credentials,
-    raw:bool=False,
-    session:requests.Session=None,
-    logger:logging.Logger=None,
-)->Union[dict, AccountOverview]:
+    request: AccountOverview.Request,
+    session_id: str,
+    credentials: Credentials,
+    raw: bool = False,
+    session: requests.Session = None,
+    logger: logging.Logger = None,
+) -> Union[dict, AccountOverview]:
     """ Retrieve information about the account.
 
     Args:
@@ -764,7 +785,7 @@ def get_account_overview(
     Returns:
         Update: API response.
     """
-    
+
     if logger is None:
         logger = build_logger()
     if session is None:
@@ -785,7 +806,7 @@ def get_account_overview(
         response_raw = session.send(prepped, verify=False)
         response_dict = response_raw.json()
 
-        if raw == True:
+        if raw is True:
             response = response_dict
         else:
             response = payload_handler.account_overview_to_grpc(
@@ -799,8 +820,9 @@ def get_account_overview(
 
     return response
 
+
 def product_search(
-    request:Union[
+    request: Union[
         ProductSearch.RequestBonds,
         ProductSearch.RequestETFs,
         ProductSearch.RequestFunds,
@@ -811,12 +833,12 @@ def product_search(
         ProductSearch.RequestStocks,
         ProductSearch.RequestWarrants,
     ],
-    session_id:str,
-    credentials:Credentials,
-    raw:bool=False,
-    session:requests.Session=None,
-    logger:logging.Logger=None,
-)->Union[dict, ProductSearch]:
+    session_id: str,
+    credentials: Credentials,
+    raw: bool = False,
+    session: requests.Session = None,
+    logger: logging.Logger = None,
+) -> Union[dict, ProductSearch]:
     """ Search products.
 
     Args:
@@ -856,7 +878,7 @@ def product_search(
     Returns:
         ProductSearch: API response.
     """
-    
+
     if logger is None:
         logger = build_logger()
     if session is None:
@@ -880,7 +902,7 @@ def product_search(
         response_raw = session.send(prepped, verify=False)
         response_dict = response_raw.json()
 
-        if raw == True:
+        if raw is True:
             response = response_dict
         else:
             response = payload_handler.product_search_to_grpc(
@@ -894,13 +916,14 @@ def product_search(
 
     return response
 
+
 def get_favourites_list(
-    session_id:str,
-    credentials:Credentials,
-    raw:bool=False,
-    session:requests.Session=None,
-    logger:logging.Logger=None,
-)->Union[dict, Favourites]:
+    session_id: str,
+    credentials: Credentials,
+    raw: bool = False,
+    session: requests.Session = None,
+    logger: logging.Logger = None,
+) -> Union[dict, Favourites]:
     """ Retrieve the lists of favourite products.
 
     Args:
@@ -921,7 +944,7 @@ def get_favourites_list(
     Returns:
         Favourites: API response.
     """
-    
+
     if logger is None:
         logger = build_logger()
     if session is None:
@@ -931,8 +954,8 @@ def get_favourites_list(
     url = URLs.PRODUCT_FAVOURITES_LISTS
 
     params = {
-        'intAccount' : int_account,
-        'sessionId' : session_id,
+        'intAccount': int_account,
+        'sessionId': session_id,
     }
 
     request = requests.Request(method='GET', url=url, params=params)
@@ -943,7 +966,7 @@ def get_favourites_list(
         response_raw = session.send(prepped, verify=False)
         response_dict = response_raw.json()
 
-        if raw == True:
+        if raw is True:
             response = response_dict
         else:
             response = payload_handler.favourites_to_grpc(
@@ -957,13 +980,14 @@ def get_favourites_list(
 
     return response
 
+
 def get_products_config(
-    session_id:str,
-    credentials:Credentials,
-    raw:bool=False,
-    session:requests.Session=None,
-    logger:logging.Logger=None,
-)->Union[dict, ProductSearch.Config]:
+    session_id: str,
+    credentials: Credentials,
+    raw: bool = False,
+    session: requests.Session = None,
+    logger: logging.Logger = None,
+) -> Union[dict, ProductSearch.Config]:
     """ Fetch the product search config table.
 
     No credentials or logging seems to be required for this endpoint.
@@ -988,7 +1012,7 @@ def get_products_config(
     Returns:
         ProductSearch.Config: API response.
     """
-    
+
     if logger is None:
         logger = build_logger()
     if session is None:
@@ -998,8 +1022,8 @@ def get_products_config(
     url = URLs.PRODUCTS_CONFIG
 
     params = {
-        'intAccount' : int_account,
-        'sessionId' : session_id,
+        'intAccount': int_account,
+        'sessionId': session_id,
     }
 
     request = requests.Request(method='GET', url=url, params=params)
@@ -1010,7 +1034,7 @@ def get_products_config(
         response_raw = session.send(prepped, verify=False)
         response_dict = response_raw.json()
 
-        if raw == True:
+        if raw is True:
             response = response_dict
         else:
             response = payload_handler.products_config_to_grpc(
@@ -1024,14 +1048,15 @@ def get_products_config(
 
     return response
 
+
 def get_products_info(
-    request:ProductsInfo.Request,
-    session_id:str,
-    credentials:Credentials,
-    raw:bool=False,
-    session:requests.Session=None,
-    logger:logging.Logger=None,
-)->ProductsInfo:
+    request: ProductsInfo.Request,
+    session_id: str,
+    credentials: Credentials,
+    raw: bool = False,
+    session: requests.Session = None,
+    logger: logging.Logger = None,
+) -> ProductsInfo:
     """ Search for products using their ids.
 
     Args:
@@ -1067,8 +1092,8 @@ def get_products_info(
     url = URLs.PRODUCTS_INFO
 
     params = {
-        'intAccount' : int_account,
-        'sessionId' : session_id,
+        'intAccount': int_account,
+        'sessionId': session_id,
     }
 
     payload = payload_handler.products_info_to_api(request=request)
@@ -1087,7 +1112,7 @@ def get_products_info(
         response_raw = session.send(prepped, verify=False)
         response_dict = response_raw.json()
 
-        if raw == True:
+        if raw is True:
             response = response_dict
         else:
             response = payload_handler.products_info_to_grpc(
@@ -1101,19 +1126,20 @@ def get_products_info(
 
     return response
 
+
 def get_company_ratios(
-    product_isin:str,
-    session_id:str,
-    credentials:Credentials,
-    raw:bool=False,
-    session:requests.Session=None,
-    logger:logging.Logger=None,
-)->dict:
+    product_isin: str,
+    session_id: str,
+    credentials: Credentials,
+    raw: bool = False,
+    session: requests.Session = None,
+    logger: logging.Logger = None,
+) -> dict:
     if logger is None:
         logger = build_logger()
     if session is None:
         session = build_session()
-    
+
     int_account = credentials.int_account
     url = f'{URLs.COMPANY_RATIOS}/{product_isin}'
 
@@ -1125,7 +1151,7 @@ def get_company_ratios(
     request = requests.Request(method='GET', url=url)
     prepped = session.prepare_request(request)
     prepped.headers['cookie'] = 'JSESSIONID=' + session_id
-    
+
     request = requests.Request(method='GET', url=url, params=params)
     prepped = session.prepare_request(request)
     response_raw = None
@@ -1134,7 +1160,7 @@ def get_company_ratios(
         response_raw = session.send(prepped, verify=False)
         response_dict = response_raw.json()
 
-        if raw == True:
+        if raw is True:
             response = response_dict
         else:
             response = payload_handler.company_ratios_to_grpc(
@@ -1149,6 +1175,7 @@ def get_company_ratios(
 
     return response
 
+
 if __name__ == '__main__':
     # IMPORTATIONS
     import json
@@ -1159,7 +1186,7 @@ if __name__ == '__main__':
     # FETCH CONFIG
     with open('config.json') as config_file:
         config = json.load(config_file)
-    
+
     # SETUP CREDENTIALS
     username = config['username']
     password = config['password']

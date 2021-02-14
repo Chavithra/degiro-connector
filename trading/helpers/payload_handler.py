@@ -17,44 +17,45 @@ from typing import List, Union
 
 # MATCHINGS
 __ACTION_MATCHING = {
-    'B' : Order.Action.Value('BUY'),
-    'S' : Order.Action.Value('SELL'),
+    'B': Order.Action.Value('BUY'),
+    'S': Order.Action.Value('SELL'),
 }
 
 __ORDER_MATCHING = {
-    'buysell' : 'action',
-    'contractSize' : 'contract_size',
-    'contractType' : 'contract_type',
-    'currency' : 'currency',
-    'date' : 'hour',
-    'id' : 'id',
-    'isDeletable' : 'is_deletable',
-    'isModifiable' : 'is_modifiable',
-    'orderTimeTypeId' : 'time_type',
-    'orderTypeId' : 'order_type',
-    'price' : 'price',
-    'product' : 'product',
-    'productId' : 'product_id',
-    'quantity' : 'quantity',
-    'size' : 'size',
-    'stopPrice' : 'stop_price',
-    'totalOrderValue' : 'total_order_value',
+    'buysell': 'action',
+    'contractSize': 'contract_size',
+    'contractType': 'contract_type',
+    'currency': 'currency',
+    'date': 'hour',
+    'id': 'id',
+    'isDeletable': 'is_deletable',
+    'isModifiable': 'is_modifiable',
+    'orderTimeTypeId': 'time_type',
+    'orderTypeId': 'order_type',
+    'price': 'price',
+    'product': 'product',
+    'productId': 'product_id',
+    'quantity': 'quantity',
+    'size': 'size',
+    'stopPrice': 'stop_price',
+    'totalOrderValue': 'total_order_value',
 }
 
 __UPDATE_OPTION_MATCHING = {
-    Update.Option.Value('ALERTS') : 'alerts',
-    Update.Option.Value('CASHFUNDS') : 'cashFunds',
-    Update.Option.Value('HISTORICALORDERS') : 'historicalOrders',
-    Update.Option.Value('ORDERS') : 'orders',
-    Update.Option.Value('PORTFOLIO') : 'portfolio',
-    Update.Option.Value('TOTALPORTFOLIO') : 'totalPortfolio',
-    Update.Option.Value('TRANSACTIONS') : 'transactions',
+    Update.Option.Value('ALERTS'): 'alerts',
+    Update.Option.Value('CASHFUNDS'): 'cashFunds',
+    Update.Option.Value('HISTORICALORDERS'): 'historicalOrders',
+    Update.Option.Value('ORDERS'): 'orders',
+    Update.Option.Value('PORTFOLIO'): 'portfolio',
+    Update.Option.Value('TOTALPORTFOLIO'): 'totalPortfolio',
+    Update.Option.Value('TRANSACTIONS'): 'transactions',
 }
+
 
 # GRPC TO API
 def account_overview_request_to_api(
-    request:AccountOverview.Request,
-)->dict:
+    request: AccountOverview.Request,
+) -> dict:
     request_dict = dict()
     request_dict['fromDate'] = \
         datetime.datetime(
@@ -73,9 +74,10 @@ def account_overview_request_to_api(
 
     return request_dict
 
+
 def products_info_to_api(
-    request:ProductsInfo.Request,
-)->List[str]:
+    request: ProductsInfo.Request,
+) -> List[str]:
     request_dict = json_format.MessageToDict(
         message=request,
         including_default_value_fields=True,
@@ -89,8 +91,9 @@ def products_info_to_api(
 
     return payload
 
+
 def product_search_request_to_api(
-    request:Union[
+    request: Union[
         ProductSearch.RequestBonds,
         ProductSearch.RequestETFs,
         ProductSearch.RequestFunds,
@@ -101,7 +104,7 @@ def product_search_request_to_api(
         ProductSearch.RequestStocks,
         ProductSearch.RequestWarrants,
     ],
-)->dict:
+) -> dict:
     request_dict = json_format.MessageToDict(
         message=request,
         including_default_value_fields=False,
@@ -113,7 +116,8 @@ def product_search_request_to_api(
 
     return request_dict
 
-def orders_history_request_to_api(request:OrdersHistory.Request)->dict:
+
+def orders_history_request_to_api(request: OrdersHistory.Request) -> dict:
     request_dict = dict()
     request_dict['fromDate'] = \
         datetime.datetime(
@@ -131,10 +135,11 @@ def orders_history_request_to_api(request:OrdersHistory.Request)->dict:
         .strftime('%d/%m/%Y')
 
     return request_dict
+
 
 def transactions_history_request_to_api(
-    request:TransactionsHistory.Request,
-)->dict:
+    request: TransactionsHistory.Request,
+) -> dict:
     request_dict = dict()
     request_dict['fromDate'] = \
         datetime.datetime(
@@ -153,7 +158,8 @@ def transactions_history_request_to_api(
 
     return request_dict
 
-def update_request_list_to_api(request_list:Update.RequestList)->dict:
+
+def update_request_list_to_api(request_list: Update.RequestList) -> dict:
     """ Makes a payload compatible with the API.
 
     Parameters:
@@ -173,12 +179,13 @@ def update_request_list_to_api(request_list:Update.RequestList)->dict:
 
     return payload
 
+
 # API TO GRPC
-def account_overview_to_grpc(payload:dict)->OrdersHistory:
+def account_overview_to_grpc(payload: dict) -> OrdersHistory:
     account_overview = AccountOverview()
     account_overview.response_datetime.GetCurrentTime()
     json_format.ParseDict(
-        js_dict={'values':payload['data']},
+        js_dict={'values': payload['data']},
         message=account_overview,
         ignore_unknown_fields=True,
         descriptor_pool=None,
@@ -186,7 +193,8 @@ def account_overview_to_grpc(payload:dict)->OrdersHistory:
 
     return account_overview
 
-def checking_response_to_grpc(payload:dict)->Order.CheckingResponse:
+
+def checking_response_to_grpc(payload: dict) -> Order.CheckingResponse:
     checking_response = Order.CheckingResponse()
     checking_response.response_datetime.GetCurrentTime()
     json_format.ParseDict(
@@ -198,19 +206,21 @@ def checking_response_to_grpc(payload:dict)->Order.CheckingResponse:
 
     return checking_response
 
-def company_ratios_to_grpc(payload:dict)->CompanyRatios:
+
+def company_ratios_to_grpc(payload: dict) -> CompanyRatios:
     company_ratios = CompanyRatios()
     json_format.ParseDict(
-        js_dict={'values':payload['data']},
+        js_dict={'values': payload['data']},
         message=company_ratios,
         ignore_unknown_fields=False,
         descriptor_pool=None,
     )
     return company_ratios
 
+
 def confirmation_response_to_grpc(
-    payload:dict,
-)->Order.ConfirmationResponse:
+    payload: dict,
+) -> Order.ConfirmationResponse:
     confirmation_response = Order.ConfirmationResponse()
     confirmation_response.response_datetime.GetCurrentTime()
     json_format.ParseDict(
@@ -222,11 +232,12 @@ def confirmation_response_to_grpc(
 
     return confirmation_response
 
-def favourites_to_grpc(payload:dict)->Favourites:
+
+def favourites_to_grpc(payload: dict) -> Favourites:
     favourites = Favourites()
     favourites.response_datetime.GetCurrentTime()
     json_format.ParseDict(
-        js_dict={'values':payload['data']},
+        js_dict={'values': payload['data']},
         message=favourites,
         ignore_unknown_fields=False,
         descriptor_pool=None,
@@ -234,7 +245,8 @@ def favourites_to_grpc(payload:dict)->Favourites:
 
     return favourites
 
-def message_to_dict(message:Message)->dict:
+
+def message_to_dict(message: Message) -> dict:
     return json_format.MessageToDict(
         message=message,
         including_default_value_fields=True,
@@ -244,11 +256,12 @@ def message_to_dict(message:Message)->dict:
         float_precision=None,
     )
 
-def orders_history_to_grpc(payload:dict)->OrdersHistory:
+
+def orders_history_to_grpc(payload: dict) -> OrdersHistory:
     orders_history = OrdersHistory()
     orders_history.response_datetime.GetCurrentTime()
     json_format.ParseDict(
-        js_dict={'values':payload['data']},
+        js_dict={'values': payload['data']},
         message=orders_history,
         ignore_unknown_fields=True,
         descriptor_pool=None,
@@ -256,10 +269,11 @@ def orders_history_to_grpc(payload:dict)->OrdersHistory:
 
     return orders_history
 
-def products_config_to_grpc(payload:dict)->ProductSearch.Config:
+
+def products_config_to_grpc(payload: dict) -> ProductSearch.Config:
     products_config = ProductSearch.Config()
     json_format.ParseDict(
-        js_dict={'values':payload},
+        js_dict={'values': payload},
         message=products_config,
         ignore_unknown_fields=False,
         descriptor_pool=None,
@@ -267,17 +281,19 @@ def products_config_to_grpc(payload:dict)->ProductSearch.Config:
 
     return products_config
 
-def products_info_to_grpc(payload:dict)->ProductsInfo:
+
+def products_info_to_grpc(payload: dict) -> ProductsInfo:
     products_info = ProductsInfo()
     json_format.ParseDict(
-        js_dict={'values':payload['data']},
+        js_dict={'values': payload['data']},
         message=products_info,
         ignore_unknown_fields=False,
         descriptor_pool=None,
     )
     return products_info
 
-def product_search_to_grpc(payload:dict)->ProductSearch:
+
+def product_search_to_grpc(payload: dict) -> ProductSearch:
     product_search = ProductSearch()
     product_search.response_datetime.GetCurrentTime()
     json_format.ParseDict(
@@ -289,7 +305,8 @@ def product_search_to_grpc(payload:dict)->ProductSearch:
 
     return product_search
 
-def setup_update_orders(update:Update, payload:dict):
+
+def setup_update_orders(update: Update, payload: dict):
     """ Build an "Order" object using "dict" returned by the API.
     Parameters:
         order {dict}
@@ -305,9 +322,9 @@ def setup_update_orders(update:Update, payload:dict):
         for order in payload['orders']['value']:
             order_dict = dict()
             for attribute in order['value']:
-                if  'name' in attribute \
-                and 'value' in attribute \
-                and attribute['name'] in __ORDER_MATCHING:
+                if 'name' in attribute \
+                        and 'value' in attribute \
+                        and attribute['name'] in __ORDER_MATCHING:
                     order_dict[__ORDER_MATCHING[attribute['name']]] = \
                         attribute['value']
 
@@ -315,35 +332,38 @@ def setup_update_orders(update:Update, payload:dict):
                 __ACTION_MATCHING[order_dict['action']]
             update.orders.values.append(Order(**order_dict))
 
-def setup_update_portfolio(update:Update, payload:dict):
+
+def setup_update_portfolio(update: Update, payload: dict):
     if 'portfolio' in payload:
         update.portfolio.last_updated = \
             payload['portfolio']['lastUpdated']
-            
+
         for positionrow in payload['portfolio']['value']:
             value = update.portfolio.values.add()
             for attribute in positionrow['value']:
-                if  'name' in attribute \
-                and 'value' in attribute:
+                if 'name' in attribute \
+                        and 'value' in attribute:
                     value[attribute['name']] = attribute['value']
 
-def setup_update_total_portfolio(update:Update, payload:dict):
+
+def setup_update_total_portfolio(update: Update, payload: dict):
     if 'totalPortfolio' in payload:
         update.total_portfolio.last_updated = \
             payload['totalPortfolio']['lastUpdated']
 
         for attribute in payload['totalPortfolio']['value']:
-            if  'name' in attribute \
-            and 'value' in attribute:
+            if 'name' in attribute \
+                    and 'value' in attribute:
                 name = attribute['name']
                 value = attribute['value']
                 update.total_portfolio.values[name] = value
 
-def transactions_history_to_grpc(payload:dict)->TransactionsHistory:
+
+def transactions_history_to_grpc(payload: dict) -> TransactionsHistory:
     transactions_history = TransactionsHistory()
     transactions_history.response_datetime.GetCurrentTime()
     json_format.ParseDict(
-        js_dict={'values':payload['data']},
+        js_dict={'values': payload['data']},
         message=transactions_history,
         ignore_unknown_fields=True,
         descriptor_pool=None,
@@ -351,7 +371,8 @@ def transactions_history_to_grpc(payload:dict)->TransactionsHistory:
 
     return transactions_history
 
-def update_to_grpc(payload:dict)->Update:
+
+def update_to_grpc(payload: dict) -> Update:
     update = Update()
     update.response_datetime.GetCurrentTime()
 
