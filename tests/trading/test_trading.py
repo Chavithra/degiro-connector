@@ -18,7 +18,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 def config_dict():
     with open('config/config.json') as config_file:
         config_dict = json.load(config_file)
-    
+
     return config_dict
 
 @pytest.fixture(scope='module')
@@ -43,7 +43,7 @@ def trading_api(credentials):
     return trading_api
 
 # TESTS FIXTURES
-def test_fixture_config_dict(config_dict):    
+def test_fixture_config_dict(config_dict):
     int_account = config_dict['int_account']
     username = config_dict['username']
     password = config_dict['password']

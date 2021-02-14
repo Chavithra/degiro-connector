@@ -65,7 +65,7 @@ def test_chart(quotecast_api):
     # FETCH DATA
     chart = quotecast_api.get_chart(
         request=request,
-        override=None,
+        override = None,
         raw=True,
     )
 
@@ -136,7 +136,7 @@ def test_quotecast(quotecast_api):
         'BidPrice',
     ])
     quotecast_api.subscribe(request=request)
-    
+
     quotecast = quotecast_api.fetch_data()
 
     quotecast_parser = QuotecastParser()
