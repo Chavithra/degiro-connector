@@ -7,9 +7,9 @@ setup(
     author='Chavithra PARANA',
     author_email='chavithra@gmail.com',
     classifiers=[
-        "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: BSD-3-Clause",
-        "Operating System :: OS Independent",
+        'Programming Language :: Python :: 3',
+        'License :: OSI Approved :: BSD 3-Clause "New" or "Revised" License (BSD-3-Clause)',
+        'Operating System :: OS Independent',
     ],
     entry_points={
         'console_scripts': [
