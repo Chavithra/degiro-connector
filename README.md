@@ -28,13 +28,13 @@ Here are the features you can access through this library :
 ## 1.2. How to install ?
 
 ```bash
-pip install git+https://github.com/chavithra/degiro-connector.git
+pip install degiro-connector
 ```
 
 ## 1.3. How to upgrade ?
 
 ```bash
-pip install --no-cache-dir --upgrade git+https://github.com/chavithra/degiro-connector.git
+pip install --no-cache-dir --upgrade degiro-connector
 ```
 
 ## 1.4. How to uninstall ?
