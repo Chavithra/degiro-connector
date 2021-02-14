@@ -2,17 +2,20 @@
 import json
 import logging
 import pytest
+import quotecast.helpers.pb_handler as pb_handler
 import random
 import time
 import urllib3
 
 from quotecast.api import API as QuotecastAPI
-from quotecast.pb.quotecast_pb2 import Chart
+from quotecast.models.quotecast_parser import QuotecastParser
+from quotecast.pb.quotecast_pb2 import Chart, Quotecast
 
 # SETUP LOGGING
 logging.basicConfig(level=logging.FATAL)
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
+# SETUP FIXTURES
 @pytest.fixture(scope='module')
 def config_dict():
     with open('config/config.json') as config_file:
@@ -33,14 +36,18 @@ def quotecast_api(user_token):
 
     return quotecast_api
 
-def test_session_id(quotecast_api):
-    time.sleep(random.uniform(0, 2))
+# TESTS FIXTURES
+def test_fixture_user_token(user_token):
+    assert isinstance(user_token, int)
+    assert user_token > 0
 
+def test_fixture_quotecast_api(quotecast_api):
     session_id = quotecast_api.connection_storage.session_id
 
     assert isinstance(session_id, str)
     assert len(session_id) == 36
 
+# TESTS FEATURES
 def test_chart(quotecast_api):
     time.sleep(random.uniform(0, 2))
 
@@ -115,3 +122,30 @@ def test_chart(quotecast_api):
     assert chart['resolution'] == 'PT1M'
     assert chart['series'][0]['data']['quality'] == 'REALTIME'
     assert chart['series'][0]['data']['issueId'] == 360148977
+
+def test_quotecast(quotecast_api):
+    time.sleep(random.uniform(0, 2))
+
+    request = Quotecast.Request()
+    request.subscriptions['AAPL.BATS,E'].extend([
+        'LastDate',
+        'LastTime',
+        'LastPrice',
+        'LastVolume',
+        'AskPrice',
+        'BidPrice',
+    ])
+    quotecast_api.subscribe(request=request)
+    
+    quotecast = quotecast_api.fetch_data()
+
+    quotecast_parser = QuotecastParser()
+    quotecast_parser.put_quotecast(quotecast=quotecast)
+    ticker = quotecast_parser.ticker
+    ticker_dict = pb_handler.message_to_dict(message=ticker)
+    metrics = ticker_dict['products']['AAPL.BATS,E']['metrics']
+
+    assert 'AAPL.BATS,E' in ticker.product_list
+
+    for metric in metrics:
+        assert isinstance(metrics[metric], float)
