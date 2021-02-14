@@ -1,12 +1,12 @@
 import logging
 import orjson as json
 import quotecast.helpers.pb_handler as pb_handler
+import quotecast.constants.urls as urls
 import requests
 import time
 import urllib3
 
 from quotecast.constants.headers import Headers
-from quotecast.constants.endpoints import Endpoints
 from quotecast.pb.quotecast_pb2 import Chart, Quotecast
 from typing import Dict
 
@@ -65,9 +65,9 @@ def get_session_id(
     if session is None:
         session = build_session()
     
-    url = Endpoints.QUOTECAST_URL
+    url = urls.QUOTECAST
     url = f'{url}/request_session'
-    version = Endpoints.QUOTECAST_VERSION
+    version = urls.QUOTECAST_VERSION
     
     parameters = {'version': version, 'userToken': user_token}
     data = '{"referrer":"https://trader.degiro.nl"}'
@@ -127,7 +127,7 @@ def fetch_data(
     if session is None:
         session = build_session()
 
-    url = f'{Endpoints.QUOTECAST_URL}/{session_id}'
+    url = f'{urls.QUOTECAST}/{session_id}'
 
     request = requests.Request(method='GET', url=url)
     prepped = session.prepare_request(request=request)
@@ -197,7 +197,7 @@ def subscribe(
     if session is None:
         session = build_session()
 
-    url = Endpoints.QUOTECAST_URL
+    url = urls.QUOTECAST
     url = f'{url}/{session_id}'
     data = pb_handler.quotecast_request_to_api(request=request)
 
@@ -270,7 +270,7 @@ def get_chart(
     if session is None:
         session = build_session()
 
-    url = Endpoints.CHART_URL
+    url = urls.CHART
     params = pb_handler.chart_request_to_api(request=request)
     params['format'] = 'json'
     params['callback'] = ''

@@ -152,6 +152,14 @@ class QuotecastParser:
     )->Ticker:
         """ Build or update a Ticker metrics using a Quotecast object.
 
+        Only the metrics which can be converted to float are supported.
+
+        But that should be enough to handle all the real use cases.
+
+        This was done to :
+            * Keep the Ticker structure simple and light.
+            * Have better performances during processing.
+
         Args:
             quotecast (Quotecast):
                 Object containing the raw metrics.
@@ -205,8 +213,11 @@ class QuotecastParser:
                         + time.second
                     ticker.products[product].metrics[metric] = value
                 else:
-                    # NO CONVERSION TO FLOAT POSSIBLE
-                    raise RuntimeWarning(f'Unused string : {message}')
+                    # NOT CONVERTIBLE TO FLOAT
+                    raise RuntimeWarning(
+                        'Unsupported string metric : '
+                        f'{metric} = {message}'
+                    )
             elif message['m'] == 'a_req':
                 references[message['v'][1]] = message['v'][0].rsplit(
                     sep='.',
