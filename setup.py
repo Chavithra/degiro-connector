@@ -18,7 +18,7 @@ setup(
         ],
     },
     extras_requires={
-        'tests':[
+        'tests': [
             'pytest',
         ],
     },
