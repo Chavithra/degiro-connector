@@ -24,7 +24,6 @@ setup(
     },
     install_requires=[
         'wheel',
-        'click',
         'grpcio',
         'onetimepass',
         'orjson',
@@ -38,5 +37,5 @@ setup(
     packages=find_packages(),
     python_requires='>=3.7',
     url='https://github.com/chavithra/degiro-connector',
-    version='0.0.4',
+    version='0.0.5',
 )
