@@ -1,4 +1,8 @@
 from setuptools import setup, find_packages
+
+with open('README.md', 'r') as f:
+    long_description = f.read()
+
 setup(
     author='Chavithra PARANA',
     author_email='chavithra@gmail.com',
@@ -28,6 +32,8 @@ setup(
         'requests',
         'wrapt',
     ],
+    long_description=long_description,
+    long_description_content_type='text/markdown',
     name='degiro-connector',
     packages=find_packages(),
     python_requires='>=3.7',
