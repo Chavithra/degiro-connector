@@ -161,7 +161,7 @@ You can use the following code to connect :
 
 ```python
 # SETUP QUOTECAST API
-quotecast_api = API(user_token=YOUR_USER_TOKEN) 
+quotecast_api = API(user_token=YOUR_USER_TOKEN)
 
 # CONNECTION
 quotecast_api.connect()
@@ -364,7 +364,7 @@ Example - Dictionnary :
 
 ```python
 {
-    '360114899' : {
+    '360114899': {
         'vwd_id': 360114899,
         'response_datetime': '2020-11-08 12:00:27',
         'request_duration': 1.0224891666870117,
@@ -373,7 +373,7 @@ Example - Dictionnary :
         'LastPrice': '70.0',
         'LastVolume': '100'
     },
-    '360015751' : {
+    '360015751': {
         'vwd_id': 360015751,
         'response_datetime': '2020-11-08 12:00:27',
         'request_duration': 1.0224891666870117,
