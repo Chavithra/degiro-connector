@@ -8,6 +8,8 @@ import threading
 # https://stackoverflow.com/questions/61631955/python-requests-ssl-error-during-requests
 import ssl
 from urllib3 import poolmanager
+
+
 class TLSAdapter(requests.adapters.HTTPAdapter):
     def init_poolmanager(self, connections, maxsize, block=False):
         """Create and initialize the urllib3 PoolManager."""
@@ -27,11 +29,12 @@ class TLSAdapter(requests.adapters.HTTPAdapter):
             ssl_context=ctx,
         )
 
+
 class SessionStorage:
     """ Handle the Requests Session objects in a threadsafe manner. """
 
     @property
-    def session(self)->requests.Session:
+    def session(self) -> requests.Session:
         self.__logger.debug(
             'session:getter: %s',
             threading.current_thread().name
@@ -39,23 +42,23 @@ class SessionStorage:
 
         if not hasattr(self.__local_storage, 'session'):
             self.__local_storage.session = self.build_session()
-        
+
         return self.__local_storage.session
 
     @session.setter
-    def session(self, session:requests.Session):
+    def session(self, session: requests.Session):
         self.__logger.debug(
             'session:setter: %s',
             threading.current_thread().name
         )
-        
+
         self.__local_storage.session = session
 
     def build_session(
         self,
-        headers:dict=None,
-        hooks:dict=None,
-    )->requests.Session:
+        headers: dict = None,
+        hooks: dict = None,
+    ) -> requests.Session:
         """
         Args:
             headers (dict, optional):
@@ -75,31 +78,31 @@ class SessionStorage:
         # FIX #61631955
         session.mount('https://', TLSAdapter())
 
-        if isinstance(headers, dict) :
+        if isinstance(headers, dict):
             session.headers.update(headers)
         elif isinstance(self.__headers, dict):
             session.headers.update(self.__headers)
-        
-        if isinstance(hooks, dict) :
+
+        if isinstance(hooks, dict):
             session.hooks.update(hooks)
         elif isinstance(self.__hooks, dict):
             session.hooks.update(self.__hooks)
 
         return session
 
-    def reset_session(self, headers:dict=None, hooks:dict=None):
+    def reset_session(self, headers: dict = None, hooks: dict = None):
         self.__local_storage.session = self.build_session(
             headers=headers,
             hooks=hooks
         )
 
-    def __init__(self, headers:dict=None, hooks:dict=None):
+    def __init__(self, headers: dict = None, hooks: dict = None):
         self.__logger = logging.getLogger(self.__module__)
         self.__local_storage = threading.local()
-        
-        if isinstance(headers, dict) :
+
+        if isinstance(headers, dict):
             headers = dict(headers)
-        
+
         if isinstance(hooks, dict):
             hooks = dict(hooks)
 

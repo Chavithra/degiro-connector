@@ -2,16 +2,17 @@ import logging
 import urllib3
 
 from quotecast.basic import Basic
-from quotecast.models.connection_storage import  ConnectionStorage
+from quotecast.models.connection_storage import ConnectionStorage
 from quotecast.models.quotecast_parser import QuotecastParser
 from quotecast.pb.quotecast_pb2 import Chart, Quotecast
 from typing import Dict, Union
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
+
 class API:
     """ Tools to consume Degiro's QuoteCast API.
-    
+
     Same operations than "Basic" but with "session_id" management.
 
     Additional methods :
@@ -21,18 +22,18 @@ class API:
     """
 
     @property
-    def basic(self)->Basic:
+    def basic(self) -> Basic:
         return self._basic
-    
+
     @property
-    def connection_storage(self)->ConnectionStorage:
+    def connection_storage(self) -> ConnectionStorage:
         return self._connection_storage
 
     @property
-    def user_token(self)->int:
+    def user_token(self) -> int:
         return self._basic.user_token
 
-    def __init__(self, user_token:int):
+    def __init__(self, user_token: int):
         self._logger = logging.getLogger(self.__module__)
         self._basic = Basic(user_token=user_token)
         self._connection_storage = ConnectionStorage(
@@ -45,7 +46,7 @@ class API:
         connection_storage = self._connection_storage
         connection_storage.session_id = basic.get_session_id()
 
-    def fetch_data(self)->Quotecast:
+    def fetch_data(self) -> Quotecast:
         basic = self.basic
         session_id = self.connection_storage.session_id
 
@@ -55,10 +56,10 @@ class API:
 
     def fetch_metrics(
         self,
-        request:Quotecast.Request,
-    )->Dict[
-        Union[str, int], # VWD_ID
-        Dict[str, Union[str, int]] # METRICS : NAME / VALUE
+        request: Quotecast.Request,
+    ) -> Dict[
+        Union[str, int],  # VWD_ID
+        Dict[str, Union[str, int]]  # METRICS : NAME / VALUE
     ]:
         """ Fetch metrics from a request.
 
@@ -93,10 +94,10 @@ class API:
             except Exception as e:
                 logger.fatal(e)
                 break
-            
+
         return ticker_dict
 
-    def subscribe(self, request:Quotecast.Request)->bool:
+    def subscribe(self, request: Quotecast.Request) -> bool:
         basic = self.basic
         session_id = self._connection_storage.session_id
 
@@ -107,17 +108,18 @@ class API:
 
     def get_chart(
         self,
-        request:Chart.Request,
-        override:Dict[str, str]=None,
-        raw:bool=False,
-    )->bool:
+        request: Chart.Request,
+        override: Dict[str, str] = None,
+        raw: bool = False,
+    ) -> bool:
         basic = self.basic
-        
+
         return basic.get_chart(
             request=request,
             override=override,
             raw=raw,
         )
+
 
 if __name__ == '__main__':
     # IMPORTATIONS
@@ -128,7 +130,7 @@ if __name__ == '__main__':
     # SETUP LOGS
     logging.basicConfig(level=logging.DEBUG)
 
-    # SETUP CREDENTIALS    
+    # SETUP CREDENTIALS
     with open('config/subscription_request.json') as config_file:
         config = json.load(config_file)
     user_token = config['user_token']

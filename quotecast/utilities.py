@@ -14,10 +14,12 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # pylint: disable=no-member
 
-def build_logger()->logging.Logger:
+
+def build_logger() -> logging.Logger:
     return logging.getLogger(__name__)
 
-def build_session(headers:dict=None)->requests.Session:
+
+def build_session(headers: dict = None) -> requests.Session:
     """ Setups a requests.Session object.
 
     Args:
@@ -32,18 +34,19 @@ def build_session(headers:dict=None)->requests.Session:
 
     session = requests.Session()
 
-    if isinstance(headers, dict) :
+    if isinstance(headers, dict):
         session.headers.update(headers)
     else:
         session.headers.update(Headers.get_headers())
 
     return session
 
+
 def get_session_id(
-    user_token:int,
-    session:requests.Session=None,
-    logger:logging.Logger=None,
-)->str:
+    user_token: int,
+    session: requests.Session = None,
+    logger: logging.Logger = None,
+) -> str:
     """ Retrieves the "session_id" necessary to access the data-stream.
 
     Args:
@@ -64,11 +67,11 @@ def get_session_id(
         logger = build_logger()
     if session is None:
         session = build_session()
-    
+
     url = urls.QUOTECAST
     url = f'{url}/request_session'
     version = urls.QUOTECAST_VERSION
-    
+
     parameters = {'version': version, 'userToken': user_token}
     data = '{"referrer":"https://trader.degiro.nl"}'
 
@@ -86,7 +89,7 @@ def get_session_id(
     except Exception as e:
         logger.fatal(e)
         return False
-    
+
     logger.info('get_session_id:response_dict: %s', response_dict)
 
     if 'sessionId' in response_dict:
@@ -94,11 +97,12 @@ def get_session_id(
     else:
         return None
 
+
 def fetch_data(
-    session_id:str,
-    session:requests.Session=None,
-    logger:logging.Logger=None,
-)->Quotecast:
+    session_id: str,
+    session: requests.Session = None,
+    logger: logging.Logger = None,
+) -> Quotecast:
     """ Fetches data from the feed.
 
     Args:
@@ -137,7 +141,7 @@ def fetch_data(
     # We could have used : response.elapsed.total_seconds()
     duration_ns = time.perf_counter_ns() - start_ns
 
-    if response.text == '[{"m":"sr"}]' :
+    if response.text == '[{"m":"sr"}]':
         raise BrokenPipeError('A new "session_id" is required.')
 
     quotecast = Quotecast()
@@ -149,12 +153,13 @@ def fetch_data(
 
     return quotecast
 
+
 def subscribe(
-    request:Quotecast.Request,
-    session_id:str,
-    session:requests.Session=None,
-    logger:logging.Logger=None,
-)->bool:
+    request: Quotecast.Request,
+    session_id: str,
+    session: requests.Session = None,
+    logger: logging.Logger = None,
+) -> bool:
     """ Adds/removes metric from the data-stream.
 
     Args:
@@ -209,7 +214,7 @@ def subscribe(
     try:
         response = session.send(request=prepped, verify=False)
 
-        if response.text == '[{"m":"sr"}]' :
+        if response.text == '[{"m":"sr"}]':
             raise BrokenPipeError('A new "session_id" is required.')
         else:
             response = True
@@ -219,14 +224,15 @@ def subscribe(
 
     return response
 
+
 def get_chart(
-    request:Chart.Request,
-    user_token:int,
-    override:Dict[str, str]=None,
-    raw:bool=False,
-    session:requests.Session=None,
-    logger:logging.Logger=None,
-)->Chart:
+    request: Chart.Request,
+    user_token: int,
+    override: Dict[str, str] = None,
+    raw: bool = False,
+    session: requests.Session = None,
+    logger: logging.Logger = None,
+) -> Chart:
     """ Fetches chart's data.
 
     Args:
@@ -288,7 +294,7 @@ def get_chart(
         response_raw = session.send(prepped, verify=False)
         response_dict = json.loads(response_raw.text)
 
-        if raw == True:
+        if raw is True:
             response = response_dict
         else:
             response = pb_handler.api_to_chart(payload=response_dict)

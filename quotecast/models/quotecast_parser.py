@@ -8,6 +8,7 @@ from quotecast.models.metrics_storage import MetricsStorage
 from quotecast.pb.quotecast_pb2 import Quotecast, Ticker
 from typing import Dict, List, Union
 
+
 class QuotecastParser:
     """ Handle the payload returned from this endpoint :
 
@@ -84,8 +85,8 @@ class QuotecastParser:
     We can denote a message like this :
     ```python
     MESSAGE = {
-        'm' : MESSAGE_TYPE
-        'v' : [CODE1, CODE2]
+        'm': MESSAGE_TYPE
+        'v': [CODE1, CODE2]
     }
     ```
 
@@ -117,7 +118,7 @@ class QuotecastParser:
     If MESSAGE_TYPE = "a_req" or "a_rel" :
         * CODE1 : contains the product's VWD_ID and the PARAMETER_NAME.
         * CODE2 : contains the REFERENCE for the parameter in CODE1.
-        * Example of MESSAGE : 
+        * Example of MESSAGE :
         ```json
         {
             "m": "a_req",
@@ -133,7 +134,7 @@ class QuotecastParser:
         * CODE1 : contains the reference number.
         * CODE2 : contains the value of the information referenced by
         CODE1.
-        * Example of MESSAGE : 
+        * Example of MESSAGE :
         ```json
         {
             "m": "a_req",
@@ -146,10 +147,10 @@ class QuotecastParser:
 
     @staticmethod
     def build_ticker_from_quotecast(
-        quotecast:Quotecast,
-        ticker:Ticker=Ticker(),
-        references:Dict[int, List[str]]=dict(),
-    )->Ticker:
+        quotecast: Quotecast,
+        ticker: Ticker = Ticker(),
+        references: Dict[int, List[str]] = dict(),
+    ) -> Ticker:
         """ Build or update a Ticker metrics using a Quotecast object.
 
         Only the metrics which can be converted to float are supported.
@@ -184,11 +185,11 @@ class QuotecastParser:
         Returns:
             Ticker: New or updated Ticker.
         """
-    
+
         # SETUP PRODUCTS & METRICS
         message_array = json.loads(quotecast.json_data)
         for message in message_array:
-            if  message['m'] == 'un' :
+            if message['m'] == 'un':
                 reference = message['v'][0]
                 value = message['v'][1]
                 product, metric = references[reference]
@@ -251,29 +252,29 @@ class QuotecastParser:
         return ticker
 
     @property
-    def references(self)->Dict[int, str]:
+    def references(self) -> Dict[int, str]:
         return self.__references
 
     @property
-    def ticker(self)->Ticker:
+    def ticker(self) -> Ticker:
         return self.__ticker
 
     @property
-    def ticker_df(self)->pd.DataFrame:
+    def ticker_df(self) -> pd.DataFrame:
         ticker = self.__ticker
         ticker_df = pb_handler.ticker_to_df(ticker=ticker)
         return ticker_df
 
     @property
-    def ticker_dict(self)->Dict[
-        Union[str, int], # VWD_ID
-        Dict[str, Union[str, int]] # METRICS : NAME / VALUE
+    def ticker_dict(self) -> Dict[
+        Union[str, int],  # VWD_ID
+        Dict[str, Union[str, int]]  # METRICS : NAME / VALUE
     ]:
         ticker = self.__ticker
         ticker_dict = pb_handler.ticker_to_dict(ticker=ticker)
         return ticker_dict
 
-    def __init__(self, forward_fill:bool=False):
+    def __init__(self, forward_fill: bool = False):
         """
         Args:
             forward_fill (bool, optional):
@@ -289,7 +290,7 @@ class QuotecastParser:
 
         self.__logger = logging.getLogger(self.__module__)
 
-    def put_quotecast(self, quotecast:Quotecast):
+    def put_quotecast(self, quotecast: Quotecast):
         forward_fill = self.__forward_fill
         metrics_storage = self.__metrics_storage
         references = self.__references
@@ -300,12 +301,12 @@ class QuotecastParser:
             references=references,
         )
 
-        if forward_fill == True:
+        if forward_fill is True:
             metrics_storage.fill_ticker(ticker=ticker)
 
         self.__ticker = ticker
 
-    def rebuild_request(self)->Quotecast.Request:
+    def rebuild_request(self) -> Quotecast.Request:
         """ Rebuild the request from history (self.__references).
 
         Returns:
@@ -321,5 +322,8 @@ class QuotecastParser:
 
         return request
 
+
 if __name__ == '__main__':
-    data = '[{"m":"h"},{"m":"a_req","v":["360015751.LastPrice",101]},{"m":"un","v":[101,119.900000]}]'
+    data = \
+        '[{"m":"h"},{"m":"a_req","v":["360015751.LastPrice",101]},' \
+        '{"m":"un","v":[101,119.900000]}]'

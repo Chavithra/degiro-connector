@@ -12,15 +12,16 @@ pd.set_option('display.max_rows', None)
 pd.set_option('display.max_columns', None)
 pd.set_option('display.expand_frame_repr', False)
 
+
 def ticker_to_dict(
-    ticker:Ticker,
-    column_list:List[str]=[],
-)->Dict[
-    Union[str, int], # VWD_ID
-    Dict[str, Union[str, int]] # METRICS : NAME / VALUE
+    ticker: Ticker,
+    column_list: List[str] = [],
+) -> Dict[
+    Union[str, int],  # VWD_ID
+    Dict[str, Union[str, int]]  # METRICS : NAME / VALUE
 ]:
     """ Converts a ticker to a "dict".
-    
+
     Args:
         ticker (Ticker):
             Ticker to convert.
@@ -48,12 +49,13 @@ def ticker_to_dict(
 
     return ticker_dict
 
+
 def ticker_to_df(
-    ticker:Ticker,
-    column_list:List[str]=[],
-)->pd.DataFrame:
+    ticker: Ticker,
+    column_list: List[str] = [],
+) -> pd.DataFrame:
     """ Converts a ticker to a "pandas.DataFrame".
-    
+
     Args:
         ticker (Ticker):
             Ticker to convert.
@@ -77,9 +79,10 @@ def ticker_to_df(
 
     return df
 
+
 def build_ticker_sample(
-    number:int=10,
-    metric_list:List[str]=['l1', 'l2' ,'l3'],
+    number: int = 10,
+    metric_list: List[str] = ['l1', 'l2', 'l3'],
 ):
     """ Build a Ticker object for testing purpose. """
 
@@ -101,10 +104,11 @@ def build_ticker_sample(
 
     return ticker
 
+
 def merge_tickers(
-    ticker1:Ticker,
-    ticker2:Ticker,
-    update_only:bool=False,
+    ticker1: Ticker,
+    ticker2: Ticker,
+    update_only: bool = False,
 ):
     """ Override metrics of ticker1 with ticker2's metrics.
 
@@ -116,7 +120,7 @@ def merge_tickers(
             "ticker1".
     """
 
-    if update_only == True:
+    if update_only is True:
         for ticker2_product in ticker2.products:
             if ticker2_product in ticker1.products:
                 ticker1.products[ticker2_product].metrics.update(
@@ -128,7 +132,8 @@ def merge_tickers(
                 ticker2.products[ticker2_product].metrics
             )
 
-def message_to_dict(message:Message)->dict:
+
+def message_to_dict(message: Message) -> dict:
     return json_format.MessageToDict(
         message=message,
         including_default_value_fields=True,
@@ -138,7 +143,8 @@ def message_to_dict(message:Message)->dict:
         float_precision=None,
     )
 
-def update_message_from_dict(message:Message, js_dict:dict)->Message:
+
+def update_message_from_dict(message: Message, js_dict: dict) -> Message:
     json_format.ParseDict(
         js_dict=js_dict,
         message=message,
@@ -146,8 +152,9 @@ def update_message_from_dict(message:Message, js_dict:dict)->Message:
         descriptor_pool=None,
     )
 
+
 # GRPC TO API
-def quotecast_request_to_api(request:Quotecast.Request)->str:
+def quotecast_request_to_api(request: Quotecast.Request) -> str:
     payload = '{"controlData":"'
     for vwd_id in request.subscriptions:
         for metric_name in request.subscriptions[vwd_id]:
@@ -159,7 +166,8 @@ def quotecast_request_to_api(request:Quotecast.Request)->str:
 
     return payload
 
-def chart_request_to_api(request:Chart.Request)->dict:
+
+def chart_request_to_api(request: Chart.Request) -> dict:
     request_dict = json_format.MessageToDict(
         message=request,
         including_default_value_fields=True,
@@ -171,8 +179,9 @@ def chart_request_to_api(request:Chart.Request)->dict:
 
     return request_dict
 
+
 # API TO GRPC
-def api_to_chart(payload:dict)->Chart:
+def api_to_chart(payload: dict) -> Chart:
     chart = Chart()
     json_format.ParseDict(
         js_dict=payload,

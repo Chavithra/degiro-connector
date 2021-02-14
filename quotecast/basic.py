@@ -9,6 +9,7 @@ from typing import Dict
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
+
 class Basic:
     """ Tools to consume Degiro's QuoteCast API.
 
@@ -21,25 +22,25 @@ class Basic:
     """
 
     @staticmethod
-    def build_session_storage()->SessionStorage:
+    def build_session_storage() -> SessionStorage:
         return SessionStorage(
             headers=Headers.get_headers(),
             hooks=None,
         )
 
     @property
-    def session_storage(self)->SessionStorage:
+    def session_storage(self) -> SessionStorage:
         return self._session_storage
 
     @session_storage.setter
-    def session_storage(self, session_storage:SessionStorage):
+    def session_storage(self, session_storage: SessionStorage):
         self._session_storage = session_storage
 
     @property
-    def user_token(self)->int:
+    def user_token(self) -> int:
         return self._user_token
 
-    def __init__(self, user_token:int, session_storage=None):
+    def __init__(self, user_token: int, session_storage=None):
         if session_storage is None:
             session_storage = self.build_session_storage()
 
@@ -47,7 +48,7 @@ class Basic:
         self._user_token = user_token
         self._session_storage = session_storage
 
-    def fetch_data(self, session_id:str)->Quotecast:
+    def fetch_data(self, session_id: str) -> Quotecast:
         logger = self._logger
         session = self._session_storage.session
 
@@ -57,7 +58,7 @@ class Basic:
             logger=logger,
         )
 
-    def get_session_id(self)->str:
+    def get_session_id(self) -> str:
         logger = self._logger
         session = self._session_storage.session
         user_token = self._user_token
@@ -70,12 +71,12 @@ class Basic:
 
     def subscribe(
         self,
-        request:Quotecast.Request,
-        session_id:str,
-    )->bool:
+        request: Quotecast.Request,
+        session_id: str,
+    ) -> bool:
         logger = self._logger
         session = self._session_storage.session
-        
+
         return utilities.subscribe(
             request=request,
             session_id=session_id,
@@ -85,14 +86,14 @@ class Basic:
 
     def get_chart(
         self,
-        request:Chart.Request,
-        override:Dict[str, str]=None,
-        raw:bool=False,
-    )->bool:
+        request: Chart.Request,
+        override: Dict[str, str] = None,
+        raw: bool = False,
+    ) -> bool:
         logger = self._logger
         session = self._session_storage.session
         user_token = self._user_token
-        
+
         return utilities.get_chart(
             request=request,
             user_token=user_token,
@@ -101,6 +102,7 @@ class Basic:
             session=session,
             logger=logger,
         )
+
 
 if __name__ == '__main__':
     # IMPORTATIONS
@@ -111,7 +113,7 @@ if __name__ == '__main__':
     # SETUP LOGS
     logging.basicConfig(level=logging.DEBUG)
 
-    # SETUP CREDENTIALS    
+    # SETUP CREDENTIALS
     with open('config/subscription_request.json') as config_file:
         config = json.load(config_file)
     user_token = config['user_token']

@@ -1,19 +1,18 @@
 import logging
-import requests
 import time
 
-from quotecast.constants.headers import Headers
 from quotecast.models.session_storage import SessionStorage
 from threading import Event
 from wrapt.decorators import synchronized
 
+
 class ConnectionStorage:
     @property
-    def connected(self)->Event:
+    def connected(self) -> Event:
         return self.__connected
 
     @property
-    def connection_timeout(self)->int:
+    def connection_timeout(self) -> int:
         return self.__connection_timeout
 
     @property
@@ -30,25 +29,26 @@ class ConnectionStorage:
 
     @session_id.setter
     @synchronized
-    def session_id(self, session_id:str):
+    def session_id(self, session_id: str):
         if session_id:
             self.__session_id = session_id
             self.__connected.set()
 
     @property
-    def session_storage(self)->SessionStorage:
+    def session_storage(self) -> SessionStorage:
         return self.__session_storage
 
     def __init__(
         self,
-        session_storage:SessionStorage,
-        connection_timeout:int=15,
+        session_storage: SessionStorage,
+        connection_timeout: int = 15,
     ):
         self.__session_storage = session_storage
         self.__connection_timeout = connection_timeout
 
         self.__connected = Event()
         self.__last_success = 0
+        self.__logger = logging.getLogger(self.__module__)
         self.__session_id = ''
 
         self.setup_hooks()
@@ -73,5 +73,5 @@ class ConnectionStorage:
             self.__last_success = timestamp
 
     def setup_hooks(self):
-        hooks = {'response':[self.response_hook]}
+        hooks = {'response': [self.response_hook]}
         self.__session_storage.session.hooks.update(hooks)
