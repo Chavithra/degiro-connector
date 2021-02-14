@@ -8,7 +8,7 @@ setup(
     author_email='chavithra@gmail.com',
     classifiers=[
         'Programming Language :: Python :: 3',
-        'License :: OSI Approved :: BSD 3-Clause "New" or "Revised" License (BSD-3-Clause)',
+        'License :: OSI Approved :: BSD License',
         'Operating System :: OS Independent',
     ],
     entry_points={
