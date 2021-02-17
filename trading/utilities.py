@@ -518,7 +518,7 @@ def get_config(
     if type(response) != dict:
         return False
 
-    return response.get('data', default=False)
+    return response.get('data', False)
 
 
 def get_client_details(
