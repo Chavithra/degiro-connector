@@ -13,11 +13,7 @@ from trading.pb.trading_pb2 import (
     TransactionsHistory,
     Update,
 )
-from typing import (
-    List,
-    Union,
-)
-from wrapt.decorators import synchronized
+from typing import Union
 
 
 class API:
@@ -261,7 +257,6 @@ class API:
 if __name__ == '__main__':
     # IMPORTATIONS
     import json
-    import logging
 
     from trading.pb.trading_pb2 import Credentials
 

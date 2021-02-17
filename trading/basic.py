@@ -1,10 +1,7 @@
 import logging
 import trading.utilities as utilities
 
-from typing import (
-    List,
-    Union,
-)
+from typing import Union
 from quotecast.constants.headers import Headers
 from trading.models.session_storage import SessionStorage
 from trading.pb.trading_pb2 import (
@@ -167,7 +164,6 @@ class Basic:
         self,
         session_id: str,
     ) -> dict:
-        credentials = self._credentials
         logger = self._logger
         session = self._session_storage.session
 
@@ -181,7 +177,6 @@ class Basic:
         self,
         session_id: str,
     ) -> dict:
-        credentials = self._credentials
         logger = self._logger
         session = self._session_storage.session
 
@@ -368,7 +363,6 @@ class Basic:
 if __name__ == '__main__':
     # IMPORTATIONS
     import json
-    import logging
 
     from trading.pb.trading_pb2 import Credentials
 

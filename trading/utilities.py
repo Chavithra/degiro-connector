@@ -2,10 +2,10 @@ import logging
 import orjson as json
 import onetimepass as otp
 import requests
+import trading.constants.urls as urls
 import trading.helpers.payload_handler as payload_handler
 import urllib3
 
-from trading.constants.urls import URLs
 from trading.constants.headers import Headers
 from trading.pb.trading_pb2 import (
     AccountOverview,
@@ -18,29 +18,29 @@ from trading.pb.trading_pb2 import (
     TransactionsHistory,
     Update,
 )
-from typing import List, Union
+from typing import Union
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 __PRODUCT_SEARCH_REQUEST_URL_MATCHING = {
     ProductSearch.RequestBonds.DESCRIPTOR.full_name:
-        URLs.PRODUCT_SEARCH_BONDS,
+        urls.PRODUCT_SEARCH_BONDS,
     ProductSearch.RequestETFs.DESCRIPTOR.full_name:
-        URLs.PRODUCT_SEARCH_ETFS,
+        urls.PRODUCT_SEARCH_ETFS,
     ProductSearch.RequestFunds.DESCRIPTOR.full_name:
-        URLs.PRODUCT_SEARCH_FUNDS,
+        urls.PRODUCT_SEARCH_FUNDS,
     ProductSearch.RequestFutures.DESCRIPTOR.full_name:
-        URLs.PRODUCT_SEARCH_FUTURES,
+        urls.PRODUCT_SEARCH_FUTURES,
     ProductSearch.RequestLeverageds.DESCRIPTOR.full_name:
-        URLs.PRODUCT_SEARCH_LEVERAGEDS,
+        urls.PRODUCT_SEARCH_LEVERAGEDS,
     ProductSearch.RequestLookup.DESCRIPTOR.full_name:
-        URLs.PRODUCT_SEARCH_LOOKUP,
+        urls.PRODUCT_SEARCH_LOOKUP,
     ProductSearch.RequestOptions.DESCRIPTOR.full_name:
-        URLs.PRODUCT_SEARCH_OPTIONS,
+        urls.PRODUCT_SEARCH_OPTIONS,
     ProductSearch.RequestStocks.DESCRIPTOR.full_name:
-        URLs.PRODUCT_SEARCH_STOCKS,
+        urls.PRODUCT_SEARCH_STOCKS,
     ProductSearch.RequestWarrants.DESCRIPTOR.full_name:
-        URLs.PRODUCT_SEARCH_WARRANTS,
+        urls.PRODUCT_SEARCH_WARRANTS,
 }
 
 
@@ -111,7 +111,7 @@ def get_session_id(
         session = build_session()
 
     if credentials.totp_secret_key:
-        url = URLs.LOGIN + '/totp'
+        url = urls.LOGIN + '/totp'
         username = credentials.username
         password = credentials.password
         totp_secret_key = credentials.totp_secret_key
@@ -126,7 +126,7 @@ def get_session_id(
             'oneTimePassword': one_time_password,
         }
     else:
-        url = URLs.LOGIN
+        url = urls.LOGIN
         username = credentials.username
         password = credentials.password
 
@@ -238,7 +238,7 @@ def get_update(
         session = build_session()
 
     int_account = credentials.int_account
-    url = URLs.UPDATE
+    url = urls.UPDATE
     url = f'{url}/{int_account};jsessionid={session_id}'
 
     params = payload_handler.update_request_list_to_api(
@@ -285,7 +285,7 @@ def check_order(
         session = build_session()
 
     int_account = credentials.int_account
-    url = URLs.ORDER_CHECK
+    url = urls.ORDER_CHECK
     url = f'{url};jsessionid={session_id}'
 
     params = {
@@ -352,7 +352,7 @@ def confirm_order(
         session = build_session()
 
     int_account = credentials.int_account
-    url = URLs.ORDER_CONFIRM
+    url = urls.ORDER_CONFIRM
     url = f'{url}/{confirmation_id};jsessionid={session_id}'
 
     params = {
@@ -418,7 +418,7 @@ def update_order(
 
     int_account = credentials.int_account
     order_id = order.id
-    url = URLs.ORDER_UPDATE
+    url = urls.ORDER_UPDATE
     url = f'{url}/{order_id};jsessionid={session_id}'
 
     params = {
@@ -468,7 +468,7 @@ def delete_order(
         session = build_session()
 
     int_account = credentials.int_account
-    url = URLs.ORDER_DELETE
+    url = urls.ORDER_DELETE
     url = f'{url}/{order_id};jsessionid={session_id}'
 
     params = {
@@ -502,7 +502,7 @@ def get_config(
     if session is None:
         session = build_session()
 
-    url = URLs.CONFIG
+    url = urls.CONFIG
 
     request = requests.Request(method='GET', url=url)
     prepped = session.prepare_request(request)
@@ -531,7 +531,7 @@ def get_client_details(
     if session is None:
         session = build_session()
 
-    url = URLs.CLIENT_DETAILS
+    url = urls.CLIENT_DETAILS
 
     params = {
         'sessionId': session_id,
@@ -564,7 +564,7 @@ def get_account_info(
         session = build_session()
 
     int_account = credentials.int_account
-    url = f'{URLs.ACCOUNT_INFO}/{int_account};jsessionid={session_id}'
+    url = f'{urls.ACCOUNT_INFO}/{int_account};jsessionid={session_id}'
 
     request = requests.Request(method='GET', url=url)
     prepped = session.prepare_request(request)
@@ -627,7 +627,7 @@ def get_orders_history(
     if session is None:
         session = build_session()
 
-    url = URLs.ORDERS_HISTORY
+    url = urls.ORDERS_HISTORY
 
     params = payload_handler.orders_history_request_to_api(
         request=request,
@@ -709,7 +709,7 @@ def get_transactions_history(
     if session is None:
         session = build_session()
 
-    url = URLs.TRANSACTIONS_HISTORY
+    url = urls.TRANSACTIONS_HISTORY
 
     params = payload_handler.transactions_history_request_to_api(
         request=request
@@ -791,7 +791,7 @@ def get_account_overview(
     if session is None:
         session = build_session()
 
-    url = URLs.ACCOUNT_OVERVIEW
+    url = urls.ACCOUNT_OVERVIEW
     params = payload_handler.account_overview_request_to_api(
         request=request
     )
@@ -951,7 +951,7 @@ def get_favourites_list(
         session = build_session()
 
     int_account = credentials.int_account
-    url = URLs.PRODUCT_FAVOURITES_LISTS
+    url = urls.PRODUCT_FAVOURITES_LISTS
 
     params = {
         'intAccount': int_account,
@@ -1019,7 +1019,7 @@ def get_products_config(
         session = build_session()
 
     int_account = credentials.int_account
-    url = URLs.PRODUCTS_CONFIG
+    url = urls.PRODUCTS_CONFIG
 
     params = {
         'intAccount': int_account,
@@ -1089,7 +1089,7 @@ def get_products_info(
         session = build_session()
 
     int_account = credentials.int_account
-    url = URLs.PRODUCTS_INFO
+    url = urls.PRODUCTS_INFO
 
     params = {
         'intAccount': int_account,
@@ -1141,7 +1141,7 @@ def get_company_ratios(
         session = build_session()
 
     int_account = credentials.int_account
-    url = f'{URLs.COMPANY_RATIOS}/{product_isin}'
+    url = f'{urls.COMPANY_RATIOS}/{product_isin}'
 
     params = {
         'intAccount': int_account,
@@ -1178,7 +1178,6 @@ def get_company_ratios(
 
 if __name__ == '__main__':
     # IMPORTATIONS
-    import json
     import logging
 
     from trading.pb.trading_pb2 import Credentials
