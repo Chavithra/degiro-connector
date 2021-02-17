@@ -31,6 +31,6 @@ jobs:
     - name: Lint with flake8
       run: |
         flake8 quotecast trading --exclude=quotecast/pb,trading/pb --count --show-source --statistics
-    - name: Test with pytest
-      run: |
-        pytest
+#     - name: Test with pytest
+#       run: |
+#         pytest
