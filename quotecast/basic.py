@@ -107,7 +107,6 @@ class Basic:
 if __name__ == '__main__':
     # IMPORTATIONS
     import json
-    import logging
     import time
 
     # SETUP LOGS
