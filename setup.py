@@ -21,14 +21,18 @@ setup(
         'tests': [
             'pytest',
         ],
+        'lint': [
+            'flake8',
+        ],
     },
     install_requires=[
-        'wheel',
         'grpcio',
         'onetimepass',
         'orjson',
+        'pandas',
         'protobuf',
         'requests',
+        'wheel',
         'wrapt',
     ],
     long_description=long_description,
