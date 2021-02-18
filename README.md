@@ -617,8 +617,8 @@ Has you can guess the "totp_secret_key" is in this part :
 
     secret=YOUR_TOPT_SECRET_KEY
 
-An example here :
-[connection_2fa.proto](protos/trading/pb/connection_2fa.proto)
+An example here of script to extract the text from a QRCode :
+[qrcode.py](examples/trading/qrcode.py)
 
 ## 3.6. How to find your : one_time_password ?
 
