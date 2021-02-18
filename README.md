@@ -454,7 +454,7 @@ The module **quotecast** is described in the section related to real-time data.
 The rest of this document will only refer to the module : **trading**.
 
 ## 3.1. How to login ?
-In order to use the module trading.api" you need to establish a connection.
+In order to use the module **trading.api** you need to establish a connection.
 
 Check the section related to **in_account** to understand how to get yours.
 
