@@ -4,8 +4,11 @@ from trading.basic import Basic
 from trading.models.connection_storage import ConnectionStorage
 from trading.pb.trading_pb2 import (
     AccountOverview,
+    CompanyProfile,
+    CompanyRatios,
     Credentials,
     Favourites,
+    FinancialStatements,
     Order,
     OrdersHistory,
     ProductsInfo,
@@ -243,11 +246,39 @@ class API:
         self,
         product_isin: str,
         raw: bool = False,
-    ) -> Union[dict, ProductsInfo]:
+    ) -> Union[dict, CompanyRatios]:
         basic = self._basic
         session_id = self._connection_storage.session_id
 
         return basic.get_company_ratios(
+            product_isin=product_isin,
+            session_id=session_id,
+            raw=raw,
+        )
+
+    def get_company_profile(
+        self,
+        product_isin: str,
+        raw: bool = False,
+    ) -> Union[dict, CompanyProfile]:
+        basic = self._basic
+        session_id = self._connection_storage.session_id
+
+        return basic.get_company_profile(
+            product_isin=product_isin,
+            session_id=session_id,
+            raw=raw,
+        )
+
+    def get_financial_statements(
+        self,
+        product_isin: str,
+        raw: bool = False,
+    ) -> Union[dict, FinancialStatements]:
+        basic = self._basic
+        session_id = self._connection_storage.session_id
+
+        return basic.get_financial_statements(
             product_isin=product_isin,
             session_id=session_id,
             raw=raw,

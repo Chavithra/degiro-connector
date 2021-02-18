@@ -4,8 +4,10 @@ from google.protobuf import json_format
 from google.protobuf.message import Message
 from trading.pb.trading_pb2 import (
     AccountOverview,
+    CompanyProfile,
     CompanyRatios,
     Favourites,
+    FinancialStatements,
     Order,
     OrdersHistory,
     ProductsInfo,
@@ -207,6 +209,17 @@ def checking_response_to_grpc(payload: dict) -> Order.CheckingResponse:
     return checking_response
 
 
+def company_profile_to_grpc(payload: dict) -> CompanyProfile:
+    company_profile = CompanyProfile()
+    json_format.ParseDict(
+        js_dict={'values': payload['data']},
+        message=company_profile,
+        ignore_unknown_fields=False,
+        descriptor_pool=None,
+    )
+    return company_profile
+
+
 def company_ratios_to_grpc(payload: dict) -> CompanyRatios:
     company_ratios = CompanyRatios()
     json_format.ParseDict(
@@ -244,6 +257,17 @@ def favourites_to_grpc(payload: dict) -> Favourites:
     )
 
     return favourites
+
+
+def financial_statements_to_grpc(payload: dict) -> CompanyProfile:
+    financial_statements = FinancialStatements()
+    json_format.ParseDict(
+        js_dict={'values': payload['data']},
+        message=financial_statements,
+        ignore_unknown_fields=False,
+        descriptor_pool=None,
+    )
+    return financial_statements
 
 
 def message_to_dict(message: Message) -> dict:

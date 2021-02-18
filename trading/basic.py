@@ -6,8 +6,11 @@ from quotecast.constants.headers import Headers
 from trading.models.session_storage import SessionStorage
 from trading.pb.trading_pb2 import (
     AccountOverview,
+    CompanyProfile,
+    CompanyRatios,
     Credentials,
     Favourites,
+    FinancialStatements,
     Order,
     OrdersHistory,
     ProductsInfo,
@@ -345,7 +348,7 @@ class Basic:
         product_isin: str,
         session_id: str,
         raw: bool = False,
-    ) -> Union[dict, ProductsInfo]:
+    ) -> Union[dict, CompanyRatios]:
         credentials = self._credentials
         logger = self._logger
         session = self._session_storage.session
@@ -359,6 +362,43 @@ class Basic:
             logger=logger,
         )
 
+    def get_company_profile(
+        self,
+        product_isin: str,
+        session_id: str,
+        raw: bool = False,
+    ) -> Union[dict, CompanyProfile]:
+        credentials = self._credentials
+        logger = self._logger
+        session = self._session_storage.session
+
+        return utilities.get_company_profile(
+            product_isin=product_isin,
+            session_id=session_id,
+            credentials=credentials,
+            raw=raw,
+            session=session,
+            logger=logger,
+        )
+
+    def get_financial_statements(
+        self,
+        product_isin: str,
+        session_id: str,
+        raw: bool = False,
+    ) -> Union[dict, FinancialStatements]:
+        credentials = self._credentials
+        logger = self._logger
+        session = self._session_storage.session
+
+        return utilities.get_financial_statements(
+            product_isin=product_isin,
+            session_id=session_id,
+            credentials=credentials,
+            raw=raw,
+            session=session,
+            logger=logger,
+        )
 
 if __name__ == '__main__':
     # IMPORTATIONS

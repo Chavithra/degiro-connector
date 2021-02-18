@@ -1176,6 +1176,104 @@ def get_company_ratios(
     return response
 
 
+
+def get_company_profile(
+    product_isin: str,
+    session_id: str,
+    credentials: Credentials,
+    raw: bool = False,
+    session: requests.Session = None,
+    logger: logging.Logger = None,
+) -> dict:
+    if logger is None:
+        logger = build_logger()
+    if session is None:
+        session = build_session()
+
+    int_account = credentials.int_account
+    url = f'{urls.COMPANY_PROFILE}/{product_isin}'
+
+    params = {
+        'intAccount': int_account,
+        'sessionId': session_id,
+    }
+
+    request = requests.Request(method='GET', url=url)
+    prepped = session.prepare_request(request)
+    prepped.headers['cookie'] = 'JSESSIONID=' + session_id
+
+    request = requests.Request(method='GET', url=url, params=params)
+    prepped = session.prepare_request(request)
+    response_raw = None
+
+    try:
+        response_raw = session.send(prepped, verify=False)
+        response_dict = response_raw.json()
+
+        if raw is True:
+            response = response_dict
+        else:
+            response = payload_handler.company_profile_to_grpc(
+                payload=response_dict,
+            )
+    except Exception as e:
+        logger.fatal('error')
+        logger.fatal(response_raw.status_code)
+        logger.fatal(response_raw.text)
+        logger.fatal(e)
+        return False
+
+    return response
+
+
+def get_financial_statements(
+    product_isin: str,
+    session_id: str,
+    credentials: Credentials,
+    raw: bool = False,
+    session: requests.Session = None,
+    logger: logging.Logger = None,
+) -> dict:
+    if logger is None:
+        logger = build_logger()
+    if session is None:
+        session = build_session()
+
+    int_account = credentials.int_account
+    url = f'{urls.FINANCIAL_STATEMENTS}/{product_isin}'
+
+    params = {
+        'intAccount': int_account,
+        'sessionId': session_id,
+    }
+
+    request = requests.Request(method='GET', url=url)
+    prepped = session.prepare_request(request)
+    prepped.headers['cookie'] = 'JSESSIONID=' + session_id
+
+    request = requests.Request(method='GET', url=url, params=params)
+    prepped = session.prepare_request(request)
+    response_raw = None
+
+    try:
+        response_raw = session.send(prepped, verify=False)
+        response_dict = response_raw.json()
+
+        if raw is True:
+            response = response_dict
+        else:
+            response = payload_handler.company_profile_to_grpc(
+                payload=response_dict,
+            )
+    except Exception as e:
+        logger.fatal('error')
+        logger.fatal(response_raw.status_code)
+        logger.fatal(response_raw.text)
+        logger.fatal(e)
+        return False
+
+    return response
+
 if __name__ == '__main__':
     # IMPORTATIONS
     import logging

@@ -4,10 +4,14 @@ ACCOUNT_OVERVIEW = \
     'https://trader.degiro.nl/reporting/secure/v6/accountoverview'
 CLIENT_DETAILS = \
     'https://trader.degiro.nl/pa/secure/client'
+COMPANY_PROFILE = \
+    'https://trader.degiro.nl/dgtbxdsservice/company-profile/v2'
 COMPANY_RATIOS = \
     'https://trader.degiro.nl/dgtbxdsservice/company-ratios'
 CONFIG = \
     'https://trader.degiro.nl/login/secure/config'
+FINANCIAL_STATEMENTS = \
+    'https://trader.degiro.nl/dgtbxdsservice/financial-statements'
 LOGIN = \
     'https://trader.degiro.nl/login/secure/login'
 ORDER_CHECK = \

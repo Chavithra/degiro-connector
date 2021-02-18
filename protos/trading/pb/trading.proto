@@ -376,3 +376,21 @@ message CompanyRatios {
   // PROPERTIES
   google.protobuf.Struct values = 1;
 }
+
+
+/** For the payload from the following URL :
+ * https://trader.degiro.nl/dgtbxdsservice/company-profile/v2
+ */
+message CompanyProfile {
+  // PROPERTIES
+  google.protobuf.Struct values = 1;
+}
+
+
+/** For the payload from the following URL :
+ * https://trader.degiro.nl/dgtbxdsservice/financial-statements
+ */
+message FinancialStatements {
+  // PROPERTIES
+  google.protobuf.Struct values = 1;
+}
