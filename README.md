@@ -17,6 +17,7 @@ Here are the features you can access through this library :
 |Config|Retrieve a table containing : "clientId" and URLs which are constitutive of Degiro's API.|
 |Favourites|Retrieve favorite products lists.|
 |FinancialStatements|Retrieve a company's financial statements using its ISIN code.|
+|Login|Establish a connection and retrieve a : "session_id".|
 |Order|Create, update, delete an Order.|
 |OrderHistory|Retrieve all Orders created between two dates.|
 |Orders|List pending Orders.|
