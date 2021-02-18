@@ -1,7 +1,6 @@
 # IMPORTATIONS
 import json
 import logging
-import quotecast.helpers.pb_handler as pb_handler
 
 from quotecast.api import API as QuotecastAPI
 from quotecast.models.quotecast_parser import QuotecastParser

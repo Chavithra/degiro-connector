@@ -1,7 +1,6 @@
 from pyzbar.pyzbar import decode
 from PIL import Image
 
-
 """
     This is an example on how to extract the text from a QRCode image.
     You will need to install the library : pyzbar
