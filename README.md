@@ -1274,7 +1274,7 @@ financials_statements = trading_api.get_financials_statements(
 ```
 
 For a more comprehensive example :
-[financial_statements.py](examples/trading/financials_statements.py)
+[financial_statements.py](examples/trading/financial_statements.py)
 
 # 9. Contributing
 Pull requests are welcome.
