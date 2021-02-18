@@ -494,7 +494,7 @@ Here are these credentials :
 
 Check the section related to **in_account** to understand how to get yours.
 
-Check the section related to **2FA** is you want to know more about these two parameters :
+Check the section related to **2FA** if you want to know more about these two parameters :
 - **totp_secret_key**
 - **one_time_password**
 
