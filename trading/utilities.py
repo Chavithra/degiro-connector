@@ -1176,7 +1176,6 @@ def get_company_ratios(
     return response
 
 
-
 def get_company_profile(
     product_isin: str,
     session_id: str,
@@ -1273,6 +1272,7 @@ def get_financial_statements(
         return False
 
     return response
+
 
 if __name__ == '__main__':
     # IMPORTATIONS
