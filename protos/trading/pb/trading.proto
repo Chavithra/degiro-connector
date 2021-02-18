@@ -7,7 +7,11 @@ message Credentials {
   int32 int_account = 1;
   string username = 2;
   string password = 3;
-  string totp_secret_key = 4;
+  
+  oneof oneof_2fa {
+    string totp_secret_key = 4;
+    int32 one_time_password = 5;
+  }
 }
 
 /** For the payload from the following URLs :

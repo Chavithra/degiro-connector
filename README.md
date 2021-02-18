@@ -55,7 +55,7 @@ pip uninstall degiro-connector
 - [2. Real-time data](#2-real-time-data)
   * [2.1. What are the workflows ?](#21-what-are-the-workflows-)
   * [2.2. What are the credentials ?](#22-what-are-the-credentials-)
-  * [2.3. How to get the : user_token ?](#23-how-to-get-the--user_token-)
+  * [2.3. How to find your : user_token ?](#23-how-to-find-your--user_token-)
   * [2.4. How to login ?](#24-how-to-login-)
   * [2.5. Is there a timeout ?](#25-is-there-a-timeout-)
   * [2.6. How to subscribe to a data-stream ?](#26-how-to-subscribe-to-a-data-stream-)
@@ -68,12 +68,13 @@ pip uninstall degiro-connector
   * [2.13. What is inside the DataFrame ?](#213-what-is-inside-the-dataframe-)
   * [2.14. How to get chart data ?](#214-how-to-get-chart-data-)
 - [3. Trading connection](#3-trading-connection)
-  * [3.1. What are the credentials ?](#31-what-are-the-credentials-)
-  * [3.2. What is the : in_account ?](#32-what-is-the--in_account-)
-  * [3.3. What is the : totp_secret_key ?](#33-what-is-the--totp_secret_key-)
-  * [3.4. How to login ?](#34-how-to-login-)
-  * [3.5. How to use 2FA ?](#35-how-to-use-2fa-)
-  * [3.6. Is there a timeout ?](#36-is-there-a-timeout-)
+  * [3.1. How to login ?](#31-how-to-login-)
+  * [3.2. What are the credentials ?](#32-what-are-the-credentials-)
+  * [3.3. How to find your : in_account ?](#33-how-to-find-your--in_account-)
+  * [3.4. How to use 2FA ?](#34-how-to-use-2fa-)
+  * [3.5. How to find your : totp_secret_key ?](#35-how-to-find-your--totp_secret_key-)
+  * [3.6. How to find your : one_time_password ?](#36-how-to-find-your--one_time_password-)
+  * [3.7. Is there a timeout ?](#37-is-there-a-timeout-)
 - [4. Order](#4-order)
   * [4.1. How to create an Order ?](#41-how-to-create-an-order-)
   * [4.2. How to update an Order ?](#42-how-to-update-an-order-)
@@ -151,7 +152,7 @@ Beware, these two identifiers are not the same thing :
 * user_token : used to fetch real-time data and charts.
 * int_account : used for some trading operations.
 
-## 2.3. How to get the : user_token ?
+## 2.3. How to find your : user_token ?
 You can find your "user_token" inside one of these tables :
 * "Config" : attribute "clientId"
 * "ClientDetails" : attribute "id"
@@ -443,13 +444,40 @@ For a more comprehensive example :
 
 # 3. Trading connection
 
-This library contains two connectors :
-* quotecast.api : to consume real-time data.
-* trading.api : to manage your Degiro's Account.
+This library contains two main modules :
+- quotecast : to consume real-time financial data.
+- trading : to manage your Degiro's account.
 
-The rest of this document will only refer to "trading.api".
+The module **quotecast** is described in the section related to real-time data.
 
-## 3.1. What are the credentials ?
+The rest of this document will only refer to the module : **trading**.
+
+## 3.1. How to login ?
+In order to use the module trading.api" you need to establish a connection.
+
+Check the section related to **in_account** to understand how to get yours.
+
+Here is how to connect :
+```python
+# SETUP CREDENTIALS
+credentials = Credentials(
+    username = YOUR_USERNAME,
+    password = YOUR_PASSWORD,
+    int_account = YOUR_INT_ACCOUNT,  # OPTIONAL FOR LOGIN
+)
+
+# SETUP TRADING API
+trading_api = API(credentials=credentials)
+
+# ESTABLISH CONNECTION
+trading_api.connect()
+```
+
+For a more comprehensive example :
+[connection.py](examples/trading/connection.py)
+
+
+## 3.2. What are the credentials ?
 
 Some credentials are required to use Degiro's trading API.
 
@@ -459,31 +487,120 @@ Here are these credentials :
 |:-|:-|:-|
 |username|str|Username used to log into Degiro's website.|
 |password|str|Password used to log into Degiro's website.|
-|int_account|int|Unique identifier of the account : used by Degiro's server.|
-|totp_secret_key|str|Secret key used for Two-factor Authentication (2FA).|
+|int_account|int|OPTIONAL : unique identifier of the account : used by Degiro's server.|
+|totp_secret_key|str|OPTIONAL : used for Two-factor Authentication (2FA).|
+|one_time_password|str|OPTIONAL : used for Two-factor Authentication (2FA).|
 
-## 3.2. What is the : in_account ?
+Check the section related to **in_account** to understand how to get yours.
 
-This "int_account" is required to do most of the trading operations available in this connector.
+Check the section related to **2FA** is you want to know more about these two parameters :
+- **totp_secret_key**
+- **one_time_password**
 
-Here are some operations for which "int_account" is not required :
-* Connection
-* Fetch table : ClientDetails
-* Fetch table : Config
+## 3.3. How to find your : in_account ?
 
-You can get the "int_account" using the "ClientDetails" table, it is the attribute "intAccount".
+To get your **int_acccount** you can run this example :
+[client_details_table.py](examples/trading/client_details_table.py)
 
-See section related to "ClientDetails" table for more details.
+See section related to **ClientDetails** table for more details.
+
+This **int_acccount** is required to do most of the trading operations available in this connector.
+
+Here are some operations for which your **int_acccount** is not required :
+- Connection
+- Fetch table : ClientDetails
+- Fetch table : Config
 
 Beware, these two identifiers are not the same thing :
-* user_token : used to fetch real-time data and charts.
-* int_account : used for some trading operations.
+- user_token : used to fetch real-time data and charts.
+- int_account : used for some trading operations.
 
-## 3.3. What is the : totp_secret_key ?
+## 3.4. How to use 2FA ?
 
-The parameter "totp_secret_key" is only required if you have enabled 2FA on Degiro's website.
+First I will briefly explain what is : **Two-Factor Authentication (2FA)**.
 
-When you try to activate 2FA on Degiro's website, it displays some QRCode.
+I recommend to skip a few paragraphs if you already know what is **2FA**.
+
+When you do a standard connection you are providing two parameters,
+which are your :
+- username
+- password
+
+But if you use **Two-Factor Authentication (2FA)** you need to provide an additional parameter, which is your :
+- one_time_password
+
+This **one_time_password** has a validity of 30 secondes and is generated using a **totp_secret_key** code.
+
+This **totp_secret_key** code is giving to you by Degiro's website when you enabled **2FA** : in the form of a QRCode.
+
+Usually you put this QRCode inside an app like **‎Google
+Authenticator**.
+
+Then this app will generate a new **one_time_password** that you can use for each connection. 
+
+To use **2FA** with this library you have to choices.
+
+**CHOICE A**
+
+Provide your **totp_secret_key** : the library will use it to generate a new **one_time_password** at each connection.
+
+So you won't have to type your **one_time_password** manually at each
+connection.
+
+This is the proper way.
+
+See the section about **totp_secret_key** to understand how to get
+yours.
+
+Here is an example of connection with the **totp_secret_key** :
+```python
+# SETUP CREDENTIALS
+credentials = Credentials(
+    username=YOUR_USERNAME,
+    password=YOUR_PASSWORD,
+    int_account=YOUR_INT_ACCOUNT,  # OPTIONAL FOR LOGIN
+    totp_secret_key=YOUR_2FA_SECRET_KEY,  # ONLY IF 2FA IS ENABLED
+)
+
+# SETUP TRADING API
+trading_api = API(credentials=credentials)
+
+# ESTABLISH CONNECTION
+trading_api.connect()
+```
+
+A complete example here :
+[connection_2fa.py](examples/trading/connection_2fa.py)
+
+**CHOICE B**
+
+Provide a new **one_time_password** at each connection.
+
+Here is an example of connection with the **one_time_password** :
+```python
+# SETUP CREDENTIALS
+credentials = Credentials(
+    username=YOUR_USERNAME,
+    password=YOUR_PASSWORD,
+    int_account=YOUR_INT_ACCOUNT,  # OPTIONAL FOR LOGIN
+    one_time_password=YOUR_2FA_OTP,  # ONLY IF 2FA IS ENABLED
+)
+
+# SETUP TRADING API
+trading_api = API(credentials=credentials)
+
+# ESTABLISH CONNECTION
+trading_api.connect()
+```
+
+A complete example here :
+[connection_otp.py](examples/trading/connection_otp.py)
+
+## 3.5. How to find your : totp_secret_key ?
+
+The parameter **totp_secret_key** is only required if you have enabled 2FA on Degiro's website.
+
+When you try to activate 2FA on Degiro's website, it displays a QRCode.
 
 This QRCode changes at each activation.
 
@@ -499,52 +616,18 @@ Has you can guess the "totp_secret_key" is in this part :
 
     secret=YOUR_TOPT_SECRET_KEY
 
-## 3.4. How to login ?
-In order to use the "trading.api" you need to establish a connection.
+An example here :
+[connection_2fa.proto](protos/trading/pb/connection_2fa.proto)
 
-Here is how to login :
-```python
-# SETUP CREDENTIALS
-credentials = Credentials(
-    username = YOUR_USERNAME,
-    password = YOUR_PASSWORD,
-    int_account = YOUR_INT_ACCOUNT, # OPTIONAL FOR LOGIN
-)
+## 3.6. How to find your : one_time_password ?
 
-# SETUP TRADING API
-trading_api = API(credentials=credentials)
+The parameter **one_time_password** is the password you type when you log in the website using **2FA**.
 
-# ESTABLISH CONNECTION
-trading_api.connect()
-```
+Usually you get it through an app like **Google Authenticator**.
 
-For a more comprehensive example :
-[connection.py](examples/trading/connection.py)
+It is preferable to use the parameter **totp_secret_key** instead of **one_time_password**.
 
-## 3.5. How to use 2FA ?
-If you are using Two-factor Authentication (2FA) you need to provide an extra parameter.
-
-This parameter is called "totp_secret_key" by the library.
-
-See the section about "totp_secret_key" to know how to get this parameter from Degiro's website.
-
-```python
-# SETUP CREDENTIALS
-credentials = Credentials(
-    username = YOUR_USERNAME,
-    password = YOUR_PASSWORD,
-    int_account = YOUR_INT_ACCOUNT, # OPTIONAL FOR LOGIN
-    totp_secret_key = YOUR_2FA_SECRET_KEY, # ONLY IF 2FA IS ENABLED
-)
-
-# SETUP TRADING API
-trading_api = API(credentials=credentials)
-
-# ESTABLISH CONNECTION
-trading_api.connect()
-```
-
-## 3.6. Is there a timeout ?
+## 3.7. Is there a timeout ?
 The connection for trading operations seems to have a timeout of : around 30 minutes.
 
 If this connection is left unused for this amount of time it will cease to work.

@@ -251,7 +251,7 @@ def get_chart(
         user_token (int):
             User identifier in Degiro's API.
         override (Dict[str], optional):
-            Override the request sent to Degiro's API.
+            Overrides the request sent to Degiro's API.
             Example :
                 override = {
                     'period':'P6D',

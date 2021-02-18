@@ -110,12 +110,16 @@ def get_session_id(
     if session is None:
         session = build_session()
 
-    if credentials.totp_secret_key:
+    if credentials.HasField('oneof_2fa') is True:
         url = urls.LOGIN + '/totp'
         username = credentials.username
         password = credentials.password
-        totp_secret_key = credentials.totp_secret_key
-        one_time_password = str(otp.get_totp(totp_secret_key))
+
+        if credentials.HasField('totp_secret_key') is True:
+            totp_secret_key = credentials.totp_secret_key
+            one_time_password = str(otp.get_totp(totp_secret_key))
+        else:
+            one_time_password = credentials.one_time_password
 
         payload_dict = {
             'username': username,
