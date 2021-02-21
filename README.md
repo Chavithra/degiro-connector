@@ -71,7 +71,7 @@ pip uninstall degiro-connector
 - [3. Trading connection](#3-trading-connection)
   * [3.1. How to login ?](#31-how-to-login-)
   * [3.2. What are the credentials ?](#32-what-are-the-credentials-)
-  * [3.3. How to find your : in_account ?](#33-how-to-find-your--in_account-)
+  * [3.3. How to find your : int_account ?](#33-how-to-find-your--int_account-)
   * [3.4. How to use 2FA ?](#34-how-to-use-2fa-)
   * [3.5. How to find your : totp_secret_key ?](#35-how-to-find-your--totp_secret_key-)
   * [3.6. How to find your : one_time_password ?](#36-how-to-find-your--one_time_password-)
@@ -456,7 +456,7 @@ The rest of this document will only refer to the module : **trading**.
 ## 3.1. How to login ?
 In order to use the module **trading.api** you need to establish a connection.
 
-Check the section related to **in_account** to understand how to get yours.
+Check the section related to **int_account** to understand how to get yours.
 
 Here is how to connect :
 ```python
@@ -492,13 +492,13 @@ Here are these credentials :
 |totp_secret_key|str|OPTIONAL : used for Two-factor Authentication (2FA).|
 |one_time_password|str|OPTIONAL : used for Two-factor Authentication (2FA).|
 
-Check the section related to **in_account** to understand how to get yours.
+Check the section related to **int_account** to understand how to get yours.
 
 Check the section related to **2FA** if you want to know more about these two parameters :
 - **totp_secret_key**
 - **one_time_password**
 
-## 3.3. How to find your : in_account ?
+## 3.3. How to find your : int_account ?
 
 To get your **int_acccount** you can run this example :
 [client_details_table.py](examples/trading/client_details_table.py)
@@ -617,7 +617,7 @@ Has you can guess the "totp_secret_key" is in this part :
 
     secret=YOUR_TOPT_SECRET_KEY
 
-An example here of script to extract the text from a QRCode :
+Here is an example of script to extract the text from a QRCode :
 [qrcode.py](examples/trading/qrcode.py)
 
 ## 3.6. How to find your : one_time_password ?
