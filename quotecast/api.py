@@ -41,10 +41,12 @@ class API:
             connection_timeout=15,
         )
 
-    def connect(self):
+    def connect(self) -> str:
         basic = self.basic
         connection_storage = self._connection_storage
         connection_storage.session_id = basic.get_session_id()
+
+        return connection_storage.session_id
 
     def fetch_data(self) -> Quotecast:
         basic = self.basic
@@ -97,6 +99,22 @@ class API:
 
         return ticker_dict
 
+
+    def get_chart(
+        self,
+        request: Chart.Request,
+        override: Dict[str, str] = None,
+        raw: bool = False,
+    ) -> Chart:
+        basic = self.basic
+
+        return basic.get_chart(
+            request=request,
+            override=override,
+            raw=raw,
+        )
+
+
     def subscribe(self, request: Quotecast.Request) -> bool:
         basic = self.basic
         session_id = self._connection_storage.session_id
@@ -104,20 +122,6 @@ class API:
         return basic.subscribe(
             request=request,
             session_id=session_id,
-        )
-
-    def get_chart(
-        self,
-        request: Chart.Request,
-        override: Dict[str, str] = None,
-        raw: bool = False,
-    ) -> bool:
-        basic = self.basic
-
-        return basic.get_chart(
-            request=request,
-            override=override,
-            raw=raw,
         )
 
 
