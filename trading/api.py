@@ -47,10 +47,12 @@ class API:
             connection_timeout=1800,
         )
 
-    def connect(self):
+    def connect(self) -> str:
         basic = self.basic
         connection_storage = self._connection_storage
         connection_storage.session_id = basic.get_session_id()
+
+        return connection_storage.session_id
 
     def get_update(
         self,
