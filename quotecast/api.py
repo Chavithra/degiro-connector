@@ -99,7 +99,6 @@ class API:
 
         return ticker_dict
 
-
     def get_chart(
         self,
         request: Chart.Request,
@@ -113,7 +112,6 @@ class API:
             override=override,
             raw=raw,
         )
-
 
     def subscribe(self, request: Quotecast.Request) -> bool:
         basic = self.basic

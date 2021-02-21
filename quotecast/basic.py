@@ -89,7 +89,7 @@ class Basic:
         request: Chart.Request,
         override: Dict[str, str] = None,
         raw: bool = False,
-    ) -> bool:
+    ) -> Chart:
         logger = self._logger
         session = self._session_storage.session
         user_token = self._user_token
