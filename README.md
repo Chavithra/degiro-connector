@@ -72,7 +72,7 @@ pip uninstall degiro-connector
   * [2.14. How to get chart data ?](#214-how-to-get-chart-data-)
 - [3. Trading connection](#3-trading-connection)
   * [3.1. How to login ?](#31-how-to-login-)
-  * [3.2. How to logout ?](#25-how-to-logout-)
+  * [3.2. How to logout ?](#32-how-to-logout-)
   * [3.3. What are the credentials ?](#32-what-are-the-credentials-)
   * [3.3. How to find your : int_account ?](#33-how-to-find-your--int_account-)
   * [3.6. How to use 2FA ?](#34-how-to-use-2fa-)
@@ -490,6 +490,9 @@ You can use the following code to disconnect :
 # DESTROY CONNECTION
 quotecast_api.logout()
 ```
+
+For a more comprehensive example :
+[logout.py](examples/trading/logout.py)
 
 ## 3.3. What are the credentials ?
 
