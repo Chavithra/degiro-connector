@@ -17,8 +17,9 @@ Here are the features you can access through this library :
 |Config|Retrieve a table containing : "clientId" and URLs which are constitutive of Degiro's API.|
 |Favourites|Retrieve favorite products lists.|
 |FinancialStatements|Retrieve a company's financial statements using its ISIN code.|
-|Login|Establish a connection and retrieve a : "session_id".|
-|Logout|Destroy previously established connection.|
+|LoginQuotecast|Establish a connection for quotecast operations.|
+|LoginTrading|Establish a connection for trading operations.|
+|LogoutTrading|Destroy previously established connection for trading operations.|
 |Order|Create, update, delete an Order.|
 |OrderHistory|Retrieve all Orders created between two dates.|
 |Orders|List pending Orders.|
@@ -59,25 +60,25 @@ pip uninstall degiro-connector
   * [2.2. What are the credentials ?](#22-what-are-the-credentials-)
   * [2.3. How to find your : user_token ?](#23-how-to-find-your--user_token-)
   * [2.4. How to login ?](#24-how-to-login-)
-  * [2.5. How to logout ?](#25-how-to-logout-)
-  * [2.6. Is there a timeout ?](#26-is-there-a-timeout-)
-  * [2.7. How to subscribe to a data-stream ?](#27-how-to-subscribe-to-a-data-stream-)
-  * [2.8. How to unsubscribe to a data-stream ?](#29-how-to-unsubscribe-to-a-data-stream-)
-  * [2.9. How to fetch the data ?](#29-how-to-fetch-the-data-)
-  * [2.10. How to use this data ?](#210-how-to-use-this-data-)
-  * [2.11. Which are the available data types ?](#211-which-are-the-available-data-types-)
-  * [2.12. What is a Ticker ?](#212-what-is-a-ticker-)
-  * [2.13. What is inside the Dictionnary ?](#213-what-is-inside-the-dictionnary-)
-  * [2.14. What is inside the DataFrame ?](#214-what-is-inside-the-dataframe-)
-  * [2.15. How to get chart data ?](#215-how-to-get-chart-data-)
+  * [2.5. Is there a timeout ?](#25-is-there-a-timeout-)
+  * [2.6. How to subscribe to a data-stream ?](#26-how-to-subscribe-to-a-data-stream-)
+  * [2.7. How to unsubscribe to a data-stream ?](#27-how-to-unsubscribe-to-a-data-stream-)
+  * [2.8. How to fetch the data ?](#28-how-to-fetch-the-data-)
+  * [2.9. How to use this data ?](#29-how-to-use-this-data-)
+  * [2.10. Which are the available data types ?](#210-which-are-the-available-data-types-)
+  * [2.11. What is a Ticker ?](#211-what-is-a-ticker-)
+  * [2.12. What is inside the Dictionnary ?](#212-what-is-inside-the-dictionnary-)
+  * [2.13. What is inside the DataFrame ?](#213-what-is-inside-the-dataframe-)
+  * [2.14. How to get chart data ?](#214-how-to-get-chart-data-)
 - [3. Trading connection](#3-trading-connection)
   * [3.1. How to login ?](#31-how-to-login-)
-  * [3.2. What are the credentials ?](#32-what-are-the-credentials-)
+  * [3.2. How to logout ?](#25-how-to-logout-)
+  * [3.3. What are the credentials ?](#32-what-are-the-credentials-)
   * [3.3. How to find your : int_account ?](#33-how-to-find-your--int_account-)
-  * [3.4. How to use 2FA ?](#34-how-to-use-2fa-)
-  * [3.5. How to find your : totp_secret_key ?](#35-how-to-find-your--totp_secret_key-)
+  * [3.6. How to use 2FA ?](#34-how-to-use-2fa-)
+  * [3.6. How to find your : totp_secret_key ?](#35-how-to-find-your--totp_secret_key-)
   * [3.6. How to find your : one_time_password ?](#36-how-to-find-your--one_time_password-)
-  * [3.7. Is there a timeout ?](#37-is-there-a-timeout-)
+  * [3.8. Is there a timeout ?](#37-is-there-a-timeout-)
 - [4. Order](#4-order)
   * [4.1. How to create an Order ?](#41-how-to-create-an-order-)
   * [4.2. How to update an Order ?](#42-how-to-update-an-order-)
@@ -176,18 +177,7 @@ quotecast_api = API(user_token=YOUR_USER_TOKEN)
 quotecast_api.connect()
 ```
 
-## 2.5. How to logout ?
-
-Once you no longer need to use the API you can destroy your connection.
-
-You can use the following code to disconnect :
-
-```python
-# DESTROY CONNECTION
-quotecast_api.logout()
-```
-
-## 2.6. Is there a timeout ?
+## 2.5. Is there a timeout ?
 
 Connection timeout is around 15 seconds.
 
@@ -199,7 +189,7 @@ This timeout is reset each time you use this connection to :
 
 So if you use it nonstop (in a loop) you won't need to reconnect.
 
-## 2.7. How to subscribe to a data-stream ?
+## 2.6. How to subscribe to a data-stream ?
 
 To subscribe to a data-stream you need to setup a Request message.
 
@@ -241,7 +231,7 @@ For more comprehensive examples :
 [realtime_poller.py](examples/quotecast/realtime_poller.py) /
 [realtime_one_shot.py](examples/quotecast/realtime_one_shot.py)
 
-## 2.8. How to unsubscribe to a data-stream ?
+## 2.7. How to unsubscribe to a data-stream ?
 
 To remove metrics from the data-stream you need to setup a Request message.
 
@@ -285,7 +275,7 @@ For more comprehensive examples :
 [realtime_poller.py](examples/quotecast/realtime_poller.py) /
 [realtime_one_shot.py](examples/quotecast/realtime_one_shot.py)
 
-## 2.9. How to fetch the data ?
+## 2.8. How to fetch the data ?
 
 You can use the following code :
 ```python
@@ -295,7 +285,7 @@ quotecast = quotecast_api.fetch_data()
 For a more comprehensive example :
 [realtime_poller.py](examples/quotecast/realtime_poller.py)
 
-## 2.10. How to use this data ?
+## 2.9. How to use this data ?
 
 Received data is a Quotecast object with the following properties :
 
@@ -311,7 +301,7 @@ response_datetime = quotecast.metadata.response_datetime
 request_duration= quotecast.metadata.request_duration
 ```
 
-## 2.11. Which are the available data types ?
+## 2.10. Which are the available data types ?
 
 This library provides the tools to convert Degiro's JSON data into something more programmer-friendly.
 
@@ -339,7 +329,7 @@ ticker_dict = quotecast_parser.ticker_dict
 ticker_df = quotecast_parser.ticker_df
 ```
 
-## 2.12. What is a Ticker ?
+## 2.11. What is a Ticker ?
 
 The generated Ticker contains :
 
@@ -374,7 +364,7 @@ A Ticker is a custom Protocol Buffer Message built for this library.
 
 It can be transmitted over GRPC framework.
 
-## 2.13. What is inside the Dictionnary ?
+## 2.12. What is inside the Dictionnary ?
 
 The dictionnary representation of a ticker contains the metrics grouped by "vwd_id" (product id), with :
 * keys : vwd_id
@@ -405,7 +395,7 @@ Example - Dictionnary :
 }
 ```
 
-## 2.14. What is inside the DataFrame ?
+## 2.13. What is inside the DataFrame ?
 
 The generated DataFrame will content :
 
@@ -418,7 +408,7 @@ Example - DataFrame :
     0   360114899  2020-11-08 12:00:27          1.022489  2020-11-06  17:39:57      70.0        100
     1   360015751  2020-11-08 12:00:27          1.022489  2020-11-06  17:36:17     22.99        470
 
-## 2.15. How to get chart data ?
+## 2.14. How to get chart data ?
 You can fetch an object containing the same data than in Degiro's website graph.
 
 For that you need to prepare a Chart.Request object.
@@ -490,8 +480,18 @@ trading_api.connect()
 For a more comprehensive example :
 [connection.py](examples/trading/connection.py)
 
+## 3.2. How to logout ?
 
-## 3.2. What are the credentials ?
+Once you no longer need to use the API you can destroy your connection.
+
+You can use the following code to disconnect :
+
+```python
+# DESTROY CONNECTION
+quotecast_api.logout()
+```
+
+## 3.3. What are the credentials ?
 
 Some credentials are required to use Degiro's trading API.
 
@@ -529,7 +529,7 @@ Beware, these two identifiers are not the same thing :
 - user_token : used to fetch real-time data and charts.
 - int_account : used for some trading operations.
 
-## 3.4. How to use 2FA ?
+## 3.6. How to use 2FA ?
 
 First I will briefly explain what is : **Two-Factor Authentication (2FA)**.
 
@@ -610,7 +610,7 @@ trading_api.connect()
 A complete example here :
 [connection_otp.py](examples/trading/connection_otp.py)
 
-## 3.5. How to find your : totp_secret_key ?
+## 3.6. How to find your : totp_secret_key ?
 
 The parameter **totp_secret_key** is only required if you have enabled 2FA on Degiro's website.
 
@@ -641,7 +641,7 @@ Usually you get it through an app like **Google Authenticator**.
 
 It is preferable to use the parameter **totp_secret_key** instead of **one_time_password**.
 
-## 3.7. Is there a timeout ?
+## 3.8. Is there a timeout ?
 The connection for trading operations seems to have a timeout of : around 30 minutes.
 
 If this connection is left unused for this amount of time it will cease to work.
