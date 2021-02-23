@@ -34,12 +34,15 @@ class API:
         return self._basic.user_token
 
     def __init__(self, user_token: int):
-        self._logger = logging.getLogger(self.__module__)
         self._basic = Basic(user_token=user_token)
+
         self._connection_storage = ConnectionStorage(
-            session_storage=self._basic.session_storage,
             connection_timeout=15,
         )
+        self._connection_storage.setup_hooks(
+            session=self._basic.session_storage.session,
+        )
+        self._logger = logging.getLogger(self.__module__)
 
     def connect(self) -> str:
         basic = self.basic

@@ -40,12 +40,15 @@ class API:
         return self._basic.credentials
 
     def __init__(self, credentials: Credentials):
-        self.logger = logging.getLogger(self.__module__)
         self._basic = Basic(credentials=credentials)
+
         self._connection_storage = ConnectionStorage(
-            session_storage=self._basic.session_storage,
             connection_timeout=1800,
         )
+        self._connection_storage.setup_hooks(
+            session=self._basic.session_storage.session,
+        )
+        self.logger = logging.getLogger(self.__module__)
 
     def connect(self) -> str:
         basic = self.basic
