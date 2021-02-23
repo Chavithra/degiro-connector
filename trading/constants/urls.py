@@ -14,6 +14,8 @@ FINANCIAL_STATEMENTS = \
     'https://trader.degiro.nl/dgtbxdsservice/financial-statements'
 LOGIN = \
     'https://trader.degiro.nl/login/secure/login'
+LOGOUT = \
+    'https://trader.degiro.nl/trading/secure/logout'
 ORDER_CHECK = \
     'https://trader.degiro.nl/trading/secure/v5/checkOrder'
 ORDER_CONFIRM = \

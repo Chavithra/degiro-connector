@@ -54,6 +54,13 @@ class API:
 
         return connection_storage.session_id
 
+    def logout(self) -> bool:
+        basic = self._basic
+        session_id = self._connection_storage.session_id
+        self._connection_storage.session_id = ''
+
+        return basic.logout(session_id=session_id)
+
     def get_update(
         self,
         request_list: Update.RequestList,

@@ -70,6 +70,18 @@ class Basic:
             logger=logger
         )
 
+    def logout(self, session_id: str) -> bool:
+        credentials = self._credentials
+        logger = self._logger
+        session = self._session_storage.session
+
+        return utilities.logout(
+            session_id=session_id,
+            credentials=credentials,
+            session=session,
+            logger=logger,
+        )
+
     def get_update(
         self,
         request_list: Update.RequestList,

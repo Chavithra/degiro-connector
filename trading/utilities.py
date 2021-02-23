@@ -171,6 +171,45 @@ def get_session_id(
         raise ConnectionError('No session id returned.')
 
 
+def logout(
+    session_id: str,
+    credentials: Credentials,
+    session: requests.Session = None,
+    logger: logging.Logger = None,
+) -> bool:
+    if logger is None:
+        logger = build_logger()
+    if session is None:
+        session = build_session()
+
+    int_account = credentials.int_account
+    url = urls.LOGOUT
+    url = f'{url};jsessionid={session_id}'
+
+    params = {
+        'intAccount': int_account,
+        'sessionId': session_id,
+    }
+
+    request = requests.Request(
+        method='PUT',
+        url=url,
+        params=params,
+    )
+    prepped = session.prepare_request(request)
+    response = None
+
+    try:
+        response = session.send(prepped, verify=False)
+    except Exception as e:
+        logger.fatal(response.status_code)
+        logger.fatal(response.text)
+        logger.fatal(e)
+        return False
+
+    return response.status_code == 200
+
+
 def get_update(
     request_list: Update.RequestList,
     session_id: str,
