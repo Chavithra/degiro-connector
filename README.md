@@ -17,9 +17,11 @@ Here are the features you can access through this library :
 |Config|Retrieve a table containing : "clientId" and URLs which are constitutive of Degiro's API.|
 |Favourites|Retrieve favorite products lists.|
 |FinancialStatements|Retrieve a company's financial statements using its ISIN code.|
+|LatestNews|Retrieve latest news about all the companies.|
 |LoginQuotecast|Establish a connection for quotecast operations.|
 |LoginTrading|Establish a connection for trading operations.|
 |LogoutTrading|Destroy previously established connection for trading operations.|
+|NewsByCompany|Retrieve news related to a specific company.|
 |Order|Create, update, delete an Order.|
 |OrderHistory|Retrieve all Orders created between two dates.|
 |Orders|List pending Orders.|
@@ -27,6 +29,7 @@ Here are the features you can access through this library :
 |ProductsConfig|Retrieve a table containing : useful parameters to filter products.|
 |ProductsInfo|Search for products using their ids.|
 |Quotecasts|Fetch real-time data on financial products. <br> For instance the real-time stock Price.|
+|TopNewsPreview|Retrieve some news preview about all the companies.|
 |TotalPorfolio|Retrieve aggregated information about your assets.|
 |TransactionsHistory|Retrieve all Transactions created between two dates.|
 
