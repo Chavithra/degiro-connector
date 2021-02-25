@@ -1304,7 +1304,7 @@ def get_financial_statements(
         if raw is True:
             response = response_dict
         else:
-            response = payload_handler.company_profile_to_grpc(
+            response = payload_handler.financial_statements_to_grpc(
                 payload=response_dict,
             )
     except Exception as e:
