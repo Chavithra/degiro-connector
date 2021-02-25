@@ -381,7 +381,6 @@ message CompanyRatios {
   google.protobuf.Struct values = 1;
 }
 
-
 /** For the payload from the following URL :
  * https://trader.degiro.nl/dgtbxdsservice/company-profile/v2
  */
@@ -390,11 +389,55 @@ message CompanyProfile {
   google.protobuf.Struct values = 1;
 }
 
-
 /** For the payload from the following URL :
  * https://trader.degiro.nl/dgtbxdsservice/financial-statements
  */
 message FinancialStatements {
   // PROPERTIES
   google.protobuf.Struct values = 1;
+}
+
+/** For the payload from the following URL :
+ * https://trader.degiro.nl/dgtbxdsservice/newsfeed/v2/latest-news
+ */
+message LatestNews {
+  // MESSAGES
+  message Request {
+    // PROPERTIES
+    int32 offset = 1;
+    string languages = 2;
+    int32 limit = 3;
+  }
+  // PROPERTIES
+  repeated google.protobuf.Struct items = 1;
+  int32 offset = 2;
+  int32 total = 3;
+}
+
+/** For the payload from the following URL :
+ * https://trader.degiro.nl/dgtbxdsservice/newsfeed/v2/top-news-preview
+ */
+message TopNewsPreview {
+  // PROPERTIES
+  repeated google.protobuf.Struct items = 1;
+  int32 offset = 2;
+  int32 total = 3;
+}
+
+/** For the payload from the following URL :
+ * https://trader.degiro.nl/dgtbxdsservice/newsfeed/v2/news-by-company
+ */
+message NewsByCompany {
+  // MESSAGES
+  message Request {
+    // PROPERTIES
+    string isin = 1;
+    int32 limit = 2;
+    int32 offset = 3;
+    string languages = 4;
+  }
+  // PROPERTIES
+  repeated google.protobuf.Struct items = 1;
+  int32 offset = 2;
+  int32 total = 3;
 }

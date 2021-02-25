@@ -9,10 +9,13 @@ from trading.pb.trading_pb2 import (
     Credentials,
     Favourites,
     FinancialStatements,
+    LatestNews,
+    NewsByCompany,
     Order,
     OrdersHistory,
     ProductsInfo,
     ProductSearch,
+    TopNewsPreview,
     TransactionsHistory,
     Update,
 )
@@ -296,6 +299,45 @@ class API:
             raw=raw,
         )
 
+    def get_latest_news(
+        self,
+        request: LatestNews.Request,
+        raw: bool = False,
+    ) -> Union[dict, LatestNews]:
+        basic = self._basic
+        session_id = self._connection_storage.session_id
+
+        return basic.get_latest_news(
+            request=request,
+            session_id=session_id,
+            raw=raw,
+        )
+
+    def get_top_news_preview(
+        self,
+        raw: bool = False,
+    ) -> Union[dict, TopNewsPreview]:
+        basic = self._basic
+        session_id = self._connection_storage.session_id
+
+        return basic.get_top_news_preview(
+            session_id=session_id,
+            raw=raw,
+        )
+
+    def get_news_by_company(
+        self,
+        request: NewsByCompany.Request,
+        raw: bool = False,
+    ) -> Union[dict, NewsByCompany]:
+        basic = self._basic
+        session_id = self._connection_storage.session_id
+
+        return basic.get_news_by_company(
+            request=request,
+            session_id=session_id,
+            raw=raw,
+        )
 
 if __name__ == '__main__':
     # IMPORTATIONS

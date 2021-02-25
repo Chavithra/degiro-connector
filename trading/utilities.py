@@ -9,12 +9,18 @@ import urllib3
 from trading.constants.headers import Headers
 from trading.pb.trading_pb2 import (
     AccountOverview,
+    CompanyProfile,
+    CompanyRatios,
     Credentials,
     Favourites,
+    FinancialStatements,
+    LatestNews,
+    NewsByCompany,
     Order,
     OrdersHistory,
     ProductsInfo,
     ProductSearch,
+    TopNewsPreview,
     TransactionsHistory,
     Update,
 )
@@ -755,7 +761,7 @@ def get_transactions_history(
     url = urls.TRANSACTIONS_HISTORY
 
     params = payload_handler.transactions_history_request_to_api(
-        request=request
+        request=request,
     )
     params['intAccount'] = credentials.int_account
     params['sessionId'] = session_id
@@ -836,7 +842,7 @@ def get_account_overview(
 
     url = urls.ACCOUNT_OVERVIEW
     params = payload_handler.account_overview_request_to_api(
-        request=request
+        request=request,
     )
     params['intAccount'] = credentials.int_account
     params['sessionId'] = session_id
@@ -932,7 +938,7 @@ def product_search(
     ]
 
     params = payload_handler.product_search_request_to_api(
-        request=request
+        request=request,
     )
     params['intAccount'] = credentials.int_account
     params['sessionId'] = session_id
@@ -1099,7 +1105,7 @@ def get_products_info(
     raw: bool = False,
     session: requests.Session = None,
     logger: logging.Logger = None,
-) -> ProductsInfo:
+) -> Union[dict, ProductsInfo]:
     """ Search for products using their ids.
 
     Args:
@@ -1177,7 +1183,7 @@ def get_company_ratios(
     raw: bool = False,
     session: requests.Session = None,
     logger: logging.Logger = None,
-) -> dict:
+) -> Union[dict, CompanyRatios]:
     if logger is None:
         logger = build_logger()
     if session is None:
@@ -1191,12 +1197,10 @@ def get_company_ratios(
         'sessionId': session_id,
     }
 
-    request = requests.Request(method='GET', url=url)
+    request = requests.Request(method='GET', url=url, params=params)
     prepped = session.prepare_request(request)
     prepped.headers['cookie'] = 'JSESSIONID=' + session_id
 
-    request = requests.Request(method='GET', url=url, params=params)
-    prepped = session.prepare_request(request)
     response_raw = None
 
     try:
@@ -1226,7 +1230,7 @@ def get_company_profile(
     raw: bool = False,
     session: requests.Session = None,
     logger: logging.Logger = None,
-) -> dict:
+) -> Union[dict, CompanyProfile]:
     if logger is None:
         logger = build_logger()
     if session is None:
@@ -1240,12 +1244,10 @@ def get_company_profile(
         'sessionId': session_id,
     }
 
-    request = requests.Request(method='GET', url=url)
+    request = requests.Request(method='GET', url=url, params=params)
     prepped = session.prepare_request(request)
     prepped.headers['cookie'] = 'JSESSIONID=' + session_id
 
-    request = requests.Request(method='GET', url=url, params=params)
-    prepped = session.prepare_request(request)
     response_raw = None
 
     try:
@@ -1275,7 +1277,7 @@ def get_financial_statements(
     raw: bool = False,
     session: requests.Session = None,
     logger: logging.Logger = None,
-) -> dict:
+) -> Union[dict, FinancialStatements]:
     if logger is None:
         logger = build_logger()
     if session is None:
@@ -1289,12 +1291,10 @@ def get_financial_statements(
         'sessionId': session_id,
     }
 
-    request = requests.Request(method='GET', url=url)
+    request = requests.Request(method='GET', url=url, params=params)
     prepped = session.prepare_request(request)
     prepped.headers['cookie'] = 'JSESSIONID=' + session_id
 
-    request = requests.Request(method='GET', url=url, params=params)
-    prepped = session.prepare_request(request)
     response_raw = None
 
     try:
@@ -1305,6 +1305,145 @@ def get_financial_statements(
             response = response_dict
         else:
             response = payload_handler.company_profile_to_grpc(
+                payload=response_dict,
+            )
+    except Exception as e:
+        logger.fatal('error')
+        logger.fatal(response_raw.status_code)
+        logger.fatal(response_raw.text)
+        logger.fatal(e)
+        return False
+
+    return response
+
+
+def get_latest_news(
+    request: LatestNews.Request,
+    session_id: str,
+    credentials: Credentials,
+    raw: bool = False,
+    session: requests.Session = None,
+    logger: logging.Logger = None,
+) -> Union[dict, LatestNews]:
+    if logger is None:
+        logger = build_logger()
+    if session is None:
+        session = build_session()
+
+    url = urls.LATEST_NEWS
+
+    params = payload_handler.latest_news_request_to_api(
+        request=request,
+    )
+    params['intAccount'] = credentials.int_account
+    params['sessionId'] = session_id
+
+    request = requests.Request(method='GET', url=url, params=params)
+    prepped = session.prepare_request(request)
+    prepped.headers['cookie'] = 'JSESSIONID=' + session_id
+
+    response_raw = None
+
+    try:
+        response_raw = session.send(prepped, verify=False)
+        response_dict = response_raw.json()
+
+        if raw is True:
+            response = response_dict
+        else:
+            response = payload_handler.latest_news_to_grpc(
+                payload=response_dict,
+            )
+    except Exception as e:
+        logger.fatal('error')
+        logger.fatal(response_raw.status_code)
+        logger.fatal(response_raw.text)
+        logger.fatal(e)
+        return False
+
+    return response
+
+
+def get_top_news_preview(
+    session_id: str,
+    credentials: Credentials,
+    raw: bool = False,
+    session: requests.Session = None,
+    logger: logging.Logger = None,
+) -> Union[dict, TopNewsPreview]:
+    if logger is None:
+        logger = build_logger()
+    if session is None:
+        session = build_session()
+
+    url = urls.TOP_NEWS_PREVIEW
+
+    params = {
+        'intAccount': credentials.int_account,
+        'sessionId': session_id,
+    }
+
+    request = requests.Request(method='GET', url=url, params=params)
+    prepped = session.prepare_request(request)
+    prepped.headers['cookie'] = 'JSESSIONID=' + session_id
+
+    response_raw = None
+
+    try:
+        response_raw = session.send(prepped, verify=False)
+        response_dict = response_raw.json()
+
+        if raw is True:
+            response = response_dict
+        else:
+            response = payload_handler.top_news_preview_to_grpc(
+                payload=response_dict,
+            )
+    except Exception as e:
+        logger.fatal('error')
+        logger.fatal(response_raw.status_code)
+        logger.fatal(response_raw.text)
+        logger.fatal(e)
+        return False
+
+    return response
+
+
+def get_news_by_company(
+    request: NewsByCompany.Request,
+    session_id: str,
+    credentials: Credentials,
+    raw: bool = False,
+    session: requests.Session = None,
+    logger: logging.Logger = None,
+) -> Union[dict, NewsByCompany]:
+    if logger is None:
+        logger = build_logger()
+    if session is None:
+        session = build_session()
+
+    url = urls.NEWS_BY_COMPANY
+
+    params = payload_handler.news_by_company_request_to_api(
+        request=request,
+    )
+    params['intAccount'] = credentials.int_account
+    params['sessionId'] = session_id
+
+    request = requests.Request(method='GET', url=url, params=params)
+    prepped = session.prepare_request(request)
+    prepped.headers['cookie'] = 'JSESSIONID=' + session_id
+
+    response_raw = None
+
+    try:
+        response_raw = session.send(prepped, verify=False)
+        response_dict = response_raw.json()
+
+        if raw is True:
+            response = response_dict
+        else:
+            response = payload_handler.news_by_company_to_grpc(
                 payload=response_dict,
             )
     except Exception as e:

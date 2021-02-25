@@ -8,10 +8,13 @@ from trading.pb.trading_pb2 import (
     CompanyRatios,
     Favourites,
     FinancialStatements,
+    LatestNews,
+    NewsByCompany,
     Order,
     OrdersHistory,
     ProductsInfo,
     ProductSearch,
+    TopNewsPreview,
     TransactionsHistory,
     Update,
 )
@@ -73,6 +76,31 @@ def account_overview_request_to_api(
             day=request.to_date.day
         ) \
         .strftime('%d/%m/%Y')
+
+    return request_dict
+
+
+def latest_news_request_to_api(
+    request: LatestNews.Request,
+) -> dict:
+    request_dict = {
+        'offset': request.offset,
+        'languages': request.languages,
+        'limit': request.limit,
+    }
+
+    return request_dict
+
+
+def news_by_company_request_to_api(
+    request: NewsByCompany.Request,
+) -> dict:
+    request_dict = {
+        'isin': request.isin,
+        'limit': request.limit,
+        'offset': request.offset,
+        'languages': request.languages,
+    }
 
     return request_dict
 
@@ -270,6 +298,18 @@ def financial_statements_to_grpc(payload: dict) -> CompanyProfile:
     return financial_statements
 
 
+def latest_news_to_grpc(payload: dict) -> LatestNews:
+    latest_news = LatestNews()
+    json_format.ParseDict(
+        js_dict=payload['data'],
+        message=latest_news,
+        ignore_unknown_fields=False,
+        descriptor_pool=None,
+    )
+
+    return latest_news
+
+
 def message_to_dict(message: Message) -> dict:
     return json_format.MessageToDict(
         message=message,
@@ -279,6 +319,19 @@ def message_to_dict(message: Message) -> dict:
         descriptor_pool=None,
         float_precision=None,
     )
+
+
+def news_by_company_to_grpc(payload: dict) -> NewsByCompany:
+    news_by_company = NewsByCompany()
+    json_format.ParseDict(
+        js_dict=payload['data'],
+        message=news_by_company,
+        ignore_unknown_fields=False,
+        descriptor_pool=None,
+    )
+
+    return news_by_company
+
 
 
 def orders_history_to_grpc(payload: dict) -> OrdersHistory:
@@ -381,6 +434,18 @@ def setup_update_total_portfolio(update: Update, payload: dict):
                 name = attribute['name']
                 value = attribute['value']
                 update.total_portfolio.values[name] = value
+
+
+def top_news_preview_to_grpc(payload: dict) -> TopNewsPreview:
+    top_news_preview = TopNewsPreview()
+    json_format.ParseDict(
+        js_dict=payload['data'],
+        message=top_news_preview,
+        ignore_unknown_fields=False,
+        descriptor_pool=None,
+    )
+
+    return top_news_preview
 
 
 def transactions_history_to_grpc(payload: dict) -> TransactionsHistory:

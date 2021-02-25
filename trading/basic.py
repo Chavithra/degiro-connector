@@ -11,10 +11,13 @@ from trading.pb.trading_pb2 import (
     Credentials,
     Favourites,
     FinancialStatements,
+    LatestNews,
+    NewsByCompany,
     Order,
     OrdersHistory,
     ProductsInfo,
     ProductSearch,
+    TopNewsPreview,
     TransactionsHistory,
     Update,
 )
@@ -405,6 +408,61 @@ class Basic:
 
         return utilities.get_financial_statements(
             product_isin=product_isin,
+            session_id=session_id,
+            credentials=credentials,
+            raw=raw,
+            session=session,
+            logger=logger,
+        )
+
+    def get_latest_news(
+        self,
+        request: LatestNews.Request,
+        session_id: str,
+        raw: bool = False,
+    ) -> Union[dict, LatestNews]:
+        credentials = self._credentials
+        logger = self._logger
+        session = self._session_storage.session
+
+        return utilities.get_latest_news(
+            request=request,
+            session_id=session_id,
+            credentials=credentials,
+            raw=raw,
+            session=session,
+            logger=logger,
+        )
+
+    def get_top_news_preview(
+        self,
+        session_id: str,
+        raw: bool = False,
+    ) -> Union[dict, TopNewsPreview]:
+        credentials = self._credentials
+        logger = self._logger
+        session = self._session_storage.session
+
+        return utilities.get_top_news_preview(
+            session_id=session_id,
+            credentials=credentials,
+            raw=raw,
+            session=session,
+            logger=logger,
+        )
+
+    def get_news_by_company(
+        self,
+        request: NewsByCompany.Request,
+        session_id: str,
+        raw: bool = False,
+    ) -> Union[dict, NewsByCompany]:
+        credentials = self._credentials
+        logger = self._logger
+        session = self._session_storage.session
+
+        return utilities.get_news_by_company(
+            request=request,
             session_id=session_id,
             credentials=credentials,
             raw=raw,

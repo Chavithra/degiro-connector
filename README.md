@@ -111,6 +111,9 @@ pip uninstall degiro-connector
   * [8.1. How to get : CompanyProfile ?](#81-how-to-get--companyprofile-)
   * [8.2. How to get : CompanyRatios ?](#82-how-to-get--companyratios-)
   * [8.3. How to get : FinancialStatements ?](#83-how-to-get--financialstatements-)
+  * [8.4. How to get : LatestNews ?](#84-how-to-get--latestnews-)
+  * [8.5. How to get : TopNewsPreview ?](#85-how-to-get--topnewspreview-)
+  * [8.6. How to get : NewsByCompany ?](#86-how-to-get--newsbycompany-)
 - [9. Contributing](#9-contributing)
 - [10. License](#10-license)
 
@@ -1375,6 +1378,63 @@ financials_statements = trading_api.get_financials_statements(
 
 For a more comprehensive example :
 [financial_statements.py](examples/trading/financial_statements.py)
+
+## 8.4. How to get : LatestNews ?
+
+Here is how to get this data :
+
+```python
+# SETUP REQUEST
+request = LatestNews.Request(
+    offset=0,
+    languages='en,fr',
+    limit=20,
+)
+
+# FETCH DATA
+latest_news = trading_api.get_latest_news(
+    request=request,
+    raw=True,
+)
+```
+
+For a more comprehensive example :
+[latest_news.py](examples/trading/latest_news.py)
+
+## 8.5. How to get : TopNewsPreview ?
+
+Here is how to get this data :
+
+```python
+# FETCH DATA
+top_news_preview = trading_api.get_top_news_preview(raw=True)
+```
+
+For a more comprehensive example :
+[top_news_preview.py](examples/trading/top_news_preview.py)
+
+## 8.6. How to get : NewsByCompany ?
+
+Here is how to get this data :
+
+```python
+# SETUP REQUEST
+request = NewsByCompany.Request(
+    isin='NL0000235190',
+    limit=10,
+    offset=0,
+    languages='en,fr',
+)
+
+# FETCH DATA
+news_by_company = trading_api.get_news_by_company(
+    request=request,
+    raw=True,
+)
+```
+
+For a more comprehensive example :
+[news_by_company.py](examples/trading/news_by_company.py)
 
 # 9. Contributing
 Pull requests are welcome.
