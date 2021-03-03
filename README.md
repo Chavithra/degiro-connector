@@ -1246,8 +1246,8 @@ request = ProductSearch.RequestOptions(
     offset=0,
     limit=100,
     requireTotal=True,
-    sortColumns='name',
-    sortTypes='asc',
+    sortColumns='expirationDate,strike',
+    sortTypes='asc,asc',
 )
 
 # FETCH DATA
