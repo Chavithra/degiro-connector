@@ -72,6 +72,6 @@ class ConnectionStorage:
         if self.__last_success < timestamp and status_code == 200:
             self.__last_success = timestamp
 
-    def setup_hooks(self, session:requests.Session):
+    def setup_hooks(self, session: requests.Session):
         hooks = {'response': [self.response_hook]}
         session.hooks.update(hooks)

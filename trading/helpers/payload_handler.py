@@ -333,7 +333,6 @@ def news_by_company_to_grpc(payload: dict) -> NewsByCompany:
     return news_by_company
 
 
-
 def orders_history_to_grpc(payload: dict) -> OrdersHistory:
     orders_history = OrdersHistory()
     orders_history.response_datetime.GetCurrentTime()
