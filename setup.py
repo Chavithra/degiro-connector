@@ -17,7 +17,7 @@ setup(
             'trading = trading.applications.cli:cli',
         ],
     },
-    extras_requires={
+    extras_require={
         'tests': [
             'pytest',
         ],
@@ -41,5 +41,5 @@ setup(
     packages=find_packages(),
     python_requires='>=3.6',
     url='https://github.com/chavithra/degiro-connector',
-    version='0.0.7',
+    version='0.0.8',
 )
