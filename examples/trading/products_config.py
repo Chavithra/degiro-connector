@@ -37,6 +37,12 @@ for item in products_config.values:
 
 # FETCH DATA - DICT
 products_config_dict = trading_api.get_products_config(raw=True)
+products_config_pretty = json.dumps(
+    products_config_dict,
+    sort_keys=True,
+    indent=4,
+)
 
 # DISPLAY - DICT
-print(products_config_dict)
+print(products_config_pretty)
+
