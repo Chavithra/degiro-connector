@@ -48,6 +48,7 @@ message Chart {
     PT15M = 5;
     PT30M = 6;
     PT60M = 7;
+    PT1H = 8;
   }
   enum Period {
     P1D = 0;
