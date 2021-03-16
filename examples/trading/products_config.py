@@ -45,4 +45,3 @@ products_config_pretty = json.dumps(
 
 # DISPLAY - DICT
 print(products_config_pretty)
-
