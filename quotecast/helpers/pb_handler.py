@@ -15,7 +15,7 @@ pd.set_option('display.expand_frame_repr', False)
 
 def ticker_to_dict(
     ticker: Ticker,
-    column_list: List[str] = [],
+    column_list: List[str] = None,
 ) -> Dict[
     Union[str, int],  # VWD_ID
     Dict[str, Union[str, int]]  # METRICS : NAME / VALUE
@@ -33,6 +33,9 @@ def ticker_to_dict(
         Dict[Union[str, int], Dict[str, Union[str, int]]]:
             Dict containing all the metrics grouped by "vwd_id".
     """
+
+    if column_list is None:
+        column_list = list()
 
     empty_list = [None] * len(column_list)
     empty_metrics = dict(zip(column_list, empty_list))
@@ -52,7 +55,7 @@ def ticker_to_dict(
 
 def ticker_to_df(
     ticker: Ticker,
-    column_list: List[str] = [],
+    column_list: List[str] = None,
 ) -> pd.DataFrame:
     """ Converts a ticker to a "pandas.DataFrame".
 
@@ -69,6 +72,9 @@ def ticker_to_df(
             Each row depicts a specific product.
             Each column depicts a specific metric.
     """
+
+    if column_list is None:
+        column_list = list()
 
     ticker_dict = ticker_to_dict(
         ticker=ticker,

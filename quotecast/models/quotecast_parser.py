@@ -148,8 +148,8 @@ class QuotecastParser:
     @staticmethod
     def build_ticker_from_quotecast(
         quotecast: Quotecast,
-        ticker: Ticker = Ticker(),
-        references: Dict[int, List[str]] = dict(),
+        references: Dict[int, List[str]] = None,
+        ticker: Ticker = None,
     ) -> Ticker:
         """ Build or update a Ticker metrics using a Quotecast object.
 
@@ -185,6 +185,12 @@ class QuotecastParser:
         Returns:
             Ticker: New or updated Ticker.
         """
+
+        if references is None:
+            references = dict()
+
+        if ticker is None:
+            ticker = Ticker()
 
         # SETUP PRODUCTS & METRICS
         message_array = json.loads(quotecast.json_data)
