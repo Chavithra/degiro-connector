@@ -57,6 +57,9 @@ message Order {
     repeated google.protobuf.Struct transaction_fees = 4;
     repeated google.protobuf.Struct transaction_opposite_fees = 5;
     repeated google.protobuf.Struct transaction_taxes = 6;
+    repeated google.protobuf.Struct transaction_auto_fx_surcharges = 7;
+    repeated google.protobuf.Struct transaction_auto_fx_opposite_surcharges = 8;
+    double autoFxConversionRate = 9;
   }
   message ConfirmationResponse {
     string orderId = 1;

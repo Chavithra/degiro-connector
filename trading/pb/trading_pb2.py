@@ -21,7 +21,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x18trading/pb/trading.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\x8b\x01\n\x0b\x43redentials\x12\x13\n\x0bint_account\x18\x01 \x01(\x05\x12\x10\n\x08username\x18\x02 \x01(\t\x12\x10\n\x08password\x18\x03 \x01(\t\x12\x19\n\x0ftotp_secret_key\x18\x04 \x01(\tH\x00\x12\x1b\n\x11one_time_password\x18\x05 \x01(\x05H\x00\x42\x0b\n\toneof_2fa\"\xe1\x07\n\x05Order\x12\x1d\n\x06\x61\x63tion\x18\x02 \x01(\x0e\x32\r.Order.Action\x12\n\n\x02id\x18\x07 \x01(\t\x12$\n\norder_type\x18\x03 \x01(\x0e\x32\x10.Order.OrderType\x12\r\n\x05price\x18\x05 \x01(\x01\x12\x12\n\nproduct_id\x18\x01 \x01(\x05\x12\x0c\n\x04size\x18\x06 \x01(\x01\x12\"\n\ttime_type\x18\x04 \x01(\x0e\x32\x0f.Order.TimeType\x12\x15\n\rcontract_size\x18\x08 \x01(\x01\x12\x15\n\rcontract_type\x18\t \x01(\x05\x12\x10\n\x08\x63urrency\x18\n \x01(\t\x12\x0c\n\x04hour\x18\x0b \x01(\t\x12\x14\n\x0cis_deletable\x18\x0c \x01(\x08\x12\x15\n\ris_modifiable\x18\r \x01(\x08\x12\x0f\n\x07product\x18\x0e \x01(\t\x12\x10\n\x08quantity\x18\x0f \x01(\x01\x12\x12\n\nstop_price\x18\x10 \x01(\x01\x12\x19\n\x11total_order_value\x18\x11 \x01(\x01\x12\x16\n\x0eretained_order\x18\x12 \x01(\x08\x12\x18\n\x10sent_to_exchange\x18\x13 \x01(\x08\x1a\x9d\x02\n\x10\x43heckingResponse\x12\x17\n\x0f\x63onfirmation_id\x18\x01 \x01(\t\x12\x16\n\x0e\x66ree_space_new\x18\x02 \x01(\x01\x12\x35\n\x11response_datetime\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x31\n\x10transaction_fees\x18\x04 \x03(\x0b\x32\x17.google.protobuf.Struct\x12:\n\x19transaction_opposite_fees\x18\x05 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x32\n\x11transaction_taxes\x18\x06 \x03(\x0b\x32\x17.google.protobuf.Struct\x1a^\n\x14\x43onfirmationResponse\x12\x0f\n\x07orderId\x18\x01 \x01(\t\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"\x1b\n\x06\x41\x63tion\x12\x07\n\x03\x42UY\x10\x00\x12\x08\n\x04SELL\x10\x01\"A\n\tOrderType\x12\t\n\x05LIMIT\x10\x00\x12\x0e\n\nSTOP_LIMIT\x10\x01\x12\n\n\x06MARKET\x10\x02\x12\r\n\tSTOP_LOSS\x10\x03\"S\n\x08TimeType\x12\r\n\tUNKNOWN_0\x10\x00\x12\x11\n\rGOOD_TILL_DAY\x10\x01\x12\r\n\tUNKNOWN_2\x10\x02\x12\x16\n\x12GOOD_TILL_CANCELED\x10\x03\"\xc6\x08\n\x06Update\x12\x35\n\x11response_datetime\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x1e\n\x06\x61lerts\x18\x02 \x01(\x0b\x32\x0e.Update.Alerts\x12%\n\ncash_funds\x18\x03 \x01(\x0b\x32\x11.Update.CashFunds\x12\x33\n\x11historical_orders\x18\x04 \x01(\x0b\x32\x18.Update.HistoricalOrders\x12\x1e\n\x06orders\x18\x05 \x01(\x0b\x32\x0e.Update.Orders\x12$\n\tportfolio\x18\x06 \x01(\x0b\x32\x11.Update.Portfolio\x12/\n\x0ftotal_portfolio\x18\x07 \x01(\x0b\x32\x16.Update.TotalPortfolio\x12*\n\x0ctransactions\x18\x08 \x01(\x0b\x32\x14.Update.Transactions\x1a?\n\x07Request\x12\x1e\n\x06option\x18\x01 \x01(\x0e\x32\x0e.Update.Option\x12\x14\n\x0clast_updated\x18\x02 \x01(\x05\x1a.\n\x0bRequestList\x12\x1f\n\x06values\x18\x01 \x03(\x0b\x32\x0f.Update.Request\x1aG\n\x06\x41lerts\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1aJ\n\tCashFunds\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1a@\n\x10HistoricalOrders\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\x16\n\x06values\x18\x02 \x03(\x0b\x32\x06.Order\x1a\x36\n\x06Orders\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\x16\n\x06values\x18\x02 \x03(\x0b\x32\x06.Order\x1aJ\n\tPortfolio\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x03(\x0b\x32\x17.google.protobuf.Struct\x1aO\n\x0eTotalPortfolio\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1aM\n\x0cTransactions\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x03(\x0b\x32\x17.google.protobuf.Struct\"z\n\x06Option\x12\n\n\x06\x41LERTS\x10\x00\x12\r\n\tCASHFUNDS\x10\x01\x12\x14\n\x10HISTORICALORDERS\x10\x02\x12\n\n\x06ORDERS\x10\x03\x12\r\n\tPORTFOLIO\x10\x04\x12\x12\n\x0eTOTALPORTFOLIO\x10\x05\x12\x10\n\x0cTRANSACTIONS\x10\x06\"\x8b\x02\n\rOrdersHistory\x12\'\n\x06values\x18\x01 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\x99\x01\n\x07Request\x12.\n\tfrom_date\x18\x01 \x01(\x0b\x32\x1b.OrdersHistory.Request.Date\x12,\n\x07to_date\x18\x02 \x01(\x0b\x32\x1b.OrdersHistory.Request.Date\x1a\x30\n\x04\x44\x61te\x12\x0c\n\x04year\x18\x01 \x01(\x05\x12\r\n\x05month\x18\x02 \x01(\x05\x12\x0b\n\x03\x64\x61y\x18\x03 \x01(\x05\"\xbf\x02\n\x13TransactionsHistory\x12\'\n\x06values\x18\x01 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\xc7\x01\n\x07Request\x12\x34\n\tfrom_date\x18\x01 \x01(\x0b\x32!.TransactionsHistory.Request.Date\x12\x32\n\x07to_date\x18\x02 \x01(\x0b\x32!.TransactionsHistory.Request.Date\x12 \n\x18groupTransactionsByOrder\x18\x03 \x01(\x08\x1a\x30\n\x04\x44\x61te\x12\x0c\n\x04year\x18\x01 \x01(\x05\x12\r\n\x05month\x18\x02 \x01(\x05\x12\x0b\n\x03\x64\x61y\x18\x03 \x01(\x05\"\x91\x02\n\x0f\x41\x63\x63ountOverview\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\x9d\x01\n\x07Request\x12\x30\n\tfrom_date\x18\x01 \x01(\x0b\x32\x1d.AccountOverview.Request.Date\x12.\n\x07to_date\x18\x02 \x01(\x0b\x32\x1d.AccountOverview.Request.Date\x1a\x30\n\x04\x44\x61te\x12\x0c\n\x04year\x18\x01 \x01(\x05\x12\r\n\x05month\x18\x02 \x01(\x05\x12\x0b\n\x03\x64\x61y\x18\x03 \x01(\x05\"\xd6\r\n\rProductSearch\x12\x0e\n\x06offset\x18\x01 \x01(\x05\x12)\n\x08products\x18\x02 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x35\n\x11response_datetime\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\r\n\x05total\x18\x04 \x01(\x05\x1a\x31\n\x06\x43onfig\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\x1a\xb1\x01\n\x0cRequestBonds\x12\x18\n\x10\x62ondIssuerTypeId\x18\x01 \x01(\x05\x12\x16\n\x0e\x62ondExchangeId\x18\x02 \x01(\x05\x12\x12\n\nsearchText\x18\x03 \x01(\t\x12\x0e\n\x06offset\x18\x04 \x01(\x05\x12\r\n\x05limit\x18\x05 \x01(\x05\x12\x14\n\x0crequireTotal\x18\x06 \x01(\x08\x12\x13\n\x0bsortColumns\x18\x07 \x01(\t\x12\x11\n\tsortTypes\x18\x08 \x01(\t\x1a\xce\x01\n\x0bRequestETFs\x12\x13\n\x0bpopularOnly\x18\x01 \x01(\x08\x12\x1b\n\x13inputAggregateTypes\x18\x02 \x01(\t\x12\x1c\n\x14inputAggregateValues\x18\x03 \x01(\t\x12\x12\n\nsearchText\x18\x04 \x01(\t\x12\x0e\n\x06offset\x18\x05 \x01(\x05\x12\r\n\x05limit\x18\x06 \x01(\x05\x12\x14\n\x0crequireTotal\x18\x07 \x01(\x08\x12\x13\n\x0bsortColumns\x18\x08 \x01(\t\x12\x11\n\tsortTypes\x18\t \x01(\t\x1a\x7f\n\x0cRequestFunds\x12\x12\n\nsearchText\x18\x01 \x01(\t\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05limit\x18\x03 \x01(\x05\x12\x14\n\x0crequireTotal\x18\x04 \x01(\x08\x12\x13\n\x0bsortColumns\x18\x05 \x01(\t\x12\x11\n\tsortTypes\x18\x06 \x01(\t\x1a\xb3\x01\n\x0eRequestFutures\x12\x18\n\x10\x66utureExchangeId\x18\x01 \x01(\x05\x12\x16\n\x0eunderlyingIsin\x18\x02 \x01(\t\x12\x12\n\nsearchText\x18\x03 \x01(\t\x12\x0e\n\x06offset\x18\x04 \x01(\x05\x12\r\n\x05limit\x18\x05 \x01(\x05\x12\x14\n\x0crequireTotal\x18\x06 \x01(\x08\x12\x13\n\x0bsortColumns\x18\x07 \x01(\t\x12\x11\n\tsortTypes\x18\x08 \x01(\t\x1a\xd4\x01\n\x11RequestLeverageds\x12\x13\n\x0bpopularOnly\x18\x01 \x01(\x08\x12\x1b\n\x13inputAggregateTypes\x18\x02 \x01(\t\x12\x1c\n\x14inputAggregateValues\x18\x03 \x01(\t\x12\x12\n\nsearchText\x18\x04 \x01(\t\x12\x0e\n\x06offset\x18\x05 \x01(\x05\x12\r\n\x05limit\x18\x06 \x01(\x05\x12\x14\n\x0crequireTotal\x18\x07 \x01(\x08\x12\x13\n\x0bsortColumns\x18\x08 \x01(\t\x12\x11\n\tsortTypes\x18\t \x01(\t\x1a\x43\n\rRequestLookup\x12\x13\n\x0bsearch_text\x18\x01 \x01(\t\x12\r\n\x05limit\x18\x02 \x01(\x05\x12\x0e\n\x06offset\x18\x03 \x01(\x05\x1a\xee\x01\n\x0eRequestOptions\x12\x1b\n\x13inputAggregateTypes\x18\x01 \x01(\t\x12\x1c\n\x14inputAggregateValues\x18\x02 \x01(\t\x12\x18\n\x10optionExchangeId\x18\x03 \x01(\x05\x12\x16\n\x0eunderlyingIsin\x18\x04 \x01(\t\x12\x12\n\nsearchText\x18\x05 \x01(\t\x12\x0e\n\x06offset\x18\x06 \x01(\x05\x12\r\n\x05limit\x18\x07 \x01(\x05\x12\x14\n\x0crequireTotal\x18\x08 \x01(\x08\x12\x13\n\x0bsortColumns\x18\t \x01(\t\x12\x11\n\tsortTypes\x18\n \x01(\t\x1a\xc2\x01\n\rRequestStocks\x12\x17\n\x0fisInUSGreenList\x18\x01 \x01(\x08\x12\x0f\n\x07indexId\x18\x02 \x01(\x05\x12\x16\n\x0estockCountryId\x18\x03 \x01(\x05\x12\x12\n\nsearchText\x18\x04 \x01(\t\x12\x0e\n\x06offset\x18\x05 \x01(\x05\x12\r\n\x05limit\x18\x06 \x01(\x05\x12\x14\n\x0crequireTotal\x18\x07 \x01(\x08\x12\x13\n\x0bsortColumns\x18\x08 \x01(\t\x12\x11\n\tsortTypes\x18\t \x01(\t\x1a\x82\x01\n\x0fRequestWarrants\x12\x12\n\nsearchText\x18\x01 \x01(\t\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05limit\x18\x03 \x01(\x05\x12\x14\n\x0crequireTotal\x18\x04 \x01(\x08\x12\x13\n\x0bsortColumns\x18\x05 \x01(\t\x12\x11\n\tsortTypes\x18\x06 \x01(\t\"\xb0\x01\n\nFavourites\x12 \n\x06values\x18\x01 \x03(\x0b\x32\x10.Favourites.List\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1aI\n\x04List\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x12\n\nis_default\x18\x03 \x01(\x08\x12\x13\n\x0bproduct_ids\x18\x04 \x03(\x05\"T\n\x0cProductsInfo\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\x1a\x1b\n\x07Request\x12\x10\n\x08products\x18\x01 \x03(\x05\"8\n\rCompanyRatios\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\"9\n\x0e\x43ompanyProfile\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\">\n\x13\x46inancialStatements\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\"\x90\x01\n\nLatestNews\x12&\n\x05items\x18\x01 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05total\x18\x03 \x01(\x05\x1a;\n\x07Request\x12\x0e\n\x06offset\x18\x01 \x01(\x05\x12\x11\n\tlanguages\x18\x02 \x01(\t\x12\r\n\x05limit\x18\x03 \x01(\x05\"W\n\x0eTopNewsPreview\x12&\n\x05items\x18\x01 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05total\x18\x03 \x01(\x05\"\xa1\x01\n\rNewsByCompany\x12&\n\x05items\x18\x01 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05total\x18\x03 \x01(\x05\x1aI\n\x07Request\x12\x0c\n\x04isin\x18\x01 \x01(\t\x12\r\n\x05limit\x18\x02 \x01(\x05\x12\x0e\n\x06offset\x18\x03 \x01(\x05\x12\x11\n\tlanguages\x18\x04 \x01(\tb\x06proto3'
+  serialized_pb=b'\n\x18trading/pb/trading.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\x8b\x01\n\x0b\x43redentials\x12\x13\n\x0bint_account\x18\x01 \x01(\x05\x12\x10\n\x08username\x18\x02 \x01(\t\x12\x10\n\x08password\x18\x03 \x01(\t\x12\x19\n\x0ftotp_secret_key\x18\x04 \x01(\tH\x00\x12\x1b\n\x11one_time_password\x18\x05 \x01(\x05H\x00\x42\x0b\n\toneof_2fa\"\x8a\t\n\x05Order\x12\x1d\n\x06\x61\x63tion\x18\x02 \x01(\x0e\x32\r.Order.Action\x12\n\n\x02id\x18\x07 \x01(\t\x12$\n\norder_type\x18\x03 \x01(\x0e\x32\x10.Order.OrderType\x12\r\n\x05price\x18\x05 \x01(\x01\x12\x12\n\nproduct_id\x18\x01 \x01(\x05\x12\x0c\n\x04size\x18\x06 \x01(\x01\x12\"\n\ttime_type\x18\x04 \x01(\x0e\x32\x0f.Order.TimeType\x12\x15\n\rcontract_size\x18\x08 \x01(\x01\x12\x15\n\rcontract_type\x18\t \x01(\x05\x12\x10\n\x08\x63urrency\x18\n \x01(\t\x12\x0c\n\x04hour\x18\x0b \x01(\t\x12\x14\n\x0cis_deletable\x18\x0c \x01(\x08\x12\x15\n\ris_modifiable\x18\r \x01(\x08\x12\x0f\n\x07product\x18\x0e \x01(\t\x12\x10\n\x08quantity\x18\x0f \x01(\x01\x12\x12\n\nstop_price\x18\x10 \x01(\x01\x12\x19\n\x11total_order_value\x18\x11 \x01(\x01\x12\x16\n\x0eretained_order\x18\x12 \x01(\x08\x12\x18\n\x10sent_to_exchange\x18\x13 \x01(\x08\x1a\xc6\x03\n\x10\x43heckingResponse\x12\x17\n\x0f\x63onfirmation_id\x18\x01 \x01(\t\x12\x16\n\x0e\x66ree_space_new\x18\x02 \x01(\x01\x12\x35\n\x11response_datetime\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x31\n\x10transaction_fees\x18\x04 \x03(\x0b\x32\x17.google.protobuf.Struct\x12:\n\x19transaction_opposite_fees\x18\x05 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x32\n\x11transaction_taxes\x18\x06 \x03(\x0b\x32\x17.google.protobuf.Struct\x12?\n\x1etransaction_auto_fx_surcharges\x18\x07 \x03(\x0b\x32\x17.google.protobuf.Struct\x12H\n\'transaction_auto_fx_opposite_surcharges\x18\x08 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x1c\n\x14\x61utoFxConversionRate\x18\t \x01(\x01\x1a^\n\x14\x43onfirmationResponse\x12\x0f\n\x07orderId\x18\x01 \x01(\t\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"\x1b\n\x06\x41\x63tion\x12\x07\n\x03\x42UY\x10\x00\x12\x08\n\x04SELL\x10\x01\"A\n\tOrderType\x12\t\n\x05LIMIT\x10\x00\x12\x0e\n\nSTOP_LIMIT\x10\x01\x12\n\n\x06MARKET\x10\x02\x12\r\n\tSTOP_LOSS\x10\x03\"S\n\x08TimeType\x12\r\n\tUNKNOWN_0\x10\x00\x12\x11\n\rGOOD_TILL_DAY\x10\x01\x12\r\n\tUNKNOWN_2\x10\x02\x12\x16\n\x12GOOD_TILL_CANCELED\x10\x03\"\xc6\x08\n\x06Update\x12\x35\n\x11response_datetime\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x1e\n\x06\x61lerts\x18\x02 \x01(\x0b\x32\x0e.Update.Alerts\x12%\n\ncash_funds\x18\x03 \x01(\x0b\x32\x11.Update.CashFunds\x12\x33\n\x11historical_orders\x18\x04 \x01(\x0b\x32\x18.Update.HistoricalOrders\x12\x1e\n\x06orders\x18\x05 \x01(\x0b\x32\x0e.Update.Orders\x12$\n\tportfolio\x18\x06 \x01(\x0b\x32\x11.Update.Portfolio\x12/\n\x0ftotal_portfolio\x18\x07 \x01(\x0b\x32\x16.Update.TotalPortfolio\x12*\n\x0ctransactions\x18\x08 \x01(\x0b\x32\x14.Update.Transactions\x1a?\n\x07Request\x12\x1e\n\x06option\x18\x01 \x01(\x0e\x32\x0e.Update.Option\x12\x14\n\x0clast_updated\x18\x02 \x01(\x05\x1a.\n\x0bRequestList\x12\x1f\n\x06values\x18\x01 \x03(\x0b\x32\x0f.Update.Request\x1aG\n\x06\x41lerts\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1aJ\n\tCashFunds\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1a@\n\x10HistoricalOrders\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\x16\n\x06values\x18\x02 \x03(\x0b\x32\x06.Order\x1a\x36\n\x06Orders\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\x16\n\x06values\x18\x02 \x03(\x0b\x32\x06.Order\x1aJ\n\tPortfolio\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x03(\x0b\x32\x17.google.protobuf.Struct\x1aO\n\x0eTotalPortfolio\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1aM\n\x0cTransactions\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x03(\x0b\x32\x17.google.protobuf.Struct\"z\n\x06Option\x12\n\n\x06\x41LERTS\x10\x00\x12\r\n\tCASHFUNDS\x10\x01\x12\x14\n\x10HISTORICALORDERS\x10\x02\x12\n\n\x06ORDERS\x10\x03\x12\r\n\tPORTFOLIO\x10\x04\x12\x12\n\x0eTOTALPORTFOLIO\x10\x05\x12\x10\n\x0cTRANSACTIONS\x10\x06\"\x8b\x02\n\rOrdersHistory\x12\'\n\x06values\x18\x01 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\x99\x01\n\x07Request\x12.\n\tfrom_date\x18\x01 \x01(\x0b\x32\x1b.OrdersHistory.Request.Date\x12,\n\x07to_date\x18\x02 \x01(\x0b\x32\x1b.OrdersHistory.Request.Date\x1a\x30\n\x04\x44\x61te\x12\x0c\n\x04year\x18\x01 \x01(\x05\x12\r\n\x05month\x18\x02 \x01(\x05\x12\x0b\n\x03\x64\x61y\x18\x03 \x01(\x05\"\xbf\x02\n\x13TransactionsHistory\x12\'\n\x06values\x18\x01 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\xc7\x01\n\x07Request\x12\x34\n\tfrom_date\x18\x01 \x01(\x0b\x32!.TransactionsHistory.Request.Date\x12\x32\n\x07to_date\x18\x02 \x01(\x0b\x32!.TransactionsHistory.Request.Date\x12 \n\x18groupTransactionsByOrder\x18\x03 \x01(\x08\x1a\x30\n\x04\x44\x61te\x12\x0c\n\x04year\x18\x01 \x01(\x05\x12\r\n\x05month\x18\x02 \x01(\x05\x12\x0b\n\x03\x64\x61y\x18\x03 \x01(\x05\"\x91\x02\n\x0f\x41\x63\x63ountOverview\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\x9d\x01\n\x07Request\x12\x30\n\tfrom_date\x18\x01 \x01(\x0b\x32\x1d.AccountOverview.Request.Date\x12.\n\x07to_date\x18\x02 \x01(\x0b\x32\x1d.AccountOverview.Request.Date\x1a\x30\n\x04\x44\x61te\x12\x0c\n\x04year\x18\x01 \x01(\x05\x12\r\n\x05month\x18\x02 \x01(\x05\x12\x0b\n\x03\x64\x61y\x18\x03 \x01(\x05\"\xd6\r\n\rProductSearch\x12\x0e\n\x06offset\x18\x01 \x01(\x05\x12)\n\x08products\x18\x02 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x35\n\x11response_datetime\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\r\n\x05total\x18\x04 \x01(\x05\x1a\x31\n\x06\x43onfig\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\x1a\xb1\x01\n\x0cRequestBonds\x12\x18\n\x10\x62ondIssuerTypeId\x18\x01 \x01(\x05\x12\x16\n\x0e\x62ondExchangeId\x18\x02 \x01(\x05\x12\x12\n\nsearchText\x18\x03 \x01(\t\x12\x0e\n\x06offset\x18\x04 \x01(\x05\x12\r\n\x05limit\x18\x05 \x01(\x05\x12\x14\n\x0crequireTotal\x18\x06 \x01(\x08\x12\x13\n\x0bsortColumns\x18\x07 \x01(\t\x12\x11\n\tsortTypes\x18\x08 \x01(\t\x1a\xce\x01\n\x0bRequestETFs\x12\x13\n\x0bpopularOnly\x18\x01 \x01(\x08\x12\x1b\n\x13inputAggregateTypes\x18\x02 \x01(\t\x12\x1c\n\x14inputAggregateValues\x18\x03 \x01(\t\x12\x12\n\nsearchText\x18\x04 \x01(\t\x12\x0e\n\x06offset\x18\x05 \x01(\x05\x12\r\n\x05limit\x18\x06 \x01(\x05\x12\x14\n\x0crequireTotal\x18\x07 \x01(\x08\x12\x13\n\x0bsortColumns\x18\x08 \x01(\t\x12\x11\n\tsortTypes\x18\t \x01(\t\x1a\x7f\n\x0cRequestFunds\x12\x12\n\nsearchText\x18\x01 \x01(\t\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05limit\x18\x03 \x01(\x05\x12\x14\n\x0crequireTotal\x18\x04 \x01(\x08\x12\x13\n\x0bsortColumns\x18\x05 \x01(\t\x12\x11\n\tsortTypes\x18\x06 \x01(\t\x1a\xb3\x01\n\x0eRequestFutures\x12\x18\n\x10\x66utureExchangeId\x18\x01 \x01(\x05\x12\x16\n\x0eunderlyingIsin\x18\x02 \x01(\t\x12\x12\n\nsearchText\x18\x03 \x01(\t\x12\x0e\n\x06offset\x18\x04 \x01(\x05\x12\r\n\x05limit\x18\x05 \x01(\x05\x12\x14\n\x0crequireTotal\x18\x06 \x01(\x08\x12\x13\n\x0bsortColumns\x18\x07 \x01(\t\x12\x11\n\tsortTypes\x18\x08 \x01(\t\x1a\xd4\x01\n\x11RequestLeverageds\x12\x13\n\x0bpopularOnly\x18\x01 \x01(\x08\x12\x1b\n\x13inputAggregateTypes\x18\x02 \x01(\t\x12\x1c\n\x14inputAggregateValues\x18\x03 \x01(\t\x12\x12\n\nsearchText\x18\x04 \x01(\t\x12\x0e\n\x06offset\x18\x05 \x01(\x05\x12\r\n\x05limit\x18\x06 \x01(\x05\x12\x14\n\x0crequireTotal\x18\x07 \x01(\x08\x12\x13\n\x0bsortColumns\x18\x08 \x01(\t\x12\x11\n\tsortTypes\x18\t \x01(\t\x1a\x43\n\rRequestLookup\x12\x13\n\x0bsearch_text\x18\x01 \x01(\t\x12\r\n\x05limit\x18\x02 \x01(\x05\x12\x0e\n\x06offset\x18\x03 \x01(\x05\x1a\xee\x01\n\x0eRequestOptions\x12\x1b\n\x13inputAggregateTypes\x18\x01 \x01(\t\x12\x1c\n\x14inputAggregateValues\x18\x02 \x01(\t\x12\x18\n\x10optionExchangeId\x18\x03 \x01(\x05\x12\x16\n\x0eunderlyingIsin\x18\x04 \x01(\t\x12\x12\n\nsearchText\x18\x05 \x01(\t\x12\x0e\n\x06offset\x18\x06 \x01(\x05\x12\r\n\x05limit\x18\x07 \x01(\x05\x12\x14\n\x0crequireTotal\x18\x08 \x01(\x08\x12\x13\n\x0bsortColumns\x18\t \x01(\t\x12\x11\n\tsortTypes\x18\n \x01(\t\x1a\xc2\x01\n\rRequestStocks\x12\x17\n\x0fisInUSGreenList\x18\x01 \x01(\x08\x12\x0f\n\x07indexId\x18\x02 \x01(\x05\x12\x16\n\x0estockCountryId\x18\x03 \x01(\x05\x12\x12\n\nsearchText\x18\x04 \x01(\t\x12\x0e\n\x06offset\x18\x05 \x01(\x05\x12\r\n\x05limit\x18\x06 \x01(\x05\x12\x14\n\x0crequireTotal\x18\x07 \x01(\x08\x12\x13\n\x0bsortColumns\x18\x08 \x01(\t\x12\x11\n\tsortTypes\x18\t \x01(\t\x1a\x82\x01\n\x0fRequestWarrants\x12\x12\n\nsearchText\x18\x01 \x01(\t\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05limit\x18\x03 \x01(\x05\x12\x14\n\x0crequireTotal\x18\x04 \x01(\x08\x12\x13\n\x0bsortColumns\x18\x05 \x01(\t\x12\x11\n\tsortTypes\x18\x06 \x01(\t\"\xb0\x01\n\nFavourites\x12 \n\x06values\x18\x01 \x03(\x0b\x32\x10.Favourites.List\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1aI\n\x04List\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x12\n\nis_default\x18\x03 \x01(\x08\x12\x13\n\x0bproduct_ids\x18\x04 \x03(\x05\"T\n\x0cProductsInfo\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\x1a\x1b\n\x07Request\x12\x10\n\x08products\x18\x01 \x03(\x05\"8\n\rCompanyRatios\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\"9\n\x0e\x43ompanyProfile\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\">\n\x13\x46inancialStatements\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\"\x90\x01\n\nLatestNews\x12&\n\x05items\x18\x01 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05total\x18\x03 \x01(\x05\x1a;\n\x07Request\x12\x0e\n\x06offset\x18\x01 \x01(\x05\x12\x11\n\tlanguages\x18\x02 \x01(\t\x12\r\n\x05limit\x18\x03 \x01(\x05\"W\n\x0eTopNewsPreview\x12&\n\x05items\x18\x01 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05total\x18\x03 \x01(\x05\"\xa1\x01\n\rNewsByCompany\x12&\n\x05items\x18\x01 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05total\x18\x03 \x01(\x05\x1aI\n\x07Request\x12\x0c\n\x04isin\x18\x01 \x01(\t\x12\r\n\x05limit\x18\x02 \x01(\x05\x12\x0e\n\x06offset\x18\x03 \x01(\x05\x12\x11\n\tlanguages\x18\x04 \x01(\tb\x06proto3'
   ,
   dependencies=[google_dot_protobuf_dot_struct__pb2.DESCRIPTOR,google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,])
 
@@ -47,8 +47,8 @@ _ORDER_ACTION = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1048,
-  serialized_end=1075,
+  serialized_start=1217,
+  serialized_end=1244,
 )
 _sym_db.RegisterEnumDescriptor(_ORDER_ACTION)
 
@@ -82,8 +82,8 @@ _ORDER_ORDERTYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1077,
-  serialized_end=1142,
+  serialized_start=1246,
+  serialized_end=1311,
 )
 _sym_db.RegisterEnumDescriptor(_ORDER_ORDERTYPE)
 
@@ -117,8 +117,8 @@ _ORDER_TIMETYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1144,
-  serialized_end=1227,
+  serialized_start=1313,
+  serialized_end=1396,
 )
 _sym_db.RegisterEnumDescriptor(_ORDER_TIMETYPE)
 
@@ -167,8 +167,8 @@ _UPDATE_OPTION = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=2202,
-  serialized_end=2324,
+  serialized_start=2371,
+  serialized_end=2493,
 )
 _sym_db.RegisterEnumDescriptor(_UPDATE_OPTION)
 
@@ -288,6 +288,27 @@ _ORDER_CHECKINGRESPONSE = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='transaction_auto_fx_surcharges', full_name='Order.CheckingResponse.transaction_auto_fx_surcharges', index=6,
+      number=7, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='transaction_auto_fx_opposite_surcharges', full_name='Order.CheckingResponse.transaction_auto_fx_opposite_surcharges', index=7,
+      number=8, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='autoFxConversionRate', full_name='Order.CheckingResponse.autoFxConversionRate', index=8,
+      number=9, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -301,7 +322,7 @@ _ORDER_CHECKINGRESPONSE = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=665,
-  serialized_end=950,
+  serialized_end=1119,
 )
 
 _ORDER_CONFIRMATIONRESPONSE = _descriptor.Descriptor(
@@ -338,8 +359,8 @@ _ORDER_CONFIRMATIONRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=952,
-  serialized_end=1046,
+  serialized_start=1121,
+  serialized_end=1215,
 )
 
 _ORDER = _descriptor.Descriptor(
@@ -499,7 +520,7 @@ _ORDER = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=234,
-  serialized_end=1227,
+  serialized_end=1396,
 )
 
 
@@ -537,8 +558,8 @@ _UPDATE_REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1582,
-  serialized_end=1645,
+  serialized_start=1751,
+  serialized_end=1814,
 )
 
 _UPDATE_REQUESTLIST = _descriptor.Descriptor(
@@ -568,8 +589,8 @@ _UPDATE_REQUESTLIST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1647,
-  serialized_end=1693,
+  serialized_start=1816,
+  serialized_end=1862,
 )
 
 _UPDATE_ALERTS = _descriptor.Descriptor(
@@ -606,8 +627,8 @@ _UPDATE_ALERTS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1695,
-  serialized_end=1766,
+  serialized_start=1864,
+  serialized_end=1935,
 )
 
 _UPDATE_CASHFUNDS = _descriptor.Descriptor(
@@ -644,8 +665,8 @@ _UPDATE_CASHFUNDS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1768,
-  serialized_end=1842,
+  serialized_start=1937,
+  serialized_end=2011,
 )
 
 _UPDATE_HISTORICALORDERS = _descriptor.Descriptor(
@@ -682,8 +703,8 @@ _UPDATE_HISTORICALORDERS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1844,
-  serialized_end=1908,
+  serialized_start=2013,
+  serialized_end=2077,
 )
 
 _UPDATE_ORDERS = _descriptor.Descriptor(
@@ -720,8 +741,8 @@ _UPDATE_ORDERS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1910,
-  serialized_end=1964,
+  serialized_start=2079,
+  serialized_end=2133,
 )
 
 _UPDATE_PORTFOLIO = _descriptor.Descriptor(
@@ -758,8 +779,8 @@ _UPDATE_PORTFOLIO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1966,
-  serialized_end=2040,
+  serialized_start=2135,
+  serialized_end=2209,
 )
 
 _UPDATE_TOTALPORTFOLIO = _descriptor.Descriptor(
@@ -796,8 +817,8 @@ _UPDATE_TOTALPORTFOLIO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2042,
-  serialized_end=2121,
+  serialized_start=2211,
+  serialized_end=2290,
 )
 
 _UPDATE_TRANSACTIONS = _descriptor.Descriptor(
@@ -834,8 +855,8 @@ _UPDATE_TRANSACTIONS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2123,
-  serialized_end=2200,
+  serialized_start=2292,
+  serialized_end=2369,
 )
 
 _UPDATE = _descriptor.Descriptor(
@@ -915,8 +936,8 @@ _UPDATE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1230,
-  serialized_end=2324,
+  serialized_start=1399,
+  serialized_end=2493,
 )
 
 
@@ -961,8 +982,8 @@ _ORDERSHISTORY_REQUEST_DATE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2546,
-  serialized_end=2594,
+  serialized_start=2715,
+  serialized_end=2763,
 )
 
 _ORDERSHISTORY_REQUEST = _descriptor.Descriptor(
@@ -999,8 +1020,8 @@ _ORDERSHISTORY_REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2441,
-  serialized_end=2594,
+  serialized_start=2610,
+  serialized_end=2763,
 )
 
 _ORDERSHISTORY = _descriptor.Descriptor(
@@ -1037,8 +1058,8 @@ _ORDERSHISTORY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2327,
-  serialized_end=2594,
+  serialized_start=2496,
+  serialized_end=2763,
 )
 
 
@@ -1083,8 +1104,8 @@ _TRANSACTIONSHISTORY_REQUEST_DATE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2546,
-  serialized_end=2594,
+  serialized_start=2715,
+  serialized_end=2763,
 )
 
 _TRANSACTIONSHISTORY_REQUEST = _descriptor.Descriptor(
@@ -1128,8 +1149,8 @@ _TRANSACTIONSHISTORY_REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2717,
-  serialized_end=2916,
+  serialized_start=2886,
+  serialized_end=3085,
 )
 
 _TRANSACTIONSHISTORY = _descriptor.Descriptor(
@@ -1166,8 +1187,8 @@ _TRANSACTIONSHISTORY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2597,
-  serialized_end=2916,
+  serialized_start=2766,
+  serialized_end=3085,
 )
 
 
@@ -1212,8 +1233,8 @@ _ACCOUNTOVERVIEW_REQUEST_DATE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2546,
-  serialized_end=2594,
+  serialized_start=2715,
+  serialized_end=2763,
 )
 
 _ACCOUNTOVERVIEW_REQUEST = _descriptor.Descriptor(
@@ -1250,8 +1271,8 @@ _ACCOUNTOVERVIEW_REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3035,
-  serialized_end=3192,
+  serialized_start=3204,
+  serialized_end=3361,
 )
 
 _ACCOUNTOVERVIEW = _descriptor.Descriptor(
@@ -1288,8 +1309,8 @@ _ACCOUNTOVERVIEW = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2919,
-  serialized_end=3192,
+  serialized_start=3088,
+  serialized_end=3361,
 )
 
 
@@ -1320,8 +1341,8 @@ _PRODUCTSEARCH_CONFIG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3341,
-  serialized_end=3390,
+  serialized_start=3510,
+  serialized_end=3559,
 )
 
 _PRODUCTSEARCH_REQUESTBONDS = _descriptor.Descriptor(
@@ -1400,8 +1421,8 @@ _PRODUCTSEARCH_REQUESTBONDS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3393,
-  serialized_end=3570,
+  serialized_start=3562,
+  serialized_end=3739,
 )
 
 _PRODUCTSEARCH_REQUESTETFS = _descriptor.Descriptor(
@@ -1487,8 +1508,8 @@ _PRODUCTSEARCH_REQUESTETFS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3573,
-  serialized_end=3779,
+  serialized_start=3742,
+  serialized_end=3948,
 )
 
 _PRODUCTSEARCH_REQUESTFUNDS = _descriptor.Descriptor(
@@ -1553,8 +1574,8 @@ _PRODUCTSEARCH_REQUESTFUNDS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3781,
-  serialized_end=3908,
+  serialized_start=3950,
+  serialized_end=4077,
 )
 
 _PRODUCTSEARCH_REQUESTFUTURES = _descriptor.Descriptor(
@@ -1633,8 +1654,8 @@ _PRODUCTSEARCH_REQUESTFUTURES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3911,
-  serialized_end=4090,
+  serialized_start=4080,
+  serialized_end=4259,
 )
 
 _PRODUCTSEARCH_REQUESTLEVERAGEDS = _descriptor.Descriptor(
@@ -1720,8 +1741,8 @@ _PRODUCTSEARCH_REQUESTLEVERAGEDS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4093,
-  serialized_end=4305,
+  serialized_start=4262,
+  serialized_end=4474,
 )
 
 _PRODUCTSEARCH_REQUESTLOOKUP = _descriptor.Descriptor(
@@ -1765,8 +1786,8 @@ _PRODUCTSEARCH_REQUESTLOOKUP = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4307,
-  serialized_end=4374,
+  serialized_start=4476,
+  serialized_end=4543,
 )
 
 _PRODUCTSEARCH_REQUESTOPTIONS = _descriptor.Descriptor(
@@ -1859,8 +1880,8 @@ _PRODUCTSEARCH_REQUESTOPTIONS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4377,
-  serialized_end=4615,
+  serialized_start=4546,
+  serialized_end=4784,
 )
 
 _PRODUCTSEARCH_REQUESTSTOCKS = _descriptor.Descriptor(
@@ -1946,8 +1967,8 @@ _PRODUCTSEARCH_REQUESTSTOCKS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4618,
-  serialized_end=4812,
+  serialized_start=4787,
+  serialized_end=4981,
 )
 
 _PRODUCTSEARCH_REQUESTWARRANTS = _descriptor.Descriptor(
@@ -2012,8 +2033,8 @@ _PRODUCTSEARCH_REQUESTWARRANTS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4815,
-  serialized_end=4945,
+  serialized_start=4984,
+  serialized_end=5114,
 )
 
 _PRODUCTSEARCH = _descriptor.Descriptor(
@@ -2064,8 +2085,8 @@ _PRODUCTSEARCH = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3195,
-  serialized_end=4945,
+  serialized_start=3364,
+  serialized_end=5114,
 )
 
 
@@ -2117,8 +2138,8 @@ _FAVOURITES_LIST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5051,
-  serialized_end=5124,
+  serialized_start=5220,
+  serialized_end=5293,
 )
 
 _FAVOURITES = _descriptor.Descriptor(
@@ -2155,8 +2176,8 @@ _FAVOURITES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4948,
-  serialized_end=5124,
+  serialized_start=5117,
+  serialized_end=5293,
 )
 
 
@@ -2187,8 +2208,8 @@ _PRODUCTSINFO_REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5183,
-  serialized_end=5210,
+  serialized_start=5352,
+  serialized_end=5379,
 )
 
 _PRODUCTSINFO = _descriptor.Descriptor(
@@ -2218,8 +2239,8 @@ _PRODUCTSINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5126,
-  serialized_end=5210,
+  serialized_start=5295,
+  serialized_end=5379,
 )
 
 
@@ -2250,8 +2271,8 @@ _COMPANYRATIOS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5212,
-  serialized_end=5268,
+  serialized_start=5381,
+  serialized_end=5437,
 )
 
 
@@ -2282,8 +2303,8 @@ _COMPANYPROFILE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5270,
-  serialized_end=5327,
+  serialized_start=5439,
+  serialized_end=5496,
 )
 
 
@@ -2314,8 +2335,8 @@ _FINANCIALSTATEMENTS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5329,
-  serialized_end=5391,
+  serialized_start=5498,
+  serialized_end=5560,
 )
 
 
@@ -2360,8 +2381,8 @@ _LATESTNEWS_REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5479,
-  serialized_end=5538,
+  serialized_start=5648,
+  serialized_end=5707,
 )
 
 _LATESTNEWS = _descriptor.Descriptor(
@@ -2405,8 +2426,8 @@ _LATESTNEWS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5394,
-  serialized_end=5538,
+  serialized_start=5563,
+  serialized_end=5707,
 )
 
 
@@ -2451,8 +2472,8 @@ _TOPNEWSPREVIEW = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5540,
-  serialized_end=5627,
+  serialized_start=5709,
+  serialized_end=5796,
 )
 
 
@@ -2504,8 +2525,8 @@ _NEWSBYCOMPANY_REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5718,
-  serialized_end=5791,
+  serialized_start=5887,
+  serialized_end=5960,
 )
 
 _NEWSBYCOMPANY = _descriptor.Descriptor(
@@ -2549,8 +2570,8 @@ _NEWSBYCOMPANY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5630,
-  serialized_end=5791,
+  serialized_start=5799,
+  serialized_end=5960,
 )
 
 _CREDENTIALS.oneofs_by_name['oneof_2fa'].fields.append(
@@ -2563,6 +2584,8 @@ _ORDER_CHECKINGRESPONSE.fields_by_name['response_datetime'].message_type = googl
 _ORDER_CHECKINGRESPONSE.fields_by_name['transaction_fees'].message_type = google_dot_protobuf_dot_struct__pb2._STRUCT
 _ORDER_CHECKINGRESPONSE.fields_by_name['transaction_opposite_fees'].message_type = google_dot_protobuf_dot_struct__pb2._STRUCT
 _ORDER_CHECKINGRESPONSE.fields_by_name['transaction_taxes'].message_type = google_dot_protobuf_dot_struct__pb2._STRUCT
+_ORDER_CHECKINGRESPONSE.fields_by_name['transaction_auto_fx_surcharges'].message_type = google_dot_protobuf_dot_struct__pb2._STRUCT
+_ORDER_CHECKINGRESPONSE.fields_by_name['transaction_auto_fx_opposite_surcharges'].message_type = google_dot_protobuf_dot_struct__pb2._STRUCT
 _ORDER_CHECKINGRESPONSE.containing_type = _ORDER
 _ORDER_CONFIRMATIONRESPONSE.fields_by_name['response_datetime'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _ORDER_CONFIRMATIONRESPONSE.containing_type = _ORDER

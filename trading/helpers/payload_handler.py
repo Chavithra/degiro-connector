@@ -230,7 +230,7 @@ def checking_response_to_grpc(payload: dict) -> Order.CheckingResponse:
     json_format.ParseDict(
         js_dict=payload['data'],
         message=checking_response,
-        ignore_unknown_fields=False,
+        ignore_unknown_fields=True,
         descriptor_pool=None,
     )
 
