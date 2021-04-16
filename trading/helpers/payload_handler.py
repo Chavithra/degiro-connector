@@ -18,7 +18,7 @@ from trading.pb.trading_pb2 import (
     TransactionsHistory,
     Update,
 )
-from typing import List, Union
+from typing import Dict, List, Union
 
 # MATCHINGS
 __ACTION_MATCHING = {
@@ -105,6 +105,60 @@ def news_by_company_request_to_api(
     return request_dict
 
 
+def order_to_api(order: Order) -> Dict[str, Union[float, int, str]]:
+    # Build dict from message
+    order_dict = json_format.MessageToDict(
+        message=order,
+        including_default_value_fields=True,
+        preserving_proto_field_name=False,
+        use_integers_for_enums=True,
+        descriptor_pool=None,
+        float_precision=None,
+    )
+
+    # Setup 'buySell'
+    if order.action == order.Action.BUY:
+        order_dict['buySell'] = 'BUY'
+    else:
+        order_dict['buySell'] = 'SELL'
+
+    # Filter fields
+    fields_to_keep = {
+        'buySell',
+        'orderType',
+        'price',
+        'stopPrice',
+        'productId',
+        'size',
+        'timeType',
+    }
+    filtered_order_dict = dict()
+    for field in order_dict.keys() & fields_to_keep:
+        filtered_order_dict[field] = order_dict[field]
+
+    return filtered_order_dict
+
+
+def orders_history_request_to_api(request: OrdersHistory.Request) -> dict:
+    request_dict = dict()
+    request_dict['fromDate'] = \
+        datetime.datetime(
+            year=request.from_date.year,
+            month=request.from_date.month,
+            day=request.from_date.day
+        ) \
+        .strftime('%d/%m/%Y')
+    request_dict['toDate'] = \
+        datetime.datetime(
+            year=request.to_date.year,
+            month=request.to_date.month,
+            day=request.to_date.day
+        ) \
+        .strftime('%d/%m/%Y')
+
+    return request_dict
+
+
 def products_info_to_api(
     request: ProductsInfo.Request,
 ) -> List[str]:
@@ -143,26 +197,6 @@ def product_search_request_to_api(
         descriptor_pool=None,
         float_precision=None,
     )
-
-    return request_dict
-
-
-def orders_history_request_to_api(request: OrdersHistory.Request) -> dict:
-    request_dict = dict()
-    request_dict['fromDate'] = \
-        datetime.datetime(
-            year=request.from_date.year,
-            month=request.from_date.month,
-            day=request.from_date.day
-        ) \
-        .strftime('%d/%m/%Y')
-    request_dict['toDate'] = \
-        datetime.datetime(
-            year=request.to_date.year,
-            month=request.to_date.month,
-            day=request.to_date.day
-        ) \
-        .strftime('%d/%m/%Y')
 
     return request_dict
 

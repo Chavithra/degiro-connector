@@ -342,14 +342,7 @@ def check_order(
         'sessionId': session_id,
     }
 
-    order_dict = {
-        'buySell': order.action,
-        'orderType': order.order_type,
-        'price': order.price,
-        'productId': order.product_id,
-        'size': order.size,
-        'timeType': order.time_type,
-    }
+    order_dict = payload_handler.order_to_api(order=order)
 
     request = requests.Request(
         method='POST',
@@ -409,14 +402,7 @@ def confirm_order(
         'sessionId': session_id,
     }
 
-    order_dict = {
-        'buySell': order.action,
-        'orderType': order.order_type,
-        'price': order.price,
-        'productId': order.product_id,
-        'size': order.size,
-        'timeType': order.time_type,
-    }
+    order_dict = payload_handler.order_to_api(order=order)
 
     request = requests.Request(
         method='POST',

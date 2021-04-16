@@ -21,7 +21,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x18trading/pb/trading.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\x8b\x01\n\x0b\x43redentials\x12\x13\n\x0bint_account\x18\x01 \x01(\x05\x12\x10\n\x08username\x18\x02 \x01(\t\x12\x10\n\x08password\x18\x03 \x01(\t\x12\x19\n\x0ftotp_secret_key\x18\x04 \x01(\tH\x00\x12\x1b\n\x11one_time_password\x18\x05 \x01(\x05H\x00\x42\x0b\n\toneof_2fa\"\x8a\t\n\x05Order\x12\x1d\n\x06\x61\x63tion\x18\x02 \x01(\x0e\x32\r.Order.Action\x12\n\n\x02id\x18\x07 \x01(\t\x12$\n\norder_type\x18\x03 \x01(\x0e\x32\x10.Order.OrderType\x12\r\n\x05price\x18\x05 \x01(\x01\x12\x12\n\nproduct_id\x18\x01 \x01(\x05\x12\x0c\n\x04size\x18\x06 \x01(\x01\x12\"\n\ttime_type\x18\x04 \x01(\x0e\x32\x0f.Order.TimeType\x12\x15\n\rcontract_size\x18\x08 \x01(\x01\x12\x15\n\rcontract_type\x18\t \x01(\x05\x12\x10\n\x08\x63urrency\x18\n \x01(\t\x12\x0c\n\x04hour\x18\x0b \x01(\t\x12\x14\n\x0cis_deletable\x18\x0c \x01(\x08\x12\x15\n\ris_modifiable\x18\r \x01(\x08\x12\x0f\n\x07product\x18\x0e \x01(\t\x12\x10\n\x08quantity\x18\x0f \x01(\x01\x12\x12\n\nstop_price\x18\x10 \x01(\x01\x12\x19\n\x11total_order_value\x18\x11 \x01(\x01\x12\x16\n\x0eretained_order\x18\x12 \x01(\x08\x12\x18\n\x10sent_to_exchange\x18\x13 \x01(\x08\x1a\xc6\x03\n\x10\x43heckingResponse\x12\x17\n\x0f\x63onfirmation_id\x18\x01 \x01(\t\x12\x16\n\x0e\x66ree_space_new\x18\x02 \x01(\x01\x12\x35\n\x11response_datetime\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x31\n\x10transaction_fees\x18\x04 \x03(\x0b\x32\x17.google.protobuf.Struct\x12:\n\x19transaction_opposite_fees\x18\x05 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x32\n\x11transaction_taxes\x18\x06 \x03(\x0b\x32\x17.google.protobuf.Struct\x12?\n\x1etransaction_auto_fx_surcharges\x18\x07 \x03(\x0b\x32\x17.google.protobuf.Struct\x12H\n\'transaction_auto_fx_opposite_surcharges\x18\x08 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x1c\n\x14\x61utoFxConversionRate\x18\t \x01(\x01\x1a^\n\x14\x43onfirmationResponse\x12\x0f\n\x07orderId\x18\x01 \x01(\t\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"\x1b\n\x06\x41\x63tion\x12\x07\n\x03\x42UY\x10\x00\x12\x08\n\x04SELL\x10\x01\"A\n\tOrderType\x12\t\n\x05LIMIT\x10\x00\x12\x0e\n\nSTOP_LIMIT\x10\x01\x12\n\n\x06MARKET\x10\x02\x12\r\n\tSTOP_LOSS\x10\x03\"S\n\x08TimeType\x12\r\n\tUNKNOWN_0\x10\x00\x12\x11\n\rGOOD_TILL_DAY\x10\x01\x12\r\n\tUNKNOWN_2\x10\x02\x12\x16\n\x12GOOD_TILL_CANCELED\x10\x03\"\xc6\x08\n\x06Update\x12\x35\n\x11response_datetime\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x1e\n\x06\x61lerts\x18\x02 \x01(\x0b\x32\x0e.Update.Alerts\x12%\n\ncash_funds\x18\x03 \x01(\x0b\x32\x11.Update.CashFunds\x12\x33\n\x11historical_orders\x18\x04 \x01(\x0b\x32\x18.Update.HistoricalOrders\x12\x1e\n\x06orders\x18\x05 \x01(\x0b\x32\x0e.Update.Orders\x12$\n\tportfolio\x18\x06 \x01(\x0b\x32\x11.Update.Portfolio\x12/\n\x0ftotal_portfolio\x18\x07 \x01(\x0b\x32\x16.Update.TotalPortfolio\x12*\n\x0ctransactions\x18\x08 \x01(\x0b\x32\x14.Update.Transactions\x1a?\n\x07Request\x12\x1e\n\x06option\x18\x01 \x01(\x0e\x32\x0e.Update.Option\x12\x14\n\x0clast_updated\x18\x02 \x01(\x05\x1a.\n\x0bRequestList\x12\x1f\n\x06values\x18\x01 \x03(\x0b\x32\x0f.Update.Request\x1aG\n\x06\x41lerts\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1aJ\n\tCashFunds\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1a@\n\x10HistoricalOrders\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\x16\n\x06values\x18\x02 \x03(\x0b\x32\x06.Order\x1a\x36\n\x06Orders\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\x16\n\x06values\x18\x02 \x03(\x0b\x32\x06.Order\x1aJ\n\tPortfolio\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x03(\x0b\x32\x17.google.protobuf.Struct\x1aO\n\x0eTotalPortfolio\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1aM\n\x0cTransactions\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x03(\x0b\x32\x17.google.protobuf.Struct\"z\n\x06Option\x12\n\n\x06\x41LERTS\x10\x00\x12\r\n\tCASHFUNDS\x10\x01\x12\x14\n\x10HISTORICALORDERS\x10\x02\x12\n\n\x06ORDERS\x10\x03\x12\r\n\tPORTFOLIO\x10\x04\x12\x12\n\x0eTOTALPORTFOLIO\x10\x05\x12\x10\n\x0cTRANSACTIONS\x10\x06\"\x8b\x02\n\rOrdersHistory\x12\'\n\x06values\x18\x01 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\x99\x01\n\x07Request\x12.\n\tfrom_date\x18\x01 \x01(\x0b\x32\x1b.OrdersHistory.Request.Date\x12,\n\x07to_date\x18\x02 \x01(\x0b\x32\x1b.OrdersHistory.Request.Date\x1a\x30\n\x04\x44\x61te\x12\x0c\n\x04year\x18\x01 \x01(\x05\x12\r\n\x05month\x18\x02 \x01(\x05\x12\x0b\n\x03\x64\x61y\x18\x03 \x01(\x05\"\xbf\x02\n\x13TransactionsHistory\x12\'\n\x06values\x18\x01 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\xc7\x01\n\x07Request\x12\x34\n\tfrom_date\x18\x01 \x01(\x0b\x32!.TransactionsHistory.Request.Date\x12\x32\n\x07to_date\x18\x02 \x01(\x0b\x32!.TransactionsHistory.Request.Date\x12 \n\x18groupTransactionsByOrder\x18\x03 \x01(\x08\x1a\x30\n\x04\x44\x61te\x12\x0c\n\x04year\x18\x01 \x01(\x05\x12\r\n\x05month\x18\x02 \x01(\x05\x12\x0b\n\x03\x64\x61y\x18\x03 \x01(\x05\"\x91\x02\n\x0f\x41\x63\x63ountOverview\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\x9d\x01\n\x07Request\x12\x30\n\tfrom_date\x18\x01 \x01(\x0b\x32\x1d.AccountOverview.Request.Date\x12.\n\x07to_date\x18\x02 \x01(\x0b\x32\x1d.AccountOverview.Request.Date\x1a\x30\n\x04\x44\x61te\x12\x0c\n\x04year\x18\x01 \x01(\x05\x12\r\n\x05month\x18\x02 \x01(\x05\x12\x0b\n\x03\x64\x61y\x18\x03 \x01(\x05\"\xd6\r\n\rProductSearch\x12\x0e\n\x06offset\x18\x01 \x01(\x05\x12)\n\x08products\x18\x02 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x35\n\x11response_datetime\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\r\n\x05total\x18\x04 \x01(\x05\x1a\x31\n\x06\x43onfig\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\x1a\xb1\x01\n\x0cRequestBonds\x12\x18\n\x10\x62ondIssuerTypeId\x18\x01 \x01(\x05\x12\x16\n\x0e\x62ondExchangeId\x18\x02 \x01(\x05\x12\x12\n\nsearchText\x18\x03 \x01(\t\x12\x0e\n\x06offset\x18\x04 \x01(\x05\x12\r\n\x05limit\x18\x05 \x01(\x05\x12\x14\n\x0crequireTotal\x18\x06 \x01(\x08\x12\x13\n\x0bsortColumns\x18\x07 \x01(\t\x12\x11\n\tsortTypes\x18\x08 \x01(\t\x1a\xce\x01\n\x0bRequestETFs\x12\x13\n\x0bpopularOnly\x18\x01 \x01(\x08\x12\x1b\n\x13inputAggregateTypes\x18\x02 \x01(\t\x12\x1c\n\x14inputAggregateValues\x18\x03 \x01(\t\x12\x12\n\nsearchText\x18\x04 \x01(\t\x12\x0e\n\x06offset\x18\x05 \x01(\x05\x12\r\n\x05limit\x18\x06 \x01(\x05\x12\x14\n\x0crequireTotal\x18\x07 \x01(\x08\x12\x13\n\x0bsortColumns\x18\x08 \x01(\t\x12\x11\n\tsortTypes\x18\t \x01(\t\x1a\x7f\n\x0cRequestFunds\x12\x12\n\nsearchText\x18\x01 \x01(\t\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05limit\x18\x03 \x01(\x05\x12\x14\n\x0crequireTotal\x18\x04 \x01(\x08\x12\x13\n\x0bsortColumns\x18\x05 \x01(\t\x12\x11\n\tsortTypes\x18\x06 \x01(\t\x1a\xb3\x01\n\x0eRequestFutures\x12\x18\n\x10\x66utureExchangeId\x18\x01 \x01(\x05\x12\x16\n\x0eunderlyingIsin\x18\x02 \x01(\t\x12\x12\n\nsearchText\x18\x03 \x01(\t\x12\x0e\n\x06offset\x18\x04 \x01(\x05\x12\r\n\x05limit\x18\x05 \x01(\x05\x12\x14\n\x0crequireTotal\x18\x06 \x01(\x08\x12\x13\n\x0bsortColumns\x18\x07 \x01(\t\x12\x11\n\tsortTypes\x18\x08 \x01(\t\x1a\xd4\x01\n\x11RequestLeverageds\x12\x13\n\x0bpopularOnly\x18\x01 \x01(\x08\x12\x1b\n\x13inputAggregateTypes\x18\x02 \x01(\t\x12\x1c\n\x14inputAggregateValues\x18\x03 \x01(\t\x12\x12\n\nsearchText\x18\x04 \x01(\t\x12\x0e\n\x06offset\x18\x05 \x01(\x05\x12\r\n\x05limit\x18\x06 \x01(\x05\x12\x14\n\x0crequireTotal\x18\x07 \x01(\x08\x12\x13\n\x0bsortColumns\x18\x08 \x01(\t\x12\x11\n\tsortTypes\x18\t \x01(\t\x1a\x43\n\rRequestLookup\x12\x13\n\x0bsearch_text\x18\x01 \x01(\t\x12\r\n\x05limit\x18\x02 \x01(\x05\x12\x0e\n\x06offset\x18\x03 \x01(\x05\x1a\xee\x01\n\x0eRequestOptions\x12\x1b\n\x13inputAggregateTypes\x18\x01 \x01(\t\x12\x1c\n\x14inputAggregateValues\x18\x02 \x01(\t\x12\x18\n\x10optionExchangeId\x18\x03 \x01(\x05\x12\x16\n\x0eunderlyingIsin\x18\x04 \x01(\t\x12\x12\n\nsearchText\x18\x05 \x01(\t\x12\x0e\n\x06offset\x18\x06 \x01(\x05\x12\r\n\x05limit\x18\x07 \x01(\x05\x12\x14\n\x0crequireTotal\x18\x08 \x01(\x08\x12\x13\n\x0bsortColumns\x18\t \x01(\t\x12\x11\n\tsortTypes\x18\n \x01(\t\x1a\xc2\x01\n\rRequestStocks\x12\x17\n\x0fisInUSGreenList\x18\x01 \x01(\x08\x12\x0f\n\x07indexId\x18\x02 \x01(\x05\x12\x16\n\x0estockCountryId\x18\x03 \x01(\x05\x12\x12\n\nsearchText\x18\x04 \x01(\t\x12\x0e\n\x06offset\x18\x05 \x01(\x05\x12\r\n\x05limit\x18\x06 \x01(\x05\x12\x14\n\x0crequireTotal\x18\x07 \x01(\x08\x12\x13\n\x0bsortColumns\x18\x08 \x01(\t\x12\x11\n\tsortTypes\x18\t \x01(\t\x1a\x82\x01\n\x0fRequestWarrants\x12\x12\n\nsearchText\x18\x01 \x01(\t\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05limit\x18\x03 \x01(\x05\x12\x14\n\x0crequireTotal\x18\x04 \x01(\x08\x12\x13\n\x0bsortColumns\x18\x05 \x01(\t\x12\x11\n\tsortTypes\x18\x06 \x01(\t\"\xb0\x01\n\nFavourites\x12 \n\x06values\x18\x01 \x03(\x0b\x32\x10.Favourites.List\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1aI\n\x04List\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x12\n\nis_default\x18\x03 \x01(\x08\x12\x13\n\x0bproduct_ids\x18\x04 \x03(\x05\"T\n\x0cProductsInfo\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\x1a\x1b\n\x07Request\x12\x10\n\x08products\x18\x01 \x03(\x05\"8\n\rCompanyRatios\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\"9\n\x0e\x43ompanyProfile\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\">\n\x13\x46inancialStatements\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\"\x90\x01\n\nLatestNews\x12&\n\x05items\x18\x01 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05total\x18\x03 \x01(\x05\x1a;\n\x07Request\x12\x0e\n\x06offset\x18\x01 \x01(\x05\x12\x11\n\tlanguages\x18\x02 \x01(\t\x12\r\n\x05limit\x18\x03 \x01(\x05\"W\n\x0eTopNewsPreview\x12&\n\x05items\x18\x01 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05total\x18\x03 \x01(\x05\"\xa1\x01\n\rNewsByCompany\x12&\n\x05items\x18\x01 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05total\x18\x03 \x01(\x05\x1aI\n\x07Request\x12\x0c\n\x04isin\x18\x01 \x01(\t\x12\r\n\x05limit\x18\x02 \x01(\x05\x12\x0e\n\x06offset\x18\x03 \x01(\x05\x12\x11\n\tlanguages\x18\x04 \x01(\tb\x06proto3'
+  serialized_pb=b'\n\x18trading/pb/trading.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\x8b\x01\n\x0b\x43redentials\x12\x13\n\x0bint_account\x18\x01 \x01(\x05\x12\x10\n\x08username\x18\x02 \x01(\t\x12\x10\n\x08password\x18\x03 \x01(\t\x12\x19\n\x0ftotp_secret_key\x18\x04 \x01(\tH\x00\x12\x1b\n\x11one_time_password\x18\x05 \x01(\x05H\x00\x42\x0b\n\toneof_2fa\"\x9d\t\n\x05Order\x12\x1d\n\x06\x61\x63tion\x18\x01 \x01(\x0e\x32\r.Order.Action\x12\n\n\x02id\x18\x02 \x01(\t\x12$\n\norder_type\x18\x03 \x01(\x0e\x32\x10.Order.OrderType\x12\x0f\n\x05price\x18\x04 \x01(\x01H\x00\x12\x14\n\nstop_price\x18\x05 \x01(\x01H\x00\x12\x12\n\nproduct_id\x18\x06 \x01(\x05\x12\x0c\n\x04size\x18\x07 \x01(\x01\x12\"\n\ttime_type\x18\x08 \x01(\x0e\x32\x0f.Order.TimeType\x12\x15\n\rcontract_size\x18\t \x01(\x01\x12\x15\n\rcontract_type\x18\n \x01(\x05\x12\x10\n\x08\x63urrency\x18\x0b \x01(\t\x12\x0c\n\x04hour\x18\x0c \x01(\t\x12\x14\n\x0cis_deletable\x18\r \x01(\x08\x12\x15\n\ris_modifiable\x18\x0e \x01(\x08\x12\x0f\n\x07product\x18\x0f \x01(\t\x12\x10\n\x08quantity\x18\x10 \x01(\x01\x12\x19\n\x11total_order_value\x18\x11 \x01(\x01\x12\x16\n\x0eretained_order\x18\x12 \x01(\x08\x12\x18\n\x10sent_to_exchange\x18\x13 \x01(\x08\x1a\xc6\x03\n\x10\x43heckingResponse\x12\x17\n\x0f\x63onfirmation_id\x18\x01 \x01(\t\x12\x16\n\x0e\x66ree_space_new\x18\x02 \x01(\x01\x12\x35\n\x11response_datetime\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x31\n\x10transaction_fees\x18\x04 \x03(\x0b\x32\x17.google.protobuf.Struct\x12:\n\x19transaction_opposite_fees\x18\x05 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x32\n\x11transaction_taxes\x18\x06 \x03(\x0b\x32\x17.google.protobuf.Struct\x12?\n\x1etransaction_auto_fx_surcharges\x18\x07 \x03(\x0b\x32\x17.google.protobuf.Struct\x12H\n\'transaction_auto_fx_opposite_surcharges\x18\x08 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x1c\n\x14\x61utoFxConversionRate\x18\t \x01(\x01\x1a^\n\x14\x43onfirmationResponse\x12\x0f\n\x07orderId\x18\x01 \x01(\t\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"\x1b\n\x06\x41\x63tion\x12\x07\n\x03\x42UY\x10\x00\x12\x08\n\x04SELL\x10\x01\"A\n\tOrderType\x12\t\n\x05LIMIT\x10\x00\x12\x0e\n\nSTOP_LIMIT\x10\x01\x12\n\n\x06MARKET\x10\x02\x12\r\n\tSTOP_LOSS\x10\x03\"S\n\x08TimeType\x12\r\n\tUNKNOWN_0\x10\x00\x12\x11\n\rGOOD_TILL_DAY\x10\x01\x12\r\n\tUNKNOWN_2\x10\x02\x12\x16\n\x12GOOD_TILL_CANCELED\x10\x03\x42\r\n\x0boneof_price\"\xc6\x08\n\x06Update\x12\x35\n\x11response_datetime\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x1e\n\x06\x61lerts\x18\x02 \x01(\x0b\x32\x0e.Update.Alerts\x12%\n\ncash_funds\x18\x03 \x01(\x0b\x32\x11.Update.CashFunds\x12\x33\n\x11historical_orders\x18\x04 \x01(\x0b\x32\x18.Update.HistoricalOrders\x12\x1e\n\x06orders\x18\x05 \x01(\x0b\x32\x0e.Update.Orders\x12$\n\tportfolio\x18\x06 \x01(\x0b\x32\x11.Update.Portfolio\x12/\n\x0ftotal_portfolio\x18\x07 \x01(\x0b\x32\x16.Update.TotalPortfolio\x12*\n\x0ctransactions\x18\x08 \x01(\x0b\x32\x14.Update.Transactions\x1a?\n\x07Request\x12\x1e\n\x06option\x18\x01 \x01(\x0e\x32\x0e.Update.Option\x12\x14\n\x0clast_updated\x18\x02 \x01(\x05\x1a.\n\x0bRequestList\x12\x1f\n\x06values\x18\x01 \x03(\x0b\x32\x0f.Update.Request\x1aG\n\x06\x41lerts\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1aJ\n\tCashFunds\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1a@\n\x10HistoricalOrders\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\x16\n\x06values\x18\x02 \x03(\x0b\x32\x06.Order\x1a\x36\n\x06Orders\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\x16\n\x06values\x18\x02 \x03(\x0b\x32\x06.Order\x1aJ\n\tPortfolio\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x03(\x0b\x32\x17.google.protobuf.Struct\x1aO\n\x0eTotalPortfolio\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1aM\n\x0cTransactions\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x03(\x0b\x32\x17.google.protobuf.Struct\"z\n\x06Option\x12\n\n\x06\x41LERTS\x10\x00\x12\r\n\tCASHFUNDS\x10\x01\x12\x14\n\x10HISTORICALORDERS\x10\x02\x12\n\n\x06ORDERS\x10\x03\x12\r\n\tPORTFOLIO\x10\x04\x12\x12\n\x0eTOTALPORTFOLIO\x10\x05\x12\x10\n\x0cTRANSACTIONS\x10\x06\"\x8b\x02\n\rOrdersHistory\x12\'\n\x06values\x18\x01 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\x99\x01\n\x07Request\x12.\n\tfrom_date\x18\x01 \x01(\x0b\x32\x1b.OrdersHistory.Request.Date\x12,\n\x07to_date\x18\x02 \x01(\x0b\x32\x1b.OrdersHistory.Request.Date\x1a\x30\n\x04\x44\x61te\x12\x0c\n\x04year\x18\x01 \x01(\x05\x12\r\n\x05month\x18\x02 \x01(\x05\x12\x0b\n\x03\x64\x61y\x18\x03 \x01(\x05\"\xbf\x02\n\x13TransactionsHistory\x12\'\n\x06values\x18\x01 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\xc7\x01\n\x07Request\x12\x34\n\tfrom_date\x18\x01 \x01(\x0b\x32!.TransactionsHistory.Request.Date\x12\x32\n\x07to_date\x18\x02 \x01(\x0b\x32!.TransactionsHistory.Request.Date\x12 \n\x18groupTransactionsByOrder\x18\x03 \x01(\x08\x1a\x30\n\x04\x44\x61te\x12\x0c\n\x04year\x18\x01 \x01(\x05\x12\r\n\x05month\x18\x02 \x01(\x05\x12\x0b\n\x03\x64\x61y\x18\x03 \x01(\x05\"\x91\x02\n\x0f\x41\x63\x63ountOverview\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\x9d\x01\n\x07Request\x12\x30\n\tfrom_date\x18\x01 \x01(\x0b\x32\x1d.AccountOverview.Request.Date\x12.\n\x07to_date\x18\x02 \x01(\x0b\x32\x1d.AccountOverview.Request.Date\x1a\x30\n\x04\x44\x61te\x12\x0c\n\x04year\x18\x01 \x01(\x05\x12\r\n\x05month\x18\x02 \x01(\x05\x12\x0b\n\x03\x64\x61y\x18\x03 \x01(\x05\"\xd6\r\n\rProductSearch\x12\x0e\n\x06offset\x18\x01 \x01(\x05\x12)\n\x08products\x18\x02 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x35\n\x11response_datetime\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\r\n\x05total\x18\x04 \x01(\x05\x1a\x31\n\x06\x43onfig\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\x1a\xb1\x01\n\x0cRequestBonds\x12\x18\n\x10\x62ondIssuerTypeId\x18\x01 \x01(\x05\x12\x16\n\x0e\x62ondExchangeId\x18\x02 \x01(\x05\x12\x12\n\nsearchText\x18\x03 \x01(\t\x12\x0e\n\x06offset\x18\x04 \x01(\x05\x12\r\n\x05limit\x18\x05 \x01(\x05\x12\x14\n\x0crequireTotal\x18\x06 \x01(\x08\x12\x13\n\x0bsortColumns\x18\x07 \x01(\t\x12\x11\n\tsortTypes\x18\x08 \x01(\t\x1a\xce\x01\n\x0bRequestETFs\x12\x13\n\x0bpopularOnly\x18\x01 \x01(\x08\x12\x1b\n\x13inputAggregateTypes\x18\x02 \x01(\t\x12\x1c\n\x14inputAggregateValues\x18\x03 \x01(\t\x12\x12\n\nsearchText\x18\x04 \x01(\t\x12\x0e\n\x06offset\x18\x05 \x01(\x05\x12\r\n\x05limit\x18\x06 \x01(\x05\x12\x14\n\x0crequireTotal\x18\x07 \x01(\x08\x12\x13\n\x0bsortColumns\x18\x08 \x01(\t\x12\x11\n\tsortTypes\x18\t \x01(\t\x1a\x7f\n\x0cRequestFunds\x12\x12\n\nsearchText\x18\x01 \x01(\t\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05limit\x18\x03 \x01(\x05\x12\x14\n\x0crequireTotal\x18\x04 \x01(\x08\x12\x13\n\x0bsortColumns\x18\x05 \x01(\t\x12\x11\n\tsortTypes\x18\x06 \x01(\t\x1a\xb3\x01\n\x0eRequestFutures\x12\x18\n\x10\x66utureExchangeId\x18\x01 \x01(\x05\x12\x16\n\x0eunderlyingIsin\x18\x02 \x01(\t\x12\x12\n\nsearchText\x18\x03 \x01(\t\x12\x0e\n\x06offset\x18\x04 \x01(\x05\x12\r\n\x05limit\x18\x05 \x01(\x05\x12\x14\n\x0crequireTotal\x18\x06 \x01(\x08\x12\x13\n\x0bsortColumns\x18\x07 \x01(\t\x12\x11\n\tsortTypes\x18\x08 \x01(\t\x1a\xd4\x01\n\x11RequestLeverageds\x12\x13\n\x0bpopularOnly\x18\x01 \x01(\x08\x12\x1b\n\x13inputAggregateTypes\x18\x02 \x01(\t\x12\x1c\n\x14inputAggregateValues\x18\x03 \x01(\t\x12\x12\n\nsearchText\x18\x04 \x01(\t\x12\x0e\n\x06offset\x18\x05 \x01(\x05\x12\r\n\x05limit\x18\x06 \x01(\x05\x12\x14\n\x0crequireTotal\x18\x07 \x01(\x08\x12\x13\n\x0bsortColumns\x18\x08 \x01(\t\x12\x11\n\tsortTypes\x18\t \x01(\t\x1a\x43\n\rRequestLookup\x12\x13\n\x0bsearch_text\x18\x01 \x01(\t\x12\r\n\x05limit\x18\x02 \x01(\x05\x12\x0e\n\x06offset\x18\x03 \x01(\x05\x1a\xee\x01\n\x0eRequestOptions\x12\x1b\n\x13inputAggregateTypes\x18\x01 \x01(\t\x12\x1c\n\x14inputAggregateValues\x18\x02 \x01(\t\x12\x18\n\x10optionExchangeId\x18\x03 \x01(\x05\x12\x16\n\x0eunderlyingIsin\x18\x04 \x01(\t\x12\x12\n\nsearchText\x18\x05 \x01(\t\x12\x0e\n\x06offset\x18\x06 \x01(\x05\x12\r\n\x05limit\x18\x07 \x01(\x05\x12\x14\n\x0crequireTotal\x18\x08 \x01(\x08\x12\x13\n\x0bsortColumns\x18\t \x01(\t\x12\x11\n\tsortTypes\x18\n \x01(\t\x1a\xc2\x01\n\rRequestStocks\x12\x17\n\x0fisInUSGreenList\x18\x01 \x01(\x08\x12\x0f\n\x07indexId\x18\x02 \x01(\x05\x12\x16\n\x0estockCountryId\x18\x03 \x01(\x05\x12\x12\n\nsearchText\x18\x04 \x01(\t\x12\x0e\n\x06offset\x18\x05 \x01(\x05\x12\r\n\x05limit\x18\x06 \x01(\x05\x12\x14\n\x0crequireTotal\x18\x07 \x01(\x08\x12\x13\n\x0bsortColumns\x18\x08 \x01(\t\x12\x11\n\tsortTypes\x18\t \x01(\t\x1a\x82\x01\n\x0fRequestWarrants\x12\x12\n\nsearchText\x18\x01 \x01(\t\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05limit\x18\x03 \x01(\x05\x12\x14\n\x0crequireTotal\x18\x04 \x01(\x08\x12\x13\n\x0bsortColumns\x18\x05 \x01(\t\x12\x11\n\tsortTypes\x18\x06 \x01(\t\"\xb0\x01\n\nFavourites\x12 \n\x06values\x18\x01 \x03(\x0b\x32\x10.Favourites.List\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1aI\n\x04List\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x12\n\nis_default\x18\x03 \x01(\x08\x12\x13\n\x0bproduct_ids\x18\x04 \x03(\x05\"T\n\x0cProductsInfo\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\x1a\x1b\n\x07Request\x12\x10\n\x08products\x18\x01 \x03(\x05\"8\n\rCompanyRatios\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\"9\n\x0e\x43ompanyProfile\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\">\n\x13\x46inancialStatements\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\"\x90\x01\n\nLatestNews\x12&\n\x05items\x18\x01 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05total\x18\x03 \x01(\x05\x1a;\n\x07Request\x12\x0e\n\x06offset\x18\x01 \x01(\x05\x12\x11\n\tlanguages\x18\x02 \x01(\t\x12\r\n\x05limit\x18\x03 \x01(\x05\"W\n\x0eTopNewsPreview\x12&\n\x05items\x18\x01 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05total\x18\x03 \x01(\x05\"\xa1\x01\n\rNewsByCompany\x12&\n\x05items\x18\x01 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05total\x18\x03 \x01(\x05\x1aI\n\x07Request\x12\x0c\n\x04isin\x18\x01 \x01(\t\x12\r\n\x05limit\x18\x02 \x01(\x05\x12\x0e\n\x06offset\x18\x03 \x01(\x05\x12\x11\n\tlanguages\x18\x04 \x01(\tb\x06proto3'
   ,
   dependencies=[google_dot_protobuf_dot_struct__pb2.DESCRIPTOR,google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,])
 
@@ -47,8 +47,8 @@ _ORDER_ACTION = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1217,
-  serialized_end=1244,
+  serialized_start=1221,
+  serialized_end=1248,
 )
 _sym_db.RegisterEnumDescriptor(_ORDER_ACTION)
 
@@ -82,8 +82,8 @@ _ORDER_ORDERTYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1246,
-  serialized_end=1311,
+  serialized_start=1250,
+  serialized_end=1315,
 )
 _sym_db.RegisterEnumDescriptor(_ORDER_ORDERTYPE)
 
@@ -117,8 +117,8 @@ _ORDER_TIMETYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1313,
-  serialized_end=1396,
+  serialized_start=1317,
+  serialized_end=1400,
 )
 _sym_db.RegisterEnumDescriptor(_ORDER_TIMETYPE)
 
@@ -167,8 +167,8 @@ _UPDATE_OPTION = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=2371,
-  serialized_end=2493,
+  serialized_start=2390,
+  serialized_end=2512,
 )
 _sym_db.RegisterEnumDescriptor(_UPDATE_OPTION)
 
@@ -321,8 +321,8 @@ _ORDER_CHECKINGRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=665,
-  serialized_end=1119,
+  serialized_start=669,
+  serialized_end=1123,
 )
 
 _ORDER_CONFIRMATIONRESPONSE = _descriptor.Descriptor(
@@ -359,8 +359,8 @@ _ORDER_CONFIRMATIONRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1121,
-  serialized_end=1215,
+  serialized_start=1125,
+  serialized_end=1219,
 )
 
 _ORDER = _descriptor.Descriptor(
@@ -373,14 +373,14 @@ _ORDER = _descriptor.Descriptor(
   fields=[
     _descriptor.FieldDescriptor(
       name='action', full_name='Order.action', index=0,
-      number=2, type=14, cpp_type=8, label=1,
+      number=1, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
       name='id', full_name='Order.id', index=1,
-      number=7, type=9, cpp_type=9, label=1,
+      number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -394,90 +394,90 @@ _ORDER = _descriptor.Descriptor(
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
       name='price', full_name='Order.price', index=3,
+      number=4, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='stop_price', full_name='Order.stop_price', index=4,
       number=5, type=1, cpp_type=5, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='product_id', full_name='Order.product_id', index=4,
-      number=1, type=5, cpp_type=1, label=1,
+      name='product_id', full_name='Order.product_id', index=5,
+      number=6, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='size', full_name='Order.size', index=5,
-      number=6, type=1, cpp_type=5, label=1,
+      name='size', full_name='Order.size', index=6,
+      number=7, type=1, cpp_type=5, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='time_type', full_name='Order.time_type', index=6,
-      number=4, type=14, cpp_type=8, label=1,
+      name='time_type', full_name='Order.time_type', index=7,
+      number=8, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='contract_size', full_name='Order.contract_size', index=7,
-      number=8, type=1, cpp_type=5, label=1,
+      name='contract_size', full_name='Order.contract_size', index=8,
+      number=9, type=1, cpp_type=5, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='contract_type', full_name='Order.contract_type', index=8,
-      number=9, type=5, cpp_type=1, label=1,
+      name='contract_type', full_name='Order.contract_type', index=9,
+      number=10, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='currency', full_name='Order.currency', index=9,
-      number=10, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='hour', full_name='Order.hour', index=10,
+      name='currency', full_name='Order.currency', index=10,
       number=11, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='is_deletable', full_name='Order.is_deletable', index=11,
-      number=12, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
+      name='hour', full_name='Order.hour', index=11,
+      number=12, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='is_modifiable', full_name='Order.is_modifiable', index=12,
+      name='is_deletable', full_name='Order.is_deletable', index=12,
       number=13, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='product', full_name='Order.product', index=13,
-      number=14, type=9, cpp_type=9, label=1,
+      name='is_modifiable', full_name='Order.is_modifiable', index=13,
+      number=14, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='product', full_name='Order.product', index=14,
+      number=15, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='quantity', full_name='Order.quantity', index=14,
-      number=15, type=1, cpp_type=5, label=1,
-      has_default_value=False, default_value=float(0),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='stop_price', full_name='Order.stop_price', index=15,
+      name='quantity', full_name='Order.quantity', index=15,
       number=16, type=1, cpp_type=5, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
@@ -518,9 +518,14 @@ _ORDER = _descriptor.Descriptor(
   syntax='proto3',
   extension_ranges=[],
   oneofs=[
+    _descriptor.OneofDescriptor(
+      name='oneof_price', full_name='Order.oneof_price',
+      index=0, containing_type=None,
+      create_key=_descriptor._internal_create_key,
+    fields=[]),
   ],
   serialized_start=234,
-  serialized_end=1396,
+  serialized_end=1415,
 )
 
 
@@ -558,8 +563,8 @@ _UPDATE_REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1751,
-  serialized_end=1814,
+  serialized_start=1770,
+  serialized_end=1833,
 )
 
 _UPDATE_REQUESTLIST = _descriptor.Descriptor(
@@ -589,8 +594,8 @@ _UPDATE_REQUESTLIST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1816,
-  serialized_end=1862,
+  serialized_start=1835,
+  serialized_end=1881,
 )
 
 _UPDATE_ALERTS = _descriptor.Descriptor(
@@ -627,8 +632,8 @@ _UPDATE_ALERTS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1864,
-  serialized_end=1935,
+  serialized_start=1883,
+  serialized_end=1954,
 )
 
 _UPDATE_CASHFUNDS = _descriptor.Descriptor(
@@ -665,8 +670,8 @@ _UPDATE_CASHFUNDS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1937,
-  serialized_end=2011,
+  serialized_start=1956,
+  serialized_end=2030,
 )
 
 _UPDATE_HISTORICALORDERS = _descriptor.Descriptor(
@@ -703,8 +708,8 @@ _UPDATE_HISTORICALORDERS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2013,
-  serialized_end=2077,
+  serialized_start=2032,
+  serialized_end=2096,
 )
 
 _UPDATE_ORDERS = _descriptor.Descriptor(
@@ -741,8 +746,8 @@ _UPDATE_ORDERS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2079,
-  serialized_end=2133,
+  serialized_start=2098,
+  serialized_end=2152,
 )
 
 _UPDATE_PORTFOLIO = _descriptor.Descriptor(
@@ -779,8 +784,8 @@ _UPDATE_PORTFOLIO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2135,
-  serialized_end=2209,
+  serialized_start=2154,
+  serialized_end=2228,
 )
 
 _UPDATE_TOTALPORTFOLIO = _descriptor.Descriptor(
@@ -817,8 +822,8 @@ _UPDATE_TOTALPORTFOLIO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2211,
-  serialized_end=2290,
+  serialized_start=2230,
+  serialized_end=2309,
 )
 
 _UPDATE_TRANSACTIONS = _descriptor.Descriptor(
@@ -855,8 +860,8 @@ _UPDATE_TRANSACTIONS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2292,
-  serialized_end=2369,
+  serialized_start=2311,
+  serialized_end=2388,
 )
 
 _UPDATE = _descriptor.Descriptor(
@@ -936,8 +941,8 @@ _UPDATE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1399,
-  serialized_end=2493,
+  serialized_start=1418,
+  serialized_end=2512,
 )
 
 
@@ -982,8 +987,8 @@ _ORDERSHISTORY_REQUEST_DATE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2715,
-  serialized_end=2763,
+  serialized_start=2734,
+  serialized_end=2782,
 )
 
 _ORDERSHISTORY_REQUEST = _descriptor.Descriptor(
@@ -1020,8 +1025,8 @@ _ORDERSHISTORY_REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2610,
-  serialized_end=2763,
+  serialized_start=2629,
+  serialized_end=2782,
 )
 
 _ORDERSHISTORY = _descriptor.Descriptor(
@@ -1058,8 +1063,8 @@ _ORDERSHISTORY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2496,
-  serialized_end=2763,
+  serialized_start=2515,
+  serialized_end=2782,
 )
 
 
@@ -1104,8 +1109,8 @@ _TRANSACTIONSHISTORY_REQUEST_DATE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2715,
-  serialized_end=2763,
+  serialized_start=2734,
+  serialized_end=2782,
 )
 
 _TRANSACTIONSHISTORY_REQUEST = _descriptor.Descriptor(
@@ -1149,8 +1154,8 @@ _TRANSACTIONSHISTORY_REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2886,
-  serialized_end=3085,
+  serialized_start=2905,
+  serialized_end=3104,
 )
 
 _TRANSACTIONSHISTORY = _descriptor.Descriptor(
@@ -1187,8 +1192,8 @@ _TRANSACTIONSHISTORY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2766,
-  serialized_end=3085,
+  serialized_start=2785,
+  serialized_end=3104,
 )
 
 
@@ -1233,8 +1238,8 @@ _ACCOUNTOVERVIEW_REQUEST_DATE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2715,
-  serialized_end=2763,
+  serialized_start=2734,
+  serialized_end=2782,
 )
 
 _ACCOUNTOVERVIEW_REQUEST = _descriptor.Descriptor(
@@ -1271,8 +1276,8 @@ _ACCOUNTOVERVIEW_REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3204,
-  serialized_end=3361,
+  serialized_start=3223,
+  serialized_end=3380,
 )
 
 _ACCOUNTOVERVIEW = _descriptor.Descriptor(
@@ -1309,8 +1314,8 @@ _ACCOUNTOVERVIEW = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3088,
-  serialized_end=3361,
+  serialized_start=3107,
+  serialized_end=3380,
 )
 
 
@@ -1341,8 +1346,8 @@ _PRODUCTSEARCH_CONFIG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3510,
-  serialized_end=3559,
+  serialized_start=3529,
+  serialized_end=3578,
 )
 
 _PRODUCTSEARCH_REQUESTBONDS = _descriptor.Descriptor(
@@ -1421,8 +1426,8 @@ _PRODUCTSEARCH_REQUESTBONDS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3562,
-  serialized_end=3739,
+  serialized_start=3581,
+  serialized_end=3758,
 )
 
 _PRODUCTSEARCH_REQUESTETFS = _descriptor.Descriptor(
@@ -1508,8 +1513,8 @@ _PRODUCTSEARCH_REQUESTETFS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3742,
-  serialized_end=3948,
+  serialized_start=3761,
+  serialized_end=3967,
 )
 
 _PRODUCTSEARCH_REQUESTFUNDS = _descriptor.Descriptor(
@@ -1574,8 +1579,8 @@ _PRODUCTSEARCH_REQUESTFUNDS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3950,
-  serialized_end=4077,
+  serialized_start=3969,
+  serialized_end=4096,
 )
 
 _PRODUCTSEARCH_REQUESTFUTURES = _descriptor.Descriptor(
@@ -1654,8 +1659,8 @@ _PRODUCTSEARCH_REQUESTFUTURES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4080,
-  serialized_end=4259,
+  serialized_start=4099,
+  serialized_end=4278,
 )
 
 _PRODUCTSEARCH_REQUESTLEVERAGEDS = _descriptor.Descriptor(
@@ -1741,8 +1746,8 @@ _PRODUCTSEARCH_REQUESTLEVERAGEDS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4262,
-  serialized_end=4474,
+  serialized_start=4281,
+  serialized_end=4493,
 )
 
 _PRODUCTSEARCH_REQUESTLOOKUP = _descriptor.Descriptor(
@@ -1786,8 +1791,8 @@ _PRODUCTSEARCH_REQUESTLOOKUP = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4476,
-  serialized_end=4543,
+  serialized_start=4495,
+  serialized_end=4562,
 )
 
 _PRODUCTSEARCH_REQUESTOPTIONS = _descriptor.Descriptor(
@@ -1880,8 +1885,8 @@ _PRODUCTSEARCH_REQUESTOPTIONS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4546,
-  serialized_end=4784,
+  serialized_start=4565,
+  serialized_end=4803,
 )
 
 _PRODUCTSEARCH_REQUESTSTOCKS = _descriptor.Descriptor(
@@ -1967,8 +1972,8 @@ _PRODUCTSEARCH_REQUESTSTOCKS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4787,
-  serialized_end=4981,
+  serialized_start=4806,
+  serialized_end=5000,
 )
 
 _PRODUCTSEARCH_REQUESTWARRANTS = _descriptor.Descriptor(
@@ -2033,8 +2038,8 @@ _PRODUCTSEARCH_REQUESTWARRANTS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4984,
-  serialized_end=5114,
+  serialized_start=5003,
+  serialized_end=5133,
 )
 
 _PRODUCTSEARCH = _descriptor.Descriptor(
@@ -2085,8 +2090,8 @@ _PRODUCTSEARCH = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3364,
-  serialized_end=5114,
+  serialized_start=3383,
+  serialized_end=5133,
 )
 
 
@@ -2138,8 +2143,8 @@ _FAVOURITES_LIST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5220,
-  serialized_end=5293,
+  serialized_start=5239,
+  serialized_end=5312,
 )
 
 _FAVOURITES = _descriptor.Descriptor(
@@ -2176,8 +2181,8 @@ _FAVOURITES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5117,
-  serialized_end=5293,
+  serialized_start=5136,
+  serialized_end=5312,
 )
 
 
@@ -2208,8 +2213,8 @@ _PRODUCTSINFO_REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5352,
-  serialized_end=5379,
+  serialized_start=5371,
+  serialized_end=5398,
 )
 
 _PRODUCTSINFO = _descriptor.Descriptor(
@@ -2239,8 +2244,8 @@ _PRODUCTSINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5295,
-  serialized_end=5379,
+  serialized_start=5314,
+  serialized_end=5398,
 )
 
 
@@ -2271,8 +2276,8 @@ _COMPANYRATIOS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5381,
-  serialized_end=5437,
+  serialized_start=5400,
+  serialized_end=5456,
 )
 
 
@@ -2303,8 +2308,8 @@ _COMPANYPROFILE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5439,
-  serialized_end=5496,
+  serialized_start=5458,
+  serialized_end=5515,
 )
 
 
@@ -2335,8 +2340,8 @@ _FINANCIALSTATEMENTS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5498,
-  serialized_end=5560,
+  serialized_start=5517,
+  serialized_end=5579,
 )
 
 
@@ -2381,8 +2386,8 @@ _LATESTNEWS_REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5648,
-  serialized_end=5707,
+  serialized_start=5667,
+  serialized_end=5726,
 )
 
 _LATESTNEWS = _descriptor.Descriptor(
@@ -2426,8 +2431,8 @@ _LATESTNEWS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5563,
-  serialized_end=5707,
+  serialized_start=5582,
+  serialized_end=5726,
 )
 
 
@@ -2472,8 +2477,8 @@ _TOPNEWSPREVIEW = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5709,
-  serialized_end=5796,
+  serialized_start=5728,
+  serialized_end=5815,
 )
 
 
@@ -2525,8 +2530,8 @@ _NEWSBYCOMPANY_REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5887,
-  serialized_end=5960,
+  serialized_start=5906,
+  serialized_end=5979,
 )
 
 _NEWSBYCOMPANY = _descriptor.Descriptor(
@@ -2570,8 +2575,8 @@ _NEWSBYCOMPANY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5799,
-  serialized_end=5960,
+  serialized_start=5818,
+  serialized_end=5979,
 )
 
 _CREDENTIALS.oneofs_by_name['oneof_2fa'].fields.append(
@@ -2595,6 +2600,12 @@ _ORDER.fields_by_name['time_type'].enum_type = _ORDER_TIMETYPE
 _ORDER_ACTION.containing_type = _ORDER
 _ORDER_ORDERTYPE.containing_type = _ORDER
 _ORDER_TIMETYPE.containing_type = _ORDER
+_ORDER.oneofs_by_name['oneof_price'].fields.append(
+  _ORDER.fields_by_name['price'])
+_ORDER.fields_by_name['price'].containing_oneof = _ORDER.oneofs_by_name['oneof_price']
+_ORDER.oneofs_by_name['oneof_price'].fields.append(
+  _ORDER.fields_by_name['stop_price'])
+_ORDER.fields_by_name['stop_price'].containing_oneof = _ORDER.oneofs_by_name['oneof_price']
 _UPDATE_REQUEST.fields_by_name['option'].enum_type = _UPDATE_OPTION
 _UPDATE_REQUEST.containing_type = _UPDATE
 _UPDATE_REQUESTLIST.fields_by_name['values'].message_type = _UPDATE_REQUEST

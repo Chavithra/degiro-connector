@@ -67,25 +67,27 @@ message Order {
   }
 
   // USED TO CHECK ORDER
-  Action action = 2; // called "buysell" by the API
-  string id = 7;
+  Action action = 1; // called "buysell" by the API
+  string id = 2;
   OrderType order_type = 3; // called "orderTypeId" by the API
-  double price = 5;
-  int32 product_id = 1; // called "productId" by the API
-  double size = 6;
-  TimeType time_type = 4; // called "orderTimeTypeId" by the API
+  oneof oneof_price {
+    double price = 4;
+    double stop_price = 5; // called "stopPrice" by the API
+  }
+  int32 product_id = 6; // called "productId" by the API
+  double size = 7;
+  TimeType time_type = 8; // called "orderTimeTypeId" by the API
 
   // USED TO CONFIRM ORDER
-  double contract_size = 8; // called "contractSize" by the API
-  int32 contract_type = 9; // called "contractType" by the API
-  string currency = 10;
-  string hour = 11; // called "date" by the API
+  double contract_size = 9; // called "contractSize" by the API
+  int32 contract_type = 10; // called "contractType" by the API
+  string currency = 11;
+  string hour = 12; // called "date" by the API
                     // contains %H:%M if the date was not passed
-  bool is_deletable = 12; // called "isDeletable" by the API
-  bool is_modifiable = 13; // called "isModifiable" by the API
-  string product = 14;
-  double quantity = 15;
-  double stop_price = 16; // called "stopPrice" by the API
+  bool is_deletable = 13; // called "isDeletable" by the API
+  bool is_modifiable = 14; // called "isModifiable" by the API
+  string product = 15;
+  double quantity = 16;
   double total_order_value = 17; // called "totalOrderValue" by the API
 
   // USED FOR ORDERS HISTORY
