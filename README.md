@@ -78,10 +78,10 @@ pip uninstall degiro-connector
   * [3.2. How to logout ?](#32-how-to-logout-)
   * [3.3. What are the credentials ?](#32-what-are-the-credentials-)
   * [3.3. How to find your : int_account ?](#33-how-to-find-your--int_account-)
-  * [3.6. How to use 2FA ?](#34-how-to-use-2fa-)
-  * [3.6. How to find your : totp_secret_key ?](#35-how-to-find-your--totp_secret_key-)
+  * [3.4. How to use 2FA ?](#34-how-to-use-2fa-)
+  * [3.5. How to find your : totp_secret_key ?](#35-how-to-find-your--totp_secret_key-)
   * [3.6. How to find your : one_time_password ?](#36-how-to-find-your--one_time_password-)
-  * [3.8. Is there a timeout ?](#37-is-there-a-timeout-)
+  * [3.7. Is there a timeout ?](#37-is-there-a-timeout-)
 - [4. Order](#4-order)
   * [4.1. How to create an Order ?](#41-how-to-create-an-order-)
   * [4.2. How to update an Order ?](#42-how-to-update-an-order-)
@@ -538,7 +538,7 @@ Beware, these two identifiers are not the same thing :
 - user_token : used to fetch real-time data and charts.
 - int_account : used for some trading operations.
 
-## 3.6. How to use 2FA ?
+## 3.4. How to use 2FA ?
 
 First I will briefly explain what is : **Two-Factor Authentication (2FA)**.
 
@@ -619,7 +619,7 @@ trading_api.connect()
 A complete example here :
 [connection_otp.py](examples/trading/connection_otp.py)
 
-## 3.6. How to find your : totp_secret_key ?
+## 3.5. How to find your : totp_secret_key ?
 
 The parameter **totp_secret_key** is only required if you have enabled 2FA on Degiro's website.
 
@@ -650,7 +650,7 @@ Usually you get it through an app like **Google Authenticator**.
 
 It is preferable to use the parameter **totp_secret_key** instead of **one_time_password**.
 
-## 3.8. Is there a timeout ?
+## 3.7. Is there a timeout ?
 The connection for trading operations seems to have a timeout of : around 30 minutes.
 
 If this connection is left unused for this amount of time it will cease to work.
