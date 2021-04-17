@@ -561,7 +561,7 @@ Authenticator**.
 
 Then this app will generate a new **one_time_password** that you can use for each connection. 
 
-To use **2FA** with this library you have to choices.
+To use **2FA** with this library you have two choices.
 
 **CHOICE A**
 
