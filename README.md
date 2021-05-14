@@ -76,12 +76,12 @@ pip uninstall degiro-connector
 - [3. Trading connection](#3-trading-connection)
   * [3.1. How to login ?](#31-how-to-login-)
   * [3.2. How to logout ?](#32-how-to-logout-)
-  * [3.3. What are the credentials ?](#32-what-are-the-credentials-)
-  * [3.3. How to find your : int_account ?](#33-how-to-find-your--int_account-)
-  * [3.6. How to use 2FA ?](#34-how-to-use-2fa-)
-  * [3.6. How to find your : totp_secret_key ?](#35-how-to-find-your--totp_secret_key-)
-  * [3.6. How to find your : one_time_password ?](#36-how-to-find-your--one_time_password-)
-  * [3.8. Is there a timeout ?](#37-is-there-a-timeout-)
+  * [3.3. What are the credentials ?](#33-what-are-the-credentials-)
+  * [3.4. How to find your : int_account ?](#34-how-to-find-your--int_account-)
+  * [3.5. How to use 2FA ?](#35-how-to-use-2fa-)
+  * [3.6. How to find your : totp_secret_key ?](#36-how-to-find-your--totp_secret_key-)
+  * [3.7. How to find your : one_time_password ?](#37-how-to-find-your--one_time_password-)
+  * [3.8. Is there a timeout ?](#38-is-there-a-timeout-)
 - [4. Order](#4-order)
   * [4.1. How to create an Order ?](#41-how-to-create-an-order-)
   * [4.2. How to update an Order ?](#42-how-to-update-an-order-)
@@ -520,7 +520,7 @@ Check the section related to **2FA** if you want to know more about these two pa
 - **totp_secret_key**
 - **one_time_password**
 
-## 3.3. How to find your : int_account ?
+## 3.4. How to find your : int_account ?
 
 To get your **int_acccount** you can run this example :
 [client_details_table.py](examples/trading/client_details_table.py)
@@ -538,7 +538,7 @@ Beware, these two identifiers are not the same thing :
 - user_token : used to fetch real-time data and charts.
 - int_account : used for some trading operations.
 
-## 3.6. How to use 2FA ?
+## 3.5. How to use 2FA ?
 
 First I will briefly explain what is : **Two-Factor Authentication (2FA)**.
 
@@ -642,7 +642,7 @@ Has you can guess the "totp_secret_key" is in this part :
 Here is an example of script to extract the text from a QRCode :
 [qrcode.py](examples/trading/qrcode.py)
 
-## 3.6. How to find your : one_time_password ?
+## 3.7. How to find your : one_time_password ?
 
 The parameter **one_time_password** is the password you type when you log in the website using **2FA**.
 
