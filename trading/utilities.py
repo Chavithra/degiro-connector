@@ -517,7 +517,6 @@ def delete_order(
 
     try:
         response = session.send(prepped, verify=False)
-        response = response.json()
     except Exception as e:
         logger.fatal(response.status_code)
         logger.fatal(response.text)
