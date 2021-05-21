@@ -34,6 +34,7 @@ request_lookup = ProductSearch.RequestLookup(
     search_text='APPLE',
     limit=2,
     offset=0,
+    product_type_id=1,
 )
 
 # FETCH DATA

@@ -21,7 +21,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x18trading/pb/trading.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\x8b\x01\n\x0b\x43redentials\x12\x13\n\x0bint_account\x18\x01 \x01(\x05\x12\x10\n\x08username\x18\x02 \x01(\t\x12\x10\n\x08password\x18\x03 \x01(\t\x12\x19\n\x0ftotp_secret_key\x18\x04 \x01(\tH\x00\x12\x1b\n\x11one_time_password\x18\x05 \x01(\x05H\x00\x42\x0b\n\toneof_2fa\"\x9d\t\n\x05Order\x12\x1d\n\x06\x61\x63tion\x18\x01 \x01(\x0e\x32\r.Order.Action\x12\n\n\x02id\x18\x02 \x01(\t\x12$\n\norder_type\x18\x03 \x01(\x0e\x32\x10.Order.OrderType\x12\x0f\n\x05price\x18\x04 \x01(\x01H\x00\x12\x14\n\nstop_price\x18\x05 \x01(\x01H\x00\x12\x12\n\nproduct_id\x18\x06 \x01(\x05\x12\x0c\n\x04size\x18\x07 \x01(\x01\x12\"\n\ttime_type\x18\x08 \x01(\x0e\x32\x0f.Order.TimeType\x12\x15\n\rcontract_size\x18\t \x01(\x01\x12\x15\n\rcontract_type\x18\n \x01(\x05\x12\x10\n\x08\x63urrency\x18\x0b \x01(\t\x12\x0c\n\x04hour\x18\x0c \x01(\t\x12\x14\n\x0cis_deletable\x18\r \x01(\x08\x12\x15\n\ris_modifiable\x18\x0e \x01(\x08\x12\x0f\n\x07product\x18\x0f \x01(\t\x12\x10\n\x08quantity\x18\x10 \x01(\x01\x12\x19\n\x11total_order_value\x18\x11 \x01(\x01\x12\x16\n\x0eretained_order\x18\x12 \x01(\x08\x12\x18\n\x10sent_to_exchange\x18\x13 \x01(\x08\x1a\xc6\x03\n\x10\x43heckingResponse\x12\x17\n\x0f\x63onfirmation_id\x18\x01 \x01(\t\x12\x16\n\x0e\x66ree_space_new\x18\x02 \x01(\x01\x12\x35\n\x11response_datetime\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x31\n\x10transaction_fees\x18\x04 \x03(\x0b\x32\x17.google.protobuf.Struct\x12:\n\x19transaction_opposite_fees\x18\x05 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x32\n\x11transaction_taxes\x18\x06 \x03(\x0b\x32\x17.google.protobuf.Struct\x12?\n\x1etransaction_auto_fx_surcharges\x18\x07 \x03(\x0b\x32\x17.google.protobuf.Struct\x12H\n\'transaction_auto_fx_opposite_surcharges\x18\x08 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x1c\n\x14\x61utoFxConversionRate\x18\t \x01(\x01\x1a^\n\x14\x43onfirmationResponse\x12\x0f\n\x07orderId\x18\x01 \x01(\t\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"\x1b\n\x06\x41\x63tion\x12\x07\n\x03\x42UY\x10\x00\x12\x08\n\x04SELL\x10\x01\"A\n\tOrderType\x12\t\n\x05LIMIT\x10\x00\x12\x0e\n\nSTOP_LIMIT\x10\x01\x12\n\n\x06MARKET\x10\x02\x12\r\n\tSTOP_LOSS\x10\x03\"S\n\x08TimeType\x12\r\n\tUNKNOWN_0\x10\x00\x12\x11\n\rGOOD_TILL_DAY\x10\x01\x12\r\n\tUNKNOWN_2\x10\x02\x12\x16\n\x12GOOD_TILL_CANCELED\x10\x03\x42\r\n\x0boneof_price\"\xc6\x08\n\x06Update\x12\x35\n\x11response_datetime\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x1e\n\x06\x61lerts\x18\x02 \x01(\x0b\x32\x0e.Update.Alerts\x12%\n\ncash_funds\x18\x03 \x01(\x0b\x32\x11.Update.CashFunds\x12\x33\n\x11historical_orders\x18\x04 \x01(\x0b\x32\x18.Update.HistoricalOrders\x12\x1e\n\x06orders\x18\x05 \x01(\x0b\x32\x0e.Update.Orders\x12$\n\tportfolio\x18\x06 \x01(\x0b\x32\x11.Update.Portfolio\x12/\n\x0ftotal_portfolio\x18\x07 \x01(\x0b\x32\x16.Update.TotalPortfolio\x12*\n\x0ctransactions\x18\x08 \x01(\x0b\x32\x14.Update.Transactions\x1a?\n\x07Request\x12\x1e\n\x06option\x18\x01 \x01(\x0e\x32\x0e.Update.Option\x12\x14\n\x0clast_updated\x18\x02 \x01(\x05\x1a.\n\x0bRequestList\x12\x1f\n\x06values\x18\x01 \x03(\x0b\x32\x0f.Update.Request\x1aG\n\x06\x41lerts\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1aJ\n\tCashFunds\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1a@\n\x10HistoricalOrders\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\x16\n\x06values\x18\x02 \x03(\x0b\x32\x06.Order\x1a\x36\n\x06Orders\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\x16\n\x06values\x18\x02 \x03(\x0b\x32\x06.Order\x1aJ\n\tPortfolio\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x03(\x0b\x32\x17.google.protobuf.Struct\x1aO\n\x0eTotalPortfolio\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1aM\n\x0cTransactions\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x03(\x0b\x32\x17.google.protobuf.Struct\"z\n\x06Option\x12\n\n\x06\x41LERTS\x10\x00\x12\r\n\tCASHFUNDS\x10\x01\x12\x14\n\x10HISTORICALORDERS\x10\x02\x12\n\n\x06ORDERS\x10\x03\x12\r\n\tPORTFOLIO\x10\x04\x12\x12\n\x0eTOTALPORTFOLIO\x10\x05\x12\x10\n\x0cTRANSACTIONS\x10\x06\"\x8b\x02\n\rOrdersHistory\x12\'\n\x06values\x18\x01 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\x99\x01\n\x07Request\x12.\n\tfrom_date\x18\x01 \x01(\x0b\x32\x1b.OrdersHistory.Request.Date\x12,\n\x07to_date\x18\x02 \x01(\x0b\x32\x1b.OrdersHistory.Request.Date\x1a\x30\n\x04\x44\x61te\x12\x0c\n\x04year\x18\x01 \x01(\x05\x12\r\n\x05month\x18\x02 \x01(\x05\x12\x0b\n\x03\x64\x61y\x18\x03 \x01(\x05\"\xbf\x02\n\x13TransactionsHistory\x12\'\n\x06values\x18\x01 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\xc7\x01\n\x07Request\x12\x34\n\tfrom_date\x18\x01 \x01(\x0b\x32!.TransactionsHistory.Request.Date\x12\x32\n\x07to_date\x18\x02 \x01(\x0b\x32!.TransactionsHistory.Request.Date\x12 \n\x18groupTransactionsByOrder\x18\x03 \x01(\x08\x1a\x30\n\x04\x44\x61te\x12\x0c\n\x04year\x18\x01 \x01(\x05\x12\r\n\x05month\x18\x02 \x01(\x05\x12\x0b\n\x03\x64\x61y\x18\x03 \x01(\x05\"\x91\x02\n\x0f\x41\x63\x63ountOverview\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\x9d\x01\n\x07Request\x12\x30\n\tfrom_date\x18\x01 \x01(\x0b\x32\x1d.AccountOverview.Request.Date\x12.\n\x07to_date\x18\x02 \x01(\x0b\x32\x1d.AccountOverview.Request.Date\x1a\x30\n\x04\x44\x61te\x12\x0c\n\x04year\x18\x01 \x01(\x05\x12\r\n\x05month\x18\x02 \x01(\x05\x12\x0b\n\x03\x64\x61y\x18\x03 \x01(\x05\"\xd6\r\n\rProductSearch\x12\x0e\n\x06offset\x18\x01 \x01(\x05\x12)\n\x08products\x18\x02 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x35\n\x11response_datetime\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\r\n\x05total\x18\x04 \x01(\x05\x1a\x31\n\x06\x43onfig\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\x1a\xb1\x01\n\x0cRequestBonds\x12\x18\n\x10\x62ondIssuerTypeId\x18\x01 \x01(\x05\x12\x16\n\x0e\x62ondExchangeId\x18\x02 \x01(\x05\x12\x12\n\nsearchText\x18\x03 \x01(\t\x12\x0e\n\x06offset\x18\x04 \x01(\x05\x12\r\n\x05limit\x18\x05 \x01(\x05\x12\x14\n\x0crequireTotal\x18\x06 \x01(\x08\x12\x13\n\x0bsortColumns\x18\x07 \x01(\t\x12\x11\n\tsortTypes\x18\x08 \x01(\t\x1a\xce\x01\n\x0bRequestETFs\x12\x13\n\x0bpopularOnly\x18\x01 \x01(\x08\x12\x1b\n\x13inputAggregateTypes\x18\x02 \x01(\t\x12\x1c\n\x14inputAggregateValues\x18\x03 \x01(\t\x12\x12\n\nsearchText\x18\x04 \x01(\t\x12\x0e\n\x06offset\x18\x05 \x01(\x05\x12\r\n\x05limit\x18\x06 \x01(\x05\x12\x14\n\x0crequireTotal\x18\x07 \x01(\x08\x12\x13\n\x0bsortColumns\x18\x08 \x01(\t\x12\x11\n\tsortTypes\x18\t \x01(\t\x1a\x7f\n\x0cRequestFunds\x12\x12\n\nsearchText\x18\x01 \x01(\t\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05limit\x18\x03 \x01(\x05\x12\x14\n\x0crequireTotal\x18\x04 \x01(\x08\x12\x13\n\x0bsortColumns\x18\x05 \x01(\t\x12\x11\n\tsortTypes\x18\x06 \x01(\t\x1a\xb3\x01\n\x0eRequestFutures\x12\x18\n\x10\x66utureExchangeId\x18\x01 \x01(\x05\x12\x16\n\x0eunderlyingIsin\x18\x02 \x01(\t\x12\x12\n\nsearchText\x18\x03 \x01(\t\x12\x0e\n\x06offset\x18\x04 \x01(\x05\x12\r\n\x05limit\x18\x05 \x01(\x05\x12\x14\n\x0crequireTotal\x18\x06 \x01(\x08\x12\x13\n\x0bsortColumns\x18\x07 \x01(\t\x12\x11\n\tsortTypes\x18\x08 \x01(\t\x1a\xd4\x01\n\x11RequestLeverageds\x12\x13\n\x0bpopularOnly\x18\x01 \x01(\x08\x12\x1b\n\x13inputAggregateTypes\x18\x02 \x01(\t\x12\x1c\n\x14inputAggregateValues\x18\x03 \x01(\t\x12\x12\n\nsearchText\x18\x04 \x01(\t\x12\x0e\n\x06offset\x18\x05 \x01(\x05\x12\r\n\x05limit\x18\x06 \x01(\x05\x12\x14\n\x0crequireTotal\x18\x07 \x01(\x08\x12\x13\n\x0bsortColumns\x18\x08 \x01(\t\x12\x11\n\tsortTypes\x18\t \x01(\t\x1a\x43\n\rRequestLookup\x12\x13\n\x0bsearch_text\x18\x01 \x01(\t\x12\r\n\x05limit\x18\x02 \x01(\x05\x12\x0e\n\x06offset\x18\x03 \x01(\x05\x1a\xee\x01\n\x0eRequestOptions\x12\x1b\n\x13inputAggregateTypes\x18\x01 \x01(\t\x12\x1c\n\x14inputAggregateValues\x18\x02 \x01(\t\x12\x18\n\x10optionExchangeId\x18\x03 \x01(\x05\x12\x16\n\x0eunderlyingIsin\x18\x04 \x01(\t\x12\x12\n\nsearchText\x18\x05 \x01(\t\x12\x0e\n\x06offset\x18\x06 \x01(\x05\x12\r\n\x05limit\x18\x07 \x01(\x05\x12\x14\n\x0crequireTotal\x18\x08 \x01(\x08\x12\x13\n\x0bsortColumns\x18\t \x01(\t\x12\x11\n\tsortTypes\x18\n \x01(\t\x1a\xc2\x01\n\rRequestStocks\x12\x17\n\x0fisInUSGreenList\x18\x01 \x01(\x08\x12\x0f\n\x07indexId\x18\x02 \x01(\x05\x12\x16\n\x0estockCountryId\x18\x03 \x01(\x05\x12\x12\n\nsearchText\x18\x04 \x01(\t\x12\x0e\n\x06offset\x18\x05 \x01(\x05\x12\r\n\x05limit\x18\x06 \x01(\x05\x12\x14\n\x0crequireTotal\x18\x07 \x01(\x08\x12\x13\n\x0bsortColumns\x18\x08 \x01(\t\x12\x11\n\tsortTypes\x18\t \x01(\t\x1a\x82\x01\n\x0fRequestWarrants\x12\x12\n\nsearchText\x18\x01 \x01(\t\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05limit\x18\x03 \x01(\x05\x12\x14\n\x0crequireTotal\x18\x04 \x01(\x08\x12\x13\n\x0bsortColumns\x18\x05 \x01(\t\x12\x11\n\tsortTypes\x18\x06 \x01(\t\"\xb0\x01\n\nFavourites\x12 \n\x06values\x18\x01 \x03(\x0b\x32\x10.Favourites.List\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1aI\n\x04List\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x12\n\nis_default\x18\x03 \x01(\x08\x12\x13\n\x0bproduct_ids\x18\x04 \x03(\x05\"T\n\x0cProductsInfo\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\x1a\x1b\n\x07Request\x12\x10\n\x08products\x18\x01 \x03(\x05\"8\n\rCompanyRatios\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\"9\n\x0e\x43ompanyProfile\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\">\n\x13\x46inancialStatements\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\"\x90\x01\n\nLatestNews\x12&\n\x05items\x18\x01 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05total\x18\x03 \x01(\x05\x1a;\n\x07Request\x12\x0e\n\x06offset\x18\x01 \x01(\x05\x12\x11\n\tlanguages\x18\x02 \x01(\t\x12\r\n\x05limit\x18\x03 \x01(\x05\"W\n\x0eTopNewsPreview\x12&\n\x05items\x18\x01 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05total\x18\x03 \x01(\x05\"\xa1\x01\n\rNewsByCompany\x12&\n\x05items\x18\x01 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05total\x18\x03 \x01(\x05\x1aI\n\x07Request\x12\x0c\n\x04isin\x18\x01 \x01(\t\x12\r\n\x05limit\x18\x02 \x01(\x05\x12\x0e\n\x06offset\x18\x03 \x01(\x05\x12\x11\n\tlanguages\x18\x04 \x01(\tb\x06proto3'
+  serialized_pb=b'\n\x18trading/pb/trading.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\x8b\x01\n\x0b\x43redentials\x12\x13\n\x0bint_account\x18\x01 \x01(\x05\x12\x10\n\x08username\x18\x02 \x01(\t\x12\x10\n\x08password\x18\x03 \x01(\t\x12\x19\n\x0ftotp_secret_key\x18\x04 \x01(\tH\x00\x12\x1b\n\x11one_time_password\x18\x05 \x01(\x05H\x00\x42\x0b\n\toneof_2fa\"\xa0\t\n\x05Order\x12\x1d\n\x06\x61\x63tion\x18\x01 \x01(\x0e\x32\r.Order.Action\x12\n\n\x02id\x18\x02 \x01(\t\x12$\n\norder_type\x18\x03 \x01(\x0e\x32\x10.Order.OrderType\x12\x0f\n\x05price\x18\x04 \x01(\x01H\x00\x12\x14\n\nstop_price\x18\x05 \x01(\x01H\x00\x12\x12\n\nproduct_id\x18\x06 \x01(\x05\x12\x0c\n\x04size\x18\x07 \x01(\x01\x12\"\n\ttime_type\x18\x08 \x01(\x0e\x32\x0f.Order.TimeType\x12\x15\n\rcontract_size\x18\t \x01(\x01\x12\x15\n\rcontract_type\x18\n \x01(\x05\x12\x10\n\x08\x63urrency\x18\x0b \x01(\t\x12\x0c\n\x04hour\x18\x0c \x01(\t\x12\x14\n\x0cis_deletable\x18\r \x01(\x08\x12\x15\n\ris_modifiable\x18\x0e \x01(\x08\x12\x0f\n\x07product\x18\x0f \x01(\t\x12\x10\n\x08quantity\x18\x10 \x01(\x01\x12\x19\n\x11total_order_value\x18\x11 \x01(\x01\x12\x16\n\x0eretained_order\x18\x12 \x01(\x08\x12\x18\n\x10sent_to_exchange\x18\x13 \x01(\x08\x1a\xc9\x03\n\x10\x43heckingResponse\x12\x17\n\x0f\x63onfirmation_id\x18\x01 \x01(\t\x12\x16\n\x0e\x66ree_space_new\x18\x02 \x01(\x01\x12\x35\n\x11response_datetime\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x31\n\x10transaction_fees\x18\x04 \x03(\x0b\x32\x17.google.protobuf.Struct\x12:\n\x19transaction_opposite_fees\x18\x05 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x32\n\x11transaction_taxes\x18\x06 \x03(\x0b\x32\x17.google.protobuf.Struct\x12?\n\x1etransaction_auto_fx_surcharges\x18\x07 \x03(\x0b\x32\x17.google.protobuf.Struct\x12H\n\'transaction_auto_fx_opposite_surcharges\x18\x08 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x1f\n\x17\x61uto_fx_conversion_rate\x18\t \x01(\x01\x1a^\n\x14\x43onfirmationResponse\x12\x0f\n\x07orderId\x18\x01 \x01(\t\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"\x1b\n\x06\x41\x63tion\x12\x07\n\x03\x42UY\x10\x00\x12\x08\n\x04SELL\x10\x01\"A\n\tOrderType\x12\t\n\x05LIMIT\x10\x00\x12\x0e\n\nSTOP_LIMIT\x10\x01\x12\n\n\x06MARKET\x10\x02\x12\r\n\tSTOP_LOSS\x10\x03\"S\n\x08TimeType\x12\r\n\tUNKNOWN_0\x10\x00\x12\x11\n\rGOOD_TILL_DAY\x10\x01\x12\r\n\tUNKNOWN_2\x10\x02\x12\x16\n\x12GOOD_TILL_CANCELED\x10\x03\x42\r\n\x0boneof_price\"\xc6\x08\n\x06Update\x12\x35\n\x11response_datetime\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x1e\n\x06\x61lerts\x18\x02 \x01(\x0b\x32\x0e.Update.Alerts\x12%\n\ncash_funds\x18\x03 \x01(\x0b\x32\x11.Update.CashFunds\x12\x33\n\x11historical_orders\x18\x04 \x01(\x0b\x32\x18.Update.HistoricalOrders\x12\x1e\n\x06orders\x18\x05 \x01(\x0b\x32\x0e.Update.Orders\x12$\n\tportfolio\x18\x06 \x01(\x0b\x32\x11.Update.Portfolio\x12/\n\x0ftotal_portfolio\x18\x07 \x01(\x0b\x32\x16.Update.TotalPortfolio\x12*\n\x0ctransactions\x18\x08 \x01(\x0b\x32\x14.Update.Transactions\x1a?\n\x07Request\x12\x1e\n\x06option\x18\x01 \x01(\x0e\x32\x0e.Update.Option\x12\x14\n\x0clast_updated\x18\x02 \x01(\x05\x1a.\n\x0bRequestList\x12\x1f\n\x06values\x18\x01 \x03(\x0b\x32\x0f.Update.Request\x1aG\n\x06\x41lerts\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1aJ\n\tCashFunds\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1a@\n\x10HistoricalOrders\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\x16\n\x06values\x18\x02 \x03(\x0b\x32\x06.Order\x1a\x36\n\x06Orders\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\x16\n\x06values\x18\x02 \x03(\x0b\x32\x06.Order\x1aJ\n\tPortfolio\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x03(\x0b\x32\x17.google.protobuf.Struct\x1aO\n\x0eTotalPortfolio\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1aM\n\x0cTransactions\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x03(\x0b\x32\x17.google.protobuf.Struct\"z\n\x06Option\x12\n\n\x06\x41LERTS\x10\x00\x12\r\n\tCASHFUNDS\x10\x01\x12\x14\n\x10HISTORICALORDERS\x10\x02\x12\n\n\x06ORDERS\x10\x03\x12\r\n\tPORTFOLIO\x10\x04\x12\x12\n\x0eTOTALPORTFOLIO\x10\x05\x12\x10\n\x0cTRANSACTIONS\x10\x06\"\x8b\x02\n\rOrdersHistory\x12\'\n\x06values\x18\x01 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\x99\x01\n\x07Request\x12.\n\tfrom_date\x18\x01 \x01(\x0b\x32\x1b.OrdersHistory.Request.Date\x12,\n\x07to_date\x18\x02 \x01(\x0b\x32\x1b.OrdersHistory.Request.Date\x1a\x30\n\x04\x44\x61te\x12\x0c\n\x04year\x18\x01 \x01(\x05\x12\r\n\x05month\x18\x02 \x01(\x05\x12\x0b\n\x03\x64\x61y\x18\x03 \x01(\x05\"\xc2\x02\n\x13TransactionsHistory\x12\'\n\x06values\x18\x01 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\xca\x01\n\x07Request\x12\x34\n\tfrom_date\x18\x01 \x01(\x0b\x32!.TransactionsHistory.Request.Date\x12\x32\n\x07to_date\x18\x02 \x01(\x0b\x32!.TransactionsHistory.Request.Date\x12#\n\x1bgroup_transactions_by_order\x18\x03 \x01(\x08\x1a\x30\n\x04\x44\x61te\x12\x0c\n\x04year\x18\x01 \x01(\x05\x12\r\n\x05month\x18\x02 \x01(\x05\x12\x0b\n\x03\x64\x61y\x18\x03 \x01(\x05\"\x91\x02\n\x0f\x41\x63\x63ountOverview\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\x9d\x01\n\x07Request\x12\x30\n\tfrom_date\x18\x01 \x01(\x0b\x32\x1d.AccountOverview.Request.Date\x12.\n\x07to_date\x18\x02 \x01(\x0b\x32\x1d.AccountOverview.Request.Date\x1a\x30\n\x04\x44\x61te\x12\x0c\n\x04year\x18\x01 \x01(\x05\x12\r\n\x05month\x18\x02 \x01(\x05\x12\x0b\n\x03\x64\x61y\x18\x03 \x01(\x05\"\xb0\x0e\n\rProductSearch\x12\x0e\n\x06offset\x18\x01 \x01(\x05\x12)\n\x08products\x18\x02 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x35\n\x11response_datetime\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\r\n\x05total\x18\x04 \x01(\x05\x1a\x31\n\x06\x43onfig\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\x1a\xba\x01\n\x0cRequestBonds\x12\x1b\n\x13\x62ond_issuer_type_id\x18\x01 \x01(\x05\x12\x18\n\x10\x62ond_exchange_id\x18\x02 \x01(\x05\x12\x13\n\x0bsearch_text\x18\x03 \x01(\t\x12\x0e\n\x06offset\x18\x04 \x01(\x05\x12\r\n\x05limit\x18\x05 \x01(\x05\x12\x15\n\rrequire_total\x18\x06 \x01(\x08\x12\x14\n\x0csort_columns\x18\x07 \x01(\t\x12\x12\n\nsort_types\x18\x08 \x01(\t\x1a\xd7\x01\n\x0bRequestETFs\x12\x14\n\x0cpopular_only\x18\x01 \x01(\x08\x12\x1d\n\x15input_aggregate_types\x18\x02 \x01(\t\x12\x1e\n\x16input_aggregate_values\x18\x03 \x01(\t\x12\x13\n\x0bsearch_text\x18\x04 \x01(\t\x12\x0e\n\x06offset\x18\x05 \x01(\x05\x12\r\n\x05limit\x18\x06 \x01(\x05\x12\x15\n\rrequire_total\x18\x07 \x01(\x08\x12\x14\n\x0csort_columns\x18\x08 \x01(\t\x12\x12\n\nsort_types\x18\t \x01(\t\x1a\x83\x01\n\x0cRequestFunds\x12\x13\n\x0bsearch_text\x18\x01 \x01(\t\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05limit\x18\x03 \x01(\x05\x12\x15\n\rrequire_total\x18\x04 \x01(\x08\x12\x14\n\x0csort_columns\x18\x05 \x01(\t\x12\x12\n\nsort_types\x18\x06 \x01(\t\x1a\xba\x01\n\x0eRequestFutures\x12\x1a\n\x12\x66uture_exchange_id\x18\x01 \x01(\x05\x12\x17\n\x0funderlying_isin\x18\x02 \x01(\t\x12\x13\n\x0bsearch_text\x18\x03 \x01(\t\x12\x0e\n\x06offset\x18\x04 \x01(\x05\x12\r\n\x05limit\x18\x05 \x01(\x05\x12\x15\n\rrequire_total\x18\x06 \x01(\x08\x12\x14\n\x0csort_columns\x18\x07 \x01(\t\x12\x12\n\nsort_types\x18\x08 \x01(\t\x1a\xdd\x01\n\x11RequestLeverageds\x12\x14\n\x0cpopular_only\x18\x01 \x01(\x08\x12\x1d\n\x15input_aggregate_types\x18\x02 \x01(\t\x12\x1e\n\x16input_aggregate_values\x18\x03 \x01(\t\x12\x13\n\x0bsearch_text\x18\x04 \x01(\t\x12\x0e\n\x06offset\x18\x05 \x01(\x05\x12\r\n\x05limit\x18\x06 \x01(\x05\x12\x15\n\rrequire_total\x18\x07 \x01(\x08\x12\x14\n\x0csort_columns\x18\x08 \x01(\t\x12\x12\n\nsort_types\x18\t \x01(\t\x1a\\\n\rRequestLookup\x12\x13\n\x0bsearch_text\x18\x01 \x01(\t\x12\r\n\x05limit\x18\x02 \x01(\x05\x12\x0e\n\x06offset\x18\x03 \x01(\x05\x12\x17\n\x0fproduct_type_id\x18\x04 \x01(\x05\x1a\xf9\x01\n\x0eRequestOptions\x12\x1d\n\x15input_aggregate_types\x18\x01 \x01(\t\x12\x1e\n\x16input_aggregate_values\x18\x02 \x01(\t\x12\x1a\n\x12option_exchange_id\x18\x03 \x01(\x05\x12\x17\n\x0funderlying_isin\x18\x04 \x01(\t\x12\x13\n\x0bsearch_text\x18\x05 \x01(\t\x12\x0e\n\x06offset\x18\x06 \x01(\x05\x12\r\n\x05limit\x18\x07 \x01(\x05\x12\x15\n\rrequire_total\x18\x08 \x01(\x08\x12\x14\n\x0csort_columns\x18\t \x01(\t\x12\x12\n\nsort_types\x18\n \x01(\t\x1a\xcd\x01\n\rRequestStocks\x12\x1b\n\x13is_in_us_green_list\x18\x01 \x01(\x08\x12\x10\n\x08index_id\x18\x02 \x01(\x05\x12\x18\n\x10stock_country_id\x18\x03 \x01(\x05\x12\x13\n\x0bsearch_text\x18\x04 \x01(\t\x12\x0e\n\x06offset\x18\x05 \x01(\x05\x12\r\n\x05limit\x18\x06 \x01(\x05\x12\x15\n\rrequire_total\x18\x07 \x01(\x08\x12\x14\n\x0csort_columns\x18\x08 \x01(\t\x12\x12\n\nsort_types\x18\t \x01(\t\x1a\x86\x01\n\x0fRequestWarrants\x12\x13\n\x0bsearch_text\x18\x01 \x01(\t\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05limit\x18\x03 \x01(\x05\x12\x15\n\rrequire_total\x18\x04 \x01(\x08\x12\x14\n\x0csort_columns\x18\x05 \x01(\t\x12\x12\n\nsort_types\x18\x06 \x01(\t\"\xb0\x01\n\nFavourites\x12 \n\x06values\x18\x01 \x03(\x0b\x32\x10.Favourites.List\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1aI\n\x04List\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x12\n\nis_default\x18\x03 \x01(\x08\x12\x13\n\x0bproduct_ids\x18\x04 \x03(\x05\"T\n\x0cProductsInfo\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\x1a\x1b\n\x07Request\x12\x10\n\x08products\x18\x01 \x03(\x05\"8\n\rCompanyRatios\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\"9\n\x0e\x43ompanyProfile\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\">\n\x13\x46inancialStatements\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\"\x90\x01\n\nLatestNews\x12&\n\x05items\x18\x01 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05total\x18\x03 \x01(\x05\x1a;\n\x07Request\x12\x0e\n\x06offset\x18\x01 \x01(\x05\x12\x11\n\tlanguages\x18\x02 \x01(\t\x12\r\n\x05limit\x18\x03 \x01(\x05\"W\n\x0eTopNewsPreview\x12&\n\x05items\x18\x01 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05total\x18\x03 \x01(\x05\"\xa1\x01\n\rNewsByCompany\x12&\n\x05items\x18\x01 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05total\x18\x03 \x01(\x05\x1aI\n\x07Request\x12\x0c\n\x04isin\x18\x01 \x01(\t\x12\r\n\x05limit\x18\x02 \x01(\x05\x12\x0e\n\x06offset\x18\x03 \x01(\x05\x12\x11\n\tlanguages\x18\x04 \x01(\tb\x06proto3'
   ,
   dependencies=[google_dot_protobuf_dot_struct__pb2.DESCRIPTOR,google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,])
 
@@ -47,8 +47,8 @@ _ORDER_ACTION = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1221,
-  serialized_end=1248,
+  serialized_start=1224,
+  serialized_end=1251,
 )
 _sym_db.RegisterEnumDescriptor(_ORDER_ACTION)
 
@@ -82,8 +82,8 @@ _ORDER_ORDERTYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1250,
-  serialized_end=1315,
+  serialized_start=1253,
+  serialized_end=1318,
 )
 _sym_db.RegisterEnumDescriptor(_ORDER_ORDERTYPE)
 
@@ -117,8 +117,8 @@ _ORDER_TIMETYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1317,
-  serialized_end=1400,
+  serialized_start=1320,
+  serialized_end=1403,
 )
 _sym_db.RegisterEnumDescriptor(_ORDER_TIMETYPE)
 
@@ -167,8 +167,8 @@ _UPDATE_OPTION = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=2390,
-  serialized_end=2512,
+  serialized_start=2393,
+  serialized_end=2515,
 )
 _sym_db.RegisterEnumDescriptor(_UPDATE_OPTION)
 
@@ -303,7 +303,7 @@ _ORDER_CHECKINGRESPONSE = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='autoFxConversionRate', full_name='Order.CheckingResponse.autoFxConversionRate', index=8,
+      name='auto_fx_conversion_rate', full_name='Order.CheckingResponse.auto_fx_conversion_rate', index=8,
       number=9, type=1, cpp_type=5, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
@@ -322,7 +322,7 @@ _ORDER_CHECKINGRESPONSE = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=669,
-  serialized_end=1123,
+  serialized_end=1126,
 )
 
 _ORDER_CONFIRMATIONRESPONSE = _descriptor.Descriptor(
@@ -359,8 +359,8 @@ _ORDER_CONFIRMATIONRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1125,
-  serialized_end=1219,
+  serialized_start=1128,
+  serialized_end=1222,
 )
 
 _ORDER = _descriptor.Descriptor(
@@ -525,7 +525,7 @@ _ORDER = _descriptor.Descriptor(
     fields=[]),
   ],
   serialized_start=234,
-  serialized_end=1415,
+  serialized_end=1418,
 )
 
 
@@ -563,8 +563,8 @@ _UPDATE_REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1770,
-  serialized_end=1833,
+  serialized_start=1773,
+  serialized_end=1836,
 )
 
 _UPDATE_REQUESTLIST = _descriptor.Descriptor(
@@ -594,8 +594,8 @@ _UPDATE_REQUESTLIST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1835,
-  serialized_end=1881,
+  serialized_start=1838,
+  serialized_end=1884,
 )
 
 _UPDATE_ALERTS = _descriptor.Descriptor(
@@ -632,8 +632,8 @@ _UPDATE_ALERTS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1883,
-  serialized_end=1954,
+  serialized_start=1886,
+  serialized_end=1957,
 )
 
 _UPDATE_CASHFUNDS = _descriptor.Descriptor(
@@ -670,8 +670,8 @@ _UPDATE_CASHFUNDS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1956,
-  serialized_end=2030,
+  serialized_start=1959,
+  serialized_end=2033,
 )
 
 _UPDATE_HISTORICALORDERS = _descriptor.Descriptor(
@@ -708,8 +708,8 @@ _UPDATE_HISTORICALORDERS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2032,
-  serialized_end=2096,
+  serialized_start=2035,
+  serialized_end=2099,
 )
 
 _UPDATE_ORDERS = _descriptor.Descriptor(
@@ -746,8 +746,8 @@ _UPDATE_ORDERS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2098,
-  serialized_end=2152,
+  serialized_start=2101,
+  serialized_end=2155,
 )
 
 _UPDATE_PORTFOLIO = _descriptor.Descriptor(
@@ -784,8 +784,8 @@ _UPDATE_PORTFOLIO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2154,
-  serialized_end=2228,
+  serialized_start=2157,
+  serialized_end=2231,
 )
 
 _UPDATE_TOTALPORTFOLIO = _descriptor.Descriptor(
@@ -822,8 +822,8 @@ _UPDATE_TOTALPORTFOLIO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2230,
-  serialized_end=2309,
+  serialized_start=2233,
+  serialized_end=2312,
 )
 
 _UPDATE_TRANSACTIONS = _descriptor.Descriptor(
@@ -860,8 +860,8 @@ _UPDATE_TRANSACTIONS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2311,
-  serialized_end=2388,
+  serialized_start=2314,
+  serialized_end=2391,
 )
 
 _UPDATE = _descriptor.Descriptor(
@@ -941,8 +941,8 @@ _UPDATE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1418,
-  serialized_end=2512,
+  serialized_start=1421,
+  serialized_end=2515,
 )
 
 
@@ -987,8 +987,8 @@ _ORDERSHISTORY_REQUEST_DATE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2734,
-  serialized_end=2782,
+  serialized_start=2737,
+  serialized_end=2785,
 )
 
 _ORDERSHISTORY_REQUEST = _descriptor.Descriptor(
@@ -1025,8 +1025,8 @@ _ORDERSHISTORY_REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2629,
-  serialized_end=2782,
+  serialized_start=2632,
+  serialized_end=2785,
 )
 
 _ORDERSHISTORY = _descriptor.Descriptor(
@@ -1063,8 +1063,8 @@ _ORDERSHISTORY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2515,
-  serialized_end=2782,
+  serialized_start=2518,
+  serialized_end=2785,
 )
 
 
@@ -1109,8 +1109,8 @@ _TRANSACTIONSHISTORY_REQUEST_DATE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2734,
-  serialized_end=2782,
+  serialized_start=2737,
+  serialized_end=2785,
 )
 
 _TRANSACTIONSHISTORY_REQUEST = _descriptor.Descriptor(
@@ -1136,7 +1136,7 @@ _TRANSACTIONSHISTORY_REQUEST = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='groupTransactionsByOrder', full_name='TransactionsHistory.Request.groupTransactionsByOrder', index=2,
+      name='group_transactions_by_order', full_name='TransactionsHistory.Request.group_transactions_by_order', index=2,
       number=3, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
@@ -1154,8 +1154,8 @@ _TRANSACTIONSHISTORY_REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2905,
-  serialized_end=3104,
+  serialized_start=2908,
+  serialized_end=3110,
 )
 
 _TRANSACTIONSHISTORY = _descriptor.Descriptor(
@@ -1192,8 +1192,8 @@ _TRANSACTIONSHISTORY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2785,
-  serialized_end=3104,
+  serialized_start=2788,
+  serialized_end=3110,
 )
 
 
@@ -1238,8 +1238,8 @@ _ACCOUNTOVERVIEW_REQUEST_DATE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2734,
-  serialized_end=2782,
+  serialized_start=2737,
+  serialized_end=2785,
 )
 
 _ACCOUNTOVERVIEW_REQUEST = _descriptor.Descriptor(
@@ -1276,8 +1276,8 @@ _ACCOUNTOVERVIEW_REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3223,
-  serialized_end=3380,
+  serialized_start=3229,
+  serialized_end=3386,
 )
 
 _ACCOUNTOVERVIEW = _descriptor.Descriptor(
@@ -1314,8 +1314,8 @@ _ACCOUNTOVERVIEW = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3107,
-  serialized_end=3380,
+  serialized_start=3113,
+  serialized_end=3386,
 )
 
 
@@ -1346,8 +1346,8 @@ _PRODUCTSEARCH_CONFIG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3529,
-  serialized_end=3578,
+  serialized_start=3535,
+  serialized_end=3584,
 )
 
 _PRODUCTSEARCH_REQUESTBONDS = _descriptor.Descriptor(
@@ -1359,21 +1359,21 @@ _PRODUCTSEARCH_REQUESTBONDS = _descriptor.Descriptor(
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='bondIssuerTypeId', full_name='ProductSearch.RequestBonds.bondIssuerTypeId', index=0,
+      name='bond_issuer_type_id', full_name='ProductSearch.RequestBonds.bond_issuer_type_id', index=0,
       number=1, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='bondExchangeId', full_name='ProductSearch.RequestBonds.bondExchangeId', index=1,
+      name='bond_exchange_id', full_name='ProductSearch.RequestBonds.bond_exchange_id', index=1,
       number=2, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='searchText', full_name='ProductSearch.RequestBonds.searchText', index=2,
+      name='search_text', full_name='ProductSearch.RequestBonds.search_text', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -1394,21 +1394,21 @@ _PRODUCTSEARCH_REQUESTBONDS = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='requireTotal', full_name='ProductSearch.RequestBonds.requireTotal', index=5,
+      name='require_total', full_name='ProductSearch.RequestBonds.require_total', index=5,
       number=6, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='sortColumns', full_name='ProductSearch.RequestBonds.sortColumns', index=6,
+      name='sort_columns', full_name='ProductSearch.RequestBonds.sort_columns', index=6,
       number=7, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='sortTypes', full_name='ProductSearch.RequestBonds.sortTypes', index=7,
+      name='sort_types', full_name='ProductSearch.RequestBonds.sort_types', index=7,
       number=8, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -1426,8 +1426,8 @@ _PRODUCTSEARCH_REQUESTBONDS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3581,
-  serialized_end=3758,
+  serialized_start=3587,
+  serialized_end=3773,
 )
 
 _PRODUCTSEARCH_REQUESTETFS = _descriptor.Descriptor(
@@ -1439,28 +1439,28 @@ _PRODUCTSEARCH_REQUESTETFS = _descriptor.Descriptor(
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='popularOnly', full_name='ProductSearch.RequestETFs.popularOnly', index=0,
+      name='popular_only', full_name='ProductSearch.RequestETFs.popular_only', index=0,
       number=1, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='inputAggregateTypes', full_name='ProductSearch.RequestETFs.inputAggregateTypes', index=1,
+      name='input_aggregate_types', full_name='ProductSearch.RequestETFs.input_aggregate_types', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='inputAggregateValues', full_name='ProductSearch.RequestETFs.inputAggregateValues', index=2,
+      name='input_aggregate_values', full_name='ProductSearch.RequestETFs.input_aggregate_values', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='searchText', full_name='ProductSearch.RequestETFs.searchText', index=3,
+      name='search_text', full_name='ProductSearch.RequestETFs.search_text', index=3,
       number=4, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -1481,21 +1481,21 @@ _PRODUCTSEARCH_REQUESTETFS = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='requireTotal', full_name='ProductSearch.RequestETFs.requireTotal', index=6,
+      name='require_total', full_name='ProductSearch.RequestETFs.require_total', index=6,
       number=7, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='sortColumns', full_name='ProductSearch.RequestETFs.sortColumns', index=7,
+      name='sort_columns', full_name='ProductSearch.RequestETFs.sort_columns', index=7,
       number=8, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='sortTypes', full_name='ProductSearch.RequestETFs.sortTypes', index=8,
+      name='sort_types', full_name='ProductSearch.RequestETFs.sort_types', index=8,
       number=9, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -1513,8 +1513,8 @@ _PRODUCTSEARCH_REQUESTETFS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3761,
-  serialized_end=3967,
+  serialized_start=3776,
+  serialized_end=3991,
 )
 
 _PRODUCTSEARCH_REQUESTFUNDS = _descriptor.Descriptor(
@@ -1526,7 +1526,7 @@ _PRODUCTSEARCH_REQUESTFUNDS = _descriptor.Descriptor(
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='searchText', full_name='ProductSearch.RequestFunds.searchText', index=0,
+      name='search_text', full_name='ProductSearch.RequestFunds.search_text', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -1547,21 +1547,21 @@ _PRODUCTSEARCH_REQUESTFUNDS = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='requireTotal', full_name='ProductSearch.RequestFunds.requireTotal', index=3,
+      name='require_total', full_name='ProductSearch.RequestFunds.require_total', index=3,
       number=4, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='sortColumns', full_name='ProductSearch.RequestFunds.sortColumns', index=4,
+      name='sort_columns', full_name='ProductSearch.RequestFunds.sort_columns', index=4,
       number=5, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='sortTypes', full_name='ProductSearch.RequestFunds.sortTypes', index=5,
+      name='sort_types', full_name='ProductSearch.RequestFunds.sort_types', index=5,
       number=6, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -1579,8 +1579,8 @@ _PRODUCTSEARCH_REQUESTFUNDS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3969,
-  serialized_end=4096,
+  serialized_start=3994,
+  serialized_end=4125,
 )
 
 _PRODUCTSEARCH_REQUESTFUTURES = _descriptor.Descriptor(
@@ -1592,21 +1592,21 @@ _PRODUCTSEARCH_REQUESTFUTURES = _descriptor.Descriptor(
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='futureExchangeId', full_name='ProductSearch.RequestFutures.futureExchangeId', index=0,
+      name='future_exchange_id', full_name='ProductSearch.RequestFutures.future_exchange_id', index=0,
       number=1, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='underlyingIsin', full_name='ProductSearch.RequestFutures.underlyingIsin', index=1,
+      name='underlying_isin', full_name='ProductSearch.RequestFutures.underlying_isin', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='searchText', full_name='ProductSearch.RequestFutures.searchText', index=2,
+      name='search_text', full_name='ProductSearch.RequestFutures.search_text', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -1627,21 +1627,21 @@ _PRODUCTSEARCH_REQUESTFUTURES = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='requireTotal', full_name='ProductSearch.RequestFutures.requireTotal', index=5,
+      name='require_total', full_name='ProductSearch.RequestFutures.require_total', index=5,
       number=6, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='sortColumns', full_name='ProductSearch.RequestFutures.sortColumns', index=6,
+      name='sort_columns', full_name='ProductSearch.RequestFutures.sort_columns', index=6,
       number=7, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='sortTypes', full_name='ProductSearch.RequestFutures.sortTypes', index=7,
+      name='sort_types', full_name='ProductSearch.RequestFutures.sort_types', index=7,
       number=8, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -1659,8 +1659,8 @@ _PRODUCTSEARCH_REQUESTFUTURES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4099,
-  serialized_end=4278,
+  serialized_start=4128,
+  serialized_end=4314,
 )
 
 _PRODUCTSEARCH_REQUESTLEVERAGEDS = _descriptor.Descriptor(
@@ -1672,28 +1672,28 @@ _PRODUCTSEARCH_REQUESTLEVERAGEDS = _descriptor.Descriptor(
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='popularOnly', full_name='ProductSearch.RequestLeverageds.popularOnly', index=0,
+      name='popular_only', full_name='ProductSearch.RequestLeverageds.popular_only', index=0,
       number=1, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='inputAggregateTypes', full_name='ProductSearch.RequestLeverageds.inputAggregateTypes', index=1,
+      name='input_aggregate_types', full_name='ProductSearch.RequestLeverageds.input_aggregate_types', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='inputAggregateValues', full_name='ProductSearch.RequestLeverageds.inputAggregateValues', index=2,
+      name='input_aggregate_values', full_name='ProductSearch.RequestLeverageds.input_aggregate_values', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='searchText', full_name='ProductSearch.RequestLeverageds.searchText', index=3,
+      name='search_text', full_name='ProductSearch.RequestLeverageds.search_text', index=3,
       number=4, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -1714,21 +1714,21 @@ _PRODUCTSEARCH_REQUESTLEVERAGEDS = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='requireTotal', full_name='ProductSearch.RequestLeverageds.requireTotal', index=6,
+      name='require_total', full_name='ProductSearch.RequestLeverageds.require_total', index=6,
       number=7, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='sortColumns', full_name='ProductSearch.RequestLeverageds.sortColumns', index=7,
+      name='sort_columns', full_name='ProductSearch.RequestLeverageds.sort_columns', index=7,
       number=8, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='sortTypes', full_name='ProductSearch.RequestLeverageds.sortTypes', index=8,
+      name='sort_types', full_name='ProductSearch.RequestLeverageds.sort_types', index=8,
       number=9, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -1746,8 +1746,8 @@ _PRODUCTSEARCH_REQUESTLEVERAGEDS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4281,
-  serialized_end=4493,
+  serialized_start=4317,
+  serialized_end=4538,
 )
 
 _PRODUCTSEARCH_REQUESTLOOKUP = _descriptor.Descriptor(
@@ -1779,6 +1779,13 @@ _PRODUCTSEARCH_REQUESTLOOKUP = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='product_type_id', full_name='ProductSearch.RequestLookup.product_type_id', index=3,
+      number=4, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -1791,8 +1798,8 @@ _PRODUCTSEARCH_REQUESTLOOKUP = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4495,
-  serialized_end=4562,
+  serialized_start=4540,
+  serialized_end=4632,
 )
 
 _PRODUCTSEARCH_REQUESTOPTIONS = _descriptor.Descriptor(
@@ -1804,35 +1811,35 @@ _PRODUCTSEARCH_REQUESTOPTIONS = _descriptor.Descriptor(
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='inputAggregateTypes', full_name='ProductSearch.RequestOptions.inputAggregateTypes', index=0,
+      name='input_aggregate_types', full_name='ProductSearch.RequestOptions.input_aggregate_types', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='inputAggregateValues', full_name='ProductSearch.RequestOptions.inputAggregateValues', index=1,
+      name='input_aggregate_values', full_name='ProductSearch.RequestOptions.input_aggregate_values', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='optionExchangeId', full_name='ProductSearch.RequestOptions.optionExchangeId', index=2,
+      name='option_exchange_id', full_name='ProductSearch.RequestOptions.option_exchange_id', index=2,
       number=3, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='underlyingIsin', full_name='ProductSearch.RequestOptions.underlyingIsin', index=3,
+      name='underlying_isin', full_name='ProductSearch.RequestOptions.underlying_isin', index=3,
       number=4, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='searchText', full_name='ProductSearch.RequestOptions.searchText', index=4,
+      name='search_text', full_name='ProductSearch.RequestOptions.search_text', index=4,
       number=5, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -1853,21 +1860,21 @@ _PRODUCTSEARCH_REQUESTOPTIONS = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='requireTotal', full_name='ProductSearch.RequestOptions.requireTotal', index=7,
+      name='require_total', full_name='ProductSearch.RequestOptions.require_total', index=7,
       number=8, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='sortColumns', full_name='ProductSearch.RequestOptions.sortColumns', index=8,
+      name='sort_columns', full_name='ProductSearch.RequestOptions.sort_columns', index=8,
       number=9, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='sortTypes', full_name='ProductSearch.RequestOptions.sortTypes', index=9,
+      name='sort_types', full_name='ProductSearch.RequestOptions.sort_types', index=9,
       number=10, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -1885,8 +1892,8 @@ _PRODUCTSEARCH_REQUESTOPTIONS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4565,
-  serialized_end=4803,
+  serialized_start=4635,
+  serialized_end=4884,
 )
 
 _PRODUCTSEARCH_REQUESTSTOCKS = _descriptor.Descriptor(
@@ -1898,28 +1905,28 @@ _PRODUCTSEARCH_REQUESTSTOCKS = _descriptor.Descriptor(
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='isInUSGreenList', full_name='ProductSearch.RequestStocks.isInUSGreenList', index=0,
+      name='is_in_us_green_list', full_name='ProductSearch.RequestStocks.is_in_us_green_list', index=0,
       number=1, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='indexId', full_name='ProductSearch.RequestStocks.indexId', index=1,
+      name='index_id', full_name='ProductSearch.RequestStocks.index_id', index=1,
       number=2, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='stockCountryId', full_name='ProductSearch.RequestStocks.stockCountryId', index=2,
+      name='stock_country_id', full_name='ProductSearch.RequestStocks.stock_country_id', index=2,
       number=3, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='searchText', full_name='ProductSearch.RequestStocks.searchText', index=3,
+      name='search_text', full_name='ProductSearch.RequestStocks.search_text', index=3,
       number=4, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -1940,21 +1947,21 @@ _PRODUCTSEARCH_REQUESTSTOCKS = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='requireTotal', full_name='ProductSearch.RequestStocks.requireTotal', index=6,
+      name='require_total', full_name='ProductSearch.RequestStocks.require_total', index=6,
       number=7, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='sortColumns', full_name='ProductSearch.RequestStocks.sortColumns', index=7,
+      name='sort_columns', full_name='ProductSearch.RequestStocks.sort_columns', index=7,
       number=8, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='sortTypes', full_name='ProductSearch.RequestStocks.sortTypes', index=8,
+      name='sort_types', full_name='ProductSearch.RequestStocks.sort_types', index=8,
       number=9, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -1972,8 +1979,8 @@ _PRODUCTSEARCH_REQUESTSTOCKS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4806,
-  serialized_end=5000,
+  serialized_start=4887,
+  serialized_end=5092,
 )
 
 _PRODUCTSEARCH_REQUESTWARRANTS = _descriptor.Descriptor(
@@ -1985,7 +1992,7 @@ _PRODUCTSEARCH_REQUESTWARRANTS = _descriptor.Descriptor(
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='searchText', full_name='ProductSearch.RequestWarrants.searchText', index=0,
+      name='search_text', full_name='ProductSearch.RequestWarrants.search_text', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -2006,21 +2013,21 @@ _PRODUCTSEARCH_REQUESTWARRANTS = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='requireTotal', full_name='ProductSearch.RequestWarrants.requireTotal', index=3,
+      name='require_total', full_name='ProductSearch.RequestWarrants.require_total', index=3,
       number=4, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='sortColumns', full_name='ProductSearch.RequestWarrants.sortColumns', index=4,
+      name='sort_columns', full_name='ProductSearch.RequestWarrants.sort_columns', index=4,
       number=5, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='sortTypes', full_name='ProductSearch.RequestWarrants.sortTypes', index=5,
+      name='sort_types', full_name='ProductSearch.RequestWarrants.sort_types', index=5,
       number=6, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -2038,8 +2045,8 @@ _PRODUCTSEARCH_REQUESTWARRANTS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5003,
-  serialized_end=5133,
+  serialized_start=5095,
+  serialized_end=5229,
 )
 
 _PRODUCTSEARCH = _descriptor.Descriptor(
@@ -2090,8 +2097,8 @@ _PRODUCTSEARCH = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3383,
-  serialized_end=5133,
+  serialized_start=3389,
+  serialized_end=5229,
 )
 
 
@@ -2143,8 +2150,8 @@ _FAVOURITES_LIST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5239,
-  serialized_end=5312,
+  serialized_start=5335,
+  serialized_end=5408,
 )
 
 _FAVOURITES = _descriptor.Descriptor(
@@ -2181,8 +2188,8 @@ _FAVOURITES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5136,
-  serialized_end=5312,
+  serialized_start=5232,
+  serialized_end=5408,
 )
 
 
@@ -2213,8 +2220,8 @@ _PRODUCTSINFO_REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5371,
-  serialized_end=5398,
+  serialized_start=5467,
+  serialized_end=5494,
 )
 
 _PRODUCTSINFO = _descriptor.Descriptor(
@@ -2244,8 +2251,8 @@ _PRODUCTSINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5314,
-  serialized_end=5398,
+  serialized_start=5410,
+  serialized_end=5494,
 )
 
 
@@ -2276,8 +2283,8 @@ _COMPANYRATIOS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5400,
-  serialized_end=5456,
+  serialized_start=5496,
+  serialized_end=5552,
 )
 
 
@@ -2308,8 +2315,8 @@ _COMPANYPROFILE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5458,
-  serialized_end=5515,
+  serialized_start=5554,
+  serialized_end=5611,
 )
 
 
@@ -2340,8 +2347,8 @@ _FINANCIALSTATEMENTS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5517,
-  serialized_end=5579,
+  serialized_start=5613,
+  serialized_end=5675,
 )
 
 
@@ -2386,8 +2393,8 @@ _LATESTNEWS_REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5667,
-  serialized_end=5726,
+  serialized_start=5763,
+  serialized_end=5822,
 )
 
 _LATESTNEWS = _descriptor.Descriptor(
@@ -2431,8 +2438,8 @@ _LATESTNEWS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5582,
-  serialized_end=5726,
+  serialized_start=5678,
+  serialized_end=5822,
 )
 
 
@@ -2477,8 +2484,8 @@ _TOPNEWSPREVIEW = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5728,
-  serialized_end=5815,
+  serialized_start=5824,
+  serialized_end=5911,
 )
 
 
@@ -2530,8 +2537,8 @@ _NEWSBYCOMPANY_REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5906,
-  serialized_end=5979,
+  serialized_start=6002,
+  serialized_end=6075,
 )
 
 _NEWSBYCOMPANY = _descriptor.Descriptor(
@@ -2575,8 +2582,8 @@ _NEWSBYCOMPANY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5818,
-  serialized_end=5979,
+  serialized_start=5914,
+  serialized_end=6075,
 )
 
 _CREDENTIALS.oneofs_by_name['oneof_2fa'].fields.append(

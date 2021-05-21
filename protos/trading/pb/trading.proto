@@ -59,7 +59,7 @@ message Order {
     repeated google.protobuf.Struct transaction_taxes = 6;
     repeated google.protobuf.Struct transaction_auto_fx_surcharges = 7;
     repeated google.protobuf.Struct transaction_auto_fx_opposite_surcharges = 8;
-    double autoFxConversionRate = 9;
+    double auto_fx_conversion_rate = 9;
   }
   message ConfirmationResponse {
     string orderId = 1;
@@ -199,7 +199,7 @@ message TransactionsHistory {
     // PROPERTIES
     Date from_date = 1;
     Date to_date = 2;
-    bool groupTransactionsByOrder= 3;
+    bool group_transactions_by_order= 3;
   }
 
   // PROPERTIES
@@ -247,96 +247,97 @@ message ProductSearch {
     google.protobuf.Struct values = 1;
   }
   message RequestBonds {
-    int32 bondIssuerTypeId = 1;
-    int32 bondExchangeId = 2;
+    int32 bond_issuer_type_id = 1;
+    int32 bond_exchange_id = 2;
 
-    string searchText = 3;
+    string search_text = 3;
     int32 offset = 4;
     int32 limit = 5;
-    bool requireTotal = 6;
-    string sortColumns = 7;
-    string sortTypes = 8;
+    bool require_total = 6;
+    string sort_columns = 7;
+    string sort_types = 8;
   }
   message RequestETFs {
-    bool popularOnly = 1;
-    string inputAggregateTypes = 2;
-    string inputAggregateValues = 3;
+    bool popular_only = 1;
+    string input_aggregate_types = 2;
+    string input_aggregate_values = 3;
 
-    string searchText = 4;
+    string search_text = 4;
     int32 offset = 5;
     int32 limit = 6;
-    bool requireTotal = 7;
-    string sortColumns = 8;
-    string sortTypes = 9;
+    bool require_total = 7;
+    string sort_columns = 8;
+    string sort_types = 9;
   }
   message RequestFunds {
-    string searchText = 1;
+    string search_text = 1;
     int32 offset = 2;
     int32 limit = 3;
-    bool requireTotal = 4;
-    string sortColumns = 5;
-    string sortTypes = 6;
+    bool require_total = 4;
+    string sort_columns = 5;
+    string sort_types = 6;
   }
   message RequestFutures {
-    int32 futureExchangeId = 1;
-    string underlyingIsin = 2;
+    int32 future_exchange_id = 1;
+    string underlying_isin = 2;
 
-    string searchText = 3;
+    string search_text = 3;
     int32 offset = 4;
     int32 limit = 5;
-    bool requireTotal = 6;
-    string sortColumns = 7;
-    string sortTypes = 8;
+    bool require_total = 6;
+    string sort_columns = 7;
+    string sort_types = 8;
   }
   message RequestLeverageds {
-    bool popularOnly = 1;
-    string inputAggregateTypes = 2;
-    string inputAggregateValues = 3;
+    bool popular_only = 1;
+    string input_aggregate_types = 2;
+    string input_aggregate_values = 3;
 
-    string searchText = 4;
+    string search_text = 4;
     int32 offset = 5;
     int32 limit = 6;
-    bool requireTotal = 7;
-    string sortColumns = 8;
-    string sortTypes = 9;
+    bool require_total = 7;
+    string sort_columns = 8;
+    string sort_types = 9;
   }
   message RequestLookup {
     string search_text = 1;
     int32 limit = 2;
     int32 offset = 3;
+    int32 product_type_id = 4;
   }
   message RequestOptions {
-    string inputAggregateTypes = 1;
-    string inputAggregateValues = 2;
-    int32 optionExchangeId = 3;
-    string underlyingIsin = 4;
+    string input_aggregate_types = 1;
+    string input_aggregate_values = 2;
+    int32 option_exchange_id = 3;
+    string underlying_isin = 4;
 
-    string searchText = 5;
+    string search_text = 5;
     int32 offset = 6;
     int32 limit = 7;
-    bool requireTotal = 8;
-    string sortColumns = 9;
-    string sortTypes = 10;
+    bool require_total = 8;
+    string sort_columns = 9;
+    string sort_types = 10;
   }
   message RequestStocks {
-    bool isInUSGreenList = 1;
-    int32 indexId = 2;
-    int32 stockCountryId = 3;
+    bool is_in_us_green_list = 1;
+    int32 index_id = 2;
+    int32 stock_country_id = 3;
 
-    string searchText = 4;
+    string search_text = 4;
     int32 offset = 5;
     int32 limit = 6;
-    bool requireTotal = 7;
-    string sortColumns = 8;
-    string sortTypes = 9;
+    bool require_total = 7;
+    string sort_columns = 8;
+    string sort_types = 9;
   }
   message RequestWarrants {
-    string searchText = 1;
+    string search_text = 1;
     int32 offset = 2;
     int32 limit = 3;
-    bool requireTotal = 4;
-    string sortColumns = 5;
-    string sortTypes = 6;
+    bool require_total = 4;
+    string sort_columns = 5;
+    string sort_types = 6;
   }
 
   // PROPERTIES
