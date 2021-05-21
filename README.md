@@ -737,7 +737,7 @@ Here is an example :
 ```python
 # ORDER SETUP
 order = Order(
-    id=YOUR_ORDER_ID
+    id=YOUR_ORDER_ID,
     action=Order.Action.BUY,
     order_type=Order.OrderType.LIMIT,
     price=10.60,
@@ -1098,6 +1098,7 @@ request = ProductSearch.RequestLookup(
     search_text='APPLE',
     limit=10,
     offset=0,
+    product_type_id=1,
 )
 
 # FETCH DATA
