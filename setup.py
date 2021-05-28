@@ -11,12 +11,6 @@ setup(
         'License :: OSI Approved :: BSD License',
         'Operating System :: OS Independent',
     ],
-    entry_points={
-        'console_scripts': [
-            'quotecast = quotecast.applications.cli:cli',
-            'trading = trading.applications.cli:cli',
-        ],
-    },
     extras_require={
         'tests': [
             'pytest',
@@ -38,8 +32,8 @@ setup(
     long_description=long_description,
     long_description_content_type='text/markdown',
     name='degiro-connector',
-    packages=find_packages(),
+    packages=['quotecast', 'trading'],
     python_requires='>=3.6',
     url='https://github.com/chavithra/degiro-connector',
-    version='0.1.0',
+    version='0.1.1',
 )
