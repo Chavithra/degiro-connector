@@ -35,5 +35,5 @@ setup(
     packages=find_packages(),
     python_requires='>=3.6',
     url='https://github.com/chavithra/degiro-connector',
-    version='0.1.1',
+    version='0.1.3',
 )
