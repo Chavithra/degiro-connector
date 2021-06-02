@@ -7,7 +7,10 @@ import time
 import urllib3
 
 from degiro_connector.quotecast.constants.headers import Headers
-from degiro_connector.quotecast.pb.quotecast_pb2 import Chart, Quotecast
+from degiro_connector.quotecast.pb.quotecast_pb2 import (
+    Chart,
+    Quotecast,
+)
 from typing import Dict
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)

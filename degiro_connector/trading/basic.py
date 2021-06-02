@@ -3,7 +3,9 @@ import degiro_connector.trading.utilities as utilities
 
 from typing import Union
 from degiro_connector.quotecast.constants.headers import Headers
-from degiro_connector.trading.models.session_storage import SessionStorage
+from degiro_connector.trading.models.session_storage import (
+    SessionStorage,
+)
 from degiro_connector.trading.pb.trading_pb2 import (
     AccountOverview,
     CompanyProfile,
