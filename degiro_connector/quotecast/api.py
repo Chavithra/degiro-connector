@@ -2,7 +2,9 @@ import logging
 import urllib3
 
 from degiro_connector.quotecast.basic import Basic
-from degiro_connector.quotecast.models.connection_storage import ConnectionStorage
+from degiro_connector.quotecast.models.connection_storage import (
+    ConnectionStorage
+)
 from degiro_connector.quotecast.models.quotecast_parser import QuotecastParser
 from degiro_connector.quotecast.pb.quotecast_pb2 import Chart, Quotecast
 from typing import Dict, Union

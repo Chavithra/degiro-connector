@@ -13,7 +13,8 @@ This script will do the following changes :
 If files might require manual update it will list those files.
 """
 
-def need_manual_update(file_source: str)-> bool:
+
+def need_manual_update(file_source: str) -> bool:
     x = re.search(
         pattern=r"(quotecast|trading)\s*=\s*[A-Z]",
         string=file_source,
@@ -21,8 +22,10 @@ def need_manual_update(file_source: str)-> bool:
 
     return x is not None
 
-def get_files_list(root_path=".")-> List[str]:
+
+def get_files_list(root_path=".") -> List[str]:
     files_list = list()
+
     for root, directories, files in os.walk(root_path):
         for name in files:
             if name.endswith(".py") \
@@ -32,13 +35,15 @@ def get_files_list(root_path=".")-> List[str]:
                     and "\\build\\lib" not in root \
                     and not name.endswith("setup.py"):
                 files_list.append(os.path.join(root, name))
+
     return files_list
 
 
 def process(files_list: List[str]):
     manual_update_list = list()
-    
+
     print("Processing the following files : ")
+
     for file_path in files_list:
         if os.path.realpath(file_path) != os.path.realpath(__file__):
             with open(file_path, 'r+') as f:
@@ -68,6 +73,7 @@ def process(files_list: List[str]):
         print("The following files might need a manual update :")
         for file_path in manual_update_list:
             print(file_path)
+
 
 files_list = get_files_list(root_path=".")
 process(files_list=files_list)

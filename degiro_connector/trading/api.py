@@ -1,7 +1,9 @@
 import logging
 
 from degiro_connector.trading.basic import Basic
-from degiro_connector.trading.models.connection_storage import ConnectionStorage
+from degiro_connector.trading.models.connection_storage import (
+    ConnectionStorage,
+)
 from degiro_connector.trading.pb.trading_pb2 import (
     AccountOverview,
     CompanyProfile,

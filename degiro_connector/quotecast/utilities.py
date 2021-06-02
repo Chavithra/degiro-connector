@@ -121,9 +121,9 @@ def fetch_data(
 
     Returns:
         Quotecast:
-            degiro_connector.quotecast.json_data : raw JSON data string.
-            degiro_connector.quotecast.metadata.response_datetime : reception timestamp.
-            degiro_connector.quotecast.metadata.request_duration : request duration.
+            json_data : raw JSON data string.
+            metadata.response_datetime : reception timestamp.
+            metadata.request_duration : request duration.
     """
 
     if logger is None:
