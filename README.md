@@ -2,6 +2,12 @@
 
 This is yet another library to access Degiro's API.
 
+Notes :
+- There is a migration script to switch from 0.x.y to 1.x.y :
+```bash
+python -m degiro_connector.migration.from_0_1_3_to_1_0_0
+```
+
 ## 1.1. Which features ?
 Here are the features you can access through this library :
 
