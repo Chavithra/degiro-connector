@@ -1,10 +1,10 @@
 import logging
-import trading.utilities as utilities
+import degiro_connector.trading.utilities as utilities
 
 from typing import Union
-from quotecast.constants.headers import Headers
-from trading.models.session_storage import SessionStorage
-from trading.pb.trading_pb2 import (
+from degiro_connector.quotecast.constants.headers import Headers
+from degiro_connector.trading.models.session_storage import SessionStorage
+from degiro_connector.trading.pb.trading_pb2 import (
     AccountOverview,
     CompanyProfile,
     CompanyRatios,
@@ -475,7 +475,7 @@ if __name__ == '__main__':
     # IMPORTATIONS
     import json
 
-    from trading.pb.trading_pb2 import Credentials
+    from degiro_connector.trading.pb.trading_pb2 import Credentials
 
     # FETCH CONFIG
     with open('config.json') as config_file:

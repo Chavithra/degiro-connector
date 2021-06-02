@@ -1,6 +1,6 @@
-import quotecast.helpers.pb_handler as pb_handler
+import degiro_connector.quotecast.helpers.pb_handler as pb_handler
 
-from quotecast.pb.quotecast_pb2 import Ticker
+from degiro_connector.quotecast.pb.quotecast_pb2 import Ticker
 
 
 class MetricsStorage:

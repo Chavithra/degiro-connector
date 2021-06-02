@@ -1,13 +1,13 @@
 import logging
 import orjson as json
-import quotecast.helpers.pb_handler as pb_handler
-import quotecast.constants.urls as urls
+import degiro_connector.quotecast.helpers.pb_handler as pb_handler
+import degiro_connector.quotecast.constants.urls as urls
 import requests
 import time
 import urllib3
 
-from quotecast.constants.headers import Headers
-from quotecast.pb.quotecast_pb2 import Chart, Quotecast
+from degiro_connector.quotecast.constants.headers import Headers
+from degiro_connector.quotecast.pb.quotecast_pb2 import Chart, Quotecast
 from typing import Dict
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -121,9 +121,9 @@ def fetch_data(
 
     Returns:
         Quotecast:
-            quotecast.json_data : raw JSON data string.
-            quotecast.metadata.response_datetime : reception timestamp.
-            quotecast.metadata.request_duration : request duration.
+            degiro_connector.quotecast.json_data : raw JSON data string.
+            degiro_connector.quotecast.metadata.response_datetime : reception timestamp.
+            degiro_connector.quotecast.metadata.request_duration : request duration.
     """
 
     if logger is None:
@@ -145,11 +145,11 @@ def fetch_data(
         raise BrokenPipeError('A new "session_id" is required.')
 
     quotecast = Quotecast()
-    quotecast.json_data = response.text
+    degiro_connector.quotecast.json_data = response.text
     # There is no "date" header returned
     # We could have used : response.cookies._now
-    quotecast.metadata.response_datetime.GetCurrentTime()
-    quotecast.metadata.request_duration.FromNanoseconds(duration_ns)
+    degiro_connector.quotecast.metadata.response_datetime.GetCurrentTime()
+    degiro_connector.quotecast.metadata.request_duration.FromNanoseconds(duration_ns)
 
     return quotecast
 

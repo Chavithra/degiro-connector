@@ -1,11 +1,11 @@
 import datetime
 import logging
 import orjson as json
-import quotecast.helpers.pb_handler as pb_handler
+import degiro_connector.quotecast.helpers.pb_handler as pb_handler
 import pandas as pd
 
-from quotecast.models.metrics_storage import MetricsStorage
-from quotecast.pb.quotecast_pb2 import Quotecast, Ticker
+from degiro_connector.quotecast.models.metrics_storage import MetricsStorage
+from degiro_connector.quotecast.pb.quotecast_pb2 import Quotecast, Ticker
 from typing import Dict, List, Union
 
 

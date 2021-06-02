@@ -2,12 +2,12 @@ import logging
 import orjson as json
 import onetimepass as otp
 import requests
-import trading.constants.urls as urls
-import trading.helpers.payload_handler as payload_handler
+import degiro_connector.trading.constants.urls as urls
+import degiro_connector.trading.helpers.payload_handler as payload_handler
 import urllib3
 
-from trading.constants.headers import Headers
-from trading.pb.trading_pb2 import (
+from degiro_connector.trading.constants.headers import Headers
+from degiro_connector.trading.pb.trading_pb2 import (
     AccountOverview,
     CompanyProfile,
     CompanyRatios,
@@ -1445,7 +1445,7 @@ if __name__ == '__main__':
     # IMPORTATIONS
     import logging
 
-    from trading.pb.trading_pb2 import Credentials
+    from degiro_connector.trading.pb.trading_pb2 import Credentials
 
     # FETCH CONFIG
     with open('config.json') as config_file:

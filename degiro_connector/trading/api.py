@@ -1,8 +1,8 @@
 import logging
 
-from trading.basic import Basic
-from trading.models.connection_storage import ConnectionStorage
-from trading.pb.trading_pb2 import (
+from degiro_connector.trading.basic import Basic
+from degiro_connector.trading.models.connection_storage import ConnectionStorage
+from degiro_connector.trading.pb.trading_pb2 import (
     AccountOverview,
     CompanyProfile,
     CompanyRatios,
@@ -344,7 +344,7 @@ if __name__ == '__main__':
     # IMPORTATIONS
     import json
 
-    from trading.pb.trading_pb2 import Credentials
+    from degiro_connector.trading.pb.trading_pb2 import Credentials
 
     # FETCH CONFIG
     with open('config.json') as config_file:

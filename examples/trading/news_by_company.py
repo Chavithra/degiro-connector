@@ -2,8 +2,8 @@
 import json
 import logging
 
-from trading.api import API as TradingAPI
-from trading.pb.trading_pb2 import Credentials, NewsByCompany
+from degiro_connector.trading.api import API as TradingAPI
+from degiro_connector.trading.pb.trading_pb2 import Credentials, NewsByCompany
 
 # SETUP LOGGING LEVEL
 logging.basicConfig(level=logging.DEBUG)

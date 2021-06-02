@@ -2,14 +2,14 @@
 import json
 import logging
 import pytest
-import quotecast.helpers.pb_handler as pb_handler
+import degiro_connector.quotecast.helpers.pb_handler as pb_handler
 import random
 import time
 import urllib3
 
-from quotecast.api import API as QuotecastAPI
-from quotecast.models.quotecast_parser import QuotecastParser
-from quotecast.pb.quotecast_pb2 import Chart, Quotecast
+from degiro_connector.quotecast.api import API as QuotecastAPI
+from degiro_connector.quotecast.models.quotecast_parser import QuotecastParser
+from degiro_connector.quotecast.pb.quotecast_pb2 import Chart, Quotecast
 
 # SETUP LOGGING
 logging.basicConfig(level=logging.FATAL)

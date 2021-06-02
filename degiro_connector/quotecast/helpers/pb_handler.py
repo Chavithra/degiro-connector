@@ -3,7 +3,7 @@ import random
 
 from google.protobuf import json_format
 from google.protobuf.message import Message
-from quotecast.pb.quotecast_pb2 import Chart, Quotecast, Ticker
+from degiro_connector.quotecast.pb.quotecast_pb2 import Chart, Quotecast, Ticker
 from typing import Dict, List, Union
 
 # pylint: disable=no-member

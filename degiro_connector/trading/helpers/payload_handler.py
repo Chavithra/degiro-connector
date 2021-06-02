@@ -2,7 +2,7 @@ import datetime
 
 from google.protobuf import json_format
 from google.protobuf.message import Message
-from trading.pb.trading_pb2 import (
+from degiro_connector.trading.pb.trading_pb2 import (
     AccountOverview,
     CompanyProfile,
     CompanyRatios,

@@ -3,7 +3,7 @@ import requests
 import time
 
 from threading import Event
-from trading.models.session_storage import SessionStorage
+from degiro_connector.trading.models.session_storage import SessionStorage
 from wrapt.decorators import synchronized
 
 

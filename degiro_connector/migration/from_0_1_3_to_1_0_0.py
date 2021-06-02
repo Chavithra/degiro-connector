@@ -12,20 +12,26 @@ for root, directories, files in os.walk(current_path):
         and not "\\build\\lib" in root \
         and not name.endswith("setup.py"):
             files_list.append(os.path.join(root, name))
-            print(os.path.join(root, name))
+
+print("Processing the following files : ")
 
 for file_path in files_list:
-    print(file_path)
-    with open(file_path, 'r+') as f:
-        file_source = f.read()
-
-        print("file_source")
-        print(file_source)
-
-        replace_string = file_source
-        replace_string = replace_string.replace(" degiro_connector.quotecast.", ' degiro_connector.quotecast.')
-        replace_string = replace_string.replace(" degiro_connector.trading.", ' degiro_connector.trading.')
-        if replace_string != file_source:
-            f.seek(0)
-            f.write(replace_string)
-            f.truncate()
+    if os.path.realpath(file_path) != os.path.realpath(__file__):
+        with open(file_path, 'r+') as f:
+            file_source = f.read()
+            replace_string = file_source
+            replace_string = replace_string.replace(
+                " quotecast.",
+                ' degiro_connector.quotecast.',
+            )
+            replace_string = replace_string.replace(
+                " trading.",
+                ' degiro_connector.trading.',
+            )
+            if replace_string != file_source:
+                print("CHANGED   :", file_path)
+                f.seek(0)
+                f.write(replace_string)
+                f.truncate()
+            else:
+                print("UNCHANGED :", file_path)

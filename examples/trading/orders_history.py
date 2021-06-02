@@ -3,8 +3,8 @@ import datetime
 import json
 import logging
 
-from trading.api import API as TradingAPI
-from trading.pb.trading_pb2 import (
+from degiro_connector.trading.api import API as TradingAPI
+from degiro_connector.trading.pb.trading_pb2 import (
     Credentials,
     OrdersHistory,
 )

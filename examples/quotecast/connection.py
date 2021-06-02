@@ -1,7 +1,7 @@
 # IMPORTATIONS
 import json
 
-from quotecast.api import API as QuotecastAPI
+from degiro_connector.quotecast.api import API as QuotecastAPI
 
 # SETUP CONFIG DICT
 with open('config/config.json') as config_file:

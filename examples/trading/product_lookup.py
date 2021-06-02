@@ -1,10 +1,10 @@
 # IMPORTATIONS
 import json
 import logging
-import trading.helpers.payload_handler as payload_handler
+import degiro_connector.trading.helpers.payload_handler as payload_handler
 
-from trading.api import API as TradingAPI
-from trading.pb.trading_pb2 import Credentials, ProductSearch
+from degiro_connector.trading.api import API as TradingAPI
+from degiro_connector.trading.pb.trading_pb2 import Credentials, ProductSearch
 
 # SETUP LOGGING LEVEL
 logging.basicConfig(level=logging.DEBUG)

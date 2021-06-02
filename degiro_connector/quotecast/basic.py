@@ -1,10 +1,10 @@
 import logging
-import quotecast.utilities as utilities
+import degiro_connector.quotecast.utilities as utilities
 import urllib3
 
-from quotecast.constants.headers import Headers
-from quotecast.models.session_storage import SessionStorage
-from quotecast.pb.quotecast_pb2 import Chart, Quotecast
+from degiro_connector.quotecast.constants.headers import Headers
+from degiro_connector.quotecast.models.session_storage import SessionStorage
+from degiro_connector.quotecast.pb.quotecast_pb2 import Chart, Quotecast
 from typing import Dict
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)

@@ -2,8 +2,8 @@
 import json
 import logging
 
-from quotecast.api import API as QuotecastAPI
-from quotecast.pb.quotecast_pb2 import Chart
+from degiro_connector.quotecast.api import API as QuotecastAPI
+from degiro_connector.quotecast.pb.quotecast_pb2 import Chart
 
 # SETUP LOGGING
 logging.basicConfig(level=logging.INFO)
