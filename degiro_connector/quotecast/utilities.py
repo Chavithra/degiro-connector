@@ -145,11 +145,11 @@ def fetch_data(
         raise BrokenPipeError('A new "session_id" is required.')
 
     quotecast = Quotecast()
-    degiro_connector.quotecast.json_data = response.text
+    quotecast.json_data = response.text
     # There is no "date" header returned
     # We could have used : response.cookies._now
-    degiro_connector.quotecast.metadata.response_datetime.GetCurrentTime()
-    degiro_connector.quotecast.metadata.request_duration.FromNanoseconds(duration_ns)
+    quotecast.metadata.response_datetime.GetCurrentTime()
+    quotecast.metadata.request_duration.FromNanoseconds(duration_ns)
 
     return quotecast
 
