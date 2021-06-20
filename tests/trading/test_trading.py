@@ -1,13 +1,14 @@
-# IMPORTATIONS
-import json
+# IMPORTATIONS STANDARD
 import logging
-import pytest
 import random
 import time
+
+# IMPORTATION THIRD PARTY
+import pytest
 import urllib3
 
+# IMPORTATION INTERNAL
 from degiro_connector.trading.api import API as TradingAPI
-from degiro_connector.trading.pb.trading_pb2 import Credentials
 
 # SETUP LOGGING LEVEL
 logging.basicConfig(level=logging.FATAL)
@@ -15,31 +16,10 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
 # SETUP FIXTURES
-@pytest.fixture(scope='module')
-def config_dict():
-    with open('config/config.json') as config_file:
-        config_dict = json.load(config_file)
-
-    return config_dict
 
 
 @pytest.fixture(scope='module')
-def credentials(config_dict):
-    int_account = config_dict['int_account']
-    username = config_dict['username']
-    password = config_dict['password']
-
-    credentials = Credentials(
-        int_account=int_account,
-        username=username,
-        password=password,
-    )
-
-    return credentials
-
-
-@pytest.fixture(scope='module')
-def trading_api(credentials):
+def trading_api(credentials) -> TradingAPI:
     trading_api = TradingAPI(credentials=credentials)
     trading_api.connect()
 
@@ -47,17 +27,14 @@ def trading_api(credentials):
 
 
 # TESTS FIXTURES
-def test_fixture_config_dict(config_dict):
-    int_account = config_dict['int_account']
-    username = config_dict['username']
-    password = config_dict['password']
+def test_fixture_config_dict(credentials):
 
-    assert isinstance(int_account, int)
-    assert int_account > 0
-    assert isinstance(username, str)
-    assert len(username) > 0
-    assert isinstance(password, str)
-    assert len(password) > 0
+    assert isinstance(credentials.int_account, int)
+    assert credentials.int_account > 0
+    assert isinstance(credentials.username, str)
+    assert len(credentials.username) > 0
+    assert isinstance(credentials.password, str)
+    assert len(credentials.password) > 0
 
 
 def test_fixture_trading_api(trading_api):
@@ -68,10 +45,10 @@ def test_fixture_trading_api(trading_api):
 
 
 # TESTS FEATURES
-def test_config_table(config_dict, trading_api):
+def test_config_table(user_token, trading_api):
     time.sleep(random.uniform(0, 2))
 
-    real_user_token = config_dict['user_token']
+    real_user_token = user_token
     real_session_id = trading_api.connection_storage.session_id
     config_table = trading_api.get_config()
     user_token = config_table['clientId']
@@ -81,7 +58,7 @@ def test_config_table(config_dict, trading_api):
     assert session_id == real_session_id
 
 
-def test_config_table_urls(config_dict, trading_api):
+def test_config_table_urls(trading_api):
     time.sleep(random.uniform(0, 2))
 
     config_table = trading_api.get_config()

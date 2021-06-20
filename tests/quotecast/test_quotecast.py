@@ -1,12 +1,15 @@
-# IMPORTATIONS
-import json
+# IMPORTATIONS STANDARD
 import logging
-import pytest
-import degiro_connector.quotecast.helpers.pb_handler as pb_handler
 import random
 import time
+
+# IMPORTATION THIRD PARTY
+import pytest
 import urllib3
 
+# IMPORTATION INTERNAL
+import degiro_connector.quotecast.helpers.pb_handler as pb_handler
+import degiro_connector.quotecast.utilities as utilities
 from degiro_connector.quotecast.api import API as QuotecastAPI
 from degiro_connector.quotecast.models.quotecast_parser import QuotecastParser
 from degiro_connector.quotecast.pb.quotecast_pb2 import Chart, Quotecast
@@ -18,22 +21,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # SETUP FIXTURES
 @pytest.fixture(scope='module')
-def config_dict():
-    with open('config/config.json') as config_file:
-        config_dict = json.load(config_file)
-
-    return config_dict
-
-
-@pytest.fixture(scope='module')
-def user_token(config_dict):
-    user_token = config_dict['user_token']
-
-    return user_token
-
-
-@pytest.fixture(scope='module')
-def quotecast_api(user_token):
+def quotecast_api(user_token) -> QuotecastAPI:
     quotecast_api = QuotecastAPI(user_token=user_token)
     quotecast_api.connect()
 
@@ -156,3 +144,11 @@ def test_quotecast(quotecast_api):
 
     for metric in metrics:
         assert isinstance(metrics[metric], float)
+
+
+def test_build_logger():
+    time.sleep(random.uniform(0, 2))
+
+    logger = utilities.build_logger()
+    
+    assert isinstance(logger, logging.Logger)
