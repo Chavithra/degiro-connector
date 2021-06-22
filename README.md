@@ -1017,7 +1017,7 @@ For a more comprehensive example :
 
 ## 6.4. How to get the table : AccountOverview ?
 
-It contains information about cash movements.
+It will provide a list of cash movements.
 
 Here is how to get this data :
 
@@ -1033,6 +1033,21 @@ account_overview = trading_api.get_account_overview(request=request)
 
 For a more comprehensive example :
 [account_overview.py](examples/trading/account_overview.py)
+
+Each cash movement contains this kind of parameters :
+|**Parameter**|**Type**|
+|:-|:-|
+|date|str|
+|valueDate|str| 
+|id|int| 
+|orderId|str| 
+|description|str| 
+|productId|int|
+|currency|str|
+|change|float|
+|balance|dict| 
+|unsettledCash|float|
+|total|float|
 
 # 7. Products
 
