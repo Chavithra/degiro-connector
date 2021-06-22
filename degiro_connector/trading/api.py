@@ -6,6 +6,7 @@ from degiro_connector.trading.models.connection_storage import (
 )
 from degiro_connector.trading.pb.trading_pb2 import (
     AccountOverview,
+    Agenda,
     CashAccountReport,
     CompanyProfile,
     CompanyRatios,
@@ -351,6 +352,20 @@ class API:
         session_id = self._connection_storage.session_id
 
         return basic.get_cash_account_report(
+            request=request,
+            session_id=session_id,
+            raw=raw,
+        )
+
+    def get_agenda(
+        self,
+        request: Agenda.Request,
+        raw: bool = False,
+    ) -> Union[dict, Agenda]:
+        basic = self._basic
+        session_id = self._connection_storage.session_id
+
+        return basic.get_agenda(
             request=request,
             session_id=session_id,
             raw=raw,

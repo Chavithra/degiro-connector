@@ -2,6 +2,8 @@ ACCOUNT_INFO = \
     'https://trader.degiro.nl/trading/secure/v5/account/info'
 ACCOUNT_OVERVIEW = \
     'https://trader.degiro.nl/reporting/secure/v6/accountoverview'
+AGENDA = \
+    'https://trader.degiro.nl/dgtbxdsservice/agenda/v2'
 CASH_ACCOUNT_REPORT = \
     'https://trader.degiro.nl/reporting/secure/v3/cashAccountReport'
 CLIENT_DETAILS = \

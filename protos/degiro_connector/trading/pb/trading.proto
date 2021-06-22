@@ -483,3 +483,41 @@ message CashAccountReport {
   Format format = 2;
   google.protobuf.Timestamp response_datetime = 3;
 }
+
+
+/** For the payload from the following URL :
+ * https://trader.degiro.nl/dgtbxdsservice/agenda/v2
+ */
+message Agenda {
+  // ENUMS
+  enum CalendarType {
+    DIVIDEND_CALENDAR = 0;
+    ECONOMIC_CALENDAR = 1;
+    EARNINGS_CALENDAR = 2;
+    HOLIDAY_CALENDAR = 3;
+    IPO_CALENDAR = 4;
+    SPLIT_CALENDAR = 5;
+  }
+
+  // MESSAGES
+  message Request {
+    // PROPERTIES
+    CalendarType calendar_type = 1;
+    int32 offset = 2;
+    int32 limit = 3;
+    bool order_by_desc = 4;
+    google.protobuf.Timestamp start_date = 5;
+    google.protobuf.Timestamp end_date = 6;
+    string company_name = 7;
+    string countries = 8;
+    string classifications = 9;
+    string units = 10;
+  }
+
+  // PROPERTIES
+  CalendarType calendar_type = 1;
+  repeated google.protobuf.Struct items = 2;
+  int32 offset = 3;
+  int32 total = 4;
+  google.protobuf.Timestamp response_datetime = 5;
+}

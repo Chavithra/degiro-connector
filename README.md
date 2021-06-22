@@ -124,6 +124,7 @@ pip uninstall degiro-connector
   * [8.4. How to get : LatestNews ?](#84-how-to-get--latestnews-)
   * [8.5. How to get : TopNewsPreview ?](#85-how-to-get--topnewspreview-)
   * [8.6. How to get : NewsByCompany ?](#86-how-to-get--newsbycompany-)
+  * [8.7. How to get : Agenda ?](#87-how-to-get--agenda-)
 - [9. Contributing](#9-contributing)
 - [10. License](#10-license)
 
@@ -454,7 +455,7 @@ chart = quotecast_api.get_chart(request=request)
 ```
 
 All the options for the enumerations are available in this file :
-[quotecast.proto](protos/quotecast/pb/quotecast.proto)
+[quotecast.proto](protos/degiro_connector/quotecast/pb/quotecast.proto)
 
 For a more comprehensive example :
 [chart.py](examples/quotecast/chart.py)
@@ -678,7 +679,7 @@ Here are the main parameters of an Order.
 |time_type|Order.TimeType|Duration of the order : GOOD_TILL_DAY or GOOD_TILL_CANCELED|
 
 The full description of an Order is available here :
-[trading.proto](protos/trading/pb/trading.proto)
+[trading.proto](protos/degiro_connector/trading/pb/trading.proto)
 
 ## 4.1. How to create an Order ?
 
@@ -1496,6 +1497,31 @@ news_by_company = trading_api.get_news_by_company(
 
 For a more comprehensive example :
 [news_by_company.py](examples/trading/news_by_company.py)
+
+
+## 8.7. How to get : Agenda ?
+
+Here is how to get this data :
+
+```python
+# SETUP REQUEST
+request = Agenda.Request()
+request.start_date.FromJsonString('2021-06-21T22:00:00Z')
+request.end_date.FromJsonString('2021-11-28T23:00:00Z')
+request.calendar_type = Agenda.CalendarType.DIVIDEND_CALENDAR
+
+# FETCH DATA
+agenda = trading_api.get_agenda(
+    request=request,
+    raw=False,
+)
+```
+
+Available options for `Agenda.Request` are in this file :
+[trading.proto](protos/degiro_connector/trading/pb/trading.proto)
+
+For a more comprehensive example :
+[agenda.py](examples/trading/agenda.py)
 
 # 9. Contributing
 Pull requests are welcome.

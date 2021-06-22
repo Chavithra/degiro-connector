@@ -4,6 +4,7 @@ from google.protobuf import json_format
 from google.protobuf.message import Message
 from degiro_connector.trading.pb.trading_pb2 import (
     AccountOverview,
+    Agenda,
     CashAccountReport,
     CompanyProfile,
     CompanyRatios,
@@ -101,6 +102,28 @@ def cash_account_report_request_to_api(
             day=request.to_date.day
         ) \
         .strftime('%d/%m/%Y')
+
+    return request_dict
+
+
+def agenda_request_to_api(
+    request: Agenda.Request,
+) -> dict:
+    request_dict = json_format.MessageToDict(
+        message=request,
+        including_default_value_fields=False,
+        preserving_proto_field_name=False,
+        use_integers_for_enums=True,
+        descriptor_pool=None,
+        float_precision=None,
+    )
+    request_dict['calendarType'] = Agenda \
+        .CalendarType \
+        .Name(request.calendar_type) \
+        .title() \
+        .replace('_', '')
+    request_dict['offset'] = request.offset
+    request_dict['orderByDesc'] = request.order_by_desc
 
     return request_dict
 
@@ -293,6 +316,24 @@ def cash_account_report_to_grpc(
     cash_account_report.format = request.format
 
     return cash_account_report
+
+
+def agenda_to_grpc(
+    request: Agenda.Request,
+    payload: dict,
+) -> CashAccountReport:
+    agenda = Agenda()
+    agenda.response_datetime.GetCurrentTime()
+    agenda.calendar_type = request.calendar_type
+    json_format.ParseDict(
+        js_dict=payload,
+        message=agenda,
+        ignore_unknown_fields=True,
+        descriptor_pool=None,
+    )
+
+    return agenda
+
 
 
 def checking_response_to_grpc(payload: dict) -> Order.CheckingResponse:
