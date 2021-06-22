@@ -103,6 +103,7 @@ pip uninstall degiro-connector
   * [6.2. How to retrieve the table : ClientDetails ?](#62-how-to-retrieve-the-table--clientdetails-)
   * [6.3. How to retrieve the table : AccountInfo ?](#63-how-to-retrieve-the-table--accountinfo-)
   * [6.4. How to get the table : AccountOverview ?](#64-how-to-get-the-table--accountoverview-)
+  * [6.5. How to export the table : CashAccountReport ?](#65-how-to-get-the-table--cashaccountreport-)
 - [7. Products](#7-products)
   * [7.1. How to get the table : ProductsConfig ?](#71-how-to-get-the-table--productsconfig-)
   * [7.2. How to get my favourite products ?](#72-how-to-get-my-favourite-products-)
@@ -1048,6 +1049,38 @@ Each cash movement contains this kind of parameters :
 |balance|dict| 
 |unsettledCash|float|
 |total|float|
+
+
+## 6.5. How to export the table : CashAccountReport ?
+
+It will export a list of cash movements in a specific format.
+
+Available formats :
+- CSV
+- HTML
+- PDF
+- XLS
+
+Here is how to get this content in `CSV` format :
+
+```python
+# SETUP REQUEST
+from_date = AccountOverview.Request.Date(year=2020,month=11,day=15)
+to_date = AccountOverview.Request.Date(year=2020,month=10,day=15)
+request = AccountOverview.Request(
+    format=CashAccountReport.Format.CSV,
+    country='FR',
+    lang='fr',
+    from_date=from_date,
+    to_date=to_date,
+)
+
+# FETCH DATA
+cash_account_report = trading_api.get_cash_account_report(
+    request=request,
+    raw=False,
+)
+```
 
 # 7. Products
 

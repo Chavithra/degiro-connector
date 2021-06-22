@@ -4,6 +4,7 @@ from google.protobuf import json_format
 from google.protobuf.message import Message
 from degiro_connector.trading.pb.trading_pb2 import (
     AccountOverview,
+    CashAccountReport,
     CompanyProfile,
     CompanyRatios,
     Favourites,
@@ -62,6 +63,30 @@ def account_overview_request_to_api(
     request: AccountOverview.Request,
 ) -> dict:
     request_dict = dict()
+    request_dict['fromDate'] = \
+        datetime.datetime(
+            year=request.from_date.year,
+            month=request.from_date.month,
+            day=request.from_date.day
+        ) \
+        .strftime('%d/%m/%Y')
+    request_dict['toDate'] = \
+        datetime.datetime(
+            year=request.to_date.year,
+            month=request.to_date.month,
+            day=request.to_date.day
+        ) \
+        .strftime('%d/%m/%Y')
+
+    return request_dict
+
+
+def cash_account_report_request_to_api(
+    request: CashAccountReport.Request,
+) -> dict:
+    request_dict = dict()
+    request_dict['country'] = request.country
+    request_dict['lang'] = request.lang
     request_dict['fromDate'] = \
         datetime.datetime(
             year=request.from_date.year,
@@ -245,7 +270,7 @@ def update_request_list_to_api(request_list: Update.RequestList) -> dict:
 
 
 # API TO GRPC
-def account_overview_to_grpc(payload: dict) -> OrdersHistory:
+def account_overview_to_grpc(payload: dict) -> AccountOverview:
     account_overview = AccountOverview()
     account_overview.response_datetime.GetCurrentTime()
     json_format.ParseDict(
@@ -256,6 +281,18 @@ def account_overview_to_grpc(payload: dict) -> OrdersHistory:
     )
 
     return account_overview
+
+
+def cash_account_report_to_grpc(
+    request: CashAccountReport.Request,
+    payload: str,
+) -> CashAccountReport:
+    cash_account_report = CashAccountReport()
+    cash_account_report.response_datetime.GetCurrentTime()
+    cash_account_report.content = payload
+    cash_account_report.format = request.format
+
+    return cash_account_report
 
 
 def checking_response_to_grpc(payload: dict) -> Order.CheckingResponse:

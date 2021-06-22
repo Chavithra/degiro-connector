@@ -10,6 +10,7 @@ from degiro_connector.trading.constants.headers import Headers
 from degiro_connector.trading.pb.trading_pb2 import (
     AccountOverview,
     CompanyProfile,
+    CashAccountReport,
     CompanyRatios,
     Credentials,
     Favourites,
@@ -817,7 +818,7 @@ def get_account_overview(
             Defaults to None.
 
     Returns:
-        Update: API response.
+        AccountOverview: API response.
     """
 
     if logger is None:
@@ -1433,6 +1434,92 @@ def get_news_by_company(
             )
     except Exception as e:
         logger.fatal('error')
+        logger.fatal(response_raw.status_code)
+        logger.fatal(response_raw.text)
+        logger.fatal(e)
+        return False
+
+    return response
+
+
+def get_cash_account_report(
+    request: CashAccountReport.Request,
+    session_id: str,
+    credentials: Credentials,
+    raw: bool = False,
+    session: requests.Session = None,
+    logger: logging.Logger = None,
+) -> Union[dict, CashAccountReport]:
+    """ Retrieve information about the account in a specific format.
+
+    Args:
+        request (CashAccountReport.Request):
+            List of options that we want to retrieve from the endpoint.
+            Example :
+                from_date = CashAccountReport.Request.Date(
+                    year=2020,
+                    month=10,
+                    day=15,
+                )
+                from_date = CashAccountReport.Request.Date(
+                    year=2020,
+                    month=10,
+                    day=16,
+                )
+                request = CashAccountReport.Request(
+                    format=CashAccountReport.Format.CSV,
+                    country='FR',
+                    lang='fr',
+                    from_date=from_date,
+                    to_date=to_date,
+                )
+        session_id (str):
+            API's session id.
+        credentials (Credentials):
+            Credentials containing the parameter "int_account".
+        raw (bool, optional):
+            Whether are not we want the raw API response.
+            Defaults to False.
+        session (requests.Session, optional):
+            This object will be generated if None.
+            Defaults to None.
+        logger (logging.Logger, optional):
+            This object will be generated if None.
+            Defaults to None.
+
+    Returns:
+        CashAccountReport: API response.
+    """
+
+    if logger is None:
+        logger = build_logger()
+    if session is None:
+        session = build_session()
+
+    format = CashAccountReport.Format.Name(request.format)
+    url = f'{urls.CASH_ACCOUNT_REPORT}/{format}'
+    params = payload_handler.cash_account_report_request_to_api(
+        request=request,
+    )
+    params['intAccount'] = credentials.int_account
+    params['sessionId'] = session_id
+
+    req = requests.Request(method='GET', url=url, params=params)
+    prepped = session.prepare_request(req)
+    response_raw = None
+
+    try:
+        response_raw = session.send(prepped, verify=False)
+        response_text = response_raw.text
+
+        if raw is True:
+            response = response_text
+        else:
+            response = payload_handler.cash_account_report_to_grpc(
+                request=request,
+                payload=response_text,
+            )
+    except Exception as e:
         logger.fatal(response_raw.status_code)
         logger.fatal(response_raw.text)
         logger.fatal(e)
