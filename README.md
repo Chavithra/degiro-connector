@@ -1082,6 +1082,9 @@ cash_account_report = trading_api.get_cash_account_report(
 )
 ```
 
+For a more comprehensive example :
+[cash_account_report.py](examples/trading/cash_account_report.py)
+
 # 7. Products
 
 ## 7.1. How to get the table : ProductsConfig ?
