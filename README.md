@@ -13,8 +13,10 @@ Here are the features you can access through this library :
 
 |**Endpoint**|**Feature(s)**|
 |:-|:-|
+|AccountCashReport|Export cash movements in a specific format : <br>CSV<br>HTML<br>PDF<br>XLS|
 |AccountInfo|Retrieve a table containing : "clientId" and Currencies.|
 |AccountOverview|Retrieve all the CashMovements between two dates.|
+|Agenda|Crucial events regarding products : <br>Dividend<br>Economic<br>Earnings<br>Holiday<br>IPO<br>Split|
 |Bonds<br>ETFs<br>Funds<br>Futures<br>Leverageds<br>Lookup<br>Options<br>Stocks<br>Warrants|Search list of products according their name, type and other criterias. <br> For instance all the stocks from NASDAQ 100.|
 |Chart|Retrieve chart data.|
 |ClientDetails|Retrieve a table containing : "clientId", "intAccount" and other account information.|
@@ -1066,9 +1068,9 @@ Here is how to get this content in `CSV` format :
 
 ```python
 # SETUP REQUEST
-from_date = AccountOverview.Request.Date(year=2020,month=11,day=15)
-to_date = AccountOverview.Request.Date(year=2020,month=10,day=15)
-request = AccountOverview.Request(
+from_date = CashAccountReport.Request.Date(year=2020,month=11,day=15)
+to_date = CashAccountReport.Request.Date(year=2020,month=10,day=15)
+request = CashAccountReport.Request(
     format=CashAccountReport.Format.CSV,
     country='FR',
     lang='fr',
@@ -1082,6 +1084,19 @@ cash_account_report = trading_api.get_cash_account_report(
     raw=False,
 )
 ```
+
+Here are the available parameters for `CashAccountReport.Request` :
+
+|**Parameter**|**Type**|**Description**|
+|:-|:-|:-|
+|format|CashAccountReport.Format|Wanted format : <br>`CSV`<br>`HTML`<br>`PDF`<br>`XLS`|
+|country|str|Country name, like : `FR`|
+|lang|int|Language, like : `fr`|
+|from_date|CashAccountReport.Request.Date|Events starting after this date.|
+|to_date|CashAccountReport.Request.Date|Events before this date.|
+
+Exact definitions of `CashAccountReport` and `CashAccountReport.Request` are in this file :
+[trading.proto](protos/degiro_connector/trading/pb/trading.proto)
 
 For a more comprehensive example :
 [cash_account_report.py](examples/trading/cash_account_report.py)
@@ -1509,6 +1524,8 @@ request = Agenda.Request()
 request.start_date.FromJsonString('2021-06-21T22:00:00Z')
 request.end_date.FromJsonString('2021-11-28T23:00:00Z')
 request.calendar_type = Agenda.CalendarType.DIVIDEND_CALENDAR
+request.offset = 0
+request.limit = 25
 
 # FETCH DATA
 agenda = trading_api.get_agenda(
@@ -1517,7 +1534,22 @@ agenda = trading_api.get_agenda(
 )
 ```
 
-Available options for `Agenda.Request` are in this file :
+Here are the available parameters for `Agenda.Request` :
+
+|**Parameter**|**Type**|**Description**|
+|:-|:-|:-|
+|calendar_type|Agenda.CalendarType|Type of agenda : <br>`DIVIDEND_CALENDAR`<br>`ECONOMIC_CALENDAR`<br>`EARNINGS_CALENDAR`<br>`HOLIDAY_CALENDAR`<br>`IPO_CALENDAR`<br>`SPLIT_CALENDAR`|
+|offset|int|-|
+|limit|int|-|
+|order_by_desc|bool|-|
+|start_date|Timestamp|Events starting after this date.|
+|end_date|Timestamp|Events before this date.|
+|company_name|str|Filter used on the events description.|
+|countries|str|Comma separated list of countries like : `FR,US`|
+|classifications|str|Comma separated list of sectors like : `GovernmentSector,ExternalSector`|
+|units|str|Comma separated list of units like : `Acre,Barrel`|
+
+Exact definitions of `Agenda` and `Agenda.Request` are in this file :
 [trading.proto](protos/degiro_connector/trading/pb/trading.proto)
 
 For a more comprehensive example :
