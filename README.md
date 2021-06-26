@@ -13,10 +13,10 @@ Here are the features you can access through this library :
 
 |**Endpoint**|**Feature(s)**|
 |:-|:-|
-|AccountCashReport|Export cash movements in a specific format : <br>CSV<br>HTML<br>PDF<br>XLS|
+|AccountCashReport|Export cash movements in a specific format : CSV, HTML, PDF or XLS.|
 |AccountInfo|Retrieve a table containing : "clientId" and Currencies.|
 |AccountOverview|Retrieve all the CashMovements between two dates.|
-|Agenda|Crucial events regarding products : <br>Dividend<br>Economic<br>Earnings<br>Holiday<br>IPO<br>Split|
+|Agenda|Crucial events regarding products : Dividend, Economic, Earnings, Holiday, IPO or Split.|
 |Bonds<br>ETFs<br>Funds<br>Futures<br>Leverageds<br>Lookup<br>Options<br>Stocks<br>Warrants|Search list of products according their name, type and other criterias. <br> For instance all the stocks from NASDAQ 100.|
 |Chart|Retrieve chart data.|
 |ClientDetails|Retrieve a table containing : "clientId", "intAccount" and other account information.|
