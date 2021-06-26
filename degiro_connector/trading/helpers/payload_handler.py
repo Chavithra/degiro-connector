@@ -335,7 +335,6 @@ def agenda_to_grpc(
     return agenda
 
 
-
 def checking_response_to_grpc(payload: dict) -> Order.CheckingResponse:
     checking_response = Order.CheckingResponse()
     checking_response.response_datetime.GetCurrentTime()

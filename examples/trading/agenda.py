@@ -1,5 +1,4 @@
 # IMPORTATIONS
-import datetime
 import json
 import logging
 
@@ -37,6 +36,8 @@ request = Agenda.Request()
 request.start_date.FromJsonString('2021-06-21T22:00:00Z')
 request.end_date.FromJsonString('2021-11-28T23:00:00Z')
 request.calendar_type = Agenda.CalendarType.DIVIDEND_CALENDAR
+request.offset = 0
+request.limit = 25  # 0 < limit <= 100
 
 # FETCH DATA
 agenda = trading_api.get_agenda(
