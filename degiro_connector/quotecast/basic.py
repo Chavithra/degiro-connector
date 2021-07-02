@@ -11,7 +11,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
 class Basic:
-    """ Tools to consume Degiro's QuoteCast API.
+    """Tools to consume Degiro's QuoteCast API.
 
     Same operations than "utilities" but with automatic management of :
         * user_token
@@ -64,9 +64,7 @@ class Basic:
         user_token = self._user_token
 
         return utilities.get_session_id(
-            user_token=user_token,
-            session=session,
-            logger=logger
+            user_token=user_token, session=session, logger=logger
         )
 
     def subscribe(
@@ -104,7 +102,7 @@ class Basic:
         )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # IMPORTATIONS
     import json
     import time
@@ -113,21 +111,23 @@ if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG)
 
     # SETUP CREDENTIALS
-    with open('config/subscription_request.json') as config_file:
+    with open("config/subscription_request.json") as config_file:
         config = json.load(config_file)
-    user_token = config['user_token']
+    user_token = config["user_token"]
 
     # SETUP API
     basic = Basic(user_token=user_token)
 
     # SETUP REQUEST
     request = Quotecast.Request()
-    request.subscriptions['360015751'].extend([
-        'LastDate',
-        'LastTime',
-        'LastPrice',
-        'LastVolume',
-    ])
+    request.subscriptions["360015751"].extend(
+        [
+            "LastDate",
+            "LastTime",
+            "LastPrice",
+            "LastVolume",
+        ]
+    )
 
     # CONNECT
     session_id = basic.get_session_id()

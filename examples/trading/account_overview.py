@@ -13,13 +13,13 @@ from degiro_connector.trading.pb.trading_pb2 import (
 logging.basicConfig(level=logging.DEBUG)
 
 # SETUP CONFIG DICT
-with open('config/config.json') as config_file:
+with open("config/config.json") as config_file:
     config_dict = json.load(config_file)
 
 # SETUP CREDENTIALS
-int_account = config_dict['int_account']
-username = config_dict['username']
-password = config_dict['password']
+int_account = config_dict["int_account"]
+username = config_dict["username"]
+password = config_dict["password"]
 credentials = Credentials(
     int_account=int_account,
     username=username,
@@ -56,9 +56,9 @@ account_overview = trading_api.get_account_overview(
 )
 
 # DISPLAY CASH MOVEMENTS
-for cash_movement in account_overview.values['cashMovements']:
-    print('date:', cash_movement['date'])
-    print('valueDate:', cash_movement['valueDate'])
-    print('productId:', dict(cash_movement).get('productId', 'unknown'))
-    print('currency:', dict(cash_movement).get('currency', 'unknown'))
-    print('change:', dict(cash_movement).get('change', 'unknown'))
+for cash_movement in account_overview.values["cashMovements"]:
+    print("date:", cash_movement["date"])
+    print("valueDate:", cash_movement["valueDate"])
+    print("productId:", dict(cash_movement).get("productId", "unknown"))
+    print("currency:", dict(cash_movement).get("currency", "unknown"))
+    print("change:", dict(cash_movement).get("change", "unknown"))

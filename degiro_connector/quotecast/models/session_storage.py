@@ -14,7 +14,7 @@ class TLSAdapter(requests.adapters.HTTPAdapter):
     def init_poolmanager(self, connections, maxsize, block=False):
         """Create and initialize the urllib3 PoolManager."""
         ctx = ssl.create_default_context()
-        ctx.set_ciphers('DEFAULT@SECLEVEL=1')
+        ctx.set_ciphers("DEFAULT@SECLEVEL=1")
 
         # FIX #33770129
         # https://stackoverflow.com/questions/33770129/how-do-i-disable-the-ssl-check-in-python-3-x
@@ -31,26 +31,20 @@ class TLSAdapter(requests.adapters.HTTPAdapter):
 
 
 class SessionStorage:
-    """ Handle the Requests Session objects in a threadsafe manner. """
+    """Handle the Requests Session objects in a threadsafe manner."""
 
     @property
     def session(self) -> requests.Session:
-        self.__logger.debug(
-            'session:getter: %s',
-            threading.current_thread().name
-        )
+        self.__logger.debug("session:getter: %s", threading.current_thread().name)
 
-        if not hasattr(self.__local_storage, 'session'):
+        if not hasattr(self.__local_storage, "session"):
             self.__local_storage.session = self.build_session()
 
         return self.__local_storage.session
 
     @session.setter
     def session(self, session: requests.Session):
-        self.__logger.debug(
-            'session:setter: %s',
-            threading.current_thread().name
-        )
+        self.__logger.debug("session:setter: %s", threading.current_thread().name)
 
         self.__local_storage.session = session
 
@@ -76,7 +70,7 @@ class SessionStorage:
         session = requests.Session()
 
         # FIX #61631955
-        session.mount('https://', TLSAdapter())
+        session.mount("https://", TLSAdapter())
 
         if isinstance(headers, dict):
             session.headers.update(headers)
@@ -91,10 +85,7 @@ class SessionStorage:
         return session
 
     def reset_session(self, headers: dict = None, hooks: dict = None):
-        self.__local_storage.session = self.build_session(
-            headers=headers,
-            hooks=hooks
-        )
+        self.__local_storage.session = self.build_session(headers=headers, hooks=hooks)
 
     def __init__(self, headers: dict = None, hooks: dict = None):
         self.__logger = logging.getLogger(self.__module__)

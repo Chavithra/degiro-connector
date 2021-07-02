@@ -9,13 +9,13 @@ from degiro_connector.trading.pb.trading_pb2 import Credentials
 logging.basicConfig(level=logging.DEBUG)
 
 # SETUP CONFIG DICT
-with open('config/config.json') as config_file:
+with open("config/config.json") as config_file:
     config_dict = json.load(config_file)
 
 # SETUP CREDENTIALS
-int_account = config_dict['int_account']
-username = config_dict['username']
-password = config_dict['password']
+int_account = config_dict["int_account"]
+username = config_dict["username"]
+password = config_dict["password"]
 credentials = Credentials(
     int_account=int_account,
     username=username,
@@ -33,11 +33,11 @@ favourites_list = trading_api.get_favourites_list(raw=False)
 
 # DISPLAY - MESSAGE
 for list in favourites_list.values:
-    print('id:', list.id)
-    print('name:', list.name)
-    print('is_default:', list.is_default)
-    print('product_ids:', list.product_ids)
-    print('-')
+    print("id:", list.id)
+    print("name:", list.name)
+    print("is_default:", list.is_default)
+    print("product_ids:", list.product_ids)
+    print("-")
 
 # FETCH DATA - DICT
 favourites_list_dict = trading_api.get_favourites_list(raw=True)

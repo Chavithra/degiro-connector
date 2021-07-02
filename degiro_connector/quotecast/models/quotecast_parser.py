@@ -10,7 +10,7 @@ from typing import Dict, List, Union
 
 
 class QuotecastParser:
-    """ Handle the payload returned from this endpoint :
+    """Handle the payload returned from this endpoint :
 
     "https://degiro.quotecast.vwdservices.com/CORS/{session_id}"
 
@@ -151,7 +151,7 @@ class QuotecastParser:
         references: Dict[int, List[str]] = None,
         ticker: Ticker = None,
     ) -> Ticker:
-        """ Build or update a Ticker metrics using a Quotecast object.
+        """Build or update a Ticker metrics using a Quotecast object.
 
         Only the metrics which can be converted to float are supported.
 
@@ -195,59 +195,53 @@ class QuotecastParser:
         # SETUP PRODUCTS & METRICS
         message_array = json.loads(quotecast.json_data)
         for message in message_array:
-            if message['m'] == 'un':
-                reference = message['v'][0]
-                value = message['v'][1]
+            if message["m"] == "un":
+                reference = message["v"][0]
+                value = message["v"][1]
                 product, metric = references[reference]
                 ticker.products[product].metrics[metric] = value
-            elif message['m'] == 'us':
-                reference = message['v'][0]
-                value = message['v'][1]
+            elif message["m"] == "us":
+                reference = message["v"][0]
+                value = message["v"][1]
                 product, metric = references[reference]
 
-                if value[4] == '-':
+                if value[4] == "-":
                     date = datetime.datetime.strptime(
                         value,
-                        '%Y-%m-%d',
+                        "%Y-%m-%d",
                     )
                     value = datetime.datetime.timestamp(date)
                     ticker.products[product].metrics[metric] = value
-                elif value[2] == ':':
+                elif value[2] == ":":
                     time = datetime.time.fromisoformat(value)
-                    value = \
-                        time.hour * 3600 \
-                        + time.minute * 60 \
-                        + time.second
+                    value = time.hour * 3600 + time.minute * 60 + time.second
                     ticker.products[product].metrics[metric] = value
                 else:
                     # NOT CONVERTIBLE TO FLOAT
                     raise RuntimeWarning(
-                        'Unsupported string metric : '
-                        f'{metric} = {message}'
+                        "Unsupported string metric : " f"{metric} = {message}"
                     )
-            elif message['m'] == 'a_req':
-                references[message['v'][1]] = message['v'][0].rsplit(
-                    sep='.',
+            elif message["m"] == "a_req":
+                references[message["v"][1]] = message["v"][0].rsplit(
+                    sep=".",
                     maxsplit=1,
                 )
-            elif message['m'] == 'a_rel':
+            elif message["m"] == "a_rel":
                 delete_list = []
                 for reference in references:
-                    if references[reference] == message['v'][0]:
+                    if references[reference] == message["v"][0]:
                         delete_list.append(reference)
 
                 for reference in delete_list:
                     del references[reference]
-            elif message['m'] == 'h':
+            elif message["m"] == "h":
                 pass
-            elif message['m'] == 'ue':
+            elif message["m"] == "ue":
                 pass
-            elif message['m'] == 'd':
-                raise AttributeError(
-                    f'Subscription rejected : {message}'
-                )
+            elif message["m"] == "d":
+                raise AttributeError(f"Subscription rejected : {message}")
             else:
-                raise AttributeError(f'Unknown metric : {message}')
+                raise AttributeError(f"Unknown metric : {message}")
 
         # SETUP PRODUCT LIST
         ticker.product_list.extend(ticker.products)
@@ -272,9 +266,10 @@ class QuotecastParser:
         return ticker_df
 
     @property
-    def ticker_dict(self) -> Dict[
-        Union[str, int],  # VWD_ID
-        Dict[str, Union[str, int]]  # METRICS : NAME / VALUE
+    def ticker_dict(
+        self,
+    ) -> Dict[
+        Union[str, int], Dict[str, Union[str, int]]  # VWD_ID  # METRICS : NAME / VALUE
     ]:
         ticker = self.__ticker
         ticker_dict = pb_handler.ticker_to_dict(ticker=ticker)
@@ -313,7 +308,7 @@ class QuotecastParser:
         self.__ticker = ticker
 
     def rebuild_request(self) -> Quotecast.Request:
-        """ Rebuild the request from history (self.__references).
+        """Rebuild the request from history (self.__references).
 
         Returns:
             Quotecast.Request:
@@ -329,7 +324,8 @@ class QuotecastParser:
         return request
 
 
-if __name__ == '__main__':
-    data = \
-        '[{"m":"h"},{"m":"a_req","v":["360015751.LastPrice",101]},' \
+if __name__ == "__main__":
+    data = (
+        '[{"m":"h"},{"m":"a_req","v":["360015751.LastPrice",101]},'
         '{"m":"un","v":[101,119.900000]}]'
+    )

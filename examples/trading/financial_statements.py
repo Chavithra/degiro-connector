@@ -9,12 +9,12 @@ from degiro_connector.trading.pb.trading_pb2 import Credentials
 logging.basicConfig(level=logging.DEBUG)
 
 # SETUP CONFIG DICT
-with open('config/config.json') as config_file:
+with open("config/config.json") as config_file:
     config_dict = json.load(config_file)
 
 # SETUP CREDENTIALS
-username = config_dict['username']
-password = config_dict['password']
+username = config_dict["username"]
+password = config_dict["password"]
 credentials = Credentials(
     int_account=None,
     username=username,
@@ -28,7 +28,7 @@ trading_api = TradingAPI(credentials=credentials)
 trading_api.connect()
 
 # FETCH DATA
-product_isin = 'FR0000131906'
+product_isin = "FR0000131906"
 financial_statements = trading_api.get_financial_statements(
     product_isin=product_isin,
     raw=True,

@@ -31,24 +31,15 @@ from typing import Union
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 __PRODUCT_SEARCH_REQUEST_URL_MATCHING = {
-    ProductSearch.RequestBonds.DESCRIPTOR.full_name:
-        urls.PRODUCT_SEARCH_BONDS,
-    ProductSearch.RequestETFs.DESCRIPTOR.full_name:
-        urls.PRODUCT_SEARCH_ETFS,
-    ProductSearch.RequestFunds.DESCRIPTOR.full_name:
-        urls.PRODUCT_SEARCH_FUNDS,
-    ProductSearch.RequestFutures.DESCRIPTOR.full_name:
-        urls.PRODUCT_SEARCH_FUTURES,
-    ProductSearch.RequestLeverageds.DESCRIPTOR.full_name:
-        urls.PRODUCT_SEARCH_LEVERAGEDS,
-    ProductSearch.RequestLookup.DESCRIPTOR.full_name:
-        urls.PRODUCT_SEARCH_LOOKUP,
-    ProductSearch.RequestOptions.DESCRIPTOR.full_name:
-        urls.PRODUCT_SEARCH_OPTIONS,
-    ProductSearch.RequestStocks.DESCRIPTOR.full_name:
-        urls.PRODUCT_SEARCH_STOCKS,
-    ProductSearch.RequestWarrants.DESCRIPTOR.full_name:
-        urls.PRODUCT_SEARCH_WARRANTS,
+    ProductSearch.RequestBonds.DESCRIPTOR.full_name: urls.PRODUCT_SEARCH_BONDS,
+    ProductSearch.RequestETFs.DESCRIPTOR.full_name: urls.PRODUCT_SEARCH_ETFS,
+    ProductSearch.RequestFunds.DESCRIPTOR.full_name: urls.PRODUCT_SEARCH_FUNDS,
+    ProductSearch.RequestFutures.DESCRIPTOR.full_name: urls.PRODUCT_SEARCH_FUTURES,
+    ProductSearch.RequestLeverageds.DESCRIPTOR.full_name: urls.PRODUCT_SEARCH_LEVERAGEDS,
+    ProductSearch.RequestLookup.DESCRIPTOR.full_name: urls.PRODUCT_SEARCH_LOOKUP,
+    ProductSearch.RequestOptions.DESCRIPTOR.full_name: urls.PRODUCT_SEARCH_OPTIONS,
+    ProductSearch.RequestStocks.DESCRIPTOR.full_name: urls.PRODUCT_SEARCH_STOCKS,
+    ProductSearch.RequestWarrants.DESCRIPTOR.full_name: urls.PRODUCT_SEARCH_WARRANTS,
 }
 
 
@@ -57,7 +48,7 @@ def build_logger() -> logging.Logger:
 
 
 def build_session(headers: dict = None) -> requests.Session:
-    """ Setup a "requests.Session" object.
+    """Setup a "requests.Session" object.
 
     Args:
         headers (dict, optional):
@@ -83,7 +74,7 @@ def get_session_id(
     session: requests.Session = None,
     logger: logging.Logger = None,
 ) -> str:
-    """ Establish a connection with Degiro's Trading API.
+    """Establish a connection with Degiro's Trading API.
 
     Args:
         credentials (Credentials):
@@ -118,24 +109,24 @@ def get_session_id(
     if session is None:
         session = build_session()
 
-    if credentials.HasField('oneof_2fa') is True:
-        url = urls.LOGIN + '/totp'
+    if credentials.HasField("oneof_2fa") is True:
+        url = urls.LOGIN + "/totp"
         username = credentials.username
         password = credentials.password
 
-        if credentials.HasField('totp_secret_key') is True:
+        if credentials.HasField("totp_secret_key") is True:
             totp_secret_key = credentials.totp_secret_key
             one_time_password = str(otp.get_totp(totp_secret_key))
         else:
             one_time_password = credentials.one_time_password
 
         payload_dict = {
-            'username': username,
-            'password': password,
-            'isPassCodeReset': False,
-            'isRedirectToMobile': False,
-            'queryParams': {},
-            'oneTimePassword': one_time_password,
+            "username": username,
+            "password": password,
+            "isPassCodeReset": False,
+            "isRedirectToMobile": False,
+            "queryParams": {},
+            "oneTimePassword": one_time_password,
         }
     else:
         url = urls.LOGIN
@@ -143,15 +134,15 @@ def get_session_id(
         password = credentials.password
 
         payload_dict = {
-            'username': username,
-            'password': password,
-            'isPassCodeReset': False,
-            'isRedirectToMobile': False,
-            'queryParams': {},
+            "username": username,
+            "password": password,
+            "isPassCodeReset": False,
+            "isRedirectToMobile": False,
+            "queryParams": {},
         }
 
     request = requests.Request(
-        method='POST',
+        method="POST",
         url=url,
         json=payload_dict,
     )
@@ -162,21 +153,19 @@ def get_session_id(
         response = session.send(prepped, verify=False)
         response_dict = response.json()
     except Exception as e:
-        logger.fatal('response:%s', response)
+        logger.fatal("response:%s", response)
         raise ConnectionError(e)
 
-    logger.info('get_session_id:response_dict: %s', response_dict)
+    logger.info("get_session_id:response_dict: %s", response_dict)
 
-    if 'sessionId' in response_dict:
-        return response_dict['sessionId']
-    elif 'status' in response_dict and response_dict['status'] == 6:
-        logger.fatal('response_dict:%s', response_dict)
-        raise ConnectionError(
-            '2FA is enabled, please provide the "totp_secret".'
-        )
+    if "sessionId" in response_dict:
+        return response_dict["sessionId"]
+    elif "status" in response_dict and response_dict["status"] == 6:
+        logger.fatal("response_dict:%s", response_dict)
+        raise ConnectionError('2FA is enabled, please provide the "totp_secret".')
     else:
-        logger.fatal('response_dict:%s', response_dict)
-        raise ConnectionError('No session id returned.')
+        logger.fatal("response_dict:%s", response_dict)
+        raise ConnectionError("No session id returned.")
 
 
 def logout(
@@ -192,15 +181,15 @@ def logout(
 
     int_account = credentials.int_account
     url = urls.LOGOUT
-    url = f'{url};jsessionid={session_id}'
+    url = f"{url};jsessionid={session_id}"
 
     params = {
-        'intAccount': int_account,
-        'sessionId': session_id,
+        "intAccount": int_account,
+        "sessionId": session_id,
     }
 
     request = requests.Request(
-        method='PUT',
+        method="PUT",
         url=url,
         params=params,
     )
@@ -226,7 +215,7 @@ def get_update(
     session: requests.Session = None,
     logger: logging.Logger = None,
 ) -> Union[dict, Update]:
-    """ Retrieve information from Degiro's Trading Update endpoint.
+    """Retrieve information from Degiro's Trading Update endpoint.
 
     Args:
         request (Update.RequestList):
@@ -290,15 +279,13 @@ def get_update(
 
     int_account = credentials.int_account
     url = urls.UPDATE
-    url = f'{url}/{int_account};jsessionid={session_id}'
+    url = f"{url}/{int_account};jsessionid={session_id}"
 
-    params = payload_handler.update_request_list_to_api(
-        request_list=request_list
-    )
-    params['intAccount'] = int_account
-    params['sessionId'] = session_id
+    params = payload_handler.update_request_list_to_api(request_list=request_list)
+    params["intAccount"] = int_account
+    params["sessionId"] = session_id
 
-    request = requests.Request(method='GET', url=url, params=params)
+    request = requests.Request(method="GET", url=url, params=params)
     prepped = session.prepare_request(request)
     response_raw = None
 
@@ -313,7 +300,7 @@ def get_update(
                 payload=response_dict,
             )
     except Exception as e:
-        logger.fatal('error')
+        logger.fatal("error")
         logger.fatal(response_raw.status_code)
         logger.fatal(response_raw.text)
         logger.fatal(e)
@@ -337,17 +324,17 @@ def check_order(
 
     int_account = credentials.int_account
     url = urls.ORDER_CHECK
-    url = f'{url};jsessionid={session_id}'
+    url = f"{url};jsessionid={session_id}"
 
     params = {
-        'intAccount': int_account,
-        'sessionId': session_id,
+        "intAccount": int_account,
+        "sessionId": session_id,
     }
 
     order_dict = payload_handler.order_to_api(order=order)
 
     request = requests.Request(
-        method='POST',
+        method="POST",
         url=url,
         json=order_dict,
         params=params,
@@ -364,9 +351,11 @@ def check_order(
         logger.fatal(e)
         return False
 
-    if isinstance(response_dict, dict) \
-            and 'data' in response_dict \
-            and 'confirmationId' in response_dict['data']:
+    if (
+        isinstance(response_dict, dict)
+        and "data" in response_dict
+        and "confirmationId" in response_dict["data"]
+    ):
         if raw is True:
             response = response_dict
         else:
@@ -397,17 +386,17 @@ def confirm_order(
 
     int_account = credentials.int_account
     url = urls.ORDER_CONFIRM
-    url = f'{url}/{confirmation_id};jsessionid={session_id}'
+    url = f"{url}/{confirmation_id};jsessionid={session_id}"
 
     params = {
-        'intAccount': int_account,
-        'sessionId': session_id,
+        "intAccount": int_account,
+        "sessionId": session_id,
     }
 
     order_dict = payload_handler.order_to_api(order=order)
 
     request = requests.Request(
-        method='POST',
+        method="POST",
         url=url,
         json=order_dict,
         params=params,
@@ -424,14 +413,16 @@ def confirm_order(
         logger.fatal(e)
         return False
 
-    if isinstance(response_dict, dict) \
-            and 'data' in response_dict \
-            and 'orderId' in response_dict['data']:
+    if (
+        isinstance(response_dict, dict)
+        and "data" in response_dict
+        and "orderId" in response_dict["data"]
+    ):
         if raw is True:
-            order.id = response_dict['data']['orderId']
+            order.id = response_dict["data"]["orderId"]
             response = response_dict
         else:
-            order.id = response_dict['data']['orderId']
+            order.id = response_dict["data"]["orderId"]
             response = payload_handler.confirmation_response_to_grpc(
                 payload=response_dict,
             )
@@ -456,24 +447,24 @@ def update_order(
     int_account = credentials.int_account
     order_id = order.id
     url = urls.ORDER_UPDATE
-    url = f'{url}/{order_id};jsessionid={session_id}'
+    url = f"{url}/{order_id};jsessionid={session_id}"
 
     params = {
-        'intAccount': int_account,
-        'sessionId': session_id,
+        "intAccount": int_account,
+        "sessionId": session_id,
     }
 
     order_dict = {
-        'buySell': order.action,
-        'orderType': order.order_type,
-        'price': order.price,
-        'productId': order.product_id,
-        'size': order.size,
-        'timeType': order.time_type,
+        "buySell": order.action,
+        "orderType": order.order_type,
+        "price": order.price,
+        "productId": order.product_id,
+        "size": order.size,
+        "timeType": order.time_type,
     }
 
     request = requests.Request(
-        method='PUT',
+        method="PUT",
         url=url,
         json=order_dict,
         params=params,
@@ -506,14 +497,14 @@ def delete_order(
 
     int_account = credentials.int_account
     url = urls.ORDER_DELETE
-    url = f'{url}/{order_id};jsessionid={session_id}'
+    url = f"{url}/{order_id};jsessionid={session_id}"
 
     params = {
-        'intAccount': int_account,
-        'sessionId': session_id,
+        "intAccount": int_account,
+        "sessionId": session_id,
     }
 
-    request = requests.Request(method='DELETE', url=url, params=params)
+    request = requests.Request(method="DELETE", url=url, params=params)
     prepped = session.prepare_request(request)
     response = None
 
@@ -540,9 +531,9 @@ def get_config(
 
     url = urls.CONFIG
 
-    request = requests.Request(method='GET', url=url)
+    request = requests.Request(method="GET", url=url)
     prepped = session.prepare_request(request)
-    prepped.headers['cookie'] = 'JSESSIONID=' + session_id
+    prepped.headers["cookie"] = "JSESSIONID=" + session_id
 
     try:
         response = session.send(prepped, verify=False)
@@ -554,7 +545,7 @@ def get_config(
     if type(response) != dict:
         return False
 
-    return response.get('data', False)
+    return response.get("data", False)
 
 
 def get_client_details(
@@ -570,10 +561,10 @@ def get_client_details(
     url = urls.CLIENT_DETAILS
 
     params = {
-        'sessionId': session_id,
+        "sessionId": session_id,
     }
 
-    request = requests.Request(method='GET', url=url, params=params)
+    request = requests.Request(method="GET", url=url, params=params)
     prepped = session.prepare_request(request)
     response = session.send(prepped, verify=False)
 
@@ -600,9 +591,9 @@ def get_account_info(
         session = build_session()
 
     int_account = credentials.int_account
-    url = f'{urls.ACCOUNT_INFO}/{int_account};jsessionid={session_id}'
+    url = f"{urls.ACCOUNT_INFO}/{int_account};jsessionid={session_id}"
 
-    request = requests.Request(method='GET', url=url)
+    request = requests.Request(method="GET", url=url)
     prepped = session.prepare_request(request)
     response = session.send(prepped, verify=False)
 
@@ -620,7 +611,7 @@ def get_orders_history(
     session: requests.Session = None,
     logger: logging.Logger = None,
 ) -> Union[dict, Update]:
-    """ Retrieve history about orders.
+    """Retrieve history about orders.
 
     Args:
         request (OrdersHistory.Request):
@@ -668,10 +659,10 @@ def get_orders_history(
     params = payload_handler.orders_history_request_to_api(
         request=request,
     )
-    params['intAccount'] = credentials.int_account
-    params['sessionId'] = session_id
+    params["intAccount"] = credentials.int_account
+    params["sessionId"] = session_id
 
-    request = requests.Request(method='GET', url=url, params=params)
+    request = requests.Request(method="GET", url=url, params=params)
     prepped = session.prepare_request(request)
     response_raw = None
 
@@ -702,7 +693,7 @@ def get_transactions_history(
     session: requests.Session = None,
     logger: logging.Logger = None,
 ) -> Union[dict, Update]:
-    """ Retrieve history about transactions.
+    """Retrieve history about transactions.
 
     Args:
         request (TransactionsHistory.Request):
@@ -750,10 +741,10 @@ def get_transactions_history(
     params = payload_handler.transactions_history_request_to_api(
         request=request,
     )
-    params['intAccount'] = credentials.int_account
-    params['sessionId'] = session_id
+    params["intAccount"] = credentials.int_account
+    params["sessionId"] = session_id
 
-    request = requests.Request(method='GET', url=url, params=params)
+    request = requests.Request(method="GET", url=url, params=params)
     prepped = session.prepare_request(request)
     response_raw = None
 
@@ -784,7 +775,7 @@ def get_account_overview(
     session: requests.Session = None,
     logger: logging.Logger = None,
 ) -> Union[dict, AccountOverview]:
-    """ Retrieve information about the account.
+    """Retrieve information about the account.
 
     Args:
         request (AccountOverview.Request):
@@ -831,10 +822,10 @@ def get_account_overview(
     params = payload_handler.account_overview_request_to_api(
         request=request,
     )
-    params['intAccount'] = credentials.int_account
-    params['sessionId'] = session_id
+    params["intAccount"] = credentials.int_account
+    params["sessionId"] = session_id
 
-    request = requests.Request(method='GET', url=url, params=params)
+    request = requests.Request(method="GET", url=url, params=params)
     prepped = session.prepare_request(request)
     response_raw = None
 
@@ -875,7 +866,7 @@ def product_search(
     session: requests.Session = None,
     logger: logging.Logger = None,
 ) -> Union[dict, ProductSearch]:
-    """ Search products.
+    """Search products.
 
     Args:
         request (StockList.Request):
@@ -920,17 +911,15 @@ def product_search(
     if session is None:
         session = build_session()
 
-    url = __PRODUCT_SEARCH_REQUEST_URL_MATCHING[
-        request.DESCRIPTOR.full_name
-    ]
+    url = __PRODUCT_SEARCH_REQUEST_URL_MATCHING[request.DESCRIPTOR.full_name]
 
     params = payload_handler.product_search_request_to_api(
         request=request,
     )
-    params['intAccount'] = credentials.int_account
-    params['sessionId'] = session_id
+    params["intAccount"] = credentials.int_account
+    params["sessionId"] = session_id
 
-    request = requests.Request(method='GET', url=url, params=params)
+    request = requests.Request(method="GET", url=url, params=params)
     prepped = session.prepare_request(request)
     response_raw = None
 
@@ -960,7 +949,7 @@ def get_favourites_list(
     session: requests.Session = None,
     logger: logging.Logger = None,
 ) -> Union[dict, Favourites]:
-    """ Retrieve the lists of favourite products.
+    """Retrieve the lists of favourite products.
 
     Args:
         session_id (str):
@@ -990,11 +979,11 @@ def get_favourites_list(
     url = urls.PRODUCT_FAVOURITES_LISTS
 
     params = {
-        'intAccount': int_account,
-        'sessionId': session_id,
+        "intAccount": int_account,
+        "sessionId": session_id,
     }
 
-    request = requests.Request(method='GET', url=url, params=params)
+    request = requests.Request(method="GET", url=url, params=params)
     prepped = session.prepare_request(request)
     response_raw = None
 
@@ -1024,7 +1013,7 @@ def get_products_config(
     session: requests.Session = None,
     logger: logging.Logger = None,
 ) -> Union[dict, ProductSearch.Config]:
-    """ Fetch the product search config table.
+    """Fetch the product search config table.
 
     No credentials or logging seems to be required for this endpoint.
     Just adding the credentials and session_id because the website is
@@ -1058,11 +1047,11 @@ def get_products_config(
     url = urls.PRODUCTS_CONFIG
 
     params = {
-        'intAccount': int_account,
-        'sessionId': session_id,
+        "intAccount": int_account,
+        "sessionId": session_id,
     }
 
-    request = requests.Request(method='GET', url=url, params=params)
+    request = requests.Request(method="GET", url=url, params=params)
     prepped = session.prepare_request(request)
     response_raw = None
 
@@ -1093,7 +1082,7 @@ def get_products_info(
     session: requests.Session = None,
     logger: logging.Logger = None,
 ) -> Union[dict, ProductsInfo]:
-    """ Search for products using their ids.
+    """Search for products using their ids.
 
     Args:
         request (ProductsInfo.Request):
@@ -1128,14 +1117,14 @@ def get_products_info(
     url = urls.PRODUCTS_INFO
 
     params = {
-        'intAccount': int_account,
-        'sessionId': session_id,
+        "intAccount": int_account,
+        "sessionId": session_id,
     }
 
     payload = payload_handler.products_info_to_api(request=request)
 
     request = requests.Request(
-        method='POST',
+        method="POST",
         url=url,
         json=payload,
         params=params,
@@ -1177,16 +1166,16 @@ def get_company_ratios(
         session = build_session()
 
     int_account = credentials.int_account
-    url = f'{urls.COMPANY_RATIOS}/{product_isin}'
+    url = f"{urls.COMPANY_RATIOS}/{product_isin}"
 
     params = {
-        'intAccount': int_account,
-        'sessionId': session_id,
+        "intAccount": int_account,
+        "sessionId": session_id,
     }
 
-    request = requests.Request(method='GET', url=url, params=params)
+    request = requests.Request(method="GET", url=url, params=params)
     prepped = session.prepare_request(request)
-    prepped.headers['cookie'] = 'JSESSIONID=' + session_id
+    prepped.headers["cookie"] = "JSESSIONID=" + session_id
 
     response_raw = None
 
@@ -1201,7 +1190,7 @@ def get_company_ratios(
                 payload=response_dict,
             )
     except Exception as e:
-        logger.fatal('error')
+        logger.fatal("error")
         logger.fatal(response_raw.status_code)
         logger.fatal(response_raw.text)
         logger.fatal(e)
@@ -1224,16 +1213,16 @@ def get_company_profile(
         session = build_session()
 
     int_account = credentials.int_account
-    url = f'{urls.COMPANY_PROFILE}/{product_isin}'
+    url = f"{urls.COMPANY_PROFILE}/{product_isin}"
 
     params = {
-        'intAccount': int_account,
-        'sessionId': session_id,
+        "intAccount": int_account,
+        "sessionId": session_id,
     }
 
-    request = requests.Request(method='GET', url=url, params=params)
+    request = requests.Request(method="GET", url=url, params=params)
     prepped = session.prepare_request(request)
-    prepped.headers['cookie'] = 'JSESSIONID=' + session_id
+    prepped.headers["cookie"] = "JSESSIONID=" + session_id
 
     response_raw = None
 
@@ -1248,7 +1237,7 @@ def get_company_profile(
                 payload=response_dict,
             )
     except Exception as e:
-        logger.fatal('error')
+        logger.fatal("error")
         logger.fatal(response_raw.status_code)
         logger.fatal(response_raw.text)
         logger.fatal(e)
@@ -1271,16 +1260,16 @@ def get_financial_statements(
         session = build_session()
 
     int_account = credentials.int_account
-    url = f'{urls.FINANCIAL_STATEMENTS}/{product_isin}'
+    url = f"{urls.FINANCIAL_STATEMENTS}/{product_isin}"
 
     params = {
-        'intAccount': int_account,
-        'sessionId': session_id,
+        "intAccount": int_account,
+        "sessionId": session_id,
     }
 
-    request = requests.Request(method='GET', url=url, params=params)
+    request = requests.Request(method="GET", url=url, params=params)
     prepped = session.prepare_request(request)
-    prepped.headers['cookie'] = 'JSESSIONID=' + session_id
+    prepped.headers["cookie"] = "JSESSIONID=" + session_id
 
     response_raw = None
 
@@ -1295,7 +1284,7 @@ def get_financial_statements(
                 payload=response_dict,
             )
     except Exception as e:
-        logger.fatal('error')
+        logger.fatal("error")
         logger.fatal(response_raw.status_code)
         logger.fatal(response_raw.text)
         logger.fatal(e)
@@ -1322,12 +1311,12 @@ def get_latest_news(
     params = payload_handler.latest_news_request_to_api(
         request=request,
     )
-    params['intAccount'] = credentials.int_account
-    params['sessionId'] = session_id
+    params["intAccount"] = credentials.int_account
+    params["sessionId"] = session_id
 
-    request = requests.Request(method='GET', url=url, params=params)
+    request = requests.Request(method="GET", url=url, params=params)
     prepped = session.prepare_request(request)
-    prepped.headers['cookie'] = 'JSESSIONID=' + session_id
+    prepped.headers["cookie"] = "JSESSIONID=" + session_id
 
     response_raw = None
 
@@ -1342,7 +1331,7 @@ def get_latest_news(
                 payload=response_dict,
             )
     except Exception as e:
-        logger.fatal('error')
+        logger.fatal("error")
         logger.fatal(response_raw.status_code)
         logger.fatal(response_raw.text)
         logger.fatal(e)
@@ -1366,13 +1355,13 @@ def get_top_news_preview(
     url = urls.TOP_NEWS_PREVIEW
 
     params = {
-        'intAccount': credentials.int_account,
-        'sessionId': session_id,
+        "intAccount": credentials.int_account,
+        "sessionId": session_id,
     }
 
-    request = requests.Request(method='GET', url=url, params=params)
+    request = requests.Request(method="GET", url=url, params=params)
     prepped = session.prepare_request(request)
-    prepped.headers['cookie'] = 'JSESSIONID=' + session_id
+    prepped.headers["cookie"] = "JSESSIONID=" + session_id
 
     response_raw = None
 
@@ -1387,7 +1376,7 @@ def get_top_news_preview(
                 payload=response_dict,
             )
     except Exception as e:
-        logger.fatal('error')
+        logger.fatal("error")
         logger.fatal(response_raw.status_code)
         logger.fatal(response_raw.text)
         logger.fatal(e)
@@ -1414,12 +1403,12 @@ def get_news_by_company(
     params = payload_handler.news_by_company_request_to_api(
         request=request,
     )
-    params['intAccount'] = credentials.int_account
-    params['sessionId'] = session_id
+    params["intAccount"] = credentials.int_account
+    params["sessionId"] = session_id
 
-    request = requests.Request(method='GET', url=url, params=params)
+    request = requests.Request(method="GET", url=url, params=params)
     prepped = session.prepare_request(request)
-    prepped.headers['cookie'] = 'JSESSIONID=' + session_id
+    prepped.headers["cookie"] = "JSESSIONID=" + session_id
 
     response_raw = None
 
@@ -1434,7 +1423,7 @@ def get_news_by_company(
                 payload=response_dict,
             )
     except Exception as e:
-        logger.fatal('error')
+        logger.fatal("error")
         logger.fatal(response_raw.status_code)
         logger.fatal(response_raw.text)
         logger.fatal(e)
@@ -1451,7 +1440,7 @@ def get_cash_account_report(
     session: requests.Session = None,
     logger: logging.Logger = None,
 ) -> Union[dict, CashAccountReport]:
-    """ Retrieve information about the account in a specific format.
+    """Retrieve information about the account in a specific format.
 
     Args:
         request (CashAccountReport.Request):
@@ -1498,14 +1487,14 @@ def get_cash_account_report(
         session = build_session()
 
     format = CashAccountReport.Format.Name(request.format)
-    url = f'{urls.CASH_ACCOUNT_REPORT}/{format}'
+    url = f"{urls.CASH_ACCOUNT_REPORT}/{format}"
     params = payload_handler.cash_account_report_request_to_api(
         request=request,
     )
-    params['intAccount'] = credentials.int_account
-    params['sessionId'] = session_id
+    params["intAccount"] = credentials.int_account
+    params["sessionId"] = session_id
 
-    req = requests.Request(method='GET', url=url, params=params)
+    req = requests.Request(method="GET", url=url, params=params)
     prepped = session.prepare_request(req)
     response_raw = None
 
@@ -1546,10 +1535,10 @@ def get_agenda(
     params = payload_handler.agenda_request_to_api(
         request=request,
     )
-    params['intAccount'] = credentials.int_account
-    params['sessionId'] = session_id
+    params["intAccount"] = credentials.int_account
+    params["sessionId"] = session_id
 
-    req = requests.Request(method='GET', url=url, params=params)
+    req = requests.Request(method="GET", url=url, params=params)
     prepped = session.prepare_request(req)
     response_raw = None
 
@@ -1573,34 +1562,32 @@ def get_agenda(
     return response
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # IMPORTATIONS
     import logging
 
     from degiro_connector.trading.pb.trading_pb2 import Credentials
 
     # FETCH CONFIG
-    with open('config.json') as config_file:
+    with open("config.json") as config_file:
         config = json.load(config_file)
 
     # SETUP CREDENTIALS
-    username = config['username']
-    password = config['password']
-    int_account = config['int_account']
+    username = config["username"]
+    password = config["password"]
+    int_account = config["int_account"]
     credentials = Credentials(
-        int_account=int_account,
-        username=username,
-        password=password
+        int_account=int_account, username=username, password=password
     )
 
     # SETUP LOGS
-    log_level = logging._nameToLevel['INFO']
+    log_level = logging._nameToLevel["INFO"]
     log_level = logging.getLevelName(log_level)
     logging.basicConfig(
         level=log_level,
-        format='%(asctime)s %(levelname)-8s %(message)s',
-        datefmt='%Y-%m-%d %H:%M:%S',
-        filename='test2.log',
+        format="%(asctime)s %(levelname)-8s %(message)s",
+        datefmt="%Y-%m-%d %H:%M:%S",
+        filename="test2.log",
     )
     logger = logging.getLogger(__name__)
 

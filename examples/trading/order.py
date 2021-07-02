@@ -9,13 +9,13 @@ from degiro_connector.trading.pb.trading_pb2 import Credentials, Order
 logging.basicConfig(level=logging.DEBUG)
 
 # SETUP CONFIG DICT
-with open('config/config.json') as config_file:
+with open("config/config.json") as config_file:
     config_dict = json.load(config_file)
 
 # SETUP CREDENTIALS
-int_account = config_dict['int_account']
-username = config_dict['username']
-password = config_dict['password']
+int_account = config_dict["int_account"]
+username = config_dict["username"]
+password = config_dict["password"]
 credentials = Credentials(
     int_account=int_account,
     username=username,
@@ -53,8 +53,7 @@ transaction_taxes = checking_response.transaction_taxes
 
 # SEND CONFIRMATION
 confirmation_response = trading_api.confirm_order(
-    confirmation_id=confirmation_id,
-    order=order
+    confirmation_id=confirmation_id, order=order
 )
 
 print(checking_response)

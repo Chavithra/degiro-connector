@@ -28,12 +28,14 @@ def get_files_list(root_path=".") -> List[str]:
 
     for root, directories, files in os.walk(root_path):
         for name in files:
-            if name.endswith(".py") \
-                    and ".tox" not in root \
-                    and ".git" not in root \
-                    and ".egg-info" not in root \
-                    and "\\build\\lib" not in root \
-                    and not name.endswith("setup.py"):
+            if (
+                name.endswith(".py")
+                and ".tox" not in root
+                and ".git" not in root
+                and ".egg-info" not in root
+                and "\\build\\lib" not in root
+                and not name.endswith("setup.py")
+            ):
                 files_list.append(os.path.join(root, name))
 
     return files_list
@@ -46,16 +48,16 @@ def process(files_list: List[str]):
 
     for file_path in files_list:
         if os.path.realpath(file_path) != os.path.realpath(__file__):
-            with open(file_path, 'r+') as f:
+            with open(file_path, "r+") as f:
                 file_source = f.read()
                 replace_string = file_source
                 replace_string = replace_string.replace(
                     " quotecast.",
-                    ' degiro_connector.quotecast.',
+                    " degiro_connector.quotecast.",
                 )
                 replace_string = replace_string.replace(
                     " trading.",
-                    ' degiro_connector.trading.',
+                    " degiro_connector.trading.",
                 )
 
                 if need_manual_update(file_source):

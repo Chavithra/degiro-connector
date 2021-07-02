@@ -2,9 +2,7 @@ import logging
 import urllib3
 
 from degiro_connector.quotecast.basic import Basic
-from degiro_connector.quotecast.models.connection_storage import (
-    ConnectionStorage
-)
+from degiro_connector.quotecast.models.connection_storage import ConnectionStorage
 from degiro_connector.quotecast.models.quotecast_parser import QuotecastParser
 from degiro_connector.quotecast.pb.quotecast_pb2 import Chart, Quotecast
 from typing import Dict, Union
@@ -13,7 +11,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
 class API:
-    """ Tools to consume Degiro's QuoteCast API.
+    """Tools to consume Degiro's QuoteCast API.
 
     Same operations than "Basic" but with "session_id" management.
 
@@ -57,18 +55,15 @@ class API:
         basic = self.basic
         session_id = self.connection_storage.session_id
 
-        return basic.fetch_data(
-            session_id=session_id
-        )
+        return basic.fetch_data(session_id=session_id)
 
     def fetch_metrics(
         self,
         request: Quotecast.Request,
     ) -> Dict[
-        Union[str, int],  # VWD_ID
-        Dict[str, Union[str, int]]  # METRICS : NAME / VALUE
+        Union[str, int], Dict[str, Union[str, int]]  # VWD_ID  # METRICS : NAME / VALUE
     ]:
-        """ Fetch metrics from a request.
+        """Fetch metrics from a request.
 
         If you seek realtime it's better to use "fetch_data".
         Since "fetch_data" consumes less ressources.
@@ -128,7 +123,7 @@ class API:
         )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # IMPORTATIONS
     import json
     import time
@@ -137,21 +132,23 @@ if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG)
 
     # SETUP CREDENTIALS
-    with open('config/subscription_request.json') as config_file:
+    with open("config/subscription_request.json") as config_file:
         config = json.load(config_file)
-    user_token = config['user_token']
+    user_token = config["user_token"]
 
     # SETUP API
     api = API(user_token=user_token)
 
     # SETUP REQUEST
     request = Quotecast.Request()
-    request.subscriptions['360015751'].extend([
-        'LastDate',
-        'LastTime',
-        'LastPrice',
-        'LastVolume',
-    ])
+    request.subscriptions["360015751"].extend(
+        [
+            "LastDate",
+            "LastTime",
+            "LastPrice",
+            "LastVolume",
+        ]
+    )
 
     # CONNECT
     api.connect()

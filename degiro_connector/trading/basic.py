@@ -28,7 +28,7 @@ from degiro_connector.trading.pb.trading_pb2 import (
 
 
 class Basic:
-    """ Tools to consume Degiro's Trading API.
+    """Tools to consume Degiro's Trading API.
 
     Same operations than "utilities" but with automatic management of :
         * credentials
@@ -49,10 +49,7 @@ class Basic:
         self._session_storage = session_storage
 
     def build_session_storage(self) -> SessionStorage:
-        return SessionStorage(
-            headers=Headers.get_headers(),
-            hooks=None
-        )
+        return SessionStorage(headers=Headers.get_headers(), hooks=None)
 
     def __init__(
         self,
@@ -72,9 +69,7 @@ class Basic:
         session = self._session_storage.session
 
         return utilities.get_session_id(
-            credentials=credentials,
-            session=session,
-            logger=logger
+            credentials=credentials, session=session, logger=logger
         )
 
     def logout(self, session_id: str) -> bool:
@@ -513,24 +508,22 @@ class Basic:
         )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # IMPORTATIONS
     import json
 
     from degiro_connector.trading.pb.trading_pb2 import Credentials
 
     # FETCH CONFIG
-    with open('config.json') as config_file:
+    with open("config.json") as config_file:
         config = json.load(config_file)
 
     # SETUP CREDENTIALS
-    username = config['username']
-    password = config['password']
-    int_account = config['int_account']
+    username = config["username"]
+    password = config["password"]
+    int_account = config["int_account"]
     credentials = Credentials(
-        int_account=int_account,
-        username=username,
-        password=password
+        int_account=int_account, username=username, password=password
     )
     # SETUP API
     basic = Basic(credentials=credentials)

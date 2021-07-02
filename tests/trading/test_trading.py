@@ -18,7 +18,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 # SETUP FIXTURES
 
 
-@pytest.fixture(scope='module')
+@pytest.fixture(scope="module")
 def trading_api(credentials) -> TradingAPI:
     trading_api = TradingAPI(credentials=credentials)
     trading_api.connect()
@@ -51,8 +51,8 @@ def test_config_table(user_token, trading_api):
     real_user_token = user_token
     real_session_id = trading_api.connection_storage.session_id
     config_table = trading_api.get_config()
-    user_token = config_table['clientId']
-    session_id = config_table['sessionId']
+    user_token = config_table["clientId"]
+    session_id = config_table["sessionId"]
 
     assert user_token == real_user_token
     assert session_id == real_session_id
@@ -63,13 +63,14 @@ def test_config_table_urls(trading_api):
 
     config_table = trading_api.get_config()
 
-    assert config_table['paUrl'] == \
-        'https://trader.degiro.nl/pa/secure/'
-    assert config_table['productSearchUrl'] == \
-        'https://trader.degiro.nl/product_search/secure/'
-    assert config_table['companiesServiceUrl'] == \
-        'https://trader.degiro.nl/dgtbxdsservice/'
-    assert config_table['reportingUrl'] == \
-        'https://trader.degiro.nl/reporting/secure/'
-    assert config_table['tradingUrl'] == \
-        'https://trader.degiro.nl/trading/secure/'
+    assert config_table["paUrl"] == "https://trader.degiro.nl/pa/secure/"
+    assert (
+        config_table["productSearchUrl"]
+        == "https://trader.degiro.nl/product_search/secure/"
+    )
+    assert (
+        config_table["companiesServiceUrl"]
+        == "https://trader.degiro.nl/dgtbxdsservice/"
+    )
+    assert config_table["reportingUrl"] == "https://trader.degiro.nl/reporting/secure/"
+    assert config_table["tradingUrl"] == "https://trader.degiro.nl/trading/secure/"

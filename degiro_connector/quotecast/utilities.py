@@ -23,7 +23,7 @@ def build_logger() -> logging.Logger:
 
 
 def build_session(headers: dict = None) -> requests.Session:
-    """ Setups a requests.Session object.
+    """Setups a requests.Session object.
 
     Args:
         headers (dict, optional):
@@ -50,7 +50,7 @@ def get_session_id(
     session: requests.Session = None,
     logger: logging.Logger = None,
 ) -> str:
-    """ Retrieves the "session_id" necessary to access the data-stream.
+    """Retrieves the "session_id" necessary to access the data-stream.
 
     Args:
         user_token (int):
@@ -72,18 +72,13 @@ def get_session_id(
         session = build_session()
 
     url = urls.QUOTECAST
-    url = f'{url}/request_session'
+    url = f"{url}/request_session"
     version = urls.QUOTECAST_VERSION
 
-    parameters = {'version': version, 'userToken': user_token}
+    parameters = {"version": version, "userToken": user_token}
     data = '{"referrer":"https://trader.degiro.nl"}'
 
-    request = requests.Request(
-        method='POST',
-        url=url,
-        data=data,
-        params=parameters
-    )
+    request = requests.Request(method="POST", url=url, data=data, params=parameters)
     prepped = session.prepare_request(request=request)
 
     try:
@@ -93,10 +88,10 @@ def get_session_id(
         logger.fatal(e)
         return False
 
-    logger.info('get_session_id:response_dict: %s', response_dict)
+    logger.info("get_session_id:response_dict: %s", response_dict)
 
-    if 'sessionId' in response_dict:
-        return response_dict['sessionId']
+    if "sessionId" in response_dict:
+        return response_dict["sessionId"]
     else:
         return None
 
@@ -106,7 +101,7 @@ def fetch_data(
     session: requests.Session = None,
     logger: logging.Logger = None,
 ) -> Quotecast:
-    """ Fetches data from the feed.
+    """Fetches data from the feed.
 
     Args:
         session_id (str):
@@ -134,9 +129,9 @@ def fetch_data(
     if session is None:
         session = build_session()
 
-    url = f'{urls.QUOTECAST}/{session_id}'
+    url = f"{urls.QUOTECAST}/{session_id}"
 
-    request = requests.Request(method='GET', url=url)
+    request = requests.Request(method="GET", url=url)
     prepped = session.prepare_request(request=request)
 
     start_ns = time.perf_counter_ns()
@@ -163,7 +158,7 @@ def subscribe(
     session: requests.Session = None,
     logger: logging.Logger = None,
 ) -> bool:
-    """ Adds/removes metric from the data-stream.
+    """Adds/removes metric from the data-stream.
 
     Args:
         request (QuotecastAPI.Request):
@@ -206,12 +201,12 @@ def subscribe(
         session = build_session()
 
     url = urls.QUOTECAST
-    url = f'{url}/{session_id}'
+    url = f"{url}/{session_id}"
     data = pb_handler.quotecast_request_to_api(request=request)
 
-    logger.info('subscribe:data %s', data[:100])
+    logger.info("subscribe:data %s", data[:100])
 
-    session_request = requests.Request(method='POST', url=url, data=data)
+    session_request = requests.Request(method="POST", url=url, data=data)
     prepped = session.prepare_request(request=session_request)
 
     try:
@@ -236,7 +231,7 @@ def get_chart(
     session: requests.Session = None,
     logger: logging.Logger = None,
 ) -> Chart:
-    """ Fetches chart's data.
+    """Fetches chart's data.
 
     Args:
         request (Chart.Request):
@@ -281,15 +276,15 @@ def get_chart(
 
     url = urls.CHART
     params = pb_handler.chart_request_to_api(request=request)
-    params['format'] = 'json'
-    params['callback'] = ''
-    params['userToken'] = user_token
+    params["format"] = "json"
+    params["callback"] = ""
+    params["userToken"] = user_token
 
     if override is not None:
         for key, value in override.items():
             params[key] = value
 
-    request = requests.Request(method='GET', url=url, params=params)
+    request = requests.Request(method="GET", url=url, params=params)
     prepped = session.prepare_request(request)
     response_raw = None
 

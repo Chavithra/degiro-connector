@@ -9,12 +9,12 @@ from degiro_connector.trading.pb.trading_pb2 import Credentials
 logging.basicConfig(level=logging.DEBUG)
 
 # SETUP CONFIG DICT
-with open('config/config.json') as config_file:
+with open("config/config.json") as config_file:
     config_dict = json.load(config_file)
 
 # SETUP CREDENTIALS
-username = config_dict['username']
-password = config_dict['password']
+username = config_dict["username"]
+password = config_dict["password"]
 credentials = Credentials(
     int_account=None,
     username=username,
@@ -30,4 +30,4 @@ trading_api.connect()
 # ACCESS SESSION_ID
 session_id = trading_api.connection_storage.session_id
 
-print('You are now connected, with the session id :', session_id)
+print("You are now connected, with the session id :", session_id)

@@ -6,5 +6,5 @@ from PIL import Image
     You will need to install the library : pyzbar
 """
 
-data = decode(Image.open('YOUR_QRCODE.png'))[0].data
-print('This is the content of your QRCode : ', data)
+data = decode(Image.open("YOUR_QRCODE.png"))[0].data
+print("This is the content of your QRCode : ", data)

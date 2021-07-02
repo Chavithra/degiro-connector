@@ -10,13 +10,13 @@ from degiro_connector.trading.pb.trading_pb2 import Credentials, ProductSearch
 logging.basicConfig(level=logging.DEBUG)
 
 # SETUP CONFIG DICT
-with open('config/config.json') as config_file:
+with open("config/config.json") as config_file:
     config_dict = json.load(config_file)
 
 # SETUP CREDENTIALS
-int_account = config_dict['int_account']
-username = config_dict['username']
-password = config_dict['password']
+int_account = config_dict["int_account"]
+username = config_dict["username"]
+password = config_dict["password"]
 credentials = Credentials(
     int_account=int_account,
     username=username,
@@ -31,7 +31,7 @@ trading_api.connect()
 
 # SETUP REQUEST
 request_lookup = ProductSearch.RequestLookup(
-    search_text='APPLE',
+    search_text="APPLE",
     limit=2,
     offset=0,
     product_type_id=1,

@@ -20,11 +20,11 @@ class ConnectionStorage:
     @synchronized
     def session_id(self) -> str:
         if not self.__session_id:
-            raise ConnectionError('Connection required.')
+            raise ConnectionError("Connection required.")
 
         if self.is_timeout_expired():
             self.__connected.clear()
-            raise TimeoutError('Connection has probably expired.')
+            raise TimeoutError("Connection has probably expired.")
 
         return self.__session_id
 
@@ -51,20 +51,18 @@ class ConnectionStorage:
         self.__connected = Event()
         self.__last_success = 0
         self.__logger = logging.getLogger(self.__module__)
-        self.__session_id = ''
+        self.__session_id = ""
 
     @synchronized
     def is_timeout_expired(self):
         if not self.__last_success:
             return False
 
-        return \
-            (time.monotonic() - self.__last_success) \
-            > self.__connection_timeout
+        return (time.monotonic() - self.__last_success) > self.__connection_timeout
 
     @synchronized
     def response_hook(self, response, *args, **kwargs):
-        """ This hook will intercept all the "requests.Response". """
+        """This hook will intercept all the "requests.Response"."""
 
         timestamp = time.monotonic()
         status_code = response.status_code
@@ -73,5 +71,5 @@ class ConnectionStorage:
             self.__last_success = timestamp
 
     def setup_hooks(self, session: requests.Session):
-        hooks = {'response': [self.response_hook]}
+        hooks = {"response": [self.response_hook]}
         session.hooks.update(hooks)

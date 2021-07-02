@@ -10,11 +10,11 @@ from degiro_connector.quotecast.pb.quotecast_pb2 import Quotecast
 logging.basicConfig(level=logging.INFO)
 
 # SETUP CONFIG DICT
-with open('config/config.json') as config_file:
+with open("config/config.json") as config_file:
     config_dict = json.load(config_file)
 
 # SETUP CREDENTIALS
-user_token = config_dict['user_token']  # HERE GOES YOUR USER_TOKEN
+user_token = config_dict["user_token"]  # HERE GOES YOUR USER_TOKEN
 
 # SETUP API
 quotecast_api = QuotecastAPI(user_token=user_token)
@@ -24,14 +24,16 @@ quotecast_api.connect()
 
 # SUBSCRIBE TO METRICS
 request = Quotecast.Request()
-request.subscriptions['AAPL.BATS,E'].extend([
-    'LastDate',
-    'LastTime',
-    'LastPrice',
-    'LastVolume',
-    'AskPrice',
-    'BidPrice',
-])
+request.subscriptions["AAPL.BATS,E"].extend(
+    [
+        "LastDate",
+        "LastTime",
+        "LastPrice",
+        "LastVolume",
+        "AskPrice",
+        "BidPrice",
+    ]
+)
 quotecast_api.subscribe(request=request)
 
 # SETUP JSON PARSER
@@ -66,5 +68,5 @@ while True:
         print(e)
         break
     except KeyboardInterrupt:
-        print('KeyboardInterrupt')
+        print("KeyboardInterrupt")
         break

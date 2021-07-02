@@ -11,6 +11,7 @@ from degiro_connector.trading.pb.trading_pb2 import Credentials
 
 CONFIG_FILE = "config/config.json"
 
+
 def pytest_addoption(parser):
     # QUOTECAST CREDENTIALS
     parser.addoption(
@@ -64,7 +65,7 @@ def pytest_addoption(parser):
 
 
 # SETUP FIXTURES
-@pytest.fixture(scope='module')
+@pytest.fixture(scope="module")
 def config() -> Dict[str, Union[int, str]]:
     if os.path.isfile(CONFIG_FILE):
         with open(CONFIG_FILE) as config_file:
@@ -75,9 +76,9 @@ def config() -> Dict[str, Union[int, str]]:
     return config_dict
 
 
-@pytest.fixture(scope='module')
+@pytest.fixture(scope="module")
 def user_token(config, request) -> int:
-    """ Get `--user-token` argument from `CONFIG_FILE` or CLI.
+    """Get `--user-token` argument from `CONFIG_FILE` or CLI.
 
     Args:
         config: `config` fixture.
@@ -87,15 +88,15 @@ def user_token(config, request) -> int:
         int: Quotecast API's credential : `user_token`.
     """
 
-    if config is not None :
+    if config is not None:
         return config["user_token"]
     else:
         return request.config.getoption("--user-token")
 
 
-@pytest.fixture(scope='module')
+@pytest.fixture(scope="module")
 def credentials(config, request) -> Credentials:
-    """ Get `--user-token` argument from `CONFIG_FILE` or CLI.
+    """Get `--user-token` argument from `CONFIG_FILE` or CLI.
 
     Args:
         config: `config` fixture.
@@ -105,7 +106,7 @@ def credentials(config, request) -> Credentials:
         Credentials: Trading API's credentials.
     """
 
-    if config is not None :
+    if config is not None:
         int_account = config.get("int_account")
         username = config.get("username")
         password = config.get("password")

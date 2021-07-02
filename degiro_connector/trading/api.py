@@ -27,7 +27,7 @@ from typing import Union
 
 
 class API:
-    """ Tools to consume Degiro's QuoteCast API.
+    """Tools to consume Degiro's QuoteCast API.
 
     Same operations than "Basic" but with "session_id" management.
 
@@ -67,7 +67,7 @@ class API:
     def logout(self) -> bool:
         basic = self._basic
         session_id = self._connection_storage.session_id
-        self._connection_storage.session_id = ''
+        self._connection_storage.session_id = ""
 
         return basic.logout(session_id=session_id)
 
@@ -128,10 +128,7 @@ class API:
         basic = self._basic
         session_id = self._connection_storage.session_id
 
-        return basic.delete_order(
-            order_id=order_id,
-            session_id=session_id
-        )
+        return basic.delete_order(order_id=order_id, session_id=session_id)
 
     def get_config(self) -> dict:
         basic = self._basic
@@ -372,24 +369,22 @@ class API:
         )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # IMPORTATIONS
     import json
 
     from degiro_connector.trading.pb.trading_pb2 import Credentials
 
     # FETCH CONFIG
-    with open('config.json') as config_file:
+    with open("config.json") as config_file:
         config = json.load(config_file)
 
     # SETUP CREDENTIALS
-    username = config['username']
-    password = config['password']
-    int_account = config['int_account']
+    username = config["username"]
+    password = config["password"]
+    int_account = config["int_account"]
     credentials = Credentials(
-        int_account=int_account,
-        username=username,
-        password=password
+        int_account=int_account, username=username, password=password
     )
     # SETUP API
     api = API(credentials=credentials)

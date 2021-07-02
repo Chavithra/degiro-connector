@@ -12,19 +12,18 @@ from typing import Dict, List, Union
 
 # pylint: disable=no-member
 
-pd.set_option('display.max_rows', None)
-pd.set_option('display.max_columns', None)
-pd.set_option('display.expand_frame_repr', False)
+pd.set_option("display.max_rows", None)
+pd.set_option("display.max_columns", None)
+pd.set_option("display.expand_frame_repr", False)
 
 
 def ticker_to_dict(
     ticker: Ticker,
     column_list: List[str] = None,
 ) -> Dict[
-    Union[str, int],  # VWD_ID
-    Dict[str, Union[str, int]]  # METRICS : NAME / VALUE
+    Union[str, int], Dict[str, Union[str, int]]  # VWD_ID  # METRICS : NAME / VALUE
 ]:
-    """ Converts a ticker to a "dict".
+    """Converts a ticker to a "dict".
 
     Args:
         ticker (Ticker):
@@ -43,15 +42,17 @@ def ticker_to_dict(
 
     empty_list = [None] * len(column_list)
     empty_metrics = dict(zip(column_list, empty_list))
-    empty_metrics['response_datetime'] = \
-        ticker.metadata.response_datetime.ToJsonString()
-    empty_metrics['request_duration'] = \
-        ticker.metadata.request_duration.ToMicroseconds()/10**6
+    empty_metrics[
+        "response_datetime"
+    ] = ticker.metadata.response_datetime.ToJsonString()
+    empty_metrics["request_duration"] = (
+        ticker.metadata.request_duration.ToMicroseconds() / 10 ** 6
+    )
 
     ticker_dict = dict()
     for product in ticker.products:
         ticker_dict[product] = empty_metrics.copy()
-        ticker_dict[product]['vwd_id'] = product
+        ticker_dict[product]["vwd_id"] = product
         ticker_dict[product].update(ticker.products[product].metrics)
 
     return ticker_dict
@@ -61,7 +62,7 @@ def ticker_to_df(
     ticker: Ticker,
     column_list: List[str] = None,
 ) -> pd.DataFrame:
-    """ Converts a ticker to a "pandas.DataFrame".
+    """Converts a ticker to a "pandas.DataFrame".
 
     Args:
         ticker (Ticker):
@@ -92,25 +93,20 @@ def ticker_to_df(
 
 def build_ticker_sample(
     number: int = 10,
-    metric_list: List[str] = ['l1', 'l2', 'l3'],
+    metric_list: List[str] = ["l1", "l2", "l3"],
 ):
-    """ Build a Ticker object for testing purpose. """
+    """Build a Ticker object for testing purpose."""
 
     ticker = Ticker()
 
     # SETUP METADATA
     ticker.metadata.response_datetime.GetCurrentTime()
-    ticker.metadata.request_duration.FromNanoseconds(
-        random.randrange(5*10**9)
-    )
+    ticker.metadata.request_duration.FromNanoseconds(random.randrange(5 * 10 ** 9))
 
     # SETUP EXTRA-DATA
     for i in range(number):
         for metric in metric_list:
-            ticker.products[i].metrics[metric] = random.uniform(
-                0.,
-                100.
-            )
+            ticker.products[i].metrics[metric] = random.uniform(0.0, 100.0)
 
     return ticker
 
@@ -120,7 +116,7 @@ def merge_tickers(
     ticker2: Ticker,
     update_only: bool = False,
 ):
-    """ Override metrics of ticker1 with ticker2's metrics.
+    """Override metrics of ticker1 with ticker2's metrics.
 
     Args:
         ticker1 (Ticker): Ticker to fill.
@@ -168,10 +164,10 @@ def quotecast_request_to_api(request: Quotecast.Request) -> str:
     payload = '{"controlData":"'
     for vwd_id in request.subscriptions:
         for metric_name in request.subscriptions[vwd_id]:
-            payload += 'a_req(' + vwd_id + '.' + metric_name + ');'
+            payload += "a_req(" + vwd_id + "." + metric_name + ");"
     for vwd_id in request.unsubscriptions:
         for metric_name in request.unsubscriptions[vwd_id]:
-            payload += 'a_rel(' + vwd_id + '.' + metric_name + ');'
+            payload += "a_rel(" + vwd_id + "." + metric_name + ");"
     payload += '"}'
 
     return payload

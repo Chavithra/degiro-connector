@@ -4,26 +4,20 @@ import threading
 
 
 class SessionStorage:
-    """ Handle the Requests Session objects in a threadsafe manner. """
+    """Handle the Requests Session objects in a threadsafe manner."""
 
     @property
     def session(self) -> requests.Session:
-        self.__logger.debug(
-            'session:getter: %s',
-            threading.current_thread().name
-        )
+        self.__logger.debug("session:getter: %s", threading.current_thread().name)
 
-        if not hasattr(self.__local_storage, 'session'):
+        if not hasattr(self.__local_storage, "session"):
             self.__local_storage.session = self.build_session()
 
         return self.__local_storage.session
 
     @session.setter
     def session(self, session: requests.Session):
-        self.__logger.debug(
-            'session:setter: %s',
-            threading.current_thread().name
-        )
+        self.__logger.debug("session:setter: %s", threading.current_thread().name)
 
         self.__local_storage.session = session
 
@@ -61,10 +55,7 @@ class SessionStorage:
         return session
 
     def reset_session(self, headers: dict = None, hooks: dict = None):
-        self.__local_storage.session = self.build_session(
-            headers=headers,
-            hooks=hooks
-        )
+        self.__local_storage.session = self.build_session(headers=headers, hooks=hooks)
 
     def __init__(self, headers: dict = None, hooks: dict = None):
         self.__logger = logging.getLogger(self.__module__)

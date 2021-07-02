@@ -11,12 +11,12 @@ from degiro_connector.trading.pb.trading_pb2 import Credentials
 logging.basicConfig(level=logging.DEBUG)
 
 # SETUP CONFIG DICT
-with open('config/config.json') as config_file:
+with open("config/config.json") as config_file:
     config_dict = json.load(config_file)
 
 # SETUP CREDENTIALS
-username = config_dict['username']
-password = config_dict['password']
+username = config_dict["username"]
+password = config_dict["password"]
 credentials = Credentials(
     int_account=None,
     username=username,
@@ -34,14 +34,14 @@ session_id = trading_api.connection_storage.session_id
 
 # Waiting
 sleep_time = random.uniform(1, 5)
-print(f'Waiting : {sleep_time}s ')
+print(f"Waiting : {sleep_time}s ")
 time.sleep(sleep_time)
 
 # FETCH CONFIG TABLE
 print(len(trading_api.get_config()))
 
 # LOGOUT
-print('Logout, session id : ', session_id)
+print("Logout, session id : ", session_id)
 trading_api.logout()
 
 try:
@@ -49,6 +49,6 @@ try:
     print(len(trading_api.get_config()))
 except ConnectionError as e:
     print(e)
-    print('Logout : success !')
+    print("Logout : success !")
 else:
-    print('Logout : fail !')
+    print("Logout : fail !")
