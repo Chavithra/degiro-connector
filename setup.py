@@ -1,39 +1,40 @@
 from setuptools import setup, find_packages
 
-with open('README.md', 'r') as f:
+with open("README.md", "r") as f:
     long_description = f.read()
 
 setup(
-    author='Chavithra PARANA',
-    author_email='chavithra@gmail.com',
+    author="Chavithra PARANA",
+    author_email="chavithra@gmail.com",
     classifiers=[
-        'Programming Language :: Python :: 3',
-        'License :: OSI Approved :: BSD License',
-        'Operating System :: OS Independent',
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: BSD License",
+        "Operating System :: OS Independent",
     ],
+    description="This is yet another library to access Degiro's API.",
     extras_require={
-        'tests': [
-            'pytest',
+        "tests": [
+            "pytest",
         ],
-        'lint': [
-            'flake8',
+        "lint": [
+            "flake8",
         ],
     },
     install_requires=[
-        'grpcio',
-        'onetimepass',
-        'orjson',
-        'pandas',
-        'protobuf',
-        'requests',
-        'wheel',
-        'wrapt',
+        "grpcio",
+        "onetimepass",
+        "orjson",
+        "pandas",
+        "protobuf",
+        "requests",
+        "wheel",
+        "wrapt",
     ],
     long_description=long_description,
-    long_description_content_type='text/markdown',
-    name='degiro-connector',
+    long_description_content_type="text/markdown",
+    name="degiro-connector",
     packages=find_packages(include=["degiro_connector*"]),
-    python_requires='>=3.6',
-    url='https://github.com/chavithra/degiro-connector',
-    version='1.0.2',
+    python_requires=">=3.6",
+    url="https://github.com/chavithra/degiro-connector",
+    version="1.0.3",
 )
