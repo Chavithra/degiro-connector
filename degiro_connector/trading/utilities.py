@@ -454,14 +454,7 @@ def update_order(
         "sessionId": session_id,
     }
 
-    order_dict = {
-        "buySell": order.action,
-        "orderType": order.order_type,
-        "price": order.price,
-        "productId": order.product_id,
-        "size": order.size,
-        "timeType": order.time_type,
-    }
+    order_dict = payload_handler.order_to_api(order=order)
 
     request = requests.Request(
         method="PUT",
@@ -470,17 +463,17 @@ def update_order(
         params=params,
     )
     prepped = session.prepare_request(request)
-    response = None
+    response_raw = None
 
     try:
-        response = session.send(prepped, verify=False)
+        response_raw = session.send(prepped, verify=False)
     except Exception as e:
-        logger.fatal(response.status_code)
-        logger.fatal(response.text)
+        logger.fatal(response_raw.status_code)
+        logger.fatal(response_raw.text)
         logger.fatal(e)
         return False
 
-    return response.status_code == 200
+    return response_raw.status_code == 200
 
 
 def delete_order(

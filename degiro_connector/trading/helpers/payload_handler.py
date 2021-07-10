@@ -58,6 +58,41 @@ __UPDATE_OPTION_MATCHING = {
     Update.Option.Value("TRANSACTIONS"): "transactions",
 }
 
+__ORDER_FILTER_MATCHING = {
+    Order.OrderType.LIMIT: {
+        "buySell",
+        "orderType",
+        "price",
+        "productId",
+        "size",
+        "timeType",
+    },
+    Order.OrderType.STOP_LIMIT: {
+        "buySell",
+        "orderType",
+        "price",
+        "productId",
+        "size",
+        "stopPrice",
+        "timeType",
+    },
+    Order.OrderType.MARKET: {
+        "buySell",
+        "orderType",
+        "productId",
+        "size",
+        "timeType",
+    },
+    Order.OrderType.STOP_LOSS: {
+        "buySell",
+        "orderType",
+        "productId",
+        "size",
+        "stopPrice",
+        "timeType",
+    },
+}
+
 
 # GRPC TO API
 def account_overview_request_to_api(
@@ -157,15 +192,12 @@ def order_to_api(order: Order) -> Dict[str, Union[float, int, str]]:
         order_dict["buySell"] = "SELL"
 
     # Filter fields
-    fields_to_keep = {
-        "buySell",
-        "orderType",
-        "price",
-        "stopPrice",
-        "productId",
-        "size",
-        "timeType",
-    }
+    fields_to_keep = set()
+    if order.order_type in __ORDER_FILTER_MATCHING:
+        fields_to_keep = __ORDER_FILTER_MATCHING[order.order_type]
+    else:
+        raise AttributeError("Invalid `OrderType`.")
+
     filtered_order_dict = dict()
     for field in order_dict.keys() & fields_to_keep:
         filtered_order_dict[field] = order_dict[field]
