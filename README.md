@@ -673,11 +673,12 @@ Here are the main parameters of an Order.
 
 |**Parameter**|**Type**|**Description**|
 |:-|:-|:-|
-|action|Order.Action|Whether you want to : BUY or SELL.|
-|order_type|Order.OrderType|Type of order : LIMIT, STOP_LIMIT, MARKET or STOP_LOSS.|
-|price|float|Price of the order.|
+|action|Order.Action|Whether you want to : `BUY` or `SELL`.|
+|order_type|Order.OrderType|Type of order : `LIMIT`, `STOP_LIMIT`, `MARKET` or `STOP_LOSS`.|
+|price|float|Price of the order. <br /> Only used for the following `order_type` : `LIMIT` and `STOPLIMIT`.|
 |product_id|int|Identifier of the product concerned by the order.|
 |size|float|Size of the order.|
+|stop_price|float|Stop price of the order. <br /> Only used for the following `order_type` : `STOPLIMIT` and `STOPLOSS`|
 |time_type|Order.TimeType|Duration of the order : GOOD_TILL_DAY or GOOD_TILL_CANCELED|
 
 The full description of an Order is available here :
