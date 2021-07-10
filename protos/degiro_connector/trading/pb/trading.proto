@@ -70,10 +70,8 @@ message Order {
   Action action = 1; // called "buysell" by the API
   string id = 2;
   OrderType order_type = 3; // called "orderTypeId" by the API
-  oneof oneof_price {
-    double price = 4;
-    double stop_price = 5; // called "stopPrice" by the API
-  }
+  double price = 4;
+  double stop_price = 5; // called "stopPrice" by the API
   int32 product_id = 6; // called "productId" by the API
   double size = 7;
   TimeType time_type = 8; // called "orderTimeTypeId" by the API
