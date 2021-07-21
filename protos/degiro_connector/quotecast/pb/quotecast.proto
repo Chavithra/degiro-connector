@@ -39,7 +39,7 @@ message Ticker {
 
 message Chart {
   // ENUMS
-  enum Resolution {
+  enum Interval {
     PT1S = 0;
     PT15S = 1;
     PT30S = 2;
@@ -49,26 +49,24 @@ message Chart {
     PT30M = 6;
     PT60M = 7;
     PT1H = 8;
-  }
-  enum Period {
-    P1D = 0;
-    P1W = 1;
-    P1M = 2;
-    P3M = 3;
-    P6M = 4;
-    P1Y = 5;
-    P3Y = 6;
-    P5Y = 7;
-    P10Y = 8;
-    YTD = 9;
+    P1D = 9;
+    P1W = 10;
+    P1M = 11;
+    P3M = 12;
+    P6M = 13;
+    P1Y = 14;
+    P3Y = 15;
+    P5Y = 16;
+    P10Y = 17;
+    YTD = 18;
   }
 
   // MESSAGES
   message Request {
     string requestid = 1;
-    Resolution resolution = 2;
+    Interval resolution = 2;
     string culture = 3;
-    Period period = 4;
+    Interval period = 4;
     repeated string series = 5;
     string tz = 6;
   }

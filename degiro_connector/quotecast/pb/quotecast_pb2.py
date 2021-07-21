@@ -22,15 +22,15 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n-degiro_connector/quotecast/pb/quotecast.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1cgoogle/protobuf/struct.proto\"v\n\x08Metadata\x12\x35\n\x11response_datetime\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x33\n\x10request_duration\x18\x02 \x01(\x0b\x32\x19.google.protobuf.Duration\"\xed\x02\n\tQuotecast\x12\x11\n\tjson_data\x18\x01 \x01(\t\x12\x1b\n\x08metadata\x18\x02 \x01(\x0b\x32\t.Metadata\x1a\xaf\x02\n\x07Request\x12<\n\rsubscriptions\x18\x01 \x03(\x0b\x32%.Quotecast.Request.SubscriptionsEntry\x12@\n\x0funsubscriptions\x18\x02 \x03(\x0b\x32\'.Quotecast.Request.UnsubscriptionsEntry\x1aP\n\x12SubscriptionsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12)\n\x05value\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.ListValue:\x02\x38\x01\x1aR\n\x14UnsubscriptionsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12)\n\x05value\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.ListValue:\x02\x38\x01\"\x90\x02\n\x06Ticker\x12\x1b\n\x08metadata\x18\x01 \x01(\x0b\x32\t.Metadata\x12\'\n\x08products\x18\x02 \x03(\x0b\x32\x15.Ticker.ProductsEntry\x12\x14\n\x0cproduct_list\x18\x03 \x03(\t\x1ah\n\x07Metrics\x12-\n\x07metrics\x18\x01 \x03(\x0b\x32\x1c.Ticker.Metrics.MetricsEntry\x1a.\n\x0cMetricsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x01:\x02\x38\x01\x1a@\n\rProductsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x1e\n\x05value\x18\x02 \x01(\x0b\x32\x0f.Ticker.Metrics:\x02\x38\x01\"\xd7\x03\n\x05\x43hart\x12\x11\n\trequestid\x18\x01 \x01(\t\x12\r\n\x05start\x18\x02 \x01(\t\x12\x0b\n\x03\x65nd\x18\x03 \x01(\t\x12\x12\n\nresolution\x18\x04 \x01(\t\x12\'\n\x06series\x18\x05 \x03(\x0b\x32\x17.google.protobuf.Struct\x1a\x8f\x01\n\x07Request\x12\x11\n\trequestid\x18\x01 \x01(\t\x12%\n\nresolution\x18\x02 \x01(\x0e\x32\x11.Chart.Resolution\x12\x0f\n\x07\x63ulture\x18\x03 \x01(\t\x12\x1d\n\x06period\x18\x04 \x01(\x0e\x32\r.Chart.Period\x12\x0e\n\x06series\x18\x05 \x03(\t\x12\n\n\x02tz\x18\x06 \x01(\t\"k\n\nResolution\x12\x08\n\x04PT1S\x10\x00\x12\t\n\x05PT15S\x10\x01\x12\t\n\x05PT30S\x10\x02\x12\x08\n\x04PT1M\x10\x03\x12\x08\n\x04PT5M\x10\x04\x12\t\n\x05PT15M\x10\x05\x12\t\n\x05PT30M\x10\x06\x12\t\n\x05PT60M\x10\x07\x12\x08\n\x04PT1H\x10\x08\"c\n\x06Period\x12\x07\n\x03P1D\x10\x00\x12\x07\n\x03P1W\x10\x01\x12\x07\n\x03P1M\x10\x02\x12\x07\n\x03P3M\x10\x03\x12\x07\n\x03P6M\x10\x04\x12\x07\n\x03P1Y\x10\x05\x12\x07\n\x03P3Y\x10\x06\x12\x07\n\x03P5Y\x10\x07\x12\x08\n\x04P10Y\x10\x08\x12\x07\n\x03YTD\x10\tb\x06proto3'
+  serialized_pb=b'\n-degiro_connector/quotecast/pb/quotecast.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1cgoogle/protobuf/struct.proto\"v\n\x08Metadata\x12\x35\n\x11response_datetime\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x33\n\x10request_duration\x18\x02 \x01(\x0b\x32\x19.google.protobuf.Duration\"\xed\x02\n\tQuotecast\x12\x11\n\tjson_data\x18\x01 \x01(\t\x12\x1b\n\x08metadata\x18\x02 \x01(\x0b\x32\t.Metadata\x1a\xaf\x02\n\x07Request\x12<\n\rsubscriptions\x18\x01 \x03(\x0b\x32%.Quotecast.Request.SubscriptionsEntry\x12@\n\x0funsubscriptions\x18\x02 \x03(\x0b\x32\'.Quotecast.Request.UnsubscriptionsEntry\x1aP\n\x12SubscriptionsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12)\n\x05value\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.ListValue:\x02\x38\x01\x1aR\n\x14UnsubscriptionsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12)\n\x05value\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.ListValue:\x02\x38\x01\"\x90\x02\n\x06Ticker\x12\x1b\n\x08metadata\x18\x01 \x01(\x0b\x32\t.Metadata\x12\'\n\x08products\x18\x02 \x03(\x0b\x32\x15.Ticker.ProductsEntry\x12\x14\n\x0cproduct_list\x18\x03 \x03(\t\x1ah\n\x07Metrics\x12-\n\x07metrics\x18\x01 \x03(\x0b\x32\x1c.Ticker.Metrics.MetricsEntry\x1a.\n\x0cMetricsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x01:\x02\x38\x01\x1a@\n\rProductsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x1e\n\x05value\x18\x02 \x01(\x0b\x32\x0f.Ticker.Metrics:\x02\x38\x01\"\xcc\x03\n\x05\x43hart\x12\x11\n\trequestid\x18\x01 \x01(\t\x12\r\n\x05start\x18\x02 \x01(\t\x12\x0b\n\x03\x65nd\x18\x03 \x01(\t\x12\x12\n\nresolution\x18\x04 \x01(\t\x12\'\n\x06series\x18\x05 \x03(\x0b\x32\x17.google.protobuf.Struct\x1a\x8f\x01\n\x07Request\x12\x11\n\trequestid\x18\x01 \x01(\t\x12#\n\nresolution\x18\x02 \x01(\x0e\x32\x0f.Chart.Interval\x12\x0f\n\x07\x63ulture\x18\x03 \x01(\t\x12\x1f\n\x06period\x18\x04 \x01(\x0e\x32\x0f.Chart.Interval\x12\x0e\n\x06series\x18\x05 \x03(\t\x12\n\n\x02tz\x18\x06 \x01(\t\"\xc4\x01\n\x08Interval\x12\x08\n\x04PT1S\x10\x00\x12\t\n\x05PT15S\x10\x01\x12\t\n\x05PT30S\x10\x02\x12\x08\n\x04PT1M\x10\x03\x12\x08\n\x04PT5M\x10\x04\x12\t\n\x05PT15M\x10\x05\x12\t\n\x05PT30M\x10\x06\x12\t\n\x05PT60M\x10\x07\x12\x08\n\x04PT1H\x10\x08\x12\x07\n\x03P1D\x10\t\x12\x07\n\x03P1W\x10\n\x12\x07\n\x03P1M\x10\x0b\x12\x07\n\x03P3M\x10\x0c\x12\x07\n\x03P6M\x10\r\x12\x07\n\x03P1Y\x10\x0e\x12\x07\n\x03P3Y\x10\x0f\x12\x07\n\x03P5Y\x10\x10\x12\x08\n\x04P10Y\x10\x11\x12\x07\n\x03YTD\x10\x12\x62\x06proto3'
   ,
   dependencies=[google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,google_dot_protobuf_dot_duration__pb2.DESCRIPTOR,google_dot_protobuf_dot_struct__pb2.DESCRIPTOR,])
 
 
 
-_CHART_RESOLUTION = _descriptor.EnumDescriptor(
-  name='Resolution',
-  full_name='Chart.Resolution',
+_CHART_INTERVAL = _descriptor.EnumDescriptor(
+  name='Interval',
+  full_name='Chart.Interval',
   filename=None,
   file=DESCRIPTOR,
   create_key=_descriptor._internal_create_key,
@@ -80,78 +80,63 @@ _CHART_RESOLUTION = _descriptor.EnumDescriptor(
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
-  ],
-  containing_type=None,
-  serialized_options=None,
-  serialized_start=1171,
-  serialized_end=1278,
-)
-_sym_db.RegisterEnumDescriptor(_CHART_RESOLUTION)
-
-_CHART_PERIOD = _descriptor.EnumDescriptor(
-  name='Period',
-  full_name='Chart.Period',
-  filename=None,
-  file=DESCRIPTOR,
-  create_key=_descriptor._internal_create_key,
-  values=[
     _descriptor.EnumValueDescriptor(
-      name='P1D', index=0, number=0,
+      name='P1D', index=9, number=9,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='P1W', index=1, number=1,
+      name='P1W', index=10, number=10,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='P1M', index=2, number=2,
+      name='P1M', index=11, number=11,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='P3M', index=3, number=3,
+      name='P3M', index=12, number=12,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='P6M', index=4, number=4,
+      name='P6M', index=13, number=13,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='P1Y', index=5, number=5,
+      name='P1Y', index=14, number=14,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='P3Y', index=6, number=6,
+      name='P3Y', index=15, number=15,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='P5Y', index=7, number=7,
+      name='P5Y', index=16, number=16,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='P10Y', index=8, number=8,
+      name='P10Y', index=17, number=17,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='YTD', index=9, number=9,
+      name='YTD', index=18, number=18,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1280,
-  serialized_end=1379,
+  serialized_start=1172,
+  serialized_end=1368,
 )
-_sym_db.RegisterEnumDescriptor(_CHART_PERIOD)
+_sym_db.RegisterEnumDescriptor(_CHART_INTERVAL)
 
 
 _METADATA = _descriptor.Descriptor(
@@ -613,8 +598,7 @@ _CHART = _descriptor.Descriptor(
   ],
   nested_types=[_CHART_REQUEST, ],
   enum_types=[
-    _CHART_RESOLUTION,
-    _CHART_PERIOD,
+    _CHART_INTERVAL,
   ],
   serialized_options=None,
   is_extendable=False,
@@ -623,7 +607,7 @@ _CHART = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=908,
-  serialized_end=1379,
+  serialized_end=1368,
 )
 
 _METADATA.fields_by_name['response_datetime'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
@@ -643,12 +627,11 @@ _TICKER_PRODUCTSENTRY.fields_by_name['value'].message_type = _TICKER_METRICS
 _TICKER_PRODUCTSENTRY.containing_type = _TICKER
 _TICKER.fields_by_name['metadata'].message_type = _METADATA
 _TICKER.fields_by_name['products'].message_type = _TICKER_PRODUCTSENTRY
-_CHART_REQUEST.fields_by_name['resolution'].enum_type = _CHART_RESOLUTION
-_CHART_REQUEST.fields_by_name['period'].enum_type = _CHART_PERIOD
+_CHART_REQUEST.fields_by_name['resolution'].enum_type = _CHART_INTERVAL
+_CHART_REQUEST.fields_by_name['period'].enum_type = _CHART_INTERVAL
 _CHART_REQUEST.containing_type = _CHART
 _CHART.fields_by_name['series'].message_type = google_dot_protobuf_dot_struct__pb2._STRUCT
-_CHART_RESOLUTION.containing_type = _CHART
-_CHART_PERIOD.containing_type = _CHART
+_CHART_INTERVAL.containing_type = _CHART
 DESCRIPTOR.message_types_by_name['Metadata'] = _METADATA
 DESCRIPTOR.message_types_by_name['Quotecast'] = _QUOTECAST
 DESCRIPTOR.message_types_by_name['Ticker'] = _TICKER
