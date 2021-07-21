@@ -3,9 +3,10 @@
 This is yet another library to access Degiro's API.
 
 Notes :
-- There is a migration script to switch from 0.x.y to 1.x.y :
+- Migration scripts are available :
 ```bash
 python -m degiro_connector.migration.from_0_1_3_to_1_0_0
+python -m degiro_connector.migration.from_1_0_4_to_1_0_5
 ```
 
 ## 1.1. Which features ?
