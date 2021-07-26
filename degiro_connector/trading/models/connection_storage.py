@@ -38,10 +38,6 @@ class ConnectionStorage:
             self.__session_id = session_id
             self.__connected.clear()
 
-    @property
-    def session_storage(self) -> SessionStorage:
-        return self.__session_storage
-
     def __init__(
         self,
         connection_timeout: int = 1800,
