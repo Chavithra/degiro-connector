@@ -27,4 +27,4 @@ jobs:
         python -m pip install flake8
     - name: Lint with flake8
       run: |
-        flake8 degiro_connector examples --exclude=degiro_connector/quotecast/pb,degiro_connector/trading/pb --count --show-source --statistics --max-line-length=89
+        flake8 degiro_connector examples --ignore=E203,W503 --exclude=degiro_connector/quotecast/pb,degiro_connector/trading/pb --count --show-source --statistics --max-line-length=89
