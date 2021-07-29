@@ -8,7 +8,7 @@ classifiers = [
 description = "This is yet another library to access Degiro's API."
 name = "degiro-connector"
 packages = [
-    { include = "degiro_connector/*" },
+    { include = "degiro_connector" },
 ]
 repository = "https://github.com/chavithra/degiro-connector"
 version = "1.0.5"
