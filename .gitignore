@@ -31,3 +31,4 @@ __pycache__
 *.sh
 *.txt
 *.xlsx
+*.lock
