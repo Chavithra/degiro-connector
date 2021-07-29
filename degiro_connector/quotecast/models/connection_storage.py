@@ -2,7 +2,6 @@ import logging
 import requests
 import time
 
-from degiro_connector.quotecast.models.session_storage import SessionStorage
 from threading import Event
 from wrapt.decorators import synchronized
 

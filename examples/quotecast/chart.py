@@ -33,7 +33,7 @@ request.tz = "Europe/Paris"
 # FETCH DATA
 chart = quotecast_api.get_chart(
     request=request,
-    override={"resolution":"P1D"},
+    override={"resolution": "P1D"},
     raw=True,
 )
 
