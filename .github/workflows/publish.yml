@@ -26,7 +26,8 @@ jobs:
           python -m pip install --upgrade pip setuptools
           pip install poetry
 
-      - name: Publishing to PyPi
+      - name: Publishing to PyPI
+        env: 
+          POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }} 
         run: |
-          poetry config pypi-token.pypi ${{ secrets.PYPI_TOKEN }}
           poetry publish
