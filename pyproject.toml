@@ -6,12 +6,13 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 description = "This is yet another library to access Degiro's API."
+description-file = "README.md"
 name = "degiro-connector"
 packages = [
     { include = "degiro_connector" },
 ]
 repository = "https://github.com/chavithra/degiro-connector"
-version = "1.0.6"
+version = "1.0.7"
 
 [tool.poetry.dependencies]
 python = ">=3.6.2"
