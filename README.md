@@ -211,6 +211,7 @@ So if you use it nonstop (in a loop) you won't need to reconnect.
 To subscribe to a data-stream you need to setup a Request message.
 
 A Request has the following parameters :
+
 |**Parameter**|**Type**|**Description**|
 |:-|:-|:-|
 |subscriptions|MessageMap|List of products and metrics to subscribe to.|
@@ -431,6 +432,7 @@ You can fetch an object containing the same data than in Degiro's website graph.
 For that you need to prepare a Chart.Request object.
 
 Here is a table with the available attributes for Chart.Request.
+
 |**Parameter**|**Type**|**Description**|
 |:-|:-|:-|
 |requestid|str|It sends you back whatever string you put here, you can set it to : "1".|
@@ -1041,6 +1043,7 @@ For a more comprehensive example :
 [account_overview.py](examples/trading/account_overview.py)
 
 Each cash movement contains this kind of parameters :
+
 |**Parameter**|**Type**|
 |:-|:-|
 |date|str|
