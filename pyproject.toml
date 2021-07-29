@@ -10,6 +10,7 @@ name = "degiro-connector"
 packages = [
     { include = "degiro_connector" },
 ]
+readme = "README.md"
 repository = "https://github.com/chavithra/degiro-connector"
 version = "1.0.7"
 
