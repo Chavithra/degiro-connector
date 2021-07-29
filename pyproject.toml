@@ -11,7 +11,7 @@ packages = [
     { include = "degiro_connector" },
 ]
 repository = "https://github.com/chavithra/degiro-connector"
-version = "1.0.5"
+version = "1.0.6"
 
 [tool.poetry.dependencies]
 python = ">=3.6.2"
