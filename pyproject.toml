@@ -6,6 +6,7 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 description = "This is yet another library to access Degiro's API."
+license = "BSD-3-Clause"
 name = "degiro-connector"
 packages = [
     { include = "degiro_connector" },
