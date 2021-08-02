@@ -1,3 +1,0 @@
-include LICENSE
-recursive-include protos *.proto
-recursive-include tests *.py
