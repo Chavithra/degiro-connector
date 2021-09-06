@@ -229,7 +229,7 @@ class QuotecastParser:
             elif message["m"] == "a_rel":
                 delete_list = []
                 for reference in references:
-                    if references[reference] == message["v"][0]:
+                    if ".".join(references[reference]) == message["v"][0]:
                         delete_list.append(reference)
 
                 for reference in delete_list:
