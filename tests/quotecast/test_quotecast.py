@@ -8,11 +8,11 @@ import pytest
 import urllib3
 
 # IMPORTATION INTERNAL
-import degiro_connector.quotecast.helpers.pb_handler as pb_handler
+import degiro_connector.core.helpers.pb_handler as pb_handler
 import degiro_connector.quotecast.utilities as utilities
 from degiro_connector.quotecast.api import API as QuotecastAPI
 from degiro_connector.quotecast.models.quotecast_parser import QuotecastParser
-from degiro_connector.quotecast.pb.quotecast_pb2 import Chart, Quotecast
+from degiro_connector.quotecast.models.quotecast_pb2 import Chart, Quotecast
 
 # SETUP LOGGING
 logging.basicConfig(level=logging.FATAL)

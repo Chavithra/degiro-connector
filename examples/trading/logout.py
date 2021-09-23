@@ -5,7 +5,7 @@ import random
 import time
 
 from degiro_connector.trading.api import API as TradingAPI
-from degiro_connector.trading.pb.trading_pb2 import Credentials
+from degiro_connector.trading.models.trading_pb2 import Credentials
 
 # SETUP LOGGING LEVEL
 logging.basicConfig(level=logging.DEBUG)

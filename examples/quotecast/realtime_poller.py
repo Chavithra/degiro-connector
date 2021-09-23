@@ -4,7 +4,7 @@ import logging
 
 from degiro_connector.quotecast.api import API as QuotecastAPI
 from degiro_connector.quotecast.models.quotecast_parser import QuotecastParser
-from degiro_connector.quotecast.pb.quotecast_pb2 import Quotecast
+from degiro_connector.quotecast.models.quotecast_pb2 import Quotecast
 
 # SETUP LOGGING
 logging.basicConfig(level=logging.INFO)

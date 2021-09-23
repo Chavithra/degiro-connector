@@ -7,7 +7,7 @@ from typing import Dict, Union
 import pytest
 
 # IMPORTATION INTERNAL
-from degiro_connector.trading.pb.trading_pb2 import Credentials
+from degiro_connector.trading.models.trading_pb2 import Credentials
 
 CONFIG_FILE = "config/config.json"
 

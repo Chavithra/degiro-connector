@@ -3,7 +3,7 @@ import json
 import logging
 
 from degiro_connector.trading.api import API as TradingAPI
-from degiro_connector.trading.pb.trading_pb2 import Credentials, Order
+from degiro_connector.trading.models.trading_pb2 import Credentials, Order
 
 # SETUP LOGGING LEVEL
 logging.basicConfig(level=logging.DEBUG)
