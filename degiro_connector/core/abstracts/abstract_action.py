@@ -49,6 +49,8 @@ class AbstractAction(abc.ABC):
         connection_storage: ModelConnection,
         logger: logging.Logger = None,
         session_storage: ModelSession = None,
+        *args,
+        **kwargs,
     ):
         self._credentials = credentials
         self._connection_storage = connection_storage
@@ -58,7 +60,7 @@ class AbstractAction(abc.ABC):
             ssl_check=False,
         )
 
-        self.post_init()
+        self.post_init(*args, **kwargs)
 
     @final
     def __call__(self, *args, **kwargs):
