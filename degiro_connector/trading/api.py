@@ -1,394 +1,134 @@
+# IMPORTATION STANDARD
 import logging
+import pkgutil
+from pathlib import Path
+from typing import Any, Dict, List, Optional
 
-from degiro_connector.trading.basic import Basic
-from degiro_connector.trading.models.connection_storage import (
-    ConnectionStorage,
-)
-from degiro_connector.trading.pb.trading_pb2 import (
-    AccountOverview,
-    Agenda,
-    CashAccountReport,
-    CompanyProfile,
-    CompanyRatios,
-    Credentials,
-    Favourites,
-    FinancialStatements,
-    LatestNews,
-    NewsByCompany,
-    Order,
-    OrdersHistory,
-    ProductsInfo,
-    ProductSearch,
-    TopNewsPreview,
-    TransactionsHistory,
-    Update,
-)
-from typing import Union
+# IMPORTATION THIRD PARTY
+
+# IMPORTATION INTERNAL
+import degiro_connector.core.constants.timeouts as timeouts
+import degiro_connector.core.helpers.pb_handler as pb_handler
+from degiro_connector.core.abstracts.abstract_action import AbstractAction
+from degiro_connector.core.helpers.lazy_loader import InitArgs, LazyLoader, Pair
+from degiro_connector.core.models.model_connection import ModelConnection
+from degiro_connector.core.models.model_session import ModelSession
+from degiro_connector.trading.models.trading_pb2 import Credentials
 
 
 class API:
-    """Tools to consume Degiro's QuoteCast API.
+    PKG_PATH = "degiro_connector.trading.actions"
+    CLS_PREFIX = "Action"
+    MOD_PREFIX = "action_"
+    ROOT_PATH = Path(__file__).absolute().parent.parent.parent.resolve()
 
-    Same operations than "Basic" but with "session_id" management.
+    @classmethod
+    def build_action_list(cls) -> List[str]:
+        # SETUP PATH
+        path = cls.PKG_PATH
+        path = str(Path(cls.ROOT_PATH, *path.split(".")).resolve())
 
-    This class should be threadsafe.
-    """
+        # BUILD MODULE LIST
+        action_list = list()
+        for module in pkgutil.iter_modules([path]):
+            if (
+                not module.ispkg
+                and module.name[: len(cls.MOD_PREFIX)] == cls.MOD_PREFIX
+            ):
+                action_list.append(module.name[len(cls.MOD_PREFIX) :])
+
+        return action_list
 
     @property
-    def basic(self) -> Basic:
-        return self._basic
+    def action_list(self) -> List[str]:
+        return self._action_list
 
     @property
-    def connection_storage(self) -> ConnectionStorage:
+    def connection_storage(self) -> ModelConnection:
         return self._connection_storage
 
     @property
-    def credentials(self) -> int:
-        return self._basic.credentials
+    def credentials(self) -> Dict[str, Any]:
+        return self._config
 
-    def __init__(self, credentials: Credentials):
-        self._basic = Basic(credentials=credentials)
+    @property
+    def session_storage(self) -> ModelSession:
+        return self._session_storage
 
-        self._connection_storage = ConnectionStorage(
-            connection_timeout=1800,
-        )
-        self._connection_storage.setup_hooks(
-            session=self._basic.session_storage.session,
-        )
-        self.logger = logging.getLogger(self.__module__)
-
-    def connect(self) -> str:
-        basic = self.basic
-        connection_storage = self._connection_storage
-        connection_storage.session_id = basic.get_session_id()
-
-        return connection_storage.session_id
-
-    def logout(self) -> bool:
-        basic = self._basic
-        session_id = self._connection_storage.session_id
-        self._connection_storage.session_id = ""
-
-        return basic.logout(session_id=session_id)
-
-    def get_update(
+    def load(
         self,
-        request_list: Update.RequestList,
-        raw: bool = False,
-    ) -> Union[dict, Update]:
-        basic = self._basic
-        session_id = self._connection_storage.session_id
+        action: str,
+        init_args: InitArgs = None,
+    ) -> Optional[object]:
+        if action not in self._action_list:
+            print(self.action)
+            print(self._action_list)
+            return None
 
-        return basic.get_update(
-            request_list=request_list,
-            session_id=session_id,
-            raw=raw,
+        # SETUP CLASS NAME
+        cap_words_action = action.replace("_", " ").title().replace(" ", "")
+        class_name = self.CLS_PREFIX + cap_words_action
+
+        # SETUP PATHS
+        module_path = self.PKG_PATH + "." + self.MOD_PREFIX + action
+
+        # SETUP PAIR
+        pair = Pair(
+            module_path=module_path,
+            class_name=class_name,
         )
 
-    def check_order(
+        return LazyLoader.load_pair(pair=pair, init_args=init_args)
+
+    def __init__(
         self,
-        order: Order,
-        raw: bool = False,
-    ) -> Union[Order.ConfirmationResponse, bool]:
-        basic = self._basic
-        session_id = self._connection_storage.session_id
-
-        return basic.check_order(
-            order=order,
-            session_id=session_id,
-            raw=raw,
+        credentials: Credentials,
+        connection_storage: ModelConnection = None,
+        logger: logging.Logger = None,
+        preload: bool = True,
+        session_storage: ModelSession = None,
+    ):
+        self._credentials = credentials
+        self._connection_storage = connection_storage or ModelConnection(
+            connection_timeout=timeouts.TRADING_TIMEOUT,
         )
-
-    def confirm_order(
-        self,
-        confirmation_id: str,
-        order: Order,
-        raw: bool = False,
-    ) -> Union[Order.ConfirmationResponse, bool]:
-        basic = self._basic
-        session_id = self._connection_storage.session_id
-
-        return basic.confirm_order(
-            confirmation_id=confirmation_id,
-            order=order,
-            session_id=session_id,
-            raw=raw,
+        self._logger = logger or logging.getLogger(self.__module__)
+        self._session_storage = session_storage or ModelSession(
+            hooks=self._connection_storage.build_hooks(),
+            ssl_check=False,
         )
+        self._action_list = self.build_action_list()
 
-    def update_order(self, order: Order) -> bool:
-        basic = self._basic
-        session_id = self._connection_storage.session_id
+        if preload:
+            self.setup_all_actions()
 
-        return basic.update_order(
-            order=order,
-            session_id=session_id,
+    def setup_all_actions(self):
+        action_list = self._action_list
+        for action in action_list:
+            self.setup_one_action(action=action)
+
+    def setup_one_action(self, action: str):
+        init_args = InitArgs(
+            credentials=self._credentials,
+            connection_storage=self._connection_storage,
+            session_storage=self._session_storage,
         )
-
-    def delete_order(self, order_id: str) -> bool:
-        basic = self._basic
-        session_id = self._connection_storage.session_id
-
-        return basic.delete_order(order_id=order_id, session_id=session_id)
-
-    def get_config(self) -> dict:
-        basic = self._basic
-        session_id = self._connection_storage.session_id
-
-        return basic.get_config(
-            session_id=session_id,
+        action_instance = self.load(
+            action=action,
+            init_args=init_args,
         )
+        if not isinstance(action_instance, AbstractAction):
+            raise TypeError(
+                "Not a `AbstractAction` : %s / %s " % (action, action_instance)
+            )
 
-    def get_client_details(self) -> dict:
-        basic = self._basic
-        session_id = self._connection_storage.session_id
+        print("PRELOADING the action : ", action)
+        setattr(self, action, action_instance)
 
-        return basic.get_client_details(
-            session_id=session_id,
-        )
+    def __getattr__(self, item):
+        print("CALLING __GETATTR__, on item : ", item)
+        if item in self._action_list:
+            action = item
+            self.setup_one_action(action=action)
 
-    def get_account_info(self) -> dict:
-        basic = self._basic
-        session_id = self._connection_storage.session_id
-
-        return basic.get_account_info(
-            session_id=session_id,
-        )
-
-    def get_orders_history(
-        self,
-        request: OrdersHistory.Request,
-        raw: bool = False,
-    ) -> Union[dict, Update]:
-        basic = self._basic
-        session_id = self._connection_storage.session_id
-
-        return basic.get_orders_history(
-            request=request,
-            session_id=session_id,
-            raw=raw,
-        )
-
-    def get_transactions_history(
-        self,
-        request: TransactionsHistory.Request,
-        raw: bool = False,
-    ) -> Union[dict, Update]:
-        basic = self._basic
-        session_id = self._connection_storage.session_id
-
-        return basic.get_transactions_history(
-            request=request,
-            session_id=session_id,
-            raw=raw,
-        )
-
-    def get_account_overview(
-        self,
-        request: AccountOverview.Request,
-        raw: bool = False,
-    ) -> Union[dict, AccountOverview]:
-        basic = self._basic
-        session_id = self._connection_storage.session_id
-
-        return basic.get_account_overview(
-            request=request,
-            session_id=session_id,
-            raw=raw,
-        )
-
-    def product_search(
-        self,
-        request: Union[
-            ProductSearch.RequestBonds,
-            ProductSearch.RequestETFs,
-            ProductSearch.RequestFunds,
-            ProductSearch.RequestFutures,
-            ProductSearch.RequestLeverageds,
-            ProductSearch.RequestLookup,
-            ProductSearch.RequestOptions,
-            ProductSearch.RequestStocks,
-            ProductSearch.RequestWarrants,
-        ],
-        raw: bool = False,
-    ) -> Union[dict, ProductSearch]:
-        basic = self._basic
-        session_id = self._connection_storage.session_id
-
-        return basic.product_search(
-            request=request,
-            session_id=session_id,
-            raw=raw,
-        )
-
-    def get_favourites_list(
-        self,
-        raw: bool = False,
-    ) -> Union[dict, Favourites]:
-        basic = self._basic
-        session_id = self._connection_storage.session_id
-
-        return basic.get_favourites_list(
-            session_id=session_id,
-            raw=raw,
-        )
-
-    def get_products_config(
-        self,
-        raw: bool = False,
-    ) -> Union[dict, ProductSearch.Config]:
-        basic = self._basic
-        session_id = self._connection_storage.session_id
-
-        return basic.get_products_config(
-            session_id=session_id,
-            raw=raw,
-        )
-
-    def get_products_info(
-        self,
-        request: ProductsInfo.Request,
-        raw: bool = False,
-    ) -> Union[dict, ProductsInfo]:
-        basic = self._basic
-        session_id = self._connection_storage.session_id
-
-        return basic.get_products_info(
-            request=request,
-            session_id=session_id,
-            raw=raw,
-        )
-
-    def get_company_ratios(
-        self,
-        product_isin: str,
-        raw: bool = False,
-    ) -> Union[dict, CompanyRatios]:
-        basic = self._basic
-        session_id = self._connection_storage.session_id
-
-        return basic.get_company_ratios(
-            product_isin=product_isin,
-            session_id=session_id,
-            raw=raw,
-        )
-
-    def get_company_profile(
-        self,
-        product_isin: str,
-        raw: bool = False,
-    ) -> Union[dict, CompanyProfile]:
-        basic = self._basic
-        session_id = self._connection_storage.session_id
-
-        return basic.get_company_profile(
-            product_isin=product_isin,
-            session_id=session_id,
-            raw=raw,
-        )
-
-    def get_financial_statements(
-        self,
-        product_isin: str,
-        raw: bool = False,
-    ) -> Union[dict, FinancialStatements]:
-        basic = self._basic
-        session_id = self._connection_storage.session_id
-
-        return basic.get_financial_statements(
-            product_isin=product_isin,
-            session_id=session_id,
-            raw=raw,
-        )
-
-    def get_latest_news(
-        self,
-        request: LatestNews.Request,
-        raw: bool = False,
-    ) -> Union[dict, LatestNews]:
-        basic = self._basic
-        session_id = self._connection_storage.session_id
-
-        return basic.get_latest_news(
-            request=request,
-            session_id=session_id,
-            raw=raw,
-        )
-
-    def get_top_news_preview(
-        self,
-        raw: bool = False,
-    ) -> Union[dict, TopNewsPreview]:
-        basic = self._basic
-        session_id = self._connection_storage.session_id
-
-        return basic.get_top_news_preview(
-            session_id=session_id,
-            raw=raw,
-        )
-
-    def get_news_by_company(
-        self,
-        request: NewsByCompany.Request,
-        raw: bool = False,
-    ) -> Union[dict, NewsByCompany]:
-        basic = self._basic
-        session_id = self._connection_storage.session_id
-
-        return basic.get_news_by_company(
-            request=request,
-            session_id=session_id,
-            raw=raw,
-        )
-
-    def get_cash_account_report(
-        self,
-        request: CashAccountReport.Request,
-        raw: bool = False,
-    ) -> Union[dict, CashAccountReport]:
-        basic = self._basic
-        session_id = self._connection_storage.session_id
-
-        return basic.get_cash_account_report(
-            request=request,
-            session_id=session_id,
-            raw=raw,
-        )
-
-    def get_agenda(
-        self,
-        request: Agenda.Request,
-        raw: bool = False,
-    ) -> Union[dict, Agenda]:
-        basic = self._basic
-        session_id = self._connection_storage.session_id
-
-        return basic.get_agenda(
-            request=request,
-            session_id=session_id,
-            raw=raw,
-        )
-
-
-if __name__ == "__main__":
-    # IMPORTATIONS
-    import json
-
-    from degiro_connector.trading.pb.trading_pb2 import Credentials
-
-    # FETCH CONFIG
-    with open("config.json") as config_file:
-        config = json.load(config_file)
-
-    # SETUP CREDENTIALS
-    username = config["username"]
-    password = config["password"]
-    int_account = config["int_account"]
-    credentials = Credentials(
-        int_account=int_account, username=username, password=password
-    )
-    # SETUP API
-    api = API(credentials=credentials)
-
-    # ESTABLISH CONNECTION
-    api.connect()
-    session_id = api.connection_storage.session_id
+            return getattr(self, action)
