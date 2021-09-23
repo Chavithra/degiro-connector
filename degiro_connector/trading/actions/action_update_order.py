@@ -8,14 +8,14 @@ from google.protobuf import json_format
 
 # IMPORTATION INTERNAL
 import degiro_connector.core.constants.urls as urls
+from degiro_connector.core.abstracts.abstract_action import AbstractAction
 from degiro_connector.trading.models.trading_pb2 import (
     Credentials,
     Order,
 )
-from degiro_connector.core.abstracts.abstract_action import AbstractAction
 
 
-class ActionGetCheckOrder(AbstractAction):
+class ActionUpdateOrder(AbstractAction):
     ORDER_FILTER_MATCHING = {
         Order.OrderType.LIMIT: {
             "buySell",
@@ -82,37 +82,24 @@ class ActionGetCheckOrder(AbstractAction):
 
         return filtered_order_dict
 
-    @staticmethod
-    def checking_response_to_grpc(payload: dict) -> Order.CheckingResponse:
-        checking_response = Order.CheckingResponse()
-        checking_response.response_datetime.GetCurrentTime()
-        json_format.ParseDict(
-            js_dict=payload["data"],
-            message=checking_response,
-            ignore_unknown_fields=True,
-            descriptor_pool=None,
-        )
-
-        return checking_response
-
     @classmethod
-    def check_order(
+    def update_order(
         cls,
-        credentials: Credentials,
         order: Order,
         session_id: str,
-        logger: logging.Logger = None,
-        raw: bool = False,
+        credentials: Credentials,
         session: requests.Session = None,
-    ) -> Union[Order.CheckingResponse, bool]:
+        logger: logging.Logger = None,
+    ) -> bool:
         if logger is None:
             logger = cls.build_logger()
         if session is None:
             session = cls.build_session()
 
         int_account = credentials.int_account
-        url = urls.ORDER_CHECK
-        url = f"{url};jsessionid={session_id}"
+        order_id = order.id
+        url = urls.ORDER_UPDATE
+        url = f"{url}/{order_id};jsessionid={session_id}"
 
         params = {
             "intAccount": int_account,
@@ -122,7 +109,7 @@ class ActionGetCheckOrder(AbstractAction):
         order_dict = cls.order_to_api(order=order)
 
         request = requests.Request(
-            method="POST",
+            method="PUT",
             url=url,
             json=order_dict,
             params=params,
@@ -132,47 +119,28 @@ class ActionGetCheckOrder(AbstractAction):
 
         try:
             response_raw = session.send(prepped, verify=False)
-            response_dict = response_raw.json()
         except Exception as e:
             logger.fatal(response_raw.status_code)
             logger.fatal(response_raw.text)
             logger.fatal(e)
             return False
 
-        if (
-            isinstance(response_dict, dict)
-            and "data" in response_dict
-            and "confirmationId" in response_dict["data"]
-        ):
-            if raw is True:
-                response = response_dict
-            else:
-                response = cls.checking_response_to_grpc(
-                    payload=response_dict,
-                )
-        else:
-            logger.fatal(response_raw.status_code)
-            logger.fatal(response_raw.text)
-            response = False
-
-        return response
+        return response_raw.status_code == 200
 
     def call(
         self,
         order: Order,
-        raw: bool = False,
-    ) -> Union[Order.CheckingResponse, bool]:
+    ) -> bool:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
-        credentials = self.credentials
         session = self.session_storage.session
+        credentials = self.credentials
         logger = self.logger
 
-        return self.check_order(
-            credentials=credentials,
+        return self.update_order(
             order=order,
             session_id=session_id,
-            logger=logger,
-            raw=raw,
+            credentials=credentials,
             session=session,
+            logger=logger,
         )
