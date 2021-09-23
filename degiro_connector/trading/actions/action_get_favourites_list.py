@@ -15,7 +15,7 @@ from degiro_connector.trading.models.trading_pb2 import (
 )
 
 
-class ActionGetFavoritesList(AbstractAction):
+class ActionGetFavouritesList(AbstractAction):
     @staticmethod
     def favourites_to_grpc(payload: dict) -> Favourites:
         favourites = Favourites()

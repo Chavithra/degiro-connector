@@ -15,7 +15,7 @@ from degiro_connector.trading.models.trading_pb2 import (
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
 
 
-class ActionGetCheckOrder(AbstractAction):
+class ActionCheckOrder(AbstractAction):
     ORDER_FILTER_MATCHING = {
         Order.OrderType.LIMIT: {
             "buySell",

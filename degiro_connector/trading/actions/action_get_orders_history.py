@@ -1,4 +1,5 @@
 # IMPORTATION STANDARD
+import datetime
 import logging
 from typing import Dict, Union
 
@@ -16,6 +17,35 @@ from degiro_connector.trading.models.trading_pb2 import (
 
 
 class ActionGetOrdersHistory(AbstractAction):
+    @staticmethod
+    def orders_history_request_to_api(request: OrdersHistory.Request) -> dict:
+        request_dict = dict()
+        request_dict["fromDate"] = datetime.datetime(
+            year=request.from_date.year,
+            month=request.from_date.month,
+            day=request.from_date.day,
+        ).strftime("%d/%m/%Y")
+        request_dict["toDate"] = datetime.datetime(
+            year=request.to_date.year,
+            month=request.to_date.month,
+            day=request.to_date.day,
+        ).strftime("%d/%m/%Y")
+
+        return request_dict
+
+    @staticmethod
+    def orders_history_to_grpc(payload: dict) -> OrdersHistory:
+        orders_history = OrdersHistory()
+        orders_history.response_datetime.GetCurrentTime()
+        json_format.ParseDict(
+            js_dict={"values": payload["data"]},
+            message=orders_history,
+            ignore_unknown_fields=True,
+            descriptor_pool=None,
+        )
+
+        return orders_history
+
     @classmethod
     def get_orders_history(
         cls,
@@ -25,7 +55,7 @@ class ActionGetOrdersHistory(AbstractAction):
         raw: bool = False,
         session: requests.Session = None,
         logger: logging.Logger = None,
-    ) -> Union[dict, Update]:
+    ) -> OrdersHistory:
         """Retrieve history about orders.
         Args:
             request (OrdersHistory.Request):
@@ -69,7 +99,7 @@ class ActionGetOrdersHistory(AbstractAction):
 
         url = urls.ORDERS_HISTORY
 
-        params = payload_handler.orders_history_request_to_api(
+        params = cls.orders_history_request_to_api(
             request=request,
         )
         params["intAccount"] = credentials.int_account
@@ -86,7 +116,7 @@ class ActionGetOrdersHistory(AbstractAction):
             if raw is True:
                 response = response_dict
             else:
-                response = payload_handler.orders_history_to_grpc(
+                response = cls.orders_history_to_grpc(
                     payload=response_dict,
                 )
         except Exception as e:

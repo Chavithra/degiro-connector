@@ -15,7 +15,7 @@ from degiro_connector.trading.models.trading_pb2 import (
 )
 
 
-class ActionGetnewsByCompany(AbstractAction):
+class ActionGetNewsByCompany(AbstractAction):
     @staticmethod
     def news_by_company_request_to_api(
         request: NewsByCompany.Request,
