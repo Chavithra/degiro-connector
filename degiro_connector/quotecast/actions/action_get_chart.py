@@ -16,7 +16,7 @@ from degiro_connector.quotecast.models.quotecast_pb2 import (
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
 
 
-class ActionChart(AbstractAction):
+class ActionGetChart(AbstractAction):
     @staticmethod
     def chart_request_to_api(request: Chart.Request) -> dict:
         request_dict = json_format.MessageToDict(

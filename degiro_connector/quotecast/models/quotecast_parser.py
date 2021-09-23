@@ -1,11 +1,10 @@
 import datetime
 import logging
 import orjson as json
-import degiro_connector.quotecast.helpers.pb_handler as pb_handler
 import pandas as pd
 
 from degiro_connector.quotecast.models.metrics_storage import MetricsStorage
-from degiro_connector.quotecast.pb.quotecast_pb2 import Quotecast, Ticker
+from degiro_connector.quotecast.models.quotecast_pb2 import Quotecast, Ticker
 from typing import Dict, List, Union
 
 
@@ -145,6 +144,77 @@ class QuotecastParser:
         115.85 <=> CODE2
     """
 
+    @classmethod
+    def ticker_to_df(
+        cls,
+        ticker: Ticker,
+        column_list: List[str] = None,
+    ) -> pd.DataFrame:
+        """Converts a ticker to a "pandas.DataFrame".
+        Args:
+            ticker (Ticker):
+                Ticker to convert.
+            column_list (List[str]):
+                Mandatory fields : will be set to "None" if empty.
+                Default to [].
+        Returns:
+            pandas.DataFrame:
+                "pandas.DataFrame" containing the metrics.
+                Each row depicts a specific product.
+                Each column depicts a specific metric.
+        """
+
+        if column_list is None:
+            column_list = list()
+
+        ticker_dict = cls.ticker_to_dict(
+            ticker=ticker,
+            column_list=column_list,
+        )
+
+        df = pd.DataFrame(ticker_dict.values())
+
+        return df
+
+    @staticmethod
+    def ticker_to_dict(
+        ticker: Ticker,
+        column_list: List[str] = None,
+    ) -> Dict[
+        Union[str, int], Dict[str, Union[str, int]]  # VWD_ID  # METRICS : NAME / VALUE
+    ]:
+        """Converts a ticker to a "dict".
+        Args:
+            ticker (Ticker):
+                Ticker to convert.
+            column_list (List[str]):
+                Mandatory fields : will be set to "None" if empty.
+                Default to [].
+        Returns:
+            Dict[Union[str, int], Dict[str, Union[str, int]]]:
+                Dict containing all the metrics grouped by "vwd_id".
+        """
+
+        if column_list is None:
+            column_list = list()
+
+        empty_list = [None] * len(column_list)
+        empty_metrics = dict(zip(column_list, empty_list))
+        empty_metrics[
+            "response_datetime"
+        ] = ticker.metadata.response_datetime.ToJsonString()
+        empty_metrics["request_duration"] = (
+            ticker.metadata.request_duration.ToMicroseconds() / 10 ** 6
+        )
+
+        ticker_dict = dict()
+        for product in ticker.products:
+            ticker_dict[product] = empty_metrics.copy()
+            ticker_dict[product]["vwd_id"] = product
+            ticker_dict[product].update(ticker.products[product].metrics)
+
+        return ticker_dict
+
     @staticmethod
     def build_ticker_from_quotecast(
         quotecast: Quotecast,
@@ -262,7 +332,7 @@ class QuotecastParser:
     @property
     def ticker_df(self) -> pd.DataFrame:
         ticker = self.__ticker
-        ticker_df = pb_handler.ticker_to_df(ticker=ticker)
+        ticker_df = self.ticker_to_df(ticker=ticker)
         return ticker_df
 
     @property
@@ -272,7 +342,7 @@ class QuotecastParser:
         Union[str, int], Dict[str, Union[str, int]]  # VWD_ID  # METRICS : NAME / VALUE
     ]:
         ticker = self.__ticker
-        ticker_dict = pb_handler.ticker_to_dict(ticker=ticker)
+        ticker_dict = self.ticker_to_dict(ticker=ticker)
         return ticker_dict
 
     def __init__(self, forward_fill: bool = False):

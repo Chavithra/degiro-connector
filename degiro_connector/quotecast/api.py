@@ -3,7 +3,7 @@ import logging
 import pkgutil
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Union
 
 # IMPORTATION THIRD PARTY
 
@@ -12,6 +12,9 @@ import degiro_connector.core.constants.timeouts as timeouts
 from degiro_connector.core.helpers.lazy_loader import InitArgs, LazyLoader, Pair
 from degiro_connector.core.models.model_connection import ModelConnection
 from degiro_connector.core.models.model_session import ModelSession
+
+from degiro_connector.quotecast.models.quotecast_pb2 import Quotecast
+from degiro_connector.quotecast.models.quotecast_parser import QuotecastParser
 
 
 class API:
@@ -130,3 +133,42 @@ class API:
             self.setup_one_action(action=action)
 
             return getattr(self, action)
+
+    def fetch_metrics(
+        self,
+        request: Quotecast.Request,
+    ) -> Dict[
+        Union[str, int], Dict[str, Union[str, int]]  # VWD_ID  # METRICS : NAME / VALUE
+    ]:
+        """Fetch metrics from a request.
+        If you seek realtime it's better to use "fetch_data".
+        Since "fetch_data" consumes less ressources.
+        Args:
+            request (QuotecastAPI.Request):
+                List of subscriptions & unsubscriptions to do.
+        Returns:
+            Dict[Union[str, int], Dict[str, Union[str, int]]]:
+                Dict containing all the metrics grouped by "vwd_id".
+        """
+
+        logger = self._logger
+
+        connection_attempts = 0
+        ticker_dict = dict()
+        while connection_attempts < 2:
+            try:
+                self.subscribe(request=request)
+                quotecast = self.fetch_data()
+                quotecast_parser = QuotecastParser(forward_fill=True)
+                quotecast_parser.put_quotecast(quotecast=quotecast)
+                ticker_dict = quotecast_parser.ticker_dict
+                break
+            except (ConnectionError, BrokenPipeError, TimeoutError) as e:
+                logger.info(e)
+                self.connect()
+                connection_attempts += 1
+            except Exception as e:
+                logger.fatal(e)
+                break
+
+        return ticker_dict
