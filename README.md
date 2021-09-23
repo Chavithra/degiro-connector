@@ -7,6 +7,7 @@ Notes :
 ```bash
 python -m degiro_connector.migration.from_0_1_3_to_1_0_0
 python -m degiro_connector.migration.from_1_0_4_to_1_0_5
+python -m degiro_connector.migration.from_1_0_10_to_2_0_0
 ```
 
 ## 1.1. Which features ?
