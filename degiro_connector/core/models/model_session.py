@@ -1,13 +1,19 @@
+# IMPORTATION STANDARD
 import logging
-import requests
 import threading
+from typing import Dict
 
-# FIX #61631955
-# Degiro's server has a low level of security
-# Which is not compatible with OpenSSL 1.1.1
-# https://stackoverflow.com/questions/61631955/python-requests-ssl-error-during-requests
+# IMPORTATION THIRD PARTY
+import requests
 import ssl
+import urllib3
 from urllib3 import poolmanager
+
+# IMPORTATION INTERNAL
+import degiro_connector.core.constants.headers as default_headers
+
+# DISABLE WARNINGS
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
 class TLSAdapter(requests.adapters.HTTPAdapter):
@@ -30,30 +36,16 @@ class TLSAdapter(requests.adapters.HTTPAdapter):
         )
 
 
-class SessionStorage:
+class ModelSession:
     """Handle the Requests Session objects in a threadsafe manner."""
 
-    @property
-    def session(self) -> requests.Session:
-        self.__logger.debug("session:getter: %s", threading.current_thread().name)
-
-        if not hasattr(self.__local_storage, "session"):
-            self.__local_storage.session = self.build_session()
-
-        return self.__local_storage.session
-
-    @session.setter
-    def session(self, session: requests.Session):
-        self.__logger.debug("session:setter: %s", threading.current_thread().name)
-
-        self.__local_storage.session = session
-
+    @staticmethod
     def build_session(
-        self,
         headers: dict = None,
         hooks: dict = None,
+        ssl_check: bool = False,
     ) -> requests.Session:
-        """
+        """Setup a "requests.Session" object.
         Args:
             headers (dict, optional):
                 Headers to used for the Session.
@@ -70,24 +62,59 @@ class SessionStorage:
         session = requests.Session()
 
         # FIX #61631955
-        session.mount("https://", TLSAdapter())
+        # Degiro's server has a low level of security
+        # Which is not compatible with OpenSSL 1.1.1
+        # https://stackoverflow.com/questions/61631955/python-requests-ssl-error-during-requests
+        if ssl_check is False:
+            session.mount("https://", TLSAdapter())
 
         if isinstance(headers, dict):
             session.headers.update(headers)
-        elif isinstance(self.__headers, dict):
-            session.headers.update(self.__headers)
+        else:
+            session.headers.update(default_headers.HEADERS)
 
         if isinstance(hooks, dict):
             session.hooks.update(hooks)
-        elif isinstance(self.__hooks, dict):
-            session.hooks.update(self.__hooks)
 
         return session
 
-    def reset_session(self, headers: dict = None, hooks: dict = None):
-        self.__local_storage.session = self.build_session(headers=headers, hooks=hooks)
+    @property
+    def session(self) -> requests.Session:
+        self.__logger.debug("session:getter: %s", threading.current_thread().name)
 
-    def __init__(self, headers: dict = None, hooks: dict = None):
+        if not hasattr(self.__local_storage, "session"):
+            self.__local_storage.session = self.build_session(
+                headers=self.__headers,
+                hooks=self.__hooks,
+                ssl_check=self.__ssl_check,
+            )
+
+        return self.__local_storage.session
+
+    @session.setter
+    def session(self, session: requests.Session):
+        self.__logger.debug("session:setter: %s", threading.current_thread().name)
+
+        self.__local_storage.session = session
+
+    def reset_session(
+        self,
+        headers: dict = None,
+        hooks: dict = None,
+        ssl_check: bool = False,
+    ):
+        self.__local_storage.session = self.build_session(
+            headers=headers,
+            hooks=hooks,
+            ssl_check=ssl_check,
+        )
+
+    def __init__(
+        self,
+        headers: dict = None,
+        hooks: dict = None,
+        ssl_check: bool = False,
+    ):
         self.__logger = logging.getLogger(self.__module__)
         self.__local_storage = threading.local()
 
@@ -99,3 +126,4 @@ class SessionStorage:
 
         self.__headers = headers
         self.__hooks = hooks
+        self.__ssl_check = ssl_check

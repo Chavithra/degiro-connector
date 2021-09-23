@@ -1,161 +1,132 @@
+# IMPORTATION STANDARD
 import logging
-import urllib3
+import pkgutil
+from degiro_connector.core.abstracts.abstract_action import AbstractAction
+from pathlib import Path
+from typing import Any, Dict, List, Optional
 
-from degiro_connector.quotecast.basic import Basic
-from degiro_connector.quotecast.models.connection_storage import ConnectionStorage
-from degiro_connector.quotecast.models.quotecast_parser import QuotecastParser
-from degiro_connector.quotecast.pb.quotecast_pb2 import Chart, Quotecast
-from typing import Dict, Union
+# IMPORTATION THIRD PARTY
 
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+# IMPORTATION INTERNAL
+import degiro_connector.core.constants.timeouts as timeouts
+from degiro_connector.core.helpers.lazy_loader import InitArgs, LazyLoader, Pair
+from degiro_connector.core.models.model_connection import ModelConnection
+from degiro_connector.core.models.model_session import ModelSession
 
 
 class API:
-    """Tools to consume Degiro's QuoteCast API.
+    PKG_PATH = "degiro_connector.quotecast.actions"
+    CLS_PREFIX = "Action"
+    MOD_PREFIX = "action_"
+    ROOT_PATH = Path(__file__).absolute().parent.parent.parent.resolve()
 
-    Same operations than "Basic" but with "session_id" management.
+    @classmethod
+    def build_action_list(cls) -> List[str]:
+        # SETUP PATH
+        path = cls.PKG_PATH
+        path = str(Path(cls.ROOT_PATH, *path.split(".")).resolve())
 
-    Additional methods :
-        * fetch_metrics
+        # BUILD MODULE LIST
+        action_list = list()
+        for module in pkgutil.iter_modules([path]):
+            if (
+                not module.ispkg
+                and module.name[: len(cls.MOD_PREFIX)] == cls.MOD_PREFIX
+            ):
+                action_list.append(module.name[len(cls.MOD_PREFIX) :])
 
-    This class should be threadsafe.
-    """
+        return action_list
 
     @property
-    def basic(self) -> Basic:
-        return self._basic
+    def action_list(self) -> List[str]:
+        return self._action_list
 
     @property
-    def connection_storage(self) -> ConnectionStorage:
+    def connection_storage(self) -> ModelConnection:
         return self._connection_storage
 
     @property
-    def user_token(self) -> int:
-        return self._basic.user_token
+    def credentials(self) -> Dict[str, Any]:
+        return self._config
 
-    def __init__(self, user_token: int):
-        self._basic = Basic(user_token=user_token)
+    @property
+    def session_storage(self) -> ModelSession:
+        return self._session_storage
 
-        self._connection_storage = ConnectionStorage(
-            connection_timeout=15,
-        )
-        self._connection_storage.setup_hooks(
-            session=self._basic.session_storage.session,
-        )
-        self._logger = logging.getLogger(self.__module__)
-
-    def connect(self) -> str:
-        basic = self.basic
-        connection_storage = self._connection_storage
-        connection_storage.session_id = basic.get_session_id()
-
-        return connection_storage.session_id
-
-    def fetch_data(self) -> Quotecast:
-        basic = self.basic
-        session_id = self.connection_storage.session_id
-
-        return basic.fetch_data(session_id=session_id)
-
-    def fetch_metrics(
+    def load(
         self,
-        request: Quotecast.Request,
-    ) -> Dict[
-        Union[str, int], Dict[str, Union[str, int]]  # VWD_ID  # METRICS : NAME / VALUE
-    ]:
-        """Fetch metrics from a request.
+        action: str,
+        init_args: InitArgs = None,
+    ) -> Optional[object]:
+        if action not in self._action_list:
+            print(self.action)
+            print(self._action_list)
+            return None
 
-        If you seek realtime it's better to use "fetch_data".
-        Since "fetch_data" consumes less ressources.
+        # SETUP CLASS NAME
+        cap_words_action = action.replace("_", " ").title().replace(" ", "")
+        class_name = self.CLS_PREFIX + cap_words_action
 
-        Args:
-            request (QuotecastAPI.Request):
-                List of subscriptions & unsubscriptions to do.
+        # SETUP PATHS
+        module_path = self.PKG_PATH + "." + self.MOD_PREFIX + action
 
-        Returns:
-            Dict[Union[str, int], Dict[str, Union[str, int]]]:
-                Dict containing all the metrics grouped by "vwd_id".
-        """
+        # SETUP PAIR
+        pair = Pair(
+            module_path=module_path,
+            class_name=class_name,
+        )
 
-        logger = self._logger
+        return LazyLoader.load_pair(pair=pair, init_args=init_args)
 
-        connection_attempts = 0
-        ticker_dict = dict()
-        while connection_attempts < 2:
-            try:
-                self.subscribe(request=request)
-                quotecast = self.fetch_data()
-                quotecast_parser = QuotecastParser(forward_fill=True)
-                quotecast_parser.put_quotecast(quotecast=quotecast)
-                ticker_dict = quotecast_parser.ticker_dict
-                break
-            except (ConnectionError, BrokenPipeError, TimeoutError) as e:
-                logger.info(e)
-                self.connect()
-                connection_attempts += 1
-            except Exception as e:
-                logger.fatal(e)
-                break
-
-        return ticker_dict
-
-    def get_chart(
+    def __init__(
         self,
-        request: Chart.Request,
-        override: Dict[str, str] = None,
-        raw: bool = False,
-    ) -> Chart:
-        basic = self.basic
-
-        return basic.get_chart(
-            request=request,
-            override=override,
-            raw=raw,
+        user_token: int,
+        connection_storage: ModelConnection = None,
+        logger: logging.Logger = None,
+        preload: bool = True,
+        session_storage: ModelSession = None,
+    ):
+        self._credentials = {"user_token": user_token}
+        self._connection_storage = connection_storage or ModelConnection(
+            connection_timeout=timeouts.QUOTECAST_TIMEOUT,
         )
-
-    def subscribe(self, request: Quotecast.Request) -> bool:
-        basic = self.basic
-        session_id = self._connection_storage.session_id
-
-        return basic.subscribe(
-            request=request,
-            session_id=session_id,
+        self._logger = logger or logging.getLogger(self.__module__)
+        self._session_storage = session_storage or ModelSession(
+            hooks=self._connection_storage.build_hooks(),
+            ssl_check=False,
         )
+        self._action_list = self.build_action_list()
 
+        if preload:
+            self.setup_all_actions()
 
-if __name__ == "__main__":
-    # IMPORTATIONS
-    import json
-    import time
+    def setup_all_actions(self):
+        action_list = self._action_list
+        for action in action_list:
+            self.setup_one_action(action=action)
 
-    # SETUP LOGS
-    logging.basicConfig(level=logging.DEBUG)
+    def setup_one_action(self, action: str):
+        init_args = InitArgs(
+            credentials=self._credentials,
+            connection_storage=self._connection_storage,
+            session_storage=self._session_storage,
+        )
+        action_instance = self.load(
+            action=action,
+            init_args=init_args,
+        )
+        if not isinstance(action_instance, AbstractAction):
+            raise TypeError(
+                "Not a `AbstractAction` : %s / %s " % (action, action_instance)
+            )
 
-    # SETUP CREDENTIALS
-    with open("config/subscription_request.json") as config_file:
-        config = json.load(config_file)
-    user_token = config["user_token"]
+        print("setup_one_action : ", action)
+        setattr(self, action, action_instance)
 
-    # SETUP API
-    api = API(user_token=user_token)
+    def __getattr__(self, item):
+        print("CALLING __GETATTR__, on item : ", item)
+        if item in self._action_list:
+            action = item
+            self.setup_one_action(action=action)
 
-    # SETUP REQUEST
-    request = Quotecast.Request()
-    request.subscriptions["360015751"].extend(
-        [
-            "LastDate",
-            "LastTime",
-            "LastPrice",
-            "LastVolume",
-        ]
-    )
-
-    # CONNECT
-    api.connect()
-
-    # SUBSCRIBE
-    api.subscribe(request=request)
-
-    # FETCH DATA
-    time.sleep(1)
-    api.fetch_data()
+            return getattr(self, action)

@@ -1,12 +1,16 @@
+# IMPORTATION STANDARD
 import logging
 import requests
 import time
-
 from threading import Event
+
+# IMPORTATION THIRD PARTY
 from wrapt.decorators import synchronized
 
+# IMPORTATION INTERNAL
 
-class ConnectionStorage:
+
+class ModelConnection:
     @property
     def connected(self) -> Event:
         return self.__connected
@@ -39,7 +43,7 @@ class ConnectionStorage:
 
     def __init__(
         self,
-        connection_timeout: int = 15,
+        connection_timeout: int,  # quotecast : 15s / trading: 1800s
     ):
         self.__connection_timeout = connection_timeout
 
@@ -65,6 +69,8 @@ class ConnectionStorage:
         if self.__last_success < timestamp and status_code == 200:
             self.__last_success = timestamp
 
+    def build_hooks(self):
+        return {"response": [self.response_hook]}
+
     def setup_hooks(self, session: requests.Session):
-        hooks = {"response": [self.response_hook]}
-        session.hooks.update(hooks)
+        session.hooks.update(self.build_hooks())
