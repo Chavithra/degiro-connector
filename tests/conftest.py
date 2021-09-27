@@ -130,20 +130,3 @@ def credentials(config, request) -> Credentials:
     )
 
     return credentials
-
-
-# TEST FIXTURES
-@pytest.mark.quotecast
-def test_fixture_user_token(user_token):
-    assert isinstance(user_token, int)
-    assert user_token > 0
-
-
-@pytest.mark.trading
-def test_fixture_config_dict(credentials):
-    assert isinstance(credentials.int_account, int)
-    assert credentials.int_account > 0
-    assert isinstance(credentials.username, str)
-    assert len(credentials.username) > 0
-    assert isinstance(credentials.password, str)
-    assert len(credentials.password) > 0
