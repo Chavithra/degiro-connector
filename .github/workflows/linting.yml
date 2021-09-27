@@ -28,3 +28,6 @@ jobs:
     - name: Lint with flake8
       run: |
         flake8 degiro_connector examples --ignore=E203,W503 --exclude=degiro_connector/quotecast/models,degiro_connector/trading/models --count --show-source --statistics --max-line-length=89
+    - name: Test with pytest
+      run: |
+        pytest -m "not network"

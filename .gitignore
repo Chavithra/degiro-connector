@@ -20,6 +20,7 @@ __pycache__
 # FILES
 .coverage
 !*template.json
+!*pytest.ini
 *.bat
 *.csv
 *.db
