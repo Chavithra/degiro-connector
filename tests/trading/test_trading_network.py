@@ -16,35 +16,33 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
 # SETUP FIXTURES
-
-
+@pytest.mark.trading
 @pytest.fixture(scope="module")
-def trading_api(credentials) -> TradingAPI:
-    trading_api = TradingAPI(credentials=credentials)
-    trading_api.connect()
+def trading(credentials) -> TradingAPI:
+    return TradingAPI(credentials=credentials)
 
-    return trading_api
+
+@pytest.mark.network
+@pytest.mark.trading
+def trading_connected(trading_connected) -> TradingAPI:
+    trading_connected.connect()
+
+    return trading_connected
 
 
 # TESTS FIXTURES
-def test_fixture_config_dict(credentials):
-
-    assert isinstance(credentials.int_account, int)
-    assert credentials.int_account > 0
-    assert isinstance(credentials.username, str)
-    assert len(credentials.username) > 0
-    assert isinstance(credentials.password, str)
-    assert len(credentials.password) > 0
-
-
-def test_fixture_trading_api(trading_api):
-    session_id = trading_api.connection_storage.session_id
+@pytest.mark.network
+@pytest.mark.trading
+def test_fixture_trading_connected(trading_connected):
+    session_id = trading_connected.connection_storage.session_id
 
     assert isinstance(session_id, str)
     assert len(session_id) == 45
 
 
 # TESTS FEATURES
+@pytest.mark.network
+@pytest.mark.trading
 def test_config_table(user_token, trading_api):
     time.sleep(random.uniform(0, 2))
 
@@ -58,6 +56,8 @@ def test_config_table(user_token, trading_api):
     assert session_id == real_session_id
 
 
+@pytest.mark.network
+@pytest.mark.trading
 def test_config_table_urls(trading_api):
     time.sleep(random.uniform(0, 2))
 

@@ -1,7 +1,7 @@
 # IMPORTATION STANDARD
 import json
 import os
-from typing import Dict, Union
+from typing import Any, Dict, Optional
 
 # IMPORTATION THIRD PARTY
 import pytest
@@ -66,7 +66,7 @@ def pytest_addoption(parser):
 
 # SETUP FIXTURES
 @pytest.fixture(scope="module")
-def config() -> Dict[str, Union[int, str]]:
+def config() -> Optional[Dict[str, Any]]:
     if os.path.isfile(CONFIG_FILE):
         with open(CONFIG_FILE) as config_file:
             config_dict = json.load(config_file)
@@ -77,6 +77,7 @@ def config() -> Dict[str, Union[int, str]]:
 
 
 @pytest.fixture(scope="module")
+@pytest.mark.quotecast
 def user_token(config, request) -> int:
     """Get `--user-token` argument from `CONFIG_FILE` or CLI.
 
@@ -95,6 +96,7 @@ def user_token(config, request) -> int:
 
 
 @pytest.fixture(scope="module")
+@pytest.mark.trading
 def credentials(config, request) -> Credentials:
     """Get `--user-token` argument from `CONFIG_FILE` or CLI.
 
@@ -128,3 +130,20 @@ def credentials(config, request) -> Credentials:
     )
 
     return credentials
+
+
+# TEST FIXTURES
+@pytest.mark.quotecast
+def test_fixture_user_token(user_token):
+    assert isinstance(user_token, int)
+    assert user_token > 0
+
+
+@pytest.mark.trading
+def test_fixture_config_dict(credentials):
+    assert isinstance(credentials.int_account, int)
+    assert credentials.int_account > 0
+    assert isinstance(credentials.username, str)
+    assert len(credentials.username) > 0
+    assert isinstance(credentials.password, str)
+    assert len(credentials.password) > 0
