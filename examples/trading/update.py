@@ -46,9 +46,11 @@ request_list.values.extend(
     ]
 )
 
+# FETCH DATA
 update = trading_api.get_update(request_list=request_list, raw=False)
 update_dict = pb_handler.message_to_dict(message=update)
 
+# DISPLAY DATA
 if "orders" in update_dict:
     orders_df = pd.DataFrame(update_dict["orders"]["values"])
     print("orders")

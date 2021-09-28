@@ -40,8 +40,8 @@ trading_api.connect()
 # SETUP REQUEST
 today = datetime.date.today()
 from_date = TransactionsHistory.Request.Date(
-    year=2020,
-    month=10,
+    year=today.year,
+    month=1,
     day=1,
 )
 to_date = TransactionsHistory.Request.Date(

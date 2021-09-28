@@ -40,7 +40,7 @@ trading_api.connect()
 # SETUP REQUEST
 today = datetime.date.today()
 from_date = OrdersHistory.Request.Date(
-    year=2020,
+    year=today.year,
     month=10,
     day=1,
 )
