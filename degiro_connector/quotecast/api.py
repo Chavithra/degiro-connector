@@ -61,9 +61,13 @@ class API:
         action: str,
         init_args: InitArgs = None,
     ) -> Optional[object]:
-        if action not in self._action_list:
-            print(self.action)
-            print(self._action_list)
+        logger = self._logger
+        action_list = self._action_list
+
+        if action not in action_list:
+            logger.info("Not in action_list")
+            logger.info("action : %s", action)
+            logger.info("action_list : %s", action_list)
             return None
 
         # SETUP CLASS NAME
@@ -109,6 +113,7 @@ class API:
             self.setup_one_action(action=action)
 
     def setup_one_action(self, action: str):
+        logger = self._logger
         init_args = InitArgs(
             credentials=self._credentials,
             connection_storage=self._connection_storage,
@@ -123,11 +128,12 @@ class API:
                 "Not a `AbstractAction` : %s / %s " % (action, action_instance)
             )
 
-        print("setup_one_action : ", action)
+        logger.debug("setup_one_action : %s", action)
         setattr(self, action, action_instance)
 
     def __getattr__(self, item):
-        print("CALLING __GETATTR__, on item : ", item)
+        logger = self._logger
+        logger.debug("CALLING __GETATTR__, on item : %s", item)
         if item in self._action_list:
             action = item
             self.setup_one_action(action=action)
