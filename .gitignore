@@ -19,8 +19,6 @@ __pycache__
 
 # FILES
 .coverage
-!*template.json
-!*pytest.ini
 *.bat
 *.csv
 *.db
@@ -33,3 +31,5 @@ __pycache__
 *.txt
 *.xlsx
 *.lock
+!*template.json
+!pytest.ini
