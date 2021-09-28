@@ -441,7 +441,6 @@ def test_get_products_info(trading_connected):
 
 @pytest.mark.network
 @pytest.mark.trading
-@pytest.mark.work_in_progress
 def test_get_products_info(trading_connected):
     time.sleep(random.uniform(0, 2))
 
