@@ -399,7 +399,7 @@ def test_get_products_info(trading_connected):
 
 @pytest.mark.network
 @pytest.mark.trading
-def test_get_products_info(trading_connected):
+def test_get_top_news_preview(trading_connected):
     time.sleep(random.uniform(0, 2))
 
     # FETCH DATA
@@ -410,7 +410,7 @@ def test_get_products_info(trading_connected):
 
 @pytest.mark.network
 @pytest.mark.trading
-def test_get_products_info(trading_connected):
+def test_get_transactions_history(trading_connected):
     time.sleep(random.uniform(0, 2))
 
     # SETUP REQUEST
@@ -441,7 +441,7 @@ def test_get_products_info(trading_connected):
 
 @pytest.mark.network
 @pytest.mark.trading
-def test_get_products_info(trading_connected):
+def test_get_update(trading_connected):
     time.sleep(random.uniform(0, 2))
 
     # SETUP REQUEST
