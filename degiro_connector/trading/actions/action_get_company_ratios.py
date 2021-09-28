@@ -1,5 +1,6 @@
 # IMPORTATION STANDARD
 import logging
+from os import stat
 from typing import Dict, Union
 
 # IMPORTATION THIRD PARTY
@@ -16,6 +17,17 @@ from degiro_connector.trading.models.trading_pb2 import (
 
 
 class ActionGetCompanyRatios(AbstractAction):
+    @staticmethod
+    def company_ratios_to_grpc(payload: dict) -> CompanyRatios:
+        company_ratios = CompanyRatios()
+        json_format.ParseDict(
+            js_dict={"values": payload["data"]},
+            message=company_ratios,
+            ignore_unknown_fields=False,
+            descriptor_pool=None,
+        )
+        return company_ratios
+
     @classmethod
     def get_company_ratios(
         cls,
