@@ -22,7 +22,8 @@ def trading(credentials) -> TradingAPI:
 
 @pytest.mark.network
 @pytest.mark.trading
-def trading_connected(trading_connected) -> TradingAPI:
-    trading_connected.connect()
+@pytest.fixture(scope="module")
+def trading_connected(trading) -> TradingAPI:
+    trading.connect()
 
-    return trading_connected
+    return trading

@@ -12,7 +12,6 @@ logging.basicConfig(level=logging.FATAL)
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
-
 # TEST FIXTURES
 @pytest.mark.quotecast
 def test_fixture_user_token(user_token):
