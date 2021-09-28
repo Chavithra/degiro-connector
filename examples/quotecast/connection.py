@@ -1,11 +1,15 @@
 # IMPORTATIONS
 import json
+import logging
 
 from degiro_connector.quotecast.api import API as QuotecastAPI
 
 # SETUP CONFIG DICT
 with open("config/config.json") as config_file:
     config_dict = json.load(config_file)
+
+# SETUP LOGGING LEVEL
+logging.basicConfig(level=logging.FATAL)
 
 # SETUP CREDENTIALS
 user_token = config_dict["user_token"]  # HERE GOES YOUR USER_TOKEN
