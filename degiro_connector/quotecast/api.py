@@ -95,7 +95,7 @@ class API:
     ):
         self._credentials = {"user_token": user_token}
         self._connection_storage = connection_storage or ModelConnection(
-            connection_timeout=timeouts.QUOTECAST_TIMEOUT,
+            timeout=timeouts.QUOTECAST_TIMEOUT,
         )
         self._logger = logger or logging.getLogger(self.__module__)
         self._session_storage = session_storage or ModelSession(

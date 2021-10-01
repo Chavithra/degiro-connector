@@ -93,7 +93,7 @@ class API:
     ):
         self._credentials = credentials
         self._connection_storage = connection_storage or ModelConnection(
-            connection_timeout=timeouts.TRADING_TIMEOUT,
+            timeout=timeouts.TRADING_TIMEOUT,
         )
         self._logger = logger or logging.getLogger(self.__module__)
         self._session_storage = session_storage or ModelSession(

@@ -16,8 +16,8 @@ class ModelConnection:
         return self.__connected
 
     @property
-    def connection_timeout(self) -> int:
-        return self.__connection_timeout
+    def timeout(self) -> int:
+        return self.__timeout
 
     @property
     @synchronized
@@ -43,9 +43,9 @@ class ModelConnection:
 
     def __init__(
         self,
-        connection_timeout: int,  # quotecast : 15s / trading: 1800s
+        timeout: int,  # quotecast : 15s / trading: 1800s
     ):
-        self.__connection_timeout = connection_timeout
+        self.__timeout = timeout
 
         self.__connected = Event()
         self.__last_success = 0
@@ -57,7 +57,7 @@ class ModelConnection:
         if not self.__last_success:
             return False
 
-        return (time.monotonic() - self.__last_success) > self.__connection_timeout
+        return (time.monotonic() - self.__last_success) > self.__timeout
 
     @synchronized
     def response_hook(self, response, *args, **kwargs):
