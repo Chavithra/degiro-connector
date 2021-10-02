@@ -1,7 +1,7 @@
 # IMPORTATION STANDARD
 import requests
 import logging
-from typing import Dict
+from typing import Dict, Optional
 
 # IMPORTATION THIRD PARTY
 import orjson as json
@@ -51,7 +51,7 @@ class ActionGetChart(AbstractAction):
         override: Dict[str, str] = None,
         raw: bool = False,
         session: requests.Session = None,
-    ) -> Chart:
+    ) -> Optional[Chart]:
         """Fetches chart's data.
         Args:
             request (Chart.Request):
@@ -103,8 +103,8 @@ class ActionGetChart(AbstractAction):
             for key, value in override.items():
                 params[key] = value
 
-        request = requests.Request(method="GET", url=url, params=params)
-        prepped = session.prepare_request(request)
+        http_request = requests.Request(method="GET", url=url, params=params)
+        prepped = session.prepare_request(http_request)
         response_raw = None
 
         try:
@@ -117,10 +117,9 @@ class ActionGetChart(AbstractAction):
                 response = cls.api_to_chart(payload=response_dict)
 
         except Exception as e:
-            logger.fatal(response_raw.status_code)
-            logger.fatal(response_raw.text)
+            logger.fatal(response_raw)
             logger.fatal(e)
-            return False
+            return None
 
         return response
 

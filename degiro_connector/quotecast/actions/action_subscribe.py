@@ -1,7 +1,7 @@
 # IMPORTATION STANDARD
 import requests
 import logging
-import time
+from typing import Optional
 
 # IMPORTATION THIRD PARTY
 # IMPORTATION INTERNAL
@@ -33,7 +33,7 @@ class ActionSubscribe(AbstractAction):
         session_id: str,
         session: requests.Session = None,
         logger: logging.Logger = None,
-    ) -> bool:
+    ) -> Optional[bool]:
         """Adds/removes metric from the data-stream.
         Args:
             request (QuotecastAPI.Request):
@@ -81,17 +81,18 @@ class ActionSubscribe(AbstractAction):
 
         session_request = requests.Request(method="POST", url=url, data=data)
         prepped = session.prepare_request(request=session_request)
+        response = False
 
         try:
-            response = session.send(request=prepped, verify=False)
+            raw_response = session.send(request=prepped, verify=False)
 
-            if response.text == '[{"m":"sr"}]':
+            if raw_response.text == '[{"m":"sr"}]':
                 raise BrokenPipeError('A new "session_id" is required.')
             else:
                 response = True
         except Exception as e:
             logger.fatal(e)
-            return False
+            return None
 
         return response
 

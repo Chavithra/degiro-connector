@@ -2,10 +2,11 @@
 import requests
 import logging
 import json
-import degiro_connector.core.constants.urls as urls
+from typing import Optional
 
 # IMPORTATION THIRD PARTY
 # IMPORTATION INTERNAL
+import degiro_connector.core.constants.urls as urls
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
 
 
@@ -16,7 +17,7 @@ class ActionConnect(AbstractAction):
         user_token: int,
         logger: logging.Logger = None,
         session: requests.Session = None,
-    ) -> str:
+    ) -> Optional[str]:
         """Retrieves the "session_id" necessary to access the data-stream.
         Args:
             user_token (int):
@@ -51,7 +52,7 @@ class ActionConnect(AbstractAction):
             response_dict = json.loads(response.text)
         except Exception as e:
             logger.fatal(e)
-            return False
+            return None
 
         logger.info("get_session_id:response_dict: %s", response_dict)
 

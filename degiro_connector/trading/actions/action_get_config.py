@@ -33,7 +33,7 @@ class ActionGetConfig(AbstractAction):
             response = response.json()
         except Exception as e:
             logger.fatal(e)
-            return False
+            return None
 
         if type(response) != dict:
             return False

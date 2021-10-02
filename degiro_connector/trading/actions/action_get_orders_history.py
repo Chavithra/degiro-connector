@@ -120,10 +120,9 @@ class ActionGetOrdersHistory(AbstractAction):
                     payload=response_dict,
                 )
         except Exception as e:
-            logger.fatal(response_raw.status_code)
-            logger.fatal(response_raw.text)
+            logger.fatal(response_raw)
             logger.fatal(e)
-            return False
+            return None
 
         return response
 

@@ -1,11 +1,9 @@
 # IMPORTATION STANDARD
 import requests
 import logging
-from typing import Dict
+from typing import Optional
 
 # IMPORTATION THIRD PARTY
-import orjson as json
-from google.protobuf import json_format
 
 # IMPORTATION INTERNAL
 import degiro_connector.core.constants.urls as urls
@@ -23,7 +21,7 @@ class ActionLogout(AbstractAction):
         session_id: str,
         logger: logging.Logger = None,
         session: requests.Session = None,
-    ) -> bool:
+    ) -> Optional[bool]:
         if logger is None:
             logger = cls.build_logger()
         if session is None:
@@ -44,17 +42,16 @@ class ActionLogout(AbstractAction):
             params=params,
         )
         prepped = session.prepare_request(request)
-        response = None
+        raw_response = None
 
         try:
-            response = session.send(prepped, verify=False)
+            raw_response = session.send(prepped, verify=False)
         except Exception as e:
-            logger.fatal(response.status_code)
-            logger.fatal(response.text)
+            logger.fatal(raw_response)
             logger.fatal(e)
-            return False
+            return None
 
-        return response.status_code == 200
+        return raw_response.status_code == 200
 
     def call(self):
         connection_storage = self.connection_storage

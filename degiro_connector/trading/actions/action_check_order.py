@@ -1,6 +1,6 @@
 # IMPORTATION STANDARD
 import logging
-from typing import Dict, Union
+from typing import Any, Dict, Union
 
 # IMPORTATION THIRD PARTY
 import requests
@@ -104,7 +104,7 @@ class ActionCheckOrder(AbstractAction):
         logger: logging.Logger = None,
         raw: bool = False,
         session: requests.Session = None,
-    ) -> Union[Order.CheckingResponse, bool]:
+    ) -> Union[Order.CheckingResponse, Dict[Any, Any], None]:
         if logger is None:
             logger = cls.build_logger()
         if session is None:
@@ -134,10 +134,9 @@ class ActionCheckOrder(AbstractAction):
             response_raw = session.send(prepped, verify=False)
             response_dict = response_raw.json()
         except Exception as e:
-            logger.fatal(response_raw.status_code)
-            logger.fatal(response_raw.text)
+            logger.fatal(response_raw)
             logger.fatal(e)
-            return False
+            return None
 
         if (
             isinstance(response_dict, dict)
@@ -151,9 +150,8 @@ class ActionCheckOrder(AbstractAction):
                     payload=response_dict,
                 )
         else:
-            logger.fatal(response_raw.status_code)
-            logger.fatal(response_raw.text)
-            response = False
+            logger.fatal(response_raw)
+            response = None
 
         return response
 
@@ -161,7 +159,7 @@ class ActionCheckOrder(AbstractAction):
         self,
         order: Order,
         raw: bool = False,
-    ) -> Union[Order.CheckingResponse, bool]:
+    ) -> Union[Order.CheckingResponse, Dict[Any, Any], None]:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
         credentials = self.credentials

@@ -120,10 +120,9 @@ class ActionUpdateOrder(AbstractAction):
         try:
             response_raw = session.send(prepped, verify=False)
         except Exception as e:
-            logger.fatal(response_raw.status_code)
-            logger.fatal(response_raw.text)
+            logger.fatal(response_raw)
             logger.fatal(e)
-            return False
+            return None
 
         return response_raw.status_code == 200
 

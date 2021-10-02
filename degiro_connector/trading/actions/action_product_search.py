@@ -1,6 +1,6 @@
 # IMPORTATION STANDARD
 import logging
-from typing import Dict, Union
+from typing import Dict, Optional, Union
 
 # IMPORTATION THIRD PARTY
 import requests
@@ -41,7 +41,7 @@ class ActionProductSearch(AbstractAction):
             ProductSearch.RequestStocks,
             ProductSearch.RequestWarrants,
         ],
-    ) -> dict:
+    ) -> Optional[dict]:
         request_dict = json_format.MessageToDict(
             message=request,
             including_default_value_fields=False,
@@ -152,10 +152,9 @@ class ActionProductSearch(AbstractAction):
                     payload=response_dict,
                 )
         except Exception as e:
-            logger.fatal(response_raw.status_code)
-            logger.fatal(response_raw.text)
+            logger.fatal(response_raw)
             logger.fatal(e)
-            return False
+            return None
 
         return response
 
