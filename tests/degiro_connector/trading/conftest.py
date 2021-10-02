@@ -15,7 +15,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # SETUP FIXTURES
 @pytest.mark.trading
-@pytest.fixture(scope="module")
+@pytest.fixture(scope="function")
 def trading(credentials) -> TradingAPI:
     return TradingAPI(credentials=credentials)
 
@@ -23,7 +23,8 @@ def trading(credentials) -> TradingAPI:
 @pytest.mark.network
 @pytest.mark.trading
 @pytest.fixture(scope="module")
-def trading_connected(trading) -> TradingAPI:
+def trading_connected(credentials) -> TradingAPI:
+    trading = TradingAPI(credentials=credentials)
     trading.connect()
 
     return trading

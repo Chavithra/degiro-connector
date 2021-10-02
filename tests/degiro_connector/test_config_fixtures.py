@@ -20,7 +20,7 @@ def test_fixture_user_token(user_token):
 
 
 @pytest.mark.trading
-def test_fixture_config_dict(credentials):
+def test_fixture_credentials(credentials):
     assert isinstance(credentials.int_account, int)
     assert credentials.int_account > 0
     assert isinstance(credentials.username, str)
