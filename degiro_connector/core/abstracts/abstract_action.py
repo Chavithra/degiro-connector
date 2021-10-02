@@ -66,7 +66,7 @@ class AbstractAction(abc.ABC):
     def __call__(self, *args, **kwargs):
         return self.call(*args, **kwargs)
 
-    def post_init(self):
+    def post_init(self, *args, **kwargs):
         pass
 
     @abc.abstractmethod
