@@ -34,6 +34,7 @@ python -m grpc_tools.protoc \
     --python_out=. \
     --grpc_python_out=. \
     --proto_path=protos \
+    --mypy_out=. \
     protos\degiro_connector\quotecast\models\quotecast.proto \
     protos\degiro_connector\trading\models\trading.proto
 ```
@@ -67,6 +68,7 @@ python -m grpc_tools.protoc \
     --python_out=. \
     --grpc_python_out=. \
     --proto_path=protos \
+    --mypy_out=. \
     protos\degiro_connector\quotecast\models\quotecast.proto
 ```
 
