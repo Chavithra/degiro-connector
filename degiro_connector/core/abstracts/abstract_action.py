@@ -2,7 +2,7 @@
 import abc
 import logging
 import requests
-from typing import Any, Dict, final
+from typing import Dict, final
 
 # IMPORTATION THIRD PARTY
 

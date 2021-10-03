@@ -1,7 +1,6 @@
 # IMPORTATION STANDARD
 import logging
 import threading
-from typing import Dict
 
 # IMPORTATION THIRD PARTY
 import requests
