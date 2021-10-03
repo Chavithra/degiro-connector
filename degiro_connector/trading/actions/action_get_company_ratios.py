@@ -1,6 +1,5 @@
 # IMPORTATION STANDARD
 import logging
-from os import stat
 from typing import Dict, Union
 
 # IMPORTATION THIRD PARTY
@@ -37,7 +36,7 @@ class ActionGetCompanyRatios(AbstractAction):
         raw: bool = False,
         session: requests.Session = None,
         logger: logging.Logger = None,
-    ) -> Union[dict, CompanyRatios]:
+    ) -> Union[CompanyRatios, Dict, None]:
         if logger is None:
             logger = cls.build_logger()
         if session is None:
@@ -62,9 +61,9 @@ class ActionGetCompanyRatios(AbstractAction):
             response_dict = response_raw.json()
 
             if raw is True:
-                response = response_dict
+                return response_dict
             else:
-                response = cls.company_ratios_to_grpc(
+                return cls.company_ratios_to_grpc(
                     payload=response_dict,
                 )
         except Exception as e:
@@ -73,13 +72,11 @@ class ActionGetCompanyRatios(AbstractAction):
             logger.fatal(e)
             return None
 
-        return response
-
     def call(
         self,
         product_isin: str,
         raw: bool = False,
-    ) -> Union[dict, CompanyRatios]:
+    ) -> Union[CompanyRatios, Dict, None]:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
         session = self.session_storage.session

@@ -49,7 +49,7 @@ class ActionGetLatestNews(AbstractAction):
         raw: bool = False,
         session: requests.Session = None,
         logger: logging.Logger = None,
-    ) -> Union[dict, LatestNews]:
+    ) -> Union[LatestNews, Dict, None]:
         if logger is None:
             logger = cls.build_logger()
         if session is None:
@@ -63,8 +63,8 @@ class ActionGetLatestNews(AbstractAction):
         params["intAccount"] = credentials.int_account
         params["sessionId"] = session_id
 
-        request = requests.Request(method="GET", url=url, params=params)
-        prepped = session.prepare_request(request)
+        http_request = requests.Request(method="GET", url=url, params=params)
+        prepped = session.prepare_request(http_request)
         prepped.headers["cookie"] = "JSESSIONID=" + session_id
 
         response_raw = None
@@ -74,9 +74,9 @@ class ActionGetLatestNews(AbstractAction):
             response_dict = response_raw.json()
 
             if raw is True:
-                response = response_dict
+                return response_dict
             else:
-                response = cls.latest_news_to_grpc(
+                return cls.latest_news_to_grpc(
                     payload=response_dict,
                 )
         except Exception as e:
@@ -85,13 +85,11 @@ class ActionGetLatestNews(AbstractAction):
             logger.fatal(e)
             return None
 
-        return response
-
     def call(
         self,
         request: LatestNews.Request,
         raw: bool = False,
-    ) -> Union[dict, LatestNews]:
+    ) -> Union[LatestNews, Dict, None]:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
         session = self.session_storage.session

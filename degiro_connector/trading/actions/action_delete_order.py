@@ -53,7 +53,7 @@ class ActionDeleteOrder(AbstractAction):
     def call(
         self,
         order_id: str,
-    ) -> bool:
+    ) -> Optional[bool]:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
         session = self.session_storage.session

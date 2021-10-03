@@ -1,7 +1,7 @@
 # IMPORTATION STANDARD
 import requests
 import logging
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, Union
 
 # IMPORTATION THIRD PARTY
 from google.protobuf import json_format
@@ -107,7 +107,7 @@ class ActionConfirmOrder(AbstractAction):
         logger: logging.Logger = None,
         raw: bool = False,
         session: requests.Session = None,
-    ) -> Union[Order.ConfirmationResponse, Dict[Any, Any], None]:
+    ) -> Union[Order.ConfirmationResponse, Dict, None]:
         if logger is None:
             logger = cls.build_logger()
         if session is None:
@@ -146,25 +146,23 @@ class ActionConfirmOrder(AbstractAction):
             and "data" in response_dict
             and "orderId" in response_dict["data"]
         ):
+            order.id = response_dict["data"]["orderId"]
+
             if raw is True:
-                order.id = response_dict["data"]["orderId"]
-                response = response_dict
+                return response_dict
             else:
-                order.id = response_dict["data"]["orderId"]
-                response = cls.confirmation_response_to_grpc(
+                return cls.confirmation_response_to_grpc(
                     payload=response_dict,
                 )
         else:
-            response = None
-
-        return response
+            return None
 
     def call(
         self,
         confirmation_id: str,
         order: Order,
         raw: bool = False,
-    ) -> Union[Order.ConfirmationResponse, Dict[Any, Any], None]:
+    ) -> Union[Order.ConfirmationResponse, Dict, None]:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
         credentials = self.credentials

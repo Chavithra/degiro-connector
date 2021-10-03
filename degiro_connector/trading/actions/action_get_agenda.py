@@ -62,7 +62,7 @@ class ActionGetAgenda(AbstractAction):
         raw: bool = False,
         session: requests.Session = None,
         logger: logging.Logger = None,
-    ) -> Union[dict, Agenda]:
+    ) -> Union[Agenda, Dict, None]:
         if logger is None:
             logger = cls.build_logger()
         if session is None:
@@ -84,9 +84,9 @@ class ActionGetAgenda(AbstractAction):
             response_dict = response_raw.json()
 
             if raw is True:
-                response = response_dict
+                return response_dict
             else:
-                response = cls.agenda_to_grpc(
+                return cls.agenda_to_grpc(
                     request=request,
                     payload=response_dict,
                 )
@@ -95,13 +95,11 @@ class ActionGetAgenda(AbstractAction):
             logger.fatal(e)
             return None
 
-        return response
-
     def call(
         self,
         request: Agenda.Request,
         raw: bool = False,
-    ) -> Union[dict, Agenda]:
+    ) -> Union[Agenda, Dict, None]:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
         session = self.session_storage.session

@@ -62,7 +62,7 @@ class ActionConnect(AbstractAction):
                 totp_secret_key = credentials.totp_secret_key
                 one_time_password = str(otp.get_totp(totp_secret_key))
             else:
-                one_time_password = credentials.one_time_password
+                one_time_password = str(credentials.one_time_password)
 
             payload_dict = {
                 "username": username,

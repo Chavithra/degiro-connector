@@ -1,10 +1,9 @@
 # IMPORTATION STANDARD
 import logging
-from typing import Dict, Union
+from typing import Optional
 
 # IMPORTATION THIRD PARTY
 import requests
-from google.protobuf import json_format
 
 # IMPORTATION INTERNAL
 import degiro_connector.core.constants.urls as urls
@@ -22,7 +21,7 @@ class ActionGetAccountInfo(AbstractAction):
         credentials: Credentials,
         session: requests.Session = None,
         logger: logging.Logger = None,
-    ) -> dict:
+    ) -> Optional[dict]:
         if logger is None:
             logger = cls.build_logger()
         if session is None:
@@ -36,11 +35,11 @@ class ActionGetAccountInfo(AbstractAction):
         response = session.send(prepped, verify=False)
 
         if response.status_code != 200:
-            return False
+            return None
 
         return response.json()
 
-    def call(self) -> dict:
+    def call(self) -> Optional[dict]:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
         session = self.session_storage.session

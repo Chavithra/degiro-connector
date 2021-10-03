@@ -36,7 +36,7 @@ class ActionGetProductsConfig(AbstractAction):
         raw: bool = False,
         session: requests.Session = None,
         logger: logging.Logger = None,
-    ) -> Union[dict, ProductSearch.Config]:
+    ) -> Union[ProductSearch.Config, Dict, None]:
         """Fetch the product search config table.
         No credentials or logging seems to be required for this endpoint.
         Just adding the credentials and session_id because the website is
@@ -81,9 +81,9 @@ class ActionGetProductsConfig(AbstractAction):
             response_dict = response_raw.json()
 
             if raw is True:
-                response = response_dict
+                return response_dict
             else:
-                response = cls.products_config_to_grpc(
+                return cls.products_config_to_grpc(
                     payload=response_dict,
                 )
         except Exception as e:
@@ -91,12 +91,10 @@ class ActionGetProductsConfig(AbstractAction):
             logger.fatal(e)
             return None
 
-        return response
-
     def call(
         self,
         raw: bool = False,
-    ) -> Union[dict, ProductSearch.Config]:
+    ) -> Union[ProductSearch.Config, Dict, None]:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
         session = self.session_storage.session

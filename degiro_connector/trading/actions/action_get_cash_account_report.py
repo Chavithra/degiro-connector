@@ -5,7 +5,6 @@ from typing import Dict, Union
 
 # IMPORTATION THIRD PARTY
 import requests
-from google.protobuf import json_format
 
 # IMPORTATION INTERNAL
 import degiro_connector.core.constants.urls as urls
@@ -58,7 +57,7 @@ class ActionGetCashAccountReport(AbstractAction):
         raw: bool = False,
         session: requests.Session = None,
         logger: logging.Logger = None,
-    ) -> Union[dict, CashAccountReport]:
+    ) -> Union[CashAccountReport, str, None]:
         """Retrieve information about the account in a specific format.
         Args:
             request (CashAccountReport.Request):
@@ -120,9 +119,9 @@ class ActionGetCashAccountReport(AbstractAction):
             response_text = response_raw.text
 
             if raw is True:
-                response = response_text
+                return response_text
             else:
-                response = cls.cash_account_report_to_grpc(
+                return cls.cash_account_report_to_grpc(
                     request=request,
                     payload=response_text,
                 )
@@ -131,13 +130,11 @@ class ActionGetCashAccountReport(AbstractAction):
             logger.fatal(e)
             return None
 
-        return response
-
     def call(
         self,
         request: CashAccountReport.Request,
         raw: bool = False,
-    ) -> Union[dict, CashAccountReport]:
+    ) -> Union[CashAccountReport, str, None]:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
         session = self.session_storage.session

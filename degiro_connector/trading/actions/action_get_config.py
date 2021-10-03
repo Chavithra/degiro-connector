@@ -1,4 +1,5 @@
 # IMPORTATION STANDARD
+from typing import Dict, Union
 import requests
 import logging
 
@@ -16,7 +17,7 @@ class ActionGetConfig(AbstractAction):
         session_id: str,
         session: requests.Session = None,
         logger: logging.Logger = None,
-    ) -> dict:
+    ) -> Union[Dict, None]:
         if logger is None:
             logger = cls.build_logger()
         if session is None:
@@ -36,9 +37,9 @@ class ActionGetConfig(AbstractAction):
             return None
 
         if type(response) != dict:
-            return False
+            return None
 
-        return response.get("data", False)
+        return response.get("data", None)
 
     def call(self):
         connection_storage = self.connection_storage

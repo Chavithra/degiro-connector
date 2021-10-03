@@ -4,14 +4,10 @@ from typing import Dict, Union
 
 # IMPORTATION THIRD PARTY
 import requests
-from google.protobuf import json_format
 
 # IMPORTATION INTERNAL
 import degiro_connector.core.constants.urls as urls
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
-from degiro_connector.trading.models.trading_pb2 import (
-    Credentials,
-)
 
 
 class ActionGetClientDetails(AbstractAction):
@@ -21,7 +17,7 @@ class ActionGetClientDetails(AbstractAction):
         session_id: str,
         session: requests.Session = None,
         logger: logging.Logger = None,
-    ) -> dict:
+    ) -> Union[Dict, None]:
         if logger is None:
             logger = cls.build_logger()
         if session is None:
@@ -38,16 +34,16 @@ class ActionGetClientDetails(AbstractAction):
         response = session.send(prepped, verify=False)
 
         if response.status_code != 200:
-            return False
+            return None
 
         response = response.json()
 
         if type(response) != dict:
-            return False
+            return None
 
         return response
 
-    def call(self) -> dict:
+    def call(self) -> Union[Dict, None]:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
         session = self.session_storage.session

@@ -104,7 +104,7 @@ class ActionCheckOrder(AbstractAction):
         logger: logging.Logger = None,
         raw: bool = False,
         session: requests.Session = None,
-    ) -> Union[Order.CheckingResponse, Dict[Any, Any], None]:
+    ) -> Union[Order.CheckingResponse, Dict, None]:
         if logger is None:
             logger = cls.build_logger()
         if session is None:
@@ -144,22 +144,20 @@ class ActionCheckOrder(AbstractAction):
             and "confirmationId" in response_dict["data"]
         ):
             if raw is True:
-                response = response_dict
+                return response_dict
             else:
-                response = cls.checking_response_to_grpc(
+                return cls.checking_response_to_grpc(
                     payload=response_dict,
                 )
         else:
             logger.fatal(response_raw)
-            response = None
-
-        return response
+            return None
 
     def call(
         self,
         order: Order,
         raw: bool = False,
-    ) -> Union[Order.CheckingResponse, Dict[Any, Any], None]:
+    ) -> Union[Order.CheckingResponse, Dict, None]:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
         credentials = self.credentials

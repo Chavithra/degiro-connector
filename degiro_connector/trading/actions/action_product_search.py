@@ -41,7 +41,7 @@ class ActionProductSearch(AbstractAction):
             ProductSearch.RequestStocks,
             ProductSearch.RequestWarrants,
         ],
-    ) -> Optional[dict]:
+    ) -> Dict:
         request_dict = json_format.MessageToDict(
             message=request,
             including_default_value_fields=False,
@@ -85,7 +85,7 @@ class ActionProductSearch(AbstractAction):
         raw: bool = False,
         session: requests.Session = None,
         logger: logging.Logger = None,
-    ) -> Union[dict, ProductSearch]:
+    ) -> Union[ProductSearch, Dict, None]:
         """Search products.
         Args:
             request (StockList.Request):
@@ -137,8 +137,8 @@ class ActionProductSearch(AbstractAction):
         params["intAccount"] = credentials.int_account
         params["sessionId"] = session_id
 
-        request = requests.Request(method="GET", url=url, params=params)
-        prepped = session.prepare_request(request)
+        http_request = requests.Request(method="GET", url=url, params=params)
+        prepped = session.prepare_request(http_request)
         response_raw = None
 
         try:
@@ -146,17 +146,15 @@ class ActionProductSearch(AbstractAction):
             response_dict = response_raw.json()
 
             if raw is True:
-                response = response_dict
+                return response_dict
             else:
-                response = cls.product_search_to_grpc(
+                return cls.product_search_to_grpc(
                     payload=response_dict,
                 )
         except Exception as e:
             logger.fatal(response_raw)
             logger.fatal(e)
             return None
-
-        return response
 
     def call(
         self,
@@ -172,7 +170,7 @@ class ActionProductSearch(AbstractAction):
             ProductSearch.RequestWarrants,
         ],
         raw: bool = False,
-    ) -> Union[dict, ProductSearch]:
+    ) -> Union[ProductSearch, Dict, None]:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
         session = self.session_storage.session

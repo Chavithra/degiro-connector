@@ -57,7 +57,7 @@ class ActionGetAccountOverview(AbstractAction):
         raw: bool = False,
         session: requests.Session = None,
         logger: logging.Logger = None,
-    ) -> Union[dict, AccountOverview]:
+    ) -> Union[AccountOverview, Dict, None]:
         """Retrieve information about the account.
         Args:
             request (AccountOverview.Request):
@@ -106,8 +106,8 @@ class ActionGetAccountOverview(AbstractAction):
         params["intAccount"] = credentials.int_account
         params["sessionId"] = session_id
 
-        request = requests.Request(method="GET", url=url, params=params)
-        prepped = session.prepare_request(request)
+        http_request = requests.Request(method="GET", url=url, params=params)
+        prepped = session.prepare_request(http_request)
         response_raw = None
 
         try:
@@ -115,9 +115,9 @@ class ActionGetAccountOverview(AbstractAction):
             response_dict = response_raw.json()
 
             if raw is True:
-                response = response_dict
+                return response_dict
             else:
-                response = cls.account_overview_to_grpc(
+                return cls.account_overview_to_grpc(
                     payload=response_dict,
                 )
         except Exception as e:
@@ -125,13 +125,11 @@ class ActionGetAccountOverview(AbstractAction):
             logger.fatal(e)
             return None
 
-        return response
-
     def call(
         self,
         request: AccountOverview.Request,
         raw: bool = False,
-    ) -> Union[dict, AccountOverview]:
+    ) -> Union[AccountOverview, Dict, None]:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
         session = self.session_storage.session

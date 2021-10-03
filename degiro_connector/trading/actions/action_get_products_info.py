@@ -1,6 +1,6 @@
 # IMPORTATION STANDARD
 import logging
-from typing import List, Union
+from typing import Dict, List, Union
 
 # IMPORTATION THIRD PARTY
 import requests
@@ -53,7 +53,7 @@ class ActionGetProductsInfo(AbstractAction):
         raw: bool = False,
         session: requests.Session = None,
         logger: logging.Logger = None,
-    ) -> Union[dict, ProductsInfo]:
+    ) -> Union[ProductsInfo, Dict, None]:
         """Search for products using their ids.
         Args:
             request (ProductsInfo.Request):
@@ -93,14 +93,13 @@ class ActionGetProductsInfo(AbstractAction):
 
         payload = cls.products_info_to_api(request=request)
 
-        request = requests.Request(
+        http_request = requests.Request(
             method="POST",
             url=url,
             json=payload,
             params=params,
         )
-
-        prepped = session.prepare_request(request)
+        prepped = session.prepare_request(http_request)
         response_raw = None
 
         try:
@@ -108,9 +107,9 @@ class ActionGetProductsInfo(AbstractAction):
             response_dict = response_raw.json()
 
             if raw is True:
-                response = response_dict
+                return response_dict
             else:
-                response = cls.products_info_to_grpc(
+                return cls.products_info_to_grpc(
                     payload=response_dict,
                 )
         except Exception as e:
@@ -118,13 +117,11 @@ class ActionGetProductsInfo(AbstractAction):
             logger.fatal(e)
             return None
 
-        return response
-
     def call(
         self,
         request: ProductsInfo.Request,
         raw: bool = False,
-    ) -> Union[dict, ProductsInfo]:
+    ) -> Union[ProductsInfo, Dict, None]:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
         session = self.session_storage.session

@@ -90,7 +90,7 @@ class ActionUpdateOrder(AbstractAction):
         credentials: Credentials,
         session: requests.Session = None,
         logger: logging.Logger = None,
-    ) -> bool:
+    ) -> Union[bool, None]:
         if logger is None:
             logger = cls.build_logger()
         if session is None:
@@ -129,7 +129,7 @@ class ActionUpdateOrder(AbstractAction):
     def call(
         self,
         order: Order,
-    ) -> bool:
+    ) -> Union[bool, None]:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
         session = self.session_storage.session

@@ -37,7 +37,7 @@ class ActionGetFavouritesList(AbstractAction):
         raw: bool = False,
         session: requests.Session = None,
         logger: logging.Logger = None,
-    ) -> Union[dict, Favourites]:
+    ) -> Union[Favourites, Dict, None]:
         """Retrieve the lists of favourite products.
         Args:
             session_id (str):
@@ -79,9 +79,9 @@ class ActionGetFavouritesList(AbstractAction):
             response_dict = response_raw.json()
 
             if raw is True:
-                response = response_dict
+                return response_dict
             else:
-                response = cls.favourites_to_grpc(
+                return cls.favourites_to_grpc(
                     payload=response_dict,
                 )
         except Exception as e:
@@ -89,12 +89,10 @@ class ActionGetFavouritesList(AbstractAction):
             logger.fatal(e)
             return None
 
-        return response
-
     def call(
         self,
         raw: bool = False,
-    ) -> Union[dict, Favourites]:
+    ) -> Union[Favourites, Dict, None]:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
         session = self.session_storage.session

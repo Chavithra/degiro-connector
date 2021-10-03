@@ -1,7 +1,7 @@
 # IMPORTATION STANDARD
 import requests
 import logging
-from typing import Union
+from typing import Dict, Union
 
 # IMPORTATION THIRD PARTY
 
@@ -151,7 +151,7 @@ class ActionGetUpdate(AbstractAction):
         logger: logging.Logger = None,
         raw: bool = False,
         session: requests.Session = None,
-    ) -> Union[dict, Update]:
+    ) -> Union[Update, Dict, None]:
         """Retrieve information from Degiro's Trading Update endpoint.
         Args:
             request (Update.RequestList):
@@ -229,9 +229,9 @@ class ActionGetUpdate(AbstractAction):
             response_dict = response_raw.json()
 
             if raw is True:
-                response = response_dict
+                return response_dict
             else:
-                response = cls.update_to_grpc(
+                return cls.update_to_grpc(
                     payload=response_dict,
                 )
         except Exception as e:
@@ -240,13 +240,11 @@ class ActionGetUpdate(AbstractAction):
             logger.fatal(e)
             return None
 
-        return response
-
     def call(
         self,
         request_list: Update.RequestList,
         raw: bool = False,
-    ) -> Union[dict, Update]:
+    ) -> Union[Update, Dict, None]:
         credentials = self.credentials
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id

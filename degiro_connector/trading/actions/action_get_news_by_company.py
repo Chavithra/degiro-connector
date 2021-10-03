@@ -50,7 +50,7 @@ class ActionGetNewsByCompany(AbstractAction):
         raw: bool = False,
         session: requests.Session = None,
         logger: logging.Logger = None,
-    ) -> Union[dict, NewsByCompany]:
+    ) -> Union[NewsByCompany, Dict, None]:
         if logger is None:
             logger = cls.build_logger()
         if session is None:
@@ -64,8 +64,8 @@ class ActionGetNewsByCompany(AbstractAction):
         params["intAccount"] = credentials.int_account
         params["sessionId"] = session_id
 
-        request = requests.Request(method="GET", url=url, params=params)
-        prepped = session.prepare_request(request)
+        http_request = requests.Request(method="GET", url=url, params=params)
+        prepped = session.prepare_request(http_request)
         prepped.headers["cookie"] = "JSESSIONID=" + session_id
 
         response_raw = None
@@ -75,9 +75,9 @@ class ActionGetNewsByCompany(AbstractAction):
             response_dict = response_raw.json()
 
             if raw is True:
-                response = response_dict
+                return response_dict
             else:
-                response = cls.news_by_company_to_grpc(
+                return cls.news_by_company_to_grpc(
                     payload=response_dict,
                 )
         except Exception as e:
@@ -86,13 +86,11 @@ class ActionGetNewsByCompany(AbstractAction):
             logger.fatal(e)
             return None
 
-        return response
-
     def call(
         self,
         request: NewsByCompany.Request,
         raw: bool = False,
-    ) -> Union[dict, NewsByCompany]:
+    ) -> Union[NewsByCompany, Dict, None]:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
         session = self.session_storage.session
