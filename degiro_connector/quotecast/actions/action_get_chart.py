@@ -125,7 +125,7 @@ class ActionGetChart(AbstractAction):
 
     def call(
         self,
-        request: Quotecast.Request,
+        request: Chart.Request,
         override: Dict[str, str] = None,
         raw: bool = False,
     ):
