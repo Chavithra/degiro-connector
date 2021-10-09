@@ -324,7 +324,7 @@ request_duration= quotecast.metadata.request_duration
 
 This library provides the tools to convert Degiro's JSON data into something more programmer-friendly.
 
-Here is the list of available data type :
+Here is the list of available data types :
 
 |**Type**|**Description**|
 |:-|:-|
@@ -416,10 +416,12 @@ Example - Dictionnary :
 
 ## 2.13. What is inside the DataFrame ?
 
-The generated DataFrame will content :
-
-* In rows : the product, for instance the "AAPL" stock which has "vwd_id" = "AAPL.BATS,E".
-* In columns : the product's parameters for instance "LastPrice", "LastVolume"...
+In addition to whatever metrics you have chosen to subscribe to, the DataFrame will contain the following columns :
+|**Column**|**Description**|
+|:-|:-|
+|vwd_id|Product identifier, for instance "AAPL.BATS,E" for APPLE stock.|
+|response_datetime|Datetime at which the data was received.|
+|request_duration|Duration of the request used to fetch the data.|
 
 Example - DataFrame :
 
@@ -461,14 +463,14 @@ chart = quotecast_api.get_chart(request=request)
 ```
 
 All the options for the enumerations are available in this file :
-[quotecast.proto](protos/degiro_connector/quotecast/pb/quotecast.proto)
+[quotecast.proto](protos/degiro_connector/quotecast/models/quotecast.proto)
 
 For a more comprehensive example :
 [chart.py](examples/quotecast/chart.py)
 
 # 3. Trading connection
 
-This library contains two main modules :
+This library is divided into two modules :
 - quotecast : to consume real-time financial data.
 - trading : to manage your Degiro's account.
 
@@ -558,36 +560,32 @@ First I will briefly explain what is : **Two-Factor Authentication (2FA)**.
 
 I recommend to skip a few paragraphs if you already know what is **2FA**.
 
-When you do a standard connection you are providing two parameters,
-which are your :
+In a standard connection you are providing two parameters :
 - username
 - password
 
-But if you use **Two-Factor Authentication (2FA)** you need to provide an additional parameter, which is your :
+If you use **Two-Factor Authentication (2FA)** you need an extra parameter :
 - one_time_password
 
 This **one_time_password** has a validity of 30 secondes and is generated using a **totp_secret_key** code.
 
-This **totp_secret_key** code is giving to you by Degiro's website when you enabled **2FA** : in the form of a QRCode.
+This **totp_secret_key** code is provided in Degiro's website when you enable **2FA** : it is the QRCode.
 
-Usually you put this QRCode inside an app like **‎Google
-Authenticator**.
+Usually you put this QRCode inside an app like **‎Google Authenticator**.
 
-Then this app will generate a new **one_time_password** that you can use for each connection. 
+**‎Google Authenticator** generates a **one_time_password** that you can to log in. 
 
-To use **2FA** with this library you have two choices.
+To use **2FA** with this library you have two solution.
 
-**CHOICE A**
+**SOLUTION 1**
 
 Provide your **totp_secret_key** : the library will use it to generate a new **one_time_password** at each connection.
 
-So you won't have to type your **one_time_password** manually at each
-connection.
+So you won't have to type your **one_time_password** manually at each connection.
 
 This is the proper way.
 
-See the section about **totp_secret_key** to understand how to get
-yours.
+See the section about **totp_secret_key** to understand how to get yours.
 
 Here is an example of connection with the **totp_secret_key** :
 ```python
@@ -609,7 +607,7 @@ trading_api.connect()
 A complete example here :
 [connection_2fa.py](examples/trading/connection_2fa.py)
 
-**CHOICE B**
+**SOLUTION 2**
 
 Provide a new **one_time_password** at each connection.
 
@@ -635,15 +633,15 @@ A complete example here :
 
 ## 3.6. How to find your : totp_secret_key ?
 
-The parameter **totp_secret_key** is only required if you have enabled 2FA on Degiro's website.
+The parameter **totp_secret_key** is only required if you have enabled `2FA` on Degiro's website.
 
-When you try to activate 2FA on Degiro's website, it displays a QRCode.
+When you try to activate `2FA` on Degiro's website, it displays a `QRCode`.
 
-This QRCode changes at each activation.
+This `QRCode` changes at each activation.
 
-A QRCode is a picture which can be converted into a text.
+A `QRCode` is a picture which can be converted into a text.
 
-You can download this QRCode and use a tool to extract the text from it.
+You can download this `QRCode` and use a tool to extract the text from it.
 
 This extracted text will look like this :
 
@@ -653,7 +651,7 @@ Has you can guess the "totp_secret_key" is in this part :
 
     secret=YOUR_TOPT_SECRET_KEY
 
-Here is an example of script to extract the text from a QRCode :
+Here is an example of script that extracts the text from a `QRCode` :
 [qrcode.py](examples/trading/qrcode.py)
 
 ## 3.7. How to find your : one_time_password ?
@@ -665,11 +663,11 @@ Usually you get it through an app like **Google Authenticator**.
 It is preferable to use the parameter **totp_secret_key** instead of **one_time_password**.
 
 ## 3.8. Is there a timeout ?
-The connection for trading operations seems to have a timeout of : around 30 minutes.
+A connection for trading operations seems to have a timeout of : around 30 minutes.
 
-If this connection is left unused for this amount of time it will cease to work.
+If a connection is left unused for this amount of time it will cease to work.
 
-Each time you do an operation using this connection Degiro's API seems to reset the timeout.
+Every time you do an operation using a connection, Degiro's API seems to reset the timeout for this connection.
 
 # 4. Order
 
@@ -686,7 +684,7 @@ Here are the main parameters of an Order.
 |time_type|Order.TimeType|Duration of the order : GOOD_TILL_DAY or GOOD_TILL_CANCELED|
 
 The full description of an Order is available here :
-[trading.proto](protos/degiro_connector/trading/pb/trading.proto)
+[trading.proto](protos/degiro_connector/trading/models/trading.proto)
 
 ## 4.1. How to create an Order ?
 
@@ -1102,7 +1100,7 @@ Here are the available parameters for `CashAccountReport.Request` :
 |to_date|CashAccountReport.Request.Date|Events before this date.|
 
 Exact definitions of `CashAccountReport` and `CashAccountReport.Request` are in this file :
-[trading.proto](protos/degiro_connector/trading/pb/trading.proto)
+[trading.proto](protos/degiro_connector/trading/models/trading.proto)
 
 For a more comprehensive example :
 [cash_account_report.py](examples/trading/cash_account_report.py)
@@ -1556,7 +1554,7 @@ Here are the available parameters for `Agenda.Request` :
 |units|str|Comma separated list of units like : `Acre,Barrel`|
 
 Exact definitions of `Agenda` and `Agenda.Request` are in this file :
-[trading.proto](protos/degiro_connector/trading/pb/trading.proto)
+[trading.proto](protos/degiro_connector/trading/models/trading.proto)
 
 For a more comprehensive example :
 [agenda.py](examples/trading/agenda.py)
@@ -1567,4 +1565,4 @@ Pull requests are welcome.
 Feel free to open an issue or send me a message if you have a question.
 
 # 10. License
-[BSD-3-Clause License](https://raw.githubusercontent.com/Chavithra/degiro_connector/master/LICENSE)
+[BSD-3-Clause License](https://raw.githubusercontent.com/Chavithra/degiro-connector/main/LICENSE)
