@@ -2,6 +2,7 @@
 import abc
 import logging
 import requests
+from inspect import ismethod
 from typing import Dict, final
 
 # IMPORTATION THIRD PARTY
@@ -52,6 +53,10 @@ class AbstractAction(abc.ABC):
         *args,
         **kwargs,
     ):
+        # Each action implement a `call` method.
+        # This `call` method can have it's own set of *args and **kwargs
+        assert hasattr(self, "call") and ismethod(getattr(self, "call"))
+
         self._credentials = credentials
         self._connection_storage = connection_storage
         self._logger = logger or logging.getLogger(self.__module__)
@@ -67,8 +72,4 @@ class AbstractAction(abc.ABC):
         return self.call(*args, **kwargs)
 
     def post_init(self, *args, **kwargs):
-        pass
-
-    @abc.abstractmethod
-    def call(self):
         pass
