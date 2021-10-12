@@ -67,7 +67,7 @@ class ActionFetchData(AbstractAction):
 
         return quotecast
 
-    def call(self):
+    def call(self) -> Quotecast:
         session_id = self.connection_storage.session_id
         session = self.session_storage.session
         logger = self.logger

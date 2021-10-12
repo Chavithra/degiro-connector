@@ -13,7 +13,6 @@ from degiro_connector.core.abstracts.abstract_action import AbstractAction
 from degiro_connector.trading.models.trading_pb2 import (
     Credentials,
     TransactionsHistory,
-    Update,
 )
 
 

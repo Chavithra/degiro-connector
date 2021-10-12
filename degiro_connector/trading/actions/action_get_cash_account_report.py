@@ -1,7 +1,7 @@
 # IMPORTATION STANDARD
 import datetime
 import logging
-from typing import Dict, Union
+from typing import Union
 
 # IMPORTATION THIRD PARTY
 import requests

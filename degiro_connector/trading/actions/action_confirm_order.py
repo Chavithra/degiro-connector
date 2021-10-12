@@ -1,7 +1,7 @@
 # IMPORTATION STANDARD
 import requests
 import logging
-from typing import Any, Dict, Union
+from typing import Dict, Union
 
 # IMPORTATION THIRD PARTY
 from google.protobuf import json_format

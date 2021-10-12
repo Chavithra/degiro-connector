@@ -11,7 +11,6 @@ from google.protobuf import json_format
 import degiro_connector.core.constants.urls as urls
 from degiro_connector.quotecast.models.quotecast_pb2 import (
     Chart,
-    Quotecast,
 )
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
 
@@ -128,7 +127,7 @@ class ActionGetChart(AbstractAction):
         request: Chart.Request,
         override: Dict[str, str] = None,
         raw: bool = False,
-    ):
+    ) -> Optional[Chart]:
         session = self.session_storage.session
         logger = self.logger
         credentials = self.credentials

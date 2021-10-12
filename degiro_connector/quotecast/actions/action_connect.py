@@ -61,7 +61,7 @@ class ActionConnect(AbstractAction):
         else:
             return None
 
-    def call(self):
+    def call(self) -> Optional[str]:
         connection_storage = self.connection_storage
         session = self.session_storage.session
         credentials = self.credentials
