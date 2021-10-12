@@ -96,7 +96,7 @@ class ActionSubscribe(AbstractAction):
 
         return response
 
-    def call(self, request: Quotecast.Request):
+    def call(self, request: Quotecast.Request) -> Optional[bool]:
         session_id = self.connection_storage.session_id
         session = self.session_storage.session
         logger = self.logger
