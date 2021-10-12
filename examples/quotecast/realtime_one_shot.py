@@ -13,7 +13,7 @@ with open("config/config.json") as config_file:
     config_dict = json.load(config_file)
 
 # SETUP CREDENTIALS
-user_token = config_dict["user_token"]  # HERE GOES YOUR USER_TOKEN
+user_token = config_dict.get("user_token")  # HERE GOES YOUR USER_TOKEN
 
 # SETUP API
 quotecast_api = QuotecastAPI(user_token=user_token)
