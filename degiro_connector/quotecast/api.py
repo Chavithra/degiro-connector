@@ -87,7 +87,7 @@ class API:
 
     def __init__(
         self,
-        user_token: int,
+        user_token: Dict,
         connection_storage: ModelConnection = None,
         logger: logging.Logger = None,
         preload: bool = True,
