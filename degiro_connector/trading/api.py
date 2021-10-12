@@ -48,7 +48,7 @@ class API:
 
     @property
     def credentials(self) -> Dict[str, Any]:
-        return self._config
+        return self._credentials
 
     @property
     def session_storage(self) -> ModelSession:
