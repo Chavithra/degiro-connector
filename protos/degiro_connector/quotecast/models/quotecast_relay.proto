@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package degiro_connector.quotecast;
+
+// import "google/protobuf/timestamp.proto";
+// import "google/protobuf/duration.proto";
+// import "google/protobuf/struct.proto";
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/empty.proto";
+import "degiro_connector/quotecast/models/quotecast.proto";
+
+message Config {
+    int32 user_token = 1;
+    bool auto_connect = 2;
+}
+
+service QuotecastRelay {
+  rpc set_config (Config) returns (google.protobuf.BoolValue) {}
+
+  rpc connect (google.protobuf.Empty) returns (google.protobuf.StringValue) {}
+  rpc fetch_data (google.protobuf.Empty) returns (Quotecast) {}
+  rpc get_chart (Chart.Request) returns (Chart) {}
+  rpc subscribe (Quotecast.Request) returns (google.protobuf.BoolValue) {}
+}

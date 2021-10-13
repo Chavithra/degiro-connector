@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package degiro_connector.trading;
+
+// import "google/protobuf/timestamp.proto";
+// import "google/protobuf/duration.proto";
+import "google/protobuf/struct.proto";
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/empty.proto";
+import "degiro_connector/trading/models/trading.proto";
+
+message Config {
+    Credentials credentials = 1;
+    bool auto_connect = 2;
+}
+
+service TradingRelay {
+  rpc set_config (Config) returns (google.protobuf.BoolValue) {}
+
+  rpc check_order(Order) returns (Order.CheckingResponse) {}
+  // rpc confirm_order(ConfirmationRequest) returns (Order.ConfirmationResponse) {}
+  rpc connect (google.protobuf.Empty) returns (google.protobuf.StringValue) {}
+  rpc delete_order(google.protobuf.StringValue) returns (google.protobuf.BoolValue) {}
+  rpc get_account_info(google.protobuf.Empty) returns (google.protobuf.Struct) {}
+  rpc get_account_overview(AccountOverview.Request) returns (AccountOverview) {}
+  rpc get_agenda(Agenda.Request) returns (Agenda) {}
+  rpc get_cash_account_report(CashAccountReport.Request) returns (CashAccountReport) {}
+  rpc get_client_details(google.protobuf.Empty) returns (google.protobuf.Struct)  {}
+  rpc get_company_profile(google.protobuf.StringValue) returns (CompanyProfile) {}
+  rpc get_company_ratios(google.protobuf.StringValue) returns (CompanyRatios) {}
+  rpc get_config (google.protobuf.Empty) returns (google.protobuf.Struct) {}
+  rpc get_favourites_list(google.protobuf.Empty) returns (Favourites) {}
+  rpc get_financial_statements(google.protobuf.StringValue) returns (FinancialStatements) {}
+  rpc get_latest_news(LatestNews.Request) returns (LatestNews) {}
+  rpc get_news_by_company(NewsByCompany.Request) returns (NewsByCompany) {}
+  rpc get_orders_history(OrdersHistory.Request) returns (OrdersHistory) {}
+  rpc get_products_config(google.protobuf.Empty) returns (ProductSearch.Config) {}
+  rpc get_products_info(ProductsInfo.Request) returns (ProductsInfo) {}
+  rpc get_top_news_preview(google.protobuf.Empty) returns (TopNewsPreview) {}
+  rpc get_transactions_history(TransactionsHistory.Request) returns (TransactionsHistory) {}
+  rpc get_update(Update.RequestList) returns (Update) {}
+  rpc logout(google.protobuf.Empty) returns (google.protobuf.BoolValue) {}
+  // rpc product_search() returns () {}
+  rpc update_order(Order) returns (google.protobuf.BoolValue) {}
+}
