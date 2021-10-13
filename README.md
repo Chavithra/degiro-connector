@@ -709,7 +709,7 @@ Here are the parameters of a ConfirmationResponse :
 
 |**Parameter**|**Type**|**Description**|
 |:-|:-|:-|
-|orderId|str|Id of the created Order.|
+|order_id|str|Id of the created Order.|
 |response_datetime|Timestamp|Timestamp can be converted to date string using : ToJsonString().|
 
 Here is an example :
