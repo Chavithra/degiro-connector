@@ -57,4 +57,4 @@ def test_confirm_order(mocker, trading):
 
     # CHECK DATA
     assert isinstance(confirmation_response, Order.ConfirmationResponse)
-    assert isinstance(confirmation_response.orderId, str)
+    assert isinstance(confirmation_response.order_id, str)
