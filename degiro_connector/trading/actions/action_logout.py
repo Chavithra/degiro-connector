@@ -53,7 +53,7 @@ class ActionLogout(AbstractAction):
 
         return raw_response.status_code == 200
 
-    def call(self):
+    def call(self) -> Optional[bool]:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
         session = self.session_storage.session

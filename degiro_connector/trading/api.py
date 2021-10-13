@@ -47,7 +47,7 @@ class API:
         return self._connection_storage
 
     @property
-    def credentials(self) -> Dict[str, Any]:
+    def credentials(self) -> Credentials:
         return self._credentials
 
     @property

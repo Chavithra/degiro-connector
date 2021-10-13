@@ -41,7 +41,7 @@ class ActionProductSearch(AbstractAction):
             ProductSearch.RequestStocks,
             ProductSearch.RequestWarrants,
         ],
-    ) -> Dict:
+    ) -> dict:
         request_dict = json_format.MessageToDict(
             message=request,
             including_default_value_fields=False,
