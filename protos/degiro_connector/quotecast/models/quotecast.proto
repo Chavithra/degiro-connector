@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+package degiro_connector.quotecast;
+
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/duration.proto";
 import "google/protobuf/struct.proto";

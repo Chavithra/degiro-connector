@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+package degiro_connector.trading;
+
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 
@@ -62,7 +64,7 @@ message Order {
     double auto_fx_conversion_rate = 9;
   }
   message ConfirmationResponse {
-    string orderId = 1;
+    string order_id = 1;
     google.protobuf.Timestamp response_datetime = 2;
   }
 

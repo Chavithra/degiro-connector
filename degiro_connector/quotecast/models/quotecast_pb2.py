@@ -18,11 +18,11 @@ from google.protobuf import struct_pb2 as google_dot_protobuf_dot_struct__pb2
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='degiro_connector/quotecast/models/quotecast.proto',
-  package='',
+  package='degiro_connector.quotecast',
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n1degiro_connector/quotecast/models/quotecast.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1cgoogle/protobuf/struct.proto\"v\n\x08Metadata\x12\x35\n\x11response_datetime\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x33\n\x10request_duration\x18\x02 \x01(\x0b\x32\x19.google.protobuf.Duration\"\xed\x02\n\tQuotecast\x12\x11\n\tjson_data\x18\x01 \x01(\t\x12\x1b\n\x08metadata\x18\x02 \x01(\x0b\x32\t.Metadata\x1a\xaf\x02\n\x07Request\x12<\n\rsubscriptions\x18\x01 \x03(\x0b\x32%.Quotecast.Request.SubscriptionsEntry\x12@\n\x0funsubscriptions\x18\x02 \x03(\x0b\x32\'.Quotecast.Request.UnsubscriptionsEntry\x1aP\n\x12SubscriptionsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12)\n\x05value\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.ListValue:\x02\x38\x01\x1aR\n\x14UnsubscriptionsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12)\n\x05value\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.ListValue:\x02\x38\x01\"\x90\x02\n\x06Ticker\x12\x1b\n\x08metadata\x18\x01 \x01(\x0b\x32\t.Metadata\x12\'\n\x08products\x18\x02 \x03(\x0b\x32\x15.Ticker.ProductsEntry\x12\x14\n\x0cproduct_list\x18\x03 \x03(\t\x1ah\n\x07Metrics\x12-\n\x07metrics\x18\x01 \x03(\x0b\x32\x1c.Ticker.Metrics.MetricsEntry\x1a.\n\x0cMetricsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x01:\x02\x38\x01\x1a@\n\rProductsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x1e\n\x05value\x18\x02 \x01(\x0b\x32\x0f.Ticker.Metrics:\x02\x38\x01\"\xcc\x03\n\x05\x43hart\x12\x11\n\trequestid\x18\x01 \x01(\t\x12\r\n\x05start\x18\x02 \x01(\t\x12\x0b\n\x03\x65nd\x18\x03 \x01(\t\x12\x12\n\nresolution\x18\x04 \x01(\t\x12\'\n\x06series\x18\x05 \x03(\x0b\x32\x17.google.protobuf.Struct\x1a\x8f\x01\n\x07Request\x12\x11\n\trequestid\x18\x01 \x01(\t\x12#\n\nresolution\x18\x02 \x01(\x0e\x32\x0f.Chart.Interval\x12\x0f\n\x07\x63ulture\x18\x03 \x01(\t\x12\x1f\n\x06period\x18\x04 \x01(\x0e\x32\x0f.Chart.Interval\x12\x0e\n\x06series\x18\x05 \x03(\t\x12\n\n\x02tz\x18\x06 \x01(\t\"\xc4\x01\n\x08Interval\x12\x08\n\x04PT1S\x10\x00\x12\t\n\x05PT15S\x10\x01\x12\t\n\x05PT30S\x10\x02\x12\x08\n\x04PT1M\x10\x03\x12\x08\n\x04PT5M\x10\x04\x12\t\n\x05PT15M\x10\x05\x12\t\n\x05PT30M\x10\x06\x12\t\n\x05PT60M\x10\x07\x12\x08\n\x04PT1H\x10\x08\x12\x07\n\x03P1D\x10\t\x12\x07\n\x03P1W\x10\n\x12\x07\n\x03P1M\x10\x0b\x12\x07\n\x03P3M\x10\x0c\x12\x07\n\x03P6M\x10\r\x12\x07\n\x03P1Y\x10\x0e\x12\x07\n\x03P3Y\x10\x0f\x12\x07\n\x03P5Y\x10\x10\x12\x08\n\x04P10Y\x10\x11\x12\x07\n\x03YTD\x10\x12\x62\x06proto3'
+  serialized_pb=b'\n1degiro_connector/quotecast/models/quotecast.proto\x12\x1a\x64\x65giro_connector.quotecast\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1cgoogle/protobuf/struct.proto\"v\n\x08Metadata\x12\x35\n\x11response_datetime\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x33\n\x10request_duration\x18\x02 \x01(\x0b\x32\x19.google.protobuf.Duration\"\xbe\x03\n\tQuotecast\x12\x11\n\tjson_data\x18\x01 \x01(\t\x12\x36\n\x08metadata\x18\x02 \x01(\x0b\x32$.degiro_connector.quotecast.Metadata\x1a\xe5\x02\n\x07Request\x12W\n\rsubscriptions\x18\x01 \x03(\x0b\x32@.degiro_connector.quotecast.Quotecast.Request.SubscriptionsEntry\x12[\n\x0funsubscriptions\x18\x02 \x03(\x0b\x32\x42.degiro_connector.quotecast.Quotecast.Request.UnsubscriptionsEntry\x1aP\n\x12SubscriptionsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12)\n\x05value\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.ListValue:\x02\x38\x01\x1aR\n\x14UnsubscriptionsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12)\n\x05value\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.ListValue:\x02\x38\x01\"\xfd\x02\n\x06Ticker\x12\x36\n\x08metadata\x18\x01 \x01(\x0b\x32$.degiro_connector.quotecast.Metadata\x12\x42\n\x08products\x18\x02 \x03(\x0b\x32\x30.degiro_connector.quotecast.Ticker.ProductsEntry\x12\x14\n\x0cproduct_list\x18\x03 \x03(\t\x1a\x83\x01\n\x07Metrics\x12H\n\x07metrics\x18\x01 \x03(\x0b\x32\x37.degiro_connector.quotecast.Ticker.Metrics.MetricsEntry\x1a.\n\x0cMetricsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x01:\x02\x38\x01\x1a[\n\rProductsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x39\n\x05value\x18\x02 \x01(\x0b\x32*.degiro_connector.quotecast.Ticker.Metrics:\x02\x38\x01\"\x82\x04\n\x05\x43hart\x12\x11\n\trequestid\x18\x01 \x01(\t\x12\r\n\x05start\x18\x02 \x01(\t\x12\x0b\n\x03\x65nd\x18\x03 \x01(\t\x12\x12\n\nresolution\x18\x04 \x01(\t\x12\'\n\x06series\x18\x05 \x03(\x0b\x32\x17.google.protobuf.Struct\x1a\xc5\x01\n\x07Request\x12\x11\n\trequestid\x18\x01 \x01(\t\x12>\n\nresolution\x18\x02 \x01(\x0e\x32*.degiro_connector.quotecast.Chart.Interval\x12\x0f\n\x07\x63ulture\x18\x03 \x01(\t\x12:\n\x06period\x18\x04 \x01(\x0e\x32*.degiro_connector.quotecast.Chart.Interval\x12\x0e\n\x06series\x18\x05 \x03(\t\x12\n\n\x02tz\x18\x06 \x01(\t\"\xc4\x01\n\x08Interval\x12\x08\n\x04PT1S\x10\x00\x12\t\n\x05PT15S\x10\x01\x12\t\n\x05PT30S\x10\x02\x12\x08\n\x04PT1M\x10\x03\x12\x08\n\x04PT5M\x10\x04\x12\t\n\x05PT15M\x10\x05\x12\t\n\x05PT30M\x10\x06\x12\t\n\x05PT60M\x10\x07\x12\x08\n\x04PT1H\x10\x08\x12\x07\n\x03P1D\x10\t\x12\x07\n\x03P1W\x10\n\x12\x07\n\x03P1M\x10\x0b\x12\x07\n\x03P3M\x10\x0c\x12\x07\n\x03P6M\x10\r\x12\x07\n\x03P1Y\x10\x0e\x12\x07\n\x03P3Y\x10\x0f\x12\x07\n\x03P5Y\x10\x10\x12\x08\n\x04P10Y\x10\x11\x12\x07\n\x03YTD\x10\x12\x62\x06proto3'
   ,
   dependencies=[google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,google_dot_protobuf_dot_duration__pb2.DESCRIPTOR,google_dot_protobuf_dot_struct__pb2.DESCRIPTOR,])
 
@@ -30,7 +30,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
 
 _CHART_INTERVAL = _descriptor.EnumDescriptor(
   name='Interval',
-  full_name='Chart.Interval',
+  full_name='degiro_connector.quotecast.Chart.Interval',
   filename=None,
   file=DESCRIPTOR,
   create_key=_descriptor._internal_create_key,
@@ -133,29 +133,29 @@ _CHART_INTERVAL = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1176,
-  serialized_end=1372,
+  serialized_start=1448,
+  serialized_end=1644,
 )
 _sym_db.RegisterEnumDescriptor(_CHART_INTERVAL)
 
 
 _METADATA = _descriptor.Descriptor(
   name='Metadata',
-  full_name='Metadata',
+  full_name='degiro_connector.quotecast.Metadata',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='response_datetime', full_name='Metadata.response_datetime', index=0,
+      name='response_datetime', full_name='degiro_connector.quotecast.Metadata.response_datetime', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='request_duration', full_name='Metadata.request_duration', index=1,
+      name='request_duration', full_name='degiro_connector.quotecast.Metadata.request_duration', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -173,28 +173,28 @@ _METADATA = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=148,
-  serialized_end=266,
+  serialized_start=176,
+  serialized_end=294,
 )
 
 
 _QUOTECAST_REQUEST_SUBSCRIPTIONSENTRY = _descriptor.Descriptor(
   name='SubscriptionsEntry',
-  full_name='Quotecast.Request.SubscriptionsEntry',
+  full_name='degiro_connector.quotecast.Quotecast.Request.SubscriptionsEntry',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='key', full_name='Quotecast.Request.SubscriptionsEntry.key', index=0,
+      name='key', full_name='degiro_connector.quotecast.Quotecast.Request.SubscriptionsEntry.key', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='value', full_name='Quotecast.Request.SubscriptionsEntry.value', index=1,
+      name='value', full_name='degiro_connector.quotecast.Quotecast.Request.SubscriptionsEntry.value', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -212,27 +212,27 @@ _QUOTECAST_REQUEST_SUBSCRIPTIONSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=470,
-  serialized_end=550,
+  serialized_start=579,
+  serialized_end=659,
 )
 
 _QUOTECAST_REQUEST_UNSUBSCRIPTIONSENTRY = _descriptor.Descriptor(
   name='UnsubscriptionsEntry',
-  full_name='Quotecast.Request.UnsubscriptionsEntry',
+  full_name='degiro_connector.quotecast.Quotecast.Request.UnsubscriptionsEntry',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='key', full_name='Quotecast.Request.UnsubscriptionsEntry.key', index=0,
+      name='key', full_name='degiro_connector.quotecast.Quotecast.Request.UnsubscriptionsEntry.key', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='value', full_name='Quotecast.Request.UnsubscriptionsEntry.value', index=1,
+      name='value', full_name='degiro_connector.quotecast.Quotecast.Request.UnsubscriptionsEntry.value', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -250,27 +250,27 @@ _QUOTECAST_REQUEST_UNSUBSCRIPTIONSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=552,
-  serialized_end=634,
+  serialized_start=661,
+  serialized_end=743,
 )
 
 _QUOTECAST_REQUEST = _descriptor.Descriptor(
   name='Request',
-  full_name='Quotecast.Request',
+  full_name='degiro_connector.quotecast.Quotecast.Request',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='subscriptions', full_name='Quotecast.Request.subscriptions', index=0,
+      name='subscriptions', full_name='degiro_connector.quotecast.Quotecast.Request.subscriptions', index=0,
       number=1, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='unsubscriptions', full_name='Quotecast.Request.unsubscriptions', index=1,
+      name='unsubscriptions', full_name='degiro_connector.quotecast.Quotecast.Request.unsubscriptions', index=1,
       number=2, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -288,27 +288,27 @@ _QUOTECAST_REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=331,
-  serialized_end=634,
+  serialized_start=386,
+  serialized_end=743,
 )
 
 _QUOTECAST = _descriptor.Descriptor(
   name='Quotecast',
-  full_name='Quotecast',
+  full_name='degiro_connector.quotecast.Quotecast',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='json_data', full_name='Quotecast.json_data', index=0,
+      name='json_data', full_name='degiro_connector.quotecast.Quotecast.json_data', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='metadata', full_name='Quotecast.metadata', index=1,
+      name='metadata', full_name='degiro_connector.quotecast.Quotecast.metadata', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -326,28 +326,28 @@ _QUOTECAST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=269,
-  serialized_end=634,
+  serialized_start=297,
+  serialized_end=743,
 )
 
 
 _TICKER_METRICS_METRICSENTRY = _descriptor.Descriptor(
   name='MetricsEntry',
-  full_name='Ticker.Metrics.MetricsEntry',
+  full_name='degiro_connector.quotecast.Ticker.Metrics.MetricsEntry',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='key', full_name='Ticker.Metrics.MetricsEntry.key', index=0,
+      name='key', full_name='degiro_connector.quotecast.Ticker.Metrics.MetricsEntry.key', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='value', full_name='Ticker.Metrics.MetricsEntry.value', index=1,
+      name='value', full_name='degiro_connector.quotecast.Ticker.Metrics.MetricsEntry.value', index=1,
       number=2, type=1, cpp_type=5, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
@@ -365,20 +365,20 @@ _TICKER_METRICS_METRICSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=797,
-  serialized_end=843,
+  serialized_start=988,
+  serialized_end=1034,
 )
 
 _TICKER_METRICS = _descriptor.Descriptor(
   name='Metrics',
-  full_name='Ticker.Metrics',
+  full_name='degiro_connector.quotecast.Ticker.Metrics',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='metrics', full_name='Ticker.Metrics.metrics', index=0,
+      name='metrics', full_name='degiro_connector.quotecast.Ticker.Metrics.metrics', index=0,
       number=1, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -396,27 +396,27 @@ _TICKER_METRICS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=739,
-  serialized_end=843,
+  serialized_start=903,
+  serialized_end=1034,
 )
 
 _TICKER_PRODUCTSENTRY = _descriptor.Descriptor(
   name='ProductsEntry',
-  full_name='Ticker.ProductsEntry',
+  full_name='degiro_connector.quotecast.Ticker.ProductsEntry',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='key', full_name='Ticker.ProductsEntry.key', index=0,
+      name='key', full_name='degiro_connector.quotecast.Ticker.ProductsEntry.key', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='value', full_name='Ticker.ProductsEntry.value', index=1,
+      name='value', full_name='degiro_connector.quotecast.Ticker.ProductsEntry.value', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -434,34 +434,34 @@ _TICKER_PRODUCTSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=845,
-  serialized_end=909,
+  serialized_start=1036,
+  serialized_end=1127,
 )
 
 _TICKER = _descriptor.Descriptor(
   name='Ticker',
-  full_name='Ticker',
+  full_name='degiro_connector.quotecast.Ticker',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='metadata', full_name='Ticker.metadata', index=0,
+      name='metadata', full_name='degiro_connector.quotecast.Ticker.metadata', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='products', full_name='Ticker.products', index=1,
+      name='products', full_name='degiro_connector.quotecast.Ticker.products', index=1,
       number=2, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='product_list', full_name='Ticker.product_list', index=2,
+      name='product_list', full_name='degiro_connector.quotecast.Ticker.product_list', index=2,
       number=3, type=9, cpp_type=9, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -479,56 +479,56 @@ _TICKER = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=637,
-  serialized_end=909,
+  serialized_start=746,
+  serialized_end=1127,
 )
 
 
 _CHART_REQUEST = _descriptor.Descriptor(
   name='Request',
-  full_name='Chart.Request',
+  full_name='degiro_connector.quotecast.Chart.Request',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='requestid', full_name='Chart.Request.requestid', index=0,
+      name='requestid', full_name='degiro_connector.quotecast.Chart.Request.requestid', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='resolution', full_name='Chart.Request.resolution', index=1,
+      name='resolution', full_name='degiro_connector.quotecast.Chart.Request.resolution', index=1,
       number=2, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='culture', full_name='Chart.Request.culture', index=2,
+      name='culture', full_name='degiro_connector.quotecast.Chart.Request.culture', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='period', full_name='Chart.Request.period', index=3,
+      name='period', full_name='degiro_connector.quotecast.Chart.Request.period', index=3,
       number=4, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='series', full_name='Chart.Request.series', index=4,
+      name='series', full_name='degiro_connector.quotecast.Chart.Request.series', index=4,
       number=5, type=9, cpp_type=9, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='tz', full_name='Chart.Request.tz', index=5,
+      name='tz', full_name='degiro_connector.quotecast.Chart.Request.tz', index=5,
       number=6, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -546,48 +546,48 @@ _CHART_REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1030,
-  serialized_end=1173,
+  serialized_start=1248,
+  serialized_end=1445,
 )
 
 _CHART = _descriptor.Descriptor(
   name='Chart',
-  full_name='Chart',
+  full_name='degiro_connector.quotecast.Chart',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='requestid', full_name='Chart.requestid', index=0,
+      name='requestid', full_name='degiro_connector.quotecast.Chart.requestid', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='start', full_name='Chart.start', index=1,
+      name='start', full_name='degiro_connector.quotecast.Chart.start', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='end', full_name='Chart.end', index=2,
+      name='end', full_name='degiro_connector.quotecast.Chart.end', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='resolution', full_name='Chart.resolution', index=3,
+      name='resolution', full_name='degiro_connector.quotecast.Chart.resolution', index=3,
       number=4, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='series', full_name='Chart.series', index=4,
+      name='series', full_name='degiro_connector.quotecast.Chart.series', index=4,
       number=5, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -606,8 +606,8 @@ _CHART = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=912,
-  serialized_end=1372,
+  serialized_start=1130,
+  serialized_end=1644,
 )
 
 _METADATA.fields_by_name['response_datetime'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
@@ -641,7 +641,7 @@ _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 Metadata = _reflection.GeneratedProtocolMessageType('Metadata', (_message.Message,), {
   'DESCRIPTOR' : _METADATA,
   '__module__' : 'degiro_connector.quotecast.models.quotecast_pb2'
-  # @@protoc_insertion_point(class_scope:Metadata)
+  # @@protoc_insertion_point(class_scope:degiro_connector.quotecast.Metadata)
   })
 _sym_db.RegisterMessage(Metadata)
 
@@ -652,24 +652,24 @@ Quotecast = _reflection.GeneratedProtocolMessageType('Quotecast', (_message.Mess
     'SubscriptionsEntry' : _reflection.GeneratedProtocolMessageType('SubscriptionsEntry', (_message.Message,), {
       'DESCRIPTOR' : _QUOTECAST_REQUEST_SUBSCRIPTIONSENTRY,
       '__module__' : 'degiro_connector.quotecast.models.quotecast_pb2'
-      # @@protoc_insertion_point(class_scope:Quotecast.Request.SubscriptionsEntry)
+      # @@protoc_insertion_point(class_scope:degiro_connector.quotecast.Quotecast.Request.SubscriptionsEntry)
       })
     ,
 
     'UnsubscriptionsEntry' : _reflection.GeneratedProtocolMessageType('UnsubscriptionsEntry', (_message.Message,), {
       'DESCRIPTOR' : _QUOTECAST_REQUEST_UNSUBSCRIPTIONSENTRY,
       '__module__' : 'degiro_connector.quotecast.models.quotecast_pb2'
-      # @@protoc_insertion_point(class_scope:Quotecast.Request.UnsubscriptionsEntry)
+      # @@protoc_insertion_point(class_scope:degiro_connector.quotecast.Quotecast.Request.UnsubscriptionsEntry)
       })
     ,
     'DESCRIPTOR' : _QUOTECAST_REQUEST,
     '__module__' : 'degiro_connector.quotecast.models.quotecast_pb2'
-    # @@protoc_insertion_point(class_scope:Quotecast.Request)
+    # @@protoc_insertion_point(class_scope:degiro_connector.quotecast.Quotecast.Request)
     })
   ,
   'DESCRIPTOR' : _QUOTECAST,
   '__module__' : 'degiro_connector.quotecast.models.quotecast_pb2'
-  # @@protoc_insertion_point(class_scope:Quotecast)
+  # @@protoc_insertion_point(class_scope:degiro_connector.quotecast.Quotecast)
   })
 _sym_db.RegisterMessage(Quotecast)
 _sym_db.RegisterMessage(Quotecast.Request)
@@ -683,24 +683,24 @@ Ticker = _reflection.GeneratedProtocolMessageType('Ticker', (_message.Message,),
     'MetricsEntry' : _reflection.GeneratedProtocolMessageType('MetricsEntry', (_message.Message,), {
       'DESCRIPTOR' : _TICKER_METRICS_METRICSENTRY,
       '__module__' : 'degiro_connector.quotecast.models.quotecast_pb2'
-      # @@protoc_insertion_point(class_scope:Ticker.Metrics.MetricsEntry)
+      # @@protoc_insertion_point(class_scope:degiro_connector.quotecast.Ticker.Metrics.MetricsEntry)
       })
     ,
     'DESCRIPTOR' : _TICKER_METRICS,
     '__module__' : 'degiro_connector.quotecast.models.quotecast_pb2'
-    # @@protoc_insertion_point(class_scope:Ticker.Metrics)
+    # @@protoc_insertion_point(class_scope:degiro_connector.quotecast.Ticker.Metrics)
     })
   ,
 
   'ProductsEntry' : _reflection.GeneratedProtocolMessageType('ProductsEntry', (_message.Message,), {
     'DESCRIPTOR' : _TICKER_PRODUCTSENTRY,
     '__module__' : 'degiro_connector.quotecast.models.quotecast_pb2'
-    # @@protoc_insertion_point(class_scope:Ticker.ProductsEntry)
+    # @@protoc_insertion_point(class_scope:degiro_connector.quotecast.Ticker.ProductsEntry)
     })
   ,
   'DESCRIPTOR' : _TICKER,
   '__module__' : 'degiro_connector.quotecast.models.quotecast_pb2'
-  # @@protoc_insertion_point(class_scope:Ticker)
+  # @@protoc_insertion_point(class_scope:degiro_connector.quotecast.Ticker)
   })
 _sym_db.RegisterMessage(Ticker)
 _sym_db.RegisterMessage(Ticker.Metrics)
@@ -712,12 +712,12 @@ Chart = _reflection.GeneratedProtocolMessageType('Chart', (_message.Message,), {
   'Request' : _reflection.GeneratedProtocolMessageType('Request', (_message.Message,), {
     'DESCRIPTOR' : _CHART_REQUEST,
     '__module__' : 'degiro_connector.quotecast.models.quotecast_pb2'
-    # @@protoc_insertion_point(class_scope:Chart.Request)
+    # @@protoc_insertion_point(class_scope:degiro_connector.quotecast.Chart.Request)
     })
   ,
   'DESCRIPTOR' : _CHART,
   '__module__' : 'degiro_connector.quotecast.models.quotecast_pb2'
-  # @@protoc_insertion_point(class_scope:Chart)
+  # @@protoc_insertion_point(class_scope:degiro_connector.quotecast.Chart)
   })
 _sym_db.RegisterMessage(Chart)
 _sym_db.RegisterMessage(Chart.Request)

@@ -17,11 +17,11 @@ from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='degiro_connector/trading/models/trading.proto',
-  package='',
+  package='degiro_connector.trading',
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n-degiro_connector/trading/models/trading.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\x8b\x01\n\x0b\x43redentials\x12\x13\n\x0bint_account\x18\x01 \x01(\x05\x12\x10\n\x08username\x18\x02 \x01(\t\x12\x10\n\x08password\x18\x03 \x01(\t\x12\x19\n\x0ftotp_secret_key\x18\x04 \x01(\tH\x00\x12\x1b\n\x11one_time_password\x18\x05 \x01(\x05H\x00\x42\x0b\n\toneof_2fa\"\x8d\t\n\x05Order\x12\x1d\n\x06\x61\x63tion\x18\x01 \x01(\x0e\x32\r.Order.Action\x12\n\n\x02id\x18\x02 \x01(\t\x12$\n\norder_type\x18\x03 \x01(\x0e\x32\x10.Order.OrderType\x12\r\n\x05price\x18\x04 \x01(\x01\x12\x12\n\nstop_price\x18\x05 \x01(\x01\x12\x12\n\nproduct_id\x18\x06 \x01(\x05\x12\x0c\n\x04size\x18\x07 \x01(\x01\x12\"\n\ttime_type\x18\x08 \x01(\x0e\x32\x0f.Order.TimeType\x12\x15\n\rcontract_size\x18\t \x01(\x01\x12\x15\n\rcontract_type\x18\n \x01(\x05\x12\x10\n\x08\x63urrency\x18\x0b \x01(\t\x12\x0c\n\x04hour\x18\x0c \x01(\t\x12\x14\n\x0cis_deletable\x18\r \x01(\x08\x12\x15\n\ris_modifiable\x18\x0e \x01(\x08\x12\x0f\n\x07product\x18\x0f \x01(\t\x12\x10\n\x08quantity\x18\x10 \x01(\x01\x12\x19\n\x11total_order_value\x18\x11 \x01(\x01\x12\x16\n\x0eretained_order\x18\x12 \x01(\x08\x12\x18\n\x10sent_to_exchange\x18\x13 \x01(\x08\x1a\xc9\x03\n\x10\x43heckingResponse\x12\x17\n\x0f\x63onfirmation_id\x18\x01 \x01(\t\x12\x16\n\x0e\x66ree_space_new\x18\x02 \x01(\x01\x12\x35\n\x11response_datetime\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x31\n\x10transaction_fees\x18\x04 \x03(\x0b\x32\x17.google.protobuf.Struct\x12:\n\x19transaction_opposite_fees\x18\x05 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x32\n\x11transaction_taxes\x18\x06 \x03(\x0b\x32\x17.google.protobuf.Struct\x12?\n\x1etransaction_auto_fx_surcharges\x18\x07 \x03(\x0b\x32\x17.google.protobuf.Struct\x12H\n\'transaction_auto_fx_opposite_surcharges\x18\x08 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x1f\n\x17\x61uto_fx_conversion_rate\x18\t \x01(\x01\x1a^\n\x14\x43onfirmationResponse\x12\x0f\n\x07orderId\x18\x01 \x01(\t\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"\x1b\n\x06\x41\x63tion\x12\x07\n\x03\x42UY\x10\x00\x12\x08\n\x04SELL\x10\x01\"A\n\tOrderType\x12\t\n\x05LIMIT\x10\x00\x12\x0e\n\nSTOP_LIMIT\x10\x01\x12\n\n\x06MARKET\x10\x02\x12\r\n\tSTOP_LOSS\x10\x03\"S\n\x08TimeType\x12\r\n\tUNKNOWN_0\x10\x00\x12\x11\n\rGOOD_TILL_DAY\x10\x01\x12\r\n\tUNKNOWN_2\x10\x02\x12\x16\n\x12GOOD_TILL_CANCELED\x10\x03\"\xc6\x08\n\x06Update\x12\x35\n\x11response_datetime\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x1e\n\x06\x61lerts\x18\x02 \x01(\x0b\x32\x0e.Update.Alerts\x12%\n\ncash_funds\x18\x03 \x01(\x0b\x32\x11.Update.CashFunds\x12\x33\n\x11historical_orders\x18\x04 \x01(\x0b\x32\x18.Update.HistoricalOrders\x12\x1e\n\x06orders\x18\x05 \x01(\x0b\x32\x0e.Update.Orders\x12$\n\tportfolio\x18\x06 \x01(\x0b\x32\x11.Update.Portfolio\x12/\n\x0ftotal_portfolio\x18\x07 \x01(\x0b\x32\x16.Update.TotalPortfolio\x12*\n\x0ctransactions\x18\x08 \x01(\x0b\x32\x14.Update.Transactions\x1a?\n\x07Request\x12\x1e\n\x06option\x18\x01 \x01(\x0e\x32\x0e.Update.Option\x12\x14\n\x0clast_updated\x18\x02 \x01(\x05\x1a.\n\x0bRequestList\x12\x1f\n\x06values\x18\x01 \x03(\x0b\x32\x0f.Update.Request\x1aG\n\x06\x41lerts\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1aJ\n\tCashFunds\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1a@\n\x10HistoricalOrders\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\x16\n\x06values\x18\x02 \x03(\x0b\x32\x06.Order\x1a\x36\n\x06Orders\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\x16\n\x06values\x18\x02 \x03(\x0b\x32\x06.Order\x1aJ\n\tPortfolio\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x03(\x0b\x32\x17.google.protobuf.Struct\x1aO\n\x0eTotalPortfolio\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1aM\n\x0cTransactions\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x03(\x0b\x32\x17.google.protobuf.Struct\"z\n\x06Option\x12\n\n\x06\x41LERTS\x10\x00\x12\r\n\tCASHFUNDS\x10\x01\x12\x14\n\x10HISTORICALORDERS\x10\x02\x12\n\n\x06ORDERS\x10\x03\x12\r\n\tPORTFOLIO\x10\x04\x12\x12\n\x0eTOTALPORTFOLIO\x10\x05\x12\x10\n\x0cTRANSACTIONS\x10\x06\"\x8b\x02\n\rOrdersHistory\x12\'\n\x06values\x18\x01 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\x99\x01\n\x07Request\x12.\n\tfrom_date\x18\x01 \x01(\x0b\x32\x1b.OrdersHistory.Request.Date\x12,\n\x07to_date\x18\x02 \x01(\x0b\x32\x1b.OrdersHistory.Request.Date\x1a\x30\n\x04\x44\x61te\x12\x0c\n\x04year\x18\x01 \x01(\x05\x12\r\n\x05month\x18\x02 \x01(\x05\x12\x0b\n\x03\x64\x61y\x18\x03 \x01(\x05\"\xc2\x02\n\x13TransactionsHistory\x12\'\n\x06values\x18\x01 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\xca\x01\n\x07Request\x12\x34\n\tfrom_date\x18\x01 \x01(\x0b\x32!.TransactionsHistory.Request.Date\x12\x32\n\x07to_date\x18\x02 \x01(\x0b\x32!.TransactionsHistory.Request.Date\x12#\n\x1bgroup_transactions_by_order\x18\x03 \x01(\x08\x1a\x30\n\x04\x44\x61te\x12\x0c\n\x04year\x18\x01 \x01(\x05\x12\r\n\x05month\x18\x02 \x01(\x05\x12\x0b\n\x03\x64\x61y\x18\x03 \x01(\x05\"\x91\x02\n\x0f\x41\x63\x63ountOverview\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\x9d\x01\n\x07Request\x12\x30\n\tfrom_date\x18\x01 \x01(\x0b\x32\x1d.AccountOverview.Request.Date\x12.\n\x07to_date\x18\x02 \x01(\x0b\x32\x1d.AccountOverview.Request.Date\x1a\x30\n\x04\x44\x61te\x12\x0c\n\x04year\x18\x01 \x01(\x05\x12\r\n\x05month\x18\x02 \x01(\x05\x12\x0b\n\x03\x64\x61y\x18\x03 \x01(\x05\"\xb0\x0e\n\rProductSearch\x12\x0e\n\x06offset\x18\x01 \x01(\x05\x12)\n\x08products\x18\x02 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x35\n\x11response_datetime\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\r\n\x05total\x18\x04 \x01(\x05\x1a\x31\n\x06\x43onfig\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\x1a\xba\x01\n\x0cRequestBonds\x12\x1b\n\x13\x62ond_issuer_type_id\x18\x01 \x01(\x05\x12\x18\n\x10\x62ond_exchange_id\x18\x02 \x01(\x05\x12\x13\n\x0bsearch_text\x18\x03 \x01(\t\x12\x0e\n\x06offset\x18\x04 \x01(\x05\x12\r\n\x05limit\x18\x05 \x01(\x05\x12\x15\n\rrequire_total\x18\x06 \x01(\x08\x12\x14\n\x0csort_columns\x18\x07 \x01(\t\x12\x12\n\nsort_types\x18\x08 \x01(\t\x1a\xd7\x01\n\x0bRequestETFs\x12\x14\n\x0cpopular_only\x18\x01 \x01(\x08\x12\x1d\n\x15input_aggregate_types\x18\x02 \x01(\t\x12\x1e\n\x16input_aggregate_values\x18\x03 \x01(\t\x12\x13\n\x0bsearch_text\x18\x04 \x01(\t\x12\x0e\n\x06offset\x18\x05 \x01(\x05\x12\r\n\x05limit\x18\x06 \x01(\x05\x12\x15\n\rrequire_total\x18\x07 \x01(\x08\x12\x14\n\x0csort_columns\x18\x08 \x01(\t\x12\x12\n\nsort_types\x18\t \x01(\t\x1a\x83\x01\n\x0cRequestFunds\x12\x13\n\x0bsearch_text\x18\x01 \x01(\t\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05limit\x18\x03 \x01(\x05\x12\x15\n\rrequire_total\x18\x04 \x01(\x08\x12\x14\n\x0csort_columns\x18\x05 \x01(\t\x12\x12\n\nsort_types\x18\x06 \x01(\t\x1a\xba\x01\n\x0eRequestFutures\x12\x1a\n\x12\x66uture_exchange_id\x18\x01 \x01(\x05\x12\x17\n\x0funderlying_isin\x18\x02 \x01(\t\x12\x13\n\x0bsearch_text\x18\x03 \x01(\t\x12\x0e\n\x06offset\x18\x04 \x01(\x05\x12\r\n\x05limit\x18\x05 \x01(\x05\x12\x15\n\rrequire_total\x18\x06 \x01(\x08\x12\x14\n\x0csort_columns\x18\x07 \x01(\t\x12\x12\n\nsort_types\x18\x08 \x01(\t\x1a\xdd\x01\n\x11RequestLeverageds\x12\x14\n\x0cpopular_only\x18\x01 \x01(\x08\x12\x1d\n\x15input_aggregate_types\x18\x02 \x01(\t\x12\x1e\n\x16input_aggregate_values\x18\x03 \x01(\t\x12\x13\n\x0bsearch_text\x18\x04 \x01(\t\x12\x0e\n\x06offset\x18\x05 \x01(\x05\x12\r\n\x05limit\x18\x06 \x01(\x05\x12\x15\n\rrequire_total\x18\x07 \x01(\x08\x12\x14\n\x0csort_columns\x18\x08 \x01(\t\x12\x12\n\nsort_types\x18\t \x01(\t\x1a\\\n\rRequestLookup\x12\x13\n\x0bsearch_text\x18\x01 \x01(\t\x12\r\n\x05limit\x18\x02 \x01(\x05\x12\x0e\n\x06offset\x18\x03 \x01(\x05\x12\x17\n\x0fproduct_type_id\x18\x04 \x01(\x05\x1a\xf9\x01\n\x0eRequestOptions\x12\x1d\n\x15input_aggregate_types\x18\x01 \x01(\t\x12\x1e\n\x16input_aggregate_values\x18\x02 \x01(\t\x12\x1a\n\x12option_exchange_id\x18\x03 \x01(\x05\x12\x17\n\x0funderlying_isin\x18\x04 \x01(\t\x12\x13\n\x0bsearch_text\x18\x05 \x01(\t\x12\x0e\n\x06offset\x18\x06 \x01(\x05\x12\r\n\x05limit\x18\x07 \x01(\x05\x12\x15\n\rrequire_total\x18\x08 \x01(\x08\x12\x14\n\x0csort_columns\x18\t \x01(\t\x12\x12\n\nsort_types\x18\n \x01(\t\x1a\xcd\x01\n\rRequestStocks\x12\x1b\n\x13is_in_us_green_list\x18\x01 \x01(\x08\x12\x10\n\x08index_id\x18\x02 \x01(\x05\x12\x18\n\x10stock_country_id\x18\x03 \x01(\x05\x12\x13\n\x0bsearch_text\x18\x04 \x01(\t\x12\x0e\n\x06offset\x18\x05 \x01(\x05\x12\r\n\x05limit\x18\x06 \x01(\x05\x12\x15\n\rrequire_total\x18\x07 \x01(\x08\x12\x14\n\x0csort_columns\x18\x08 \x01(\t\x12\x12\n\nsort_types\x18\t \x01(\t\x1a\x86\x01\n\x0fRequestWarrants\x12\x13\n\x0bsearch_text\x18\x01 \x01(\t\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05limit\x18\x03 \x01(\x05\x12\x15\n\rrequire_total\x18\x04 \x01(\x08\x12\x14\n\x0csort_columns\x18\x05 \x01(\t\x12\x12\n\nsort_types\x18\x06 \x01(\t\"\xb0\x01\n\nFavourites\x12 \n\x06values\x18\x01 \x03(\x0b\x32\x10.Favourites.List\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1aI\n\x04List\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x12\n\nis_default\x18\x03 \x01(\x08\x12\x13\n\x0bproduct_ids\x18\x04 \x03(\x05\"T\n\x0cProductsInfo\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\x1a\x1b\n\x07Request\x12\x10\n\x08products\x18\x01 \x03(\x05\"8\n\rCompanyRatios\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\"9\n\x0e\x43ompanyProfile\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\">\n\x13\x46inancialStatements\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\"\x90\x01\n\nLatestNews\x12&\n\x05items\x18\x01 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05total\x18\x03 \x01(\x05\x1a;\n\x07Request\x12\x0e\n\x06offset\x18\x01 \x01(\x05\x12\x11\n\tlanguages\x18\x02 \x01(\t\x12\r\n\x05limit\x18\x03 \x01(\x05\"W\n\x0eTopNewsPreview\x12&\n\x05items\x18\x01 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05total\x18\x03 \x01(\x05\"\xa1\x01\n\rNewsByCompany\x12&\n\x05items\x18\x01 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05total\x18\x03 \x01(\x05\x1aI\n\x07Request\x12\x0c\n\x04isin\x18\x01 \x01(\t\x12\r\n\x05limit\x18\x02 \x01(\x05\x12\x0e\n\x06offset\x18\x03 \x01(\x05\x12\x11\n\tlanguages\x18\x04 \x01(\t\"\xa3\x03\n\x11\x43\x61shAccountReport\x12\x0f\n\x07\x63ontent\x18\x01 \x01(\t\x12)\n\x06\x66ormat\x18\x02 \x01(\x0e\x32\x19.CashAccountReport.Format\x12\x35\n\x11response_datetime\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\xeb\x01\n\x07Request\x12)\n\x06\x66ormat\x18\x01 \x01(\x0e\x32\x19.CashAccountReport.Format\x12\x0f\n\x07\x63ountry\x18\x02 \x01(\t\x12\x0c\n\x04lang\x18\x03 \x01(\t\x12\x32\n\tfrom_date\x18\x04 \x01(\x0b\x32\x1f.CashAccountReport.Request.Date\x12\x30\n\x07to_date\x18\x05 \x01(\x0b\x32\x1f.CashAccountReport.Request.Date\x1a\x30\n\x04\x44\x61te\x12\x0c\n\x04year\x18\x01 \x01(\x05\x12\r\n\x05month\x18\x02 \x01(\x05\x12\x0b\n\x03\x64\x61y\x18\x03 \x01(\x05\"-\n\x06\x46ormat\x12\x07\n\x03\x43SV\x10\x00\x12\x08\n\x04HTML\x10\x01\x12\x07\n\x03PDF\x10\x02\x12\x07\n\x03XLS\x10\x03\"\xe3\x04\n\x06\x41genda\x12+\n\rcalendar_type\x18\x01 \x01(\x0e\x32\x14.Agenda.CalendarType\x12&\n\x05items\x18\x02 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x0e\n\x06offset\x18\x03 \x01(\x05\x12\r\n\x05total\x18\x04 \x01(\x05\x12\x35\n\x11response_datetime\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\x9b\x02\n\x07Request\x12+\n\rcalendar_type\x18\x01 \x01(\x0e\x32\x14.Agenda.CalendarType\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05limit\x18\x03 \x01(\x05\x12\x15\n\rorder_by_desc\x18\x04 \x01(\x08\x12.\n\nstart_date\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12,\n\x08\x65nd_date\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x14\n\x0c\x63ompany_name\x18\x07 \x01(\t\x12\x11\n\tcountries\x18\x08 \x01(\t\x12\x17\n\x0f\x63lassifications\x18\t \x01(\t\x12\r\n\x05units\x18\n \x01(\t\"\x8f\x01\n\x0c\x43\x61lendarType\x12\x15\n\x11\x44IVIDEND_CALENDAR\x10\x00\x12\x15\n\x11\x45\x43ONOMIC_CALENDAR\x10\x01\x12\x15\n\x11\x45\x41RNINGS_CALENDAR\x10\x02\x12\x14\n\x10HOLIDAY_CALENDAR\x10\x03\x12\x10\n\x0cIPO_CALENDAR\x10\x04\x12\x12\n\x0eSPLIT_CALENDAR\x10\x05\x62\x06proto3'
+  serialized_pb=b'\n-degiro_connector/trading/models/trading.proto\x12\x18\x64\x65giro_connector.trading\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\x8b\x01\n\x0b\x43redentials\x12\x13\n\x0bint_account\x18\x01 \x01(\x05\x12\x10\n\x08username\x18\x02 \x01(\t\x12\x10\n\x08password\x18\x03 \x01(\t\x12\x19\n\x0ftotp_secret_key\x18\x04 \x01(\tH\x00\x12\x1b\n\x11one_time_password\x18\x05 \x01(\x05H\x00\x42\x0b\n\toneof_2fa\"\xd9\t\n\x05Order\x12\x36\n\x06\x61\x63tion\x18\x01 \x01(\x0e\x32&.degiro_connector.trading.Order.Action\x12\n\n\x02id\x18\x02 \x01(\t\x12=\n\norder_type\x18\x03 \x01(\x0e\x32).degiro_connector.trading.Order.OrderType\x12\r\n\x05price\x18\x04 \x01(\x01\x12\x12\n\nstop_price\x18\x05 \x01(\x01\x12\x12\n\nproduct_id\x18\x06 \x01(\x05\x12\x0c\n\x04size\x18\x07 \x01(\x01\x12;\n\ttime_type\x18\x08 \x01(\x0e\x32(.degiro_connector.trading.Order.TimeType\x12\x15\n\rcontract_size\x18\t \x01(\x01\x12\x15\n\rcontract_type\x18\n \x01(\x05\x12\x10\n\x08\x63urrency\x18\x0b \x01(\t\x12\x0c\n\x04hour\x18\x0c \x01(\t\x12\x14\n\x0cis_deletable\x18\r \x01(\x08\x12\x15\n\ris_modifiable\x18\x0e \x01(\x08\x12\x0f\n\x07product\x18\x0f \x01(\t\x12\x10\n\x08quantity\x18\x10 \x01(\x01\x12\x19\n\x11total_order_value\x18\x11 \x01(\x01\x12\x16\n\x0eretained_order\x18\x12 \x01(\x08\x12\x18\n\x10sent_to_exchange\x18\x13 \x01(\x08\x1a\xc9\x03\n\x10\x43heckingResponse\x12\x17\n\x0f\x63onfirmation_id\x18\x01 \x01(\t\x12\x16\n\x0e\x66ree_space_new\x18\x02 \x01(\x01\x12\x35\n\x11response_datetime\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x31\n\x10transaction_fees\x18\x04 \x03(\x0b\x32\x17.google.protobuf.Struct\x12:\n\x19transaction_opposite_fees\x18\x05 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x32\n\x11transaction_taxes\x18\x06 \x03(\x0b\x32\x17.google.protobuf.Struct\x12?\n\x1etransaction_auto_fx_surcharges\x18\x07 \x03(\x0b\x32\x17.google.protobuf.Struct\x12H\n\'transaction_auto_fx_opposite_surcharges\x18\x08 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x1f\n\x17\x61uto_fx_conversion_rate\x18\t \x01(\x01\x1a_\n\x14\x43onfirmationResponse\x12\x10\n\x08order_id\x18\x01 \x01(\t\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"\x1b\n\x06\x41\x63tion\x12\x07\n\x03\x42UY\x10\x00\x12\x08\n\x04SELL\x10\x01\"A\n\tOrderType\x12\t\n\x05LIMIT\x10\x00\x12\x0e\n\nSTOP_LIMIT\x10\x01\x12\n\n\x06MARKET\x10\x02\x12\r\n\tSTOP_LOSS\x10\x03\"S\n\x08TimeType\x12\r\n\tUNKNOWN_0\x10\x00\x12\x11\n\rGOOD_TILL_DAY\x10\x01\x12\r\n\tUNKNOWN_2\x10\x02\x12\x16\n\x12GOOD_TILL_CANCELED\x10\x03\"\xd9\n\n\x06Update\x12\x35\n\x11response_datetime\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x37\n\x06\x61lerts\x18\x02 \x01(\x0b\x32\'.degiro_connector.trading.Update.Alerts\x12>\n\ncash_funds\x18\x03 \x01(\x0b\x32*.degiro_connector.trading.Update.CashFunds\x12L\n\x11historical_orders\x18\x04 \x01(\x0b\x32\x31.degiro_connector.trading.Update.HistoricalOrders\x12\x37\n\x06orders\x18\x05 \x01(\x0b\x32\'.degiro_connector.trading.Update.Orders\x12=\n\tportfolio\x18\x06 \x01(\x0b\x32*.degiro_connector.trading.Update.Portfolio\x12H\n\x0ftotal_portfolio\x18\x07 \x01(\x0b\x32/.degiro_connector.trading.Update.TotalPortfolio\x12\x43\n\x0ctransactions\x18\x08 \x01(\x0b\x32-.degiro_connector.trading.Update.Transactions\x1aX\n\x07Request\x12\x37\n\x06option\x18\x01 \x01(\x0e\x32\'.degiro_connector.trading.Update.Option\x12\x14\n\x0clast_updated\x18\x02 \x01(\x05\x1aG\n\x0bRequestList\x12\x38\n\x06values\x18\x01 \x03(\x0b\x32(.degiro_connector.trading.Update.Request\x1aG\n\x06\x41lerts\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1aJ\n\tCashFunds\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1aY\n\x10HistoricalOrders\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12/\n\x06values\x18\x02 \x03(\x0b\x32\x1f.degiro_connector.trading.Order\x1aO\n\x06Orders\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12/\n\x06values\x18\x02 \x03(\x0b\x32\x1f.degiro_connector.trading.Order\x1aJ\n\tPortfolio\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x03(\x0b\x32\x17.google.protobuf.Struct\x1aO\n\x0eTotalPortfolio\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1aM\n\x0cTransactions\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x03(\x0b\x32\x17.google.protobuf.Struct\"z\n\x06Option\x12\n\n\x06\x41LERTS\x10\x00\x12\r\n\tCASHFUNDS\x10\x01\x12\x14\n\x10HISTORICALORDERS\x10\x02\x12\n\n\x06ORDERS\x10\x03\x12\r\n\tPORTFOLIO\x10\x04\x12\x12\n\x0eTOTALPORTFOLIO\x10\x05\x12\x10\n\x0cTRANSACTIONS\x10\x06\"\xbd\x02\n\rOrdersHistory\x12\'\n\x06values\x18\x01 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\xcb\x01\n\x07Request\x12G\n\tfrom_date\x18\x01 \x01(\x0b\x32\x34.degiro_connector.trading.OrdersHistory.Request.Date\x12\x45\n\x07to_date\x18\x02 \x01(\x0b\x32\x34.degiro_connector.trading.OrdersHistory.Request.Date\x1a\x30\n\x04\x44\x61te\x12\x0c\n\x04year\x18\x01 \x01(\x05\x12\r\n\x05month\x18\x02 \x01(\x05\x12\x0b\n\x03\x64\x61y\x18\x03 \x01(\x05\"\xf4\x02\n\x13TransactionsHistory\x12\'\n\x06values\x18\x01 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\xfc\x01\n\x07Request\x12M\n\tfrom_date\x18\x01 \x01(\x0b\x32:.degiro_connector.trading.TransactionsHistory.Request.Date\x12K\n\x07to_date\x18\x02 \x01(\x0b\x32:.degiro_connector.trading.TransactionsHistory.Request.Date\x12#\n\x1bgroup_transactions_by_order\x18\x03 \x01(\x08\x1a\x30\n\x04\x44\x61te\x12\x0c\n\x04year\x18\x01 \x01(\x05\x12\r\n\x05month\x18\x02 \x01(\x05\x12\x0b\n\x03\x64\x61y\x18\x03 \x01(\x05\"\xc3\x02\n\x0f\x41\x63\x63ountOverview\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\xcf\x01\n\x07Request\x12I\n\tfrom_date\x18\x01 \x01(\x0b\x32\x36.degiro_connector.trading.AccountOverview.Request.Date\x12G\n\x07to_date\x18\x02 \x01(\x0b\x32\x36.degiro_connector.trading.AccountOverview.Request.Date\x1a\x30\n\x04\x44\x61te\x12\x0c\n\x04year\x18\x01 \x01(\x05\x12\r\n\x05month\x18\x02 \x01(\x05\x12\x0b\n\x03\x64\x61y\x18\x03 \x01(\x05\"\xb0\x0e\n\rProductSearch\x12\x0e\n\x06offset\x18\x01 \x01(\x05\x12)\n\x08products\x18\x02 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x35\n\x11response_datetime\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\r\n\x05total\x18\x04 \x01(\x05\x1a\x31\n\x06\x43onfig\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\x1a\xba\x01\n\x0cRequestBonds\x12\x1b\n\x13\x62ond_issuer_type_id\x18\x01 \x01(\x05\x12\x18\n\x10\x62ond_exchange_id\x18\x02 \x01(\x05\x12\x13\n\x0bsearch_text\x18\x03 \x01(\t\x12\x0e\n\x06offset\x18\x04 \x01(\x05\x12\r\n\x05limit\x18\x05 \x01(\x05\x12\x15\n\rrequire_total\x18\x06 \x01(\x08\x12\x14\n\x0csort_columns\x18\x07 \x01(\t\x12\x12\n\nsort_types\x18\x08 \x01(\t\x1a\xd7\x01\n\x0bRequestETFs\x12\x14\n\x0cpopular_only\x18\x01 \x01(\x08\x12\x1d\n\x15input_aggregate_types\x18\x02 \x01(\t\x12\x1e\n\x16input_aggregate_values\x18\x03 \x01(\t\x12\x13\n\x0bsearch_text\x18\x04 \x01(\t\x12\x0e\n\x06offset\x18\x05 \x01(\x05\x12\r\n\x05limit\x18\x06 \x01(\x05\x12\x15\n\rrequire_total\x18\x07 \x01(\x08\x12\x14\n\x0csort_columns\x18\x08 \x01(\t\x12\x12\n\nsort_types\x18\t \x01(\t\x1a\x83\x01\n\x0cRequestFunds\x12\x13\n\x0bsearch_text\x18\x01 \x01(\t\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05limit\x18\x03 \x01(\x05\x12\x15\n\rrequire_total\x18\x04 \x01(\x08\x12\x14\n\x0csort_columns\x18\x05 \x01(\t\x12\x12\n\nsort_types\x18\x06 \x01(\t\x1a\xba\x01\n\x0eRequestFutures\x12\x1a\n\x12\x66uture_exchange_id\x18\x01 \x01(\x05\x12\x17\n\x0funderlying_isin\x18\x02 \x01(\t\x12\x13\n\x0bsearch_text\x18\x03 \x01(\t\x12\x0e\n\x06offset\x18\x04 \x01(\x05\x12\r\n\x05limit\x18\x05 \x01(\x05\x12\x15\n\rrequire_total\x18\x06 \x01(\x08\x12\x14\n\x0csort_columns\x18\x07 \x01(\t\x12\x12\n\nsort_types\x18\x08 \x01(\t\x1a\xdd\x01\n\x11RequestLeverageds\x12\x14\n\x0cpopular_only\x18\x01 \x01(\x08\x12\x1d\n\x15input_aggregate_types\x18\x02 \x01(\t\x12\x1e\n\x16input_aggregate_values\x18\x03 \x01(\t\x12\x13\n\x0bsearch_text\x18\x04 \x01(\t\x12\x0e\n\x06offset\x18\x05 \x01(\x05\x12\r\n\x05limit\x18\x06 \x01(\x05\x12\x15\n\rrequire_total\x18\x07 \x01(\x08\x12\x14\n\x0csort_columns\x18\x08 \x01(\t\x12\x12\n\nsort_types\x18\t \x01(\t\x1a\\\n\rRequestLookup\x12\x13\n\x0bsearch_text\x18\x01 \x01(\t\x12\r\n\x05limit\x18\x02 \x01(\x05\x12\x0e\n\x06offset\x18\x03 \x01(\x05\x12\x17\n\x0fproduct_type_id\x18\x04 \x01(\x05\x1a\xf9\x01\n\x0eRequestOptions\x12\x1d\n\x15input_aggregate_types\x18\x01 \x01(\t\x12\x1e\n\x16input_aggregate_values\x18\x02 \x01(\t\x12\x1a\n\x12option_exchange_id\x18\x03 \x01(\x05\x12\x17\n\x0funderlying_isin\x18\x04 \x01(\t\x12\x13\n\x0bsearch_text\x18\x05 \x01(\t\x12\x0e\n\x06offset\x18\x06 \x01(\x05\x12\r\n\x05limit\x18\x07 \x01(\x05\x12\x15\n\rrequire_total\x18\x08 \x01(\x08\x12\x14\n\x0csort_columns\x18\t \x01(\t\x12\x12\n\nsort_types\x18\n \x01(\t\x1a\xcd\x01\n\rRequestStocks\x12\x1b\n\x13is_in_us_green_list\x18\x01 \x01(\x08\x12\x10\n\x08index_id\x18\x02 \x01(\x05\x12\x18\n\x10stock_country_id\x18\x03 \x01(\x05\x12\x13\n\x0bsearch_text\x18\x04 \x01(\t\x12\x0e\n\x06offset\x18\x05 \x01(\x05\x12\r\n\x05limit\x18\x06 \x01(\x05\x12\x15\n\rrequire_total\x18\x07 \x01(\x08\x12\x14\n\x0csort_columns\x18\x08 \x01(\t\x12\x12\n\nsort_types\x18\t \x01(\t\x1a\x86\x01\n\x0fRequestWarrants\x12\x13\n\x0bsearch_text\x18\x01 \x01(\t\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05limit\x18\x03 \x01(\x05\x12\x15\n\rrequire_total\x18\x04 \x01(\x08\x12\x14\n\x0csort_columns\x18\x05 \x01(\t\x12\x12\n\nsort_types\x18\x06 \x01(\t\"\xc9\x01\n\nFavourites\x12\x39\n\x06values\x18\x01 \x03(\x0b\x32).degiro_connector.trading.Favourites.List\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1aI\n\x04List\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x12\n\nis_default\x18\x03 \x01(\x08\x12\x13\n\x0bproduct_ids\x18\x04 \x03(\x05\"T\n\x0cProductsInfo\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\x1a\x1b\n\x07Request\x12\x10\n\x08products\x18\x01 \x03(\x05\"8\n\rCompanyRatios\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\"9\n\x0e\x43ompanyProfile\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\">\n\x13\x46inancialStatements\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\"\x90\x01\n\nLatestNews\x12&\n\x05items\x18\x01 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05total\x18\x03 \x01(\x05\x1a;\n\x07Request\x12\x0e\n\x06offset\x18\x01 \x01(\x05\x12\x11\n\tlanguages\x18\x02 \x01(\t\x12\r\n\x05limit\x18\x03 \x01(\x05\"W\n\x0eTopNewsPreview\x12&\n\x05items\x18\x01 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05total\x18\x03 \x01(\x05\"\xa1\x01\n\rNewsByCompany\x12&\n\x05items\x18\x01 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05total\x18\x03 \x01(\x05\x1aI\n\x07Request\x12\x0c\n\x04isin\x18\x01 \x01(\t\x12\r\n\x05limit\x18\x02 \x01(\x05\x12\x0e\n\x06offset\x18\x03 \x01(\x05\x12\x11\n\tlanguages\x18\x04 \x01(\t\"\x87\x04\n\x11\x43\x61shAccountReport\x12\x0f\n\x07\x63ontent\x18\x01 \x01(\t\x12\x42\n\x06\x66ormat\x18\x02 \x01(\x0e\x32\x32.degiro_connector.trading.CashAccountReport.Format\x12\x35\n\x11response_datetime\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\xb6\x02\n\x07Request\x12\x42\n\x06\x66ormat\x18\x01 \x01(\x0e\x32\x32.degiro_connector.trading.CashAccountReport.Format\x12\x0f\n\x07\x63ountry\x18\x02 \x01(\t\x12\x0c\n\x04lang\x18\x03 \x01(\t\x12K\n\tfrom_date\x18\x04 \x01(\x0b\x32\x38.degiro_connector.trading.CashAccountReport.Request.Date\x12I\n\x07to_date\x18\x05 \x01(\x0b\x32\x38.degiro_connector.trading.CashAccountReport.Request.Date\x1a\x30\n\x04\x44\x61te\x12\x0c\n\x04year\x18\x01 \x01(\x05\x12\r\n\x05month\x18\x02 \x01(\x05\x12\x0b\n\x03\x64\x61y\x18\x03 \x01(\x05\"-\n\x06\x46ormat\x12\x07\n\x03\x43SV\x10\x00\x12\x08\n\x04HTML\x10\x01\x12\x07\n\x03PDF\x10\x02\x12\x07\n\x03XLS\x10\x03\"\x95\x05\n\x06\x41genda\x12\x44\n\rcalendar_type\x18\x01 \x01(\x0e\x32-.degiro_connector.trading.Agenda.CalendarType\x12&\n\x05items\x18\x02 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x0e\n\x06offset\x18\x03 \x01(\x05\x12\r\n\x05total\x18\x04 \x01(\x05\x12\x35\n\x11response_datetime\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\xb4\x02\n\x07Request\x12\x44\n\rcalendar_type\x18\x01 \x01(\x0e\x32-.degiro_connector.trading.Agenda.CalendarType\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05limit\x18\x03 \x01(\x05\x12\x15\n\rorder_by_desc\x18\x04 \x01(\x08\x12.\n\nstart_date\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12,\n\x08\x65nd_date\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x14\n\x0c\x63ompany_name\x18\x07 \x01(\t\x12\x11\n\tcountries\x18\x08 \x01(\t\x12\x17\n\x0f\x63lassifications\x18\t \x01(\t\x12\r\n\x05units\x18\n \x01(\t\"\x8f\x01\n\x0c\x43\x61lendarType\x12\x15\n\x11\x44IVIDEND_CALENDAR\x10\x00\x12\x15\n\x11\x45\x43ONOMIC_CALENDAR\x10\x01\x12\x15\n\x11\x45\x41RNINGS_CALENDAR\x10\x02\x12\x14\n\x10HOLIDAY_CALENDAR\x10\x03\x12\x10\n\x0cIPO_CALENDAR\x10\x04\x12\x12\n\x0eSPLIT_CALENDAR\x10\x05\x62\x06proto3'
   ,
   dependencies=[google_dot_protobuf_dot_struct__pb2.DESCRIPTOR,google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,])
 
@@ -29,7 +29,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
 
 _ORDER_ACTION = _descriptor.EnumDescriptor(
   name='Action',
-  full_name='Order.Action',
+  full_name='degiro_connector.trading.Order.Action',
   filename=None,
   file=DESCRIPTOR,
   create_key=_descriptor._internal_create_key,
@@ -47,14 +47,14 @@ _ORDER_ACTION = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1241,
-  serialized_end=1268,
+  serialized_start=1343,
+  serialized_end=1370,
 )
 _sym_db.RegisterEnumDescriptor(_ORDER_ACTION)
 
 _ORDER_ORDERTYPE = _descriptor.EnumDescriptor(
   name='OrderType',
-  full_name='Order.OrderType',
+  full_name='degiro_connector.trading.Order.OrderType',
   filename=None,
   file=DESCRIPTOR,
   create_key=_descriptor._internal_create_key,
@@ -82,14 +82,14 @@ _ORDER_ORDERTYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1270,
-  serialized_end=1335,
+  serialized_start=1372,
+  serialized_end=1437,
 )
 _sym_db.RegisterEnumDescriptor(_ORDER_ORDERTYPE)
 
 _ORDER_TIMETYPE = _descriptor.EnumDescriptor(
   name='TimeType',
-  full_name='Order.TimeType',
+  full_name='degiro_connector.trading.Order.TimeType',
   filename=None,
   file=DESCRIPTOR,
   create_key=_descriptor._internal_create_key,
@@ -117,14 +117,14 @@ _ORDER_TIMETYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1337,
-  serialized_end=1420,
+  serialized_start=1439,
+  serialized_end=1522,
 )
 _sym_db.RegisterEnumDescriptor(_ORDER_TIMETYPE)
 
 _UPDATE_OPTION = _descriptor.EnumDescriptor(
   name='Option',
-  full_name='Update.Option',
+  full_name='degiro_connector.trading.Update.Option',
   filename=None,
   file=DESCRIPTOR,
   create_key=_descriptor._internal_create_key,
@@ -167,14 +167,14 @@ _UPDATE_OPTION = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=2395,
-  serialized_end=2517,
+  serialized_start=2772,
+  serialized_end=2894,
 )
 _sym_db.RegisterEnumDescriptor(_UPDATE_OPTION)
 
 _CASHACCOUNTREPORT_FORMAT = _descriptor.EnumDescriptor(
   name='Format',
-  full_name='CashAccountReport.Format',
+  full_name='degiro_connector.trading.CashAccountReport.Format',
   filename=None,
   file=DESCRIPTOR,
   create_key=_descriptor._internal_create_key,
@@ -202,14 +202,14 @@ _CASHACCOUNTREPORT_FORMAT = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=6454,
-  serialized_end=6499,
+  serialized_start=7106,
+  serialized_end=7151,
 )
 _sym_db.RegisterEnumDescriptor(_CASHACCOUNTREPORT_FORMAT)
 
 _AGENDA_CALENDARTYPE = _descriptor.EnumDescriptor(
   name='CalendarType',
-  full_name='Agenda.CalendarType',
+  full_name='degiro_connector.trading.Agenda.CalendarType',
   filename=None,
   file=DESCRIPTOR,
   create_key=_descriptor._internal_create_key,
@@ -247,50 +247,50 @@ _AGENDA_CALENDARTYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=6970,
-  serialized_end=7113,
+  serialized_start=7672,
+  serialized_end=7815,
 )
 _sym_db.RegisterEnumDescriptor(_AGENDA_CALENDARTYPE)
 
 
 _CREDENTIALS = _descriptor.Descriptor(
   name='Credentials',
-  full_name='Credentials',
+  full_name='degiro_connector.trading.Credentials',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='int_account', full_name='Credentials.int_account', index=0,
+      name='int_account', full_name='degiro_connector.trading.Credentials.int_account', index=0,
       number=1, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='username', full_name='Credentials.username', index=1,
+      name='username', full_name='degiro_connector.trading.Credentials.username', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='password', full_name='Credentials.password', index=2,
+      name='password', full_name='degiro_connector.trading.Credentials.password', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='totp_secret_key', full_name='Credentials.totp_secret_key', index=3,
+      name='totp_secret_key', full_name='degiro_connector.trading.Credentials.totp_secret_key', index=3,
       number=4, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='one_time_password', full_name='Credentials.one_time_password', index=4,
+      name='one_time_password', full_name='degiro_connector.trading.Credentials.one_time_password', index=4,
       number=5, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -308,82 +308,82 @@ _CREDENTIALS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
     _descriptor.OneofDescriptor(
-      name='oneof_2fa', full_name='Credentials.oneof_2fa',
+      name='oneof_2fa', full_name='degiro_connector.trading.Credentials.oneof_2fa',
       index=0, containing_type=None,
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=113,
-  serialized_end=252,
+  serialized_start=139,
+  serialized_end=278,
 )
 
 
 _ORDER_CHECKINGRESPONSE = _descriptor.Descriptor(
   name='CheckingResponse',
-  full_name='Order.CheckingResponse',
+  full_name='degiro_connector.trading.Order.CheckingResponse',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='confirmation_id', full_name='Order.CheckingResponse.confirmation_id', index=0,
+      name='confirmation_id', full_name='degiro_connector.trading.Order.CheckingResponse.confirmation_id', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='free_space_new', full_name='Order.CheckingResponse.free_space_new', index=1,
+      name='free_space_new', full_name='degiro_connector.trading.Order.CheckingResponse.free_space_new', index=1,
       number=2, type=1, cpp_type=5, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='response_datetime', full_name='Order.CheckingResponse.response_datetime', index=2,
+      name='response_datetime', full_name='degiro_connector.trading.Order.CheckingResponse.response_datetime', index=2,
       number=3, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='transaction_fees', full_name='Order.CheckingResponse.transaction_fees', index=3,
+      name='transaction_fees', full_name='degiro_connector.trading.Order.CheckingResponse.transaction_fees', index=3,
       number=4, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='transaction_opposite_fees', full_name='Order.CheckingResponse.transaction_opposite_fees', index=4,
+      name='transaction_opposite_fees', full_name='degiro_connector.trading.Order.CheckingResponse.transaction_opposite_fees', index=4,
       number=5, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='transaction_taxes', full_name='Order.CheckingResponse.transaction_taxes', index=5,
+      name='transaction_taxes', full_name='degiro_connector.trading.Order.CheckingResponse.transaction_taxes', index=5,
       number=6, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='transaction_auto_fx_surcharges', full_name='Order.CheckingResponse.transaction_auto_fx_surcharges', index=6,
+      name='transaction_auto_fx_surcharges', full_name='degiro_connector.trading.Order.CheckingResponse.transaction_auto_fx_surcharges', index=6,
       number=7, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='transaction_auto_fx_opposite_surcharges', full_name='Order.CheckingResponse.transaction_auto_fx_opposite_surcharges', index=7,
+      name='transaction_auto_fx_opposite_surcharges', full_name='degiro_connector.trading.Order.CheckingResponse.transaction_auto_fx_opposite_surcharges', index=7,
       number=8, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='auto_fx_conversion_rate', full_name='Order.CheckingResponse.auto_fx_conversion_rate', index=8,
+      name='auto_fx_conversion_rate', full_name='degiro_connector.trading.Order.CheckingResponse.auto_fx_conversion_rate', index=8,
       number=9, type=1, cpp_type=5, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
@@ -401,27 +401,27 @@ _ORDER_CHECKINGRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=686,
-  serialized_end=1143,
+  serialized_start=787,
+  serialized_end=1244,
 )
 
 _ORDER_CONFIRMATIONRESPONSE = _descriptor.Descriptor(
   name='ConfirmationResponse',
-  full_name='Order.ConfirmationResponse',
+  full_name='degiro_connector.trading.Order.ConfirmationResponse',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='orderId', full_name='Order.ConfirmationResponse.orderId', index=0,
+      name='order_id', full_name='degiro_connector.trading.Order.ConfirmationResponse.order_id', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='response_datetime', full_name='Order.ConfirmationResponse.response_datetime', index=1,
+      name='response_datetime', full_name='degiro_connector.trading.Order.ConfirmationResponse.response_datetime', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -439,146 +439,146 @@ _ORDER_CONFIRMATIONRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1145,
-  serialized_end=1239,
+  serialized_start=1246,
+  serialized_end=1341,
 )
 
 _ORDER = _descriptor.Descriptor(
   name='Order',
-  full_name='Order',
+  full_name='degiro_connector.trading.Order',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='action', full_name='Order.action', index=0,
+      name='action', full_name='degiro_connector.trading.Order.action', index=0,
       number=1, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='id', full_name='Order.id', index=1,
+      name='id', full_name='degiro_connector.trading.Order.id', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='order_type', full_name='Order.order_type', index=2,
+      name='order_type', full_name='degiro_connector.trading.Order.order_type', index=2,
       number=3, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='price', full_name='Order.price', index=3,
+      name='price', full_name='degiro_connector.trading.Order.price', index=3,
       number=4, type=1, cpp_type=5, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='stop_price', full_name='Order.stop_price', index=4,
+      name='stop_price', full_name='degiro_connector.trading.Order.stop_price', index=4,
       number=5, type=1, cpp_type=5, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='product_id', full_name='Order.product_id', index=5,
+      name='product_id', full_name='degiro_connector.trading.Order.product_id', index=5,
       number=6, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='size', full_name='Order.size', index=6,
+      name='size', full_name='degiro_connector.trading.Order.size', index=6,
       number=7, type=1, cpp_type=5, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='time_type', full_name='Order.time_type', index=7,
+      name='time_type', full_name='degiro_connector.trading.Order.time_type', index=7,
       number=8, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='contract_size', full_name='Order.contract_size', index=8,
+      name='contract_size', full_name='degiro_connector.trading.Order.contract_size', index=8,
       number=9, type=1, cpp_type=5, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='contract_type', full_name='Order.contract_type', index=9,
+      name='contract_type', full_name='degiro_connector.trading.Order.contract_type', index=9,
       number=10, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='currency', full_name='Order.currency', index=10,
+      name='currency', full_name='degiro_connector.trading.Order.currency', index=10,
       number=11, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='hour', full_name='Order.hour', index=11,
+      name='hour', full_name='degiro_connector.trading.Order.hour', index=11,
       number=12, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='is_deletable', full_name='Order.is_deletable', index=12,
+      name='is_deletable', full_name='degiro_connector.trading.Order.is_deletable', index=12,
       number=13, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='is_modifiable', full_name='Order.is_modifiable', index=13,
+      name='is_modifiable', full_name='degiro_connector.trading.Order.is_modifiable', index=13,
       number=14, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='product', full_name='Order.product', index=14,
+      name='product', full_name='degiro_connector.trading.Order.product', index=14,
       number=15, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='quantity', full_name='Order.quantity', index=15,
+      name='quantity', full_name='degiro_connector.trading.Order.quantity', index=15,
       number=16, type=1, cpp_type=5, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='total_order_value', full_name='Order.total_order_value', index=16,
+      name='total_order_value', full_name='degiro_connector.trading.Order.total_order_value', index=16,
       number=17, type=1, cpp_type=5, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='retained_order', full_name='Order.retained_order', index=17,
+      name='retained_order', full_name='degiro_connector.trading.Order.retained_order', index=17,
       number=18, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='sent_to_exchange', full_name='Order.sent_to_exchange', index=18,
+      name='sent_to_exchange', full_name='degiro_connector.trading.Order.sent_to_exchange', index=18,
       number=19, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
@@ -599,28 +599,28 @@ _ORDER = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=255,
-  serialized_end=1420,
+  serialized_start=281,
+  serialized_end=1522,
 )
 
 
 _UPDATE_REQUEST = _descriptor.Descriptor(
   name='Request',
-  full_name='Update.Request',
+  full_name='degiro_connector.trading.Update.Request',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='option', full_name='Update.Request.option', index=0,
+      name='option', full_name='degiro_connector.trading.Update.Request.option', index=0,
       number=1, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='last_updated', full_name='Update.Request.last_updated', index=1,
+      name='last_updated', full_name='degiro_connector.trading.Update.Request.last_updated', index=1,
       number=2, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -638,20 +638,20 @@ _UPDATE_REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1775,
-  serialized_end=1838,
+  serialized_start=2052,
+  serialized_end=2140,
 )
 
 _UPDATE_REQUESTLIST = _descriptor.Descriptor(
   name='RequestList',
-  full_name='Update.RequestList',
+  full_name='degiro_connector.trading.Update.RequestList',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='values', full_name='Update.RequestList.values', index=0,
+      name='values', full_name='degiro_connector.trading.Update.RequestList.values', index=0,
       number=1, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -669,27 +669,27 @@ _UPDATE_REQUESTLIST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1840,
-  serialized_end=1886,
+  serialized_start=2142,
+  serialized_end=2213,
 )
 
 _UPDATE_ALERTS = _descriptor.Descriptor(
   name='Alerts',
-  full_name='Update.Alerts',
+  full_name='degiro_connector.trading.Update.Alerts',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='last_updated', full_name='Update.Alerts.last_updated', index=0,
+      name='last_updated', full_name='degiro_connector.trading.Update.Alerts.last_updated', index=0,
       number=1, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='values', full_name='Update.Alerts.values', index=1,
+      name='values', full_name='degiro_connector.trading.Update.Alerts.values', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -707,27 +707,27 @@ _UPDATE_ALERTS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1888,
-  serialized_end=1959,
+  serialized_start=2215,
+  serialized_end=2286,
 )
 
 _UPDATE_CASHFUNDS = _descriptor.Descriptor(
   name='CashFunds',
-  full_name='Update.CashFunds',
+  full_name='degiro_connector.trading.Update.CashFunds',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='last_updated', full_name='Update.CashFunds.last_updated', index=0,
+      name='last_updated', full_name='degiro_connector.trading.Update.CashFunds.last_updated', index=0,
       number=1, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='values', full_name='Update.CashFunds.values', index=1,
+      name='values', full_name='degiro_connector.trading.Update.CashFunds.values', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -745,27 +745,27 @@ _UPDATE_CASHFUNDS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1961,
-  serialized_end=2035,
+  serialized_start=2288,
+  serialized_end=2362,
 )
 
 _UPDATE_HISTORICALORDERS = _descriptor.Descriptor(
   name='HistoricalOrders',
-  full_name='Update.HistoricalOrders',
+  full_name='degiro_connector.trading.Update.HistoricalOrders',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='last_updated', full_name='Update.HistoricalOrders.last_updated', index=0,
+      name='last_updated', full_name='degiro_connector.trading.Update.HistoricalOrders.last_updated', index=0,
       number=1, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='values', full_name='Update.HistoricalOrders.values', index=1,
+      name='values', full_name='degiro_connector.trading.Update.HistoricalOrders.values', index=1,
       number=2, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -783,27 +783,27 @@ _UPDATE_HISTORICALORDERS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2037,
-  serialized_end=2101,
+  serialized_start=2364,
+  serialized_end=2453,
 )
 
 _UPDATE_ORDERS = _descriptor.Descriptor(
   name='Orders',
-  full_name='Update.Orders',
+  full_name='degiro_connector.trading.Update.Orders',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='last_updated', full_name='Update.Orders.last_updated', index=0,
+      name='last_updated', full_name='degiro_connector.trading.Update.Orders.last_updated', index=0,
       number=1, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='values', full_name='Update.Orders.values', index=1,
+      name='values', full_name='degiro_connector.trading.Update.Orders.values', index=1,
       number=2, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -821,27 +821,27 @@ _UPDATE_ORDERS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2103,
-  serialized_end=2157,
+  serialized_start=2455,
+  serialized_end=2534,
 )
 
 _UPDATE_PORTFOLIO = _descriptor.Descriptor(
   name='Portfolio',
-  full_name='Update.Portfolio',
+  full_name='degiro_connector.trading.Update.Portfolio',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='last_updated', full_name='Update.Portfolio.last_updated', index=0,
+      name='last_updated', full_name='degiro_connector.trading.Update.Portfolio.last_updated', index=0,
       number=1, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='values', full_name='Update.Portfolio.values', index=1,
+      name='values', full_name='degiro_connector.trading.Update.Portfolio.values', index=1,
       number=2, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -859,27 +859,27 @@ _UPDATE_PORTFOLIO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2159,
-  serialized_end=2233,
+  serialized_start=2536,
+  serialized_end=2610,
 )
 
 _UPDATE_TOTALPORTFOLIO = _descriptor.Descriptor(
   name='TotalPortfolio',
-  full_name='Update.TotalPortfolio',
+  full_name='degiro_connector.trading.Update.TotalPortfolio',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='last_updated', full_name='Update.TotalPortfolio.last_updated', index=0,
+      name='last_updated', full_name='degiro_connector.trading.Update.TotalPortfolio.last_updated', index=0,
       number=1, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='values', full_name='Update.TotalPortfolio.values', index=1,
+      name='values', full_name='degiro_connector.trading.Update.TotalPortfolio.values', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -897,27 +897,27 @@ _UPDATE_TOTALPORTFOLIO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2235,
-  serialized_end=2314,
+  serialized_start=2612,
+  serialized_end=2691,
 )
 
 _UPDATE_TRANSACTIONS = _descriptor.Descriptor(
   name='Transactions',
-  full_name='Update.Transactions',
+  full_name='degiro_connector.trading.Update.Transactions',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='last_updated', full_name='Update.Transactions.last_updated', index=0,
+      name='last_updated', full_name='degiro_connector.trading.Update.Transactions.last_updated', index=0,
       number=1, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='values', full_name='Update.Transactions.values', index=1,
+      name='values', full_name='degiro_connector.trading.Update.Transactions.values', index=1,
       number=2, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -935,69 +935,69 @@ _UPDATE_TRANSACTIONS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2316,
-  serialized_end=2393,
+  serialized_start=2693,
+  serialized_end=2770,
 )
 
 _UPDATE = _descriptor.Descriptor(
   name='Update',
-  full_name='Update',
+  full_name='degiro_connector.trading.Update',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='response_datetime', full_name='Update.response_datetime', index=0,
+      name='response_datetime', full_name='degiro_connector.trading.Update.response_datetime', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='alerts', full_name='Update.alerts', index=1,
+      name='alerts', full_name='degiro_connector.trading.Update.alerts', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='cash_funds', full_name='Update.cash_funds', index=2,
+      name='cash_funds', full_name='degiro_connector.trading.Update.cash_funds', index=2,
       number=3, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='historical_orders', full_name='Update.historical_orders', index=3,
+      name='historical_orders', full_name='degiro_connector.trading.Update.historical_orders', index=3,
       number=4, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='orders', full_name='Update.orders', index=4,
+      name='orders', full_name='degiro_connector.trading.Update.orders', index=4,
       number=5, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='portfolio', full_name='Update.portfolio', index=5,
+      name='portfolio', full_name='degiro_connector.trading.Update.portfolio', index=5,
       number=6, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='total_portfolio', full_name='Update.total_portfolio', index=6,
+      name='total_portfolio', full_name='degiro_connector.trading.Update.total_portfolio', index=6,
       number=7, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='transactions', full_name='Update.transactions', index=7,
+      name='transactions', full_name='degiro_connector.trading.Update.transactions', index=7,
       number=8, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -1016,35 +1016,35 @@ _UPDATE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1423,
-  serialized_end=2517,
+  serialized_start=1525,
+  serialized_end=2894,
 )
 
 
 _ORDERSHISTORY_REQUEST_DATE = _descriptor.Descriptor(
   name='Date',
-  full_name='OrdersHistory.Request.Date',
+  full_name='degiro_connector.trading.OrdersHistory.Request.Date',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='year', full_name='OrdersHistory.Request.Date.year', index=0,
+      name='year', full_name='degiro_connector.trading.OrdersHistory.Request.Date.year', index=0,
       number=1, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='month', full_name='OrdersHistory.Request.Date.month', index=1,
+      name='month', full_name='degiro_connector.trading.OrdersHistory.Request.Date.month', index=1,
       number=2, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='day', full_name='OrdersHistory.Request.Date.day', index=2,
+      name='day', full_name='degiro_connector.trading.OrdersHistory.Request.Date.day', index=2,
       number=3, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -1062,27 +1062,27 @@ _ORDERSHISTORY_REQUEST_DATE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2739,
-  serialized_end=2787,
+  serialized_start=3166,
+  serialized_end=3214,
 )
 
 _ORDERSHISTORY_REQUEST = _descriptor.Descriptor(
   name='Request',
-  full_name='OrdersHistory.Request',
+  full_name='degiro_connector.trading.OrdersHistory.Request',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='from_date', full_name='OrdersHistory.Request.from_date', index=0,
+      name='from_date', full_name='degiro_connector.trading.OrdersHistory.Request.from_date', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='to_date', full_name='OrdersHistory.Request.to_date', index=1,
+      name='to_date', full_name='degiro_connector.trading.OrdersHistory.Request.to_date', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -1100,27 +1100,27 @@ _ORDERSHISTORY_REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2634,
-  serialized_end=2787,
+  serialized_start=3011,
+  serialized_end=3214,
 )
 
 _ORDERSHISTORY = _descriptor.Descriptor(
   name='OrdersHistory',
-  full_name='OrdersHistory',
+  full_name='degiro_connector.trading.OrdersHistory',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='values', full_name='OrdersHistory.values', index=0,
+      name='values', full_name='degiro_connector.trading.OrdersHistory.values', index=0,
       number=1, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='response_datetime', full_name='OrdersHistory.response_datetime', index=1,
+      name='response_datetime', full_name='degiro_connector.trading.OrdersHistory.response_datetime', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -1138,35 +1138,35 @@ _ORDERSHISTORY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2520,
-  serialized_end=2787,
+  serialized_start=2897,
+  serialized_end=3214,
 )
 
 
 _TRANSACTIONSHISTORY_REQUEST_DATE = _descriptor.Descriptor(
   name='Date',
-  full_name='TransactionsHistory.Request.Date',
+  full_name='degiro_connector.trading.TransactionsHistory.Request.Date',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='year', full_name='TransactionsHistory.Request.Date.year', index=0,
+      name='year', full_name='degiro_connector.trading.TransactionsHistory.Request.Date.year', index=0,
       number=1, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='month', full_name='TransactionsHistory.Request.Date.month', index=1,
+      name='month', full_name='degiro_connector.trading.TransactionsHistory.Request.Date.month', index=1,
       number=2, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='day', full_name='TransactionsHistory.Request.Date.day', index=2,
+      name='day', full_name='degiro_connector.trading.TransactionsHistory.Request.Date.day', index=2,
       number=3, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -1184,34 +1184,34 @@ _TRANSACTIONSHISTORY_REQUEST_DATE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2739,
-  serialized_end=2787,
+  serialized_start=3166,
+  serialized_end=3214,
 )
 
 _TRANSACTIONSHISTORY_REQUEST = _descriptor.Descriptor(
   name='Request',
-  full_name='TransactionsHistory.Request',
+  full_name='degiro_connector.trading.TransactionsHistory.Request',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='from_date', full_name='TransactionsHistory.Request.from_date', index=0,
+      name='from_date', full_name='degiro_connector.trading.TransactionsHistory.Request.from_date', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='to_date', full_name='TransactionsHistory.Request.to_date', index=1,
+      name='to_date', full_name='degiro_connector.trading.TransactionsHistory.Request.to_date', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='group_transactions_by_order', full_name='TransactionsHistory.Request.group_transactions_by_order', index=2,
+      name='group_transactions_by_order', full_name='degiro_connector.trading.TransactionsHistory.Request.group_transactions_by_order', index=2,
       number=3, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
@@ -1229,27 +1229,27 @@ _TRANSACTIONSHISTORY_REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2910,
-  serialized_end=3112,
+  serialized_start=3337,
+  serialized_end=3589,
 )
 
 _TRANSACTIONSHISTORY = _descriptor.Descriptor(
   name='TransactionsHistory',
-  full_name='TransactionsHistory',
+  full_name='degiro_connector.trading.TransactionsHistory',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='values', full_name='TransactionsHistory.values', index=0,
+      name='values', full_name='degiro_connector.trading.TransactionsHistory.values', index=0,
       number=1, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='response_datetime', full_name='TransactionsHistory.response_datetime', index=1,
+      name='response_datetime', full_name='degiro_connector.trading.TransactionsHistory.response_datetime', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -1267,35 +1267,35 @@ _TRANSACTIONSHISTORY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2790,
-  serialized_end=3112,
+  serialized_start=3217,
+  serialized_end=3589,
 )
 
 
 _ACCOUNTOVERVIEW_REQUEST_DATE = _descriptor.Descriptor(
   name='Date',
-  full_name='AccountOverview.Request.Date',
+  full_name='degiro_connector.trading.AccountOverview.Request.Date',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='year', full_name='AccountOverview.Request.Date.year', index=0,
+      name='year', full_name='degiro_connector.trading.AccountOverview.Request.Date.year', index=0,
       number=1, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='month', full_name='AccountOverview.Request.Date.month', index=1,
+      name='month', full_name='degiro_connector.trading.AccountOverview.Request.Date.month', index=1,
       number=2, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='day', full_name='AccountOverview.Request.Date.day', index=2,
+      name='day', full_name='degiro_connector.trading.AccountOverview.Request.Date.day', index=2,
       number=3, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -1313,27 +1313,27 @@ _ACCOUNTOVERVIEW_REQUEST_DATE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2739,
-  serialized_end=2787,
+  serialized_start=3166,
+  serialized_end=3214,
 )
 
 _ACCOUNTOVERVIEW_REQUEST = _descriptor.Descriptor(
   name='Request',
-  full_name='AccountOverview.Request',
+  full_name='degiro_connector.trading.AccountOverview.Request',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='from_date', full_name='AccountOverview.Request.from_date', index=0,
+      name='from_date', full_name='degiro_connector.trading.AccountOverview.Request.from_date', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='to_date', full_name='AccountOverview.Request.to_date', index=1,
+      name='to_date', full_name='degiro_connector.trading.AccountOverview.Request.to_date', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -1351,27 +1351,27 @@ _ACCOUNTOVERVIEW_REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3231,
-  serialized_end=3388,
+  serialized_start=3708,
+  serialized_end=3915,
 )
 
 _ACCOUNTOVERVIEW = _descriptor.Descriptor(
   name='AccountOverview',
-  full_name='AccountOverview',
+  full_name='degiro_connector.trading.AccountOverview',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='values', full_name='AccountOverview.values', index=0,
+      name='values', full_name='degiro_connector.trading.AccountOverview.values', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='response_datetime', full_name='AccountOverview.response_datetime', index=1,
+      name='response_datetime', full_name='degiro_connector.trading.AccountOverview.response_datetime', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -1389,21 +1389,21 @@ _ACCOUNTOVERVIEW = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3115,
-  serialized_end=3388,
+  serialized_start=3592,
+  serialized_end=3915,
 )
 
 
 _PRODUCTSEARCH_CONFIG = _descriptor.Descriptor(
   name='Config',
-  full_name='ProductSearch.Config',
+  full_name='degiro_connector.trading.ProductSearch.Config',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='values', full_name='ProductSearch.Config.values', index=0,
+      name='values', full_name='degiro_connector.trading.ProductSearch.Config.values', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -1421,69 +1421,69 @@ _PRODUCTSEARCH_CONFIG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3537,
-  serialized_end=3586,
+  serialized_start=4064,
+  serialized_end=4113,
 )
 
 _PRODUCTSEARCH_REQUESTBONDS = _descriptor.Descriptor(
   name='RequestBonds',
-  full_name='ProductSearch.RequestBonds',
+  full_name='degiro_connector.trading.ProductSearch.RequestBonds',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='bond_issuer_type_id', full_name='ProductSearch.RequestBonds.bond_issuer_type_id', index=0,
+      name='bond_issuer_type_id', full_name='degiro_connector.trading.ProductSearch.RequestBonds.bond_issuer_type_id', index=0,
       number=1, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='bond_exchange_id', full_name='ProductSearch.RequestBonds.bond_exchange_id', index=1,
+      name='bond_exchange_id', full_name='degiro_connector.trading.ProductSearch.RequestBonds.bond_exchange_id', index=1,
       number=2, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='search_text', full_name='ProductSearch.RequestBonds.search_text', index=2,
+      name='search_text', full_name='degiro_connector.trading.ProductSearch.RequestBonds.search_text', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='offset', full_name='ProductSearch.RequestBonds.offset', index=3,
+      name='offset', full_name='degiro_connector.trading.ProductSearch.RequestBonds.offset', index=3,
       number=4, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='limit', full_name='ProductSearch.RequestBonds.limit', index=4,
+      name='limit', full_name='degiro_connector.trading.ProductSearch.RequestBonds.limit', index=4,
       number=5, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='require_total', full_name='ProductSearch.RequestBonds.require_total', index=5,
+      name='require_total', full_name='degiro_connector.trading.ProductSearch.RequestBonds.require_total', index=5,
       number=6, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='sort_columns', full_name='ProductSearch.RequestBonds.sort_columns', index=6,
+      name='sort_columns', full_name='degiro_connector.trading.ProductSearch.RequestBonds.sort_columns', index=6,
       number=7, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='sort_types', full_name='ProductSearch.RequestBonds.sort_types', index=7,
+      name='sort_types', full_name='degiro_connector.trading.ProductSearch.RequestBonds.sort_types', index=7,
       number=8, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -1501,76 +1501,76 @@ _PRODUCTSEARCH_REQUESTBONDS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3589,
-  serialized_end=3775,
+  serialized_start=4116,
+  serialized_end=4302,
 )
 
 _PRODUCTSEARCH_REQUESTETFS = _descriptor.Descriptor(
   name='RequestETFs',
-  full_name='ProductSearch.RequestETFs',
+  full_name='degiro_connector.trading.ProductSearch.RequestETFs',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='popular_only', full_name='ProductSearch.RequestETFs.popular_only', index=0,
+      name='popular_only', full_name='degiro_connector.trading.ProductSearch.RequestETFs.popular_only', index=0,
       number=1, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='input_aggregate_types', full_name='ProductSearch.RequestETFs.input_aggregate_types', index=1,
+      name='input_aggregate_types', full_name='degiro_connector.trading.ProductSearch.RequestETFs.input_aggregate_types', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='input_aggregate_values', full_name='ProductSearch.RequestETFs.input_aggregate_values', index=2,
+      name='input_aggregate_values', full_name='degiro_connector.trading.ProductSearch.RequestETFs.input_aggregate_values', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='search_text', full_name='ProductSearch.RequestETFs.search_text', index=3,
+      name='search_text', full_name='degiro_connector.trading.ProductSearch.RequestETFs.search_text', index=3,
       number=4, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='offset', full_name='ProductSearch.RequestETFs.offset', index=4,
+      name='offset', full_name='degiro_connector.trading.ProductSearch.RequestETFs.offset', index=4,
       number=5, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='limit', full_name='ProductSearch.RequestETFs.limit', index=5,
+      name='limit', full_name='degiro_connector.trading.ProductSearch.RequestETFs.limit', index=5,
       number=6, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='require_total', full_name='ProductSearch.RequestETFs.require_total', index=6,
+      name='require_total', full_name='degiro_connector.trading.ProductSearch.RequestETFs.require_total', index=6,
       number=7, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='sort_columns', full_name='ProductSearch.RequestETFs.sort_columns', index=7,
+      name='sort_columns', full_name='degiro_connector.trading.ProductSearch.RequestETFs.sort_columns', index=7,
       number=8, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='sort_types', full_name='ProductSearch.RequestETFs.sort_types', index=8,
+      name='sort_types', full_name='degiro_connector.trading.ProductSearch.RequestETFs.sort_types', index=8,
       number=9, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -1588,55 +1588,55 @@ _PRODUCTSEARCH_REQUESTETFS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3778,
-  serialized_end=3993,
+  serialized_start=4305,
+  serialized_end=4520,
 )
 
 _PRODUCTSEARCH_REQUESTFUNDS = _descriptor.Descriptor(
   name='RequestFunds',
-  full_name='ProductSearch.RequestFunds',
+  full_name='degiro_connector.trading.ProductSearch.RequestFunds',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='search_text', full_name='ProductSearch.RequestFunds.search_text', index=0,
+      name='search_text', full_name='degiro_connector.trading.ProductSearch.RequestFunds.search_text', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='offset', full_name='ProductSearch.RequestFunds.offset', index=1,
+      name='offset', full_name='degiro_connector.trading.ProductSearch.RequestFunds.offset', index=1,
       number=2, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='limit', full_name='ProductSearch.RequestFunds.limit', index=2,
+      name='limit', full_name='degiro_connector.trading.ProductSearch.RequestFunds.limit', index=2,
       number=3, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='require_total', full_name='ProductSearch.RequestFunds.require_total', index=3,
+      name='require_total', full_name='degiro_connector.trading.ProductSearch.RequestFunds.require_total', index=3,
       number=4, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='sort_columns', full_name='ProductSearch.RequestFunds.sort_columns', index=4,
+      name='sort_columns', full_name='degiro_connector.trading.ProductSearch.RequestFunds.sort_columns', index=4,
       number=5, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='sort_types', full_name='ProductSearch.RequestFunds.sort_types', index=5,
+      name='sort_types', full_name='degiro_connector.trading.ProductSearch.RequestFunds.sort_types', index=5,
       number=6, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -1654,69 +1654,69 @@ _PRODUCTSEARCH_REQUESTFUNDS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3996,
-  serialized_end=4127,
+  serialized_start=4523,
+  serialized_end=4654,
 )
 
 _PRODUCTSEARCH_REQUESTFUTURES = _descriptor.Descriptor(
   name='RequestFutures',
-  full_name='ProductSearch.RequestFutures',
+  full_name='degiro_connector.trading.ProductSearch.RequestFutures',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='future_exchange_id', full_name='ProductSearch.RequestFutures.future_exchange_id', index=0,
+      name='future_exchange_id', full_name='degiro_connector.trading.ProductSearch.RequestFutures.future_exchange_id', index=0,
       number=1, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='underlying_isin', full_name='ProductSearch.RequestFutures.underlying_isin', index=1,
+      name='underlying_isin', full_name='degiro_connector.trading.ProductSearch.RequestFutures.underlying_isin', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='search_text', full_name='ProductSearch.RequestFutures.search_text', index=2,
+      name='search_text', full_name='degiro_connector.trading.ProductSearch.RequestFutures.search_text', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='offset', full_name='ProductSearch.RequestFutures.offset', index=3,
+      name='offset', full_name='degiro_connector.trading.ProductSearch.RequestFutures.offset', index=3,
       number=4, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='limit', full_name='ProductSearch.RequestFutures.limit', index=4,
+      name='limit', full_name='degiro_connector.trading.ProductSearch.RequestFutures.limit', index=4,
       number=5, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='require_total', full_name='ProductSearch.RequestFutures.require_total', index=5,
+      name='require_total', full_name='degiro_connector.trading.ProductSearch.RequestFutures.require_total', index=5,
       number=6, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='sort_columns', full_name='ProductSearch.RequestFutures.sort_columns', index=6,
+      name='sort_columns', full_name='degiro_connector.trading.ProductSearch.RequestFutures.sort_columns', index=6,
       number=7, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='sort_types', full_name='ProductSearch.RequestFutures.sort_types', index=7,
+      name='sort_types', full_name='degiro_connector.trading.ProductSearch.RequestFutures.sort_types', index=7,
       number=8, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -1734,76 +1734,76 @@ _PRODUCTSEARCH_REQUESTFUTURES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4130,
-  serialized_end=4316,
+  serialized_start=4657,
+  serialized_end=4843,
 )
 
 _PRODUCTSEARCH_REQUESTLEVERAGEDS = _descriptor.Descriptor(
   name='RequestLeverageds',
-  full_name='ProductSearch.RequestLeverageds',
+  full_name='degiro_connector.trading.ProductSearch.RequestLeverageds',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='popular_only', full_name='ProductSearch.RequestLeverageds.popular_only', index=0,
+      name='popular_only', full_name='degiro_connector.trading.ProductSearch.RequestLeverageds.popular_only', index=0,
       number=1, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='input_aggregate_types', full_name='ProductSearch.RequestLeverageds.input_aggregate_types', index=1,
+      name='input_aggregate_types', full_name='degiro_connector.trading.ProductSearch.RequestLeverageds.input_aggregate_types', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='input_aggregate_values', full_name='ProductSearch.RequestLeverageds.input_aggregate_values', index=2,
+      name='input_aggregate_values', full_name='degiro_connector.trading.ProductSearch.RequestLeverageds.input_aggregate_values', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='search_text', full_name='ProductSearch.RequestLeverageds.search_text', index=3,
+      name='search_text', full_name='degiro_connector.trading.ProductSearch.RequestLeverageds.search_text', index=3,
       number=4, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='offset', full_name='ProductSearch.RequestLeverageds.offset', index=4,
+      name='offset', full_name='degiro_connector.trading.ProductSearch.RequestLeverageds.offset', index=4,
       number=5, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='limit', full_name='ProductSearch.RequestLeverageds.limit', index=5,
+      name='limit', full_name='degiro_connector.trading.ProductSearch.RequestLeverageds.limit', index=5,
       number=6, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='require_total', full_name='ProductSearch.RequestLeverageds.require_total', index=6,
+      name='require_total', full_name='degiro_connector.trading.ProductSearch.RequestLeverageds.require_total', index=6,
       number=7, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='sort_columns', full_name='ProductSearch.RequestLeverageds.sort_columns', index=7,
+      name='sort_columns', full_name='degiro_connector.trading.ProductSearch.RequestLeverageds.sort_columns', index=7,
       number=8, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='sort_types', full_name='ProductSearch.RequestLeverageds.sort_types', index=8,
+      name='sort_types', full_name='degiro_connector.trading.ProductSearch.RequestLeverageds.sort_types', index=8,
       number=9, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -1821,41 +1821,41 @@ _PRODUCTSEARCH_REQUESTLEVERAGEDS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4319,
-  serialized_end=4540,
+  serialized_start=4846,
+  serialized_end=5067,
 )
 
 _PRODUCTSEARCH_REQUESTLOOKUP = _descriptor.Descriptor(
   name='RequestLookup',
-  full_name='ProductSearch.RequestLookup',
+  full_name='degiro_connector.trading.ProductSearch.RequestLookup',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='search_text', full_name='ProductSearch.RequestLookup.search_text', index=0,
+      name='search_text', full_name='degiro_connector.trading.ProductSearch.RequestLookup.search_text', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='limit', full_name='ProductSearch.RequestLookup.limit', index=1,
+      name='limit', full_name='degiro_connector.trading.ProductSearch.RequestLookup.limit', index=1,
       number=2, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='offset', full_name='ProductSearch.RequestLookup.offset', index=2,
+      name='offset', full_name='degiro_connector.trading.ProductSearch.RequestLookup.offset', index=2,
       number=3, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='product_type_id', full_name='ProductSearch.RequestLookup.product_type_id', index=3,
+      name='product_type_id', full_name='degiro_connector.trading.ProductSearch.RequestLookup.product_type_id', index=3,
       number=4, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -1873,83 +1873,83 @@ _PRODUCTSEARCH_REQUESTLOOKUP = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4542,
-  serialized_end=4634,
+  serialized_start=5069,
+  serialized_end=5161,
 )
 
 _PRODUCTSEARCH_REQUESTOPTIONS = _descriptor.Descriptor(
   name='RequestOptions',
-  full_name='ProductSearch.RequestOptions',
+  full_name='degiro_connector.trading.ProductSearch.RequestOptions',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='input_aggregate_types', full_name='ProductSearch.RequestOptions.input_aggregate_types', index=0,
+      name='input_aggregate_types', full_name='degiro_connector.trading.ProductSearch.RequestOptions.input_aggregate_types', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='input_aggregate_values', full_name='ProductSearch.RequestOptions.input_aggregate_values', index=1,
+      name='input_aggregate_values', full_name='degiro_connector.trading.ProductSearch.RequestOptions.input_aggregate_values', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='option_exchange_id', full_name='ProductSearch.RequestOptions.option_exchange_id', index=2,
+      name='option_exchange_id', full_name='degiro_connector.trading.ProductSearch.RequestOptions.option_exchange_id', index=2,
       number=3, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='underlying_isin', full_name='ProductSearch.RequestOptions.underlying_isin', index=3,
+      name='underlying_isin', full_name='degiro_connector.trading.ProductSearch.RequestOptions.underlying_isin', index=3,
       number=4, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='search_text', full_name='ProductSearch.RequestOptions.search_text', index=4,
+      name='search_text', full_name='degiro_connector.trading.ProductSearch.RequestOptions.search_text', index=4,
       number=5, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='offset', full_name='ProductSearch.RequestOptions.offset', index=5,
+      name='offset', full_name='degiro_connector.trading.ProductSearch.RequestOptions.offset', index=5,
       number=6, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='limit', full_name='ProductSearch.RequestOptions.limit', index=6,
+      name='limit', full_name='degiro_connector.trading.ProductSearch.RequestOptions.limit', index=6,
       number=7, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='require_total', full_name='ProductSearch.RequestOptions.require_total', index=7,
+      name='require_total', full_name='degiro_connector.trading.ProductSearch.RequestOptions.require_total', index=7,
       number=8, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='sort_columns', full_name='ProductSearch.RequestOptions.sort_columns', index=8,
+      name='sort_columns', full_name='degiro_connector.trading.ProductSearch.RequestOptions.sort_columns', index=8,
       number=9, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='sort_types', full_name='ProductSearch.RequestOptions.sort_types', index=9,
+      name='sort_types', full_name='degiro_connector.trading.ProductSearch.RequestOptions.sort_types', index=9,
       number=10, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -1967,76 +1967,76 @@ _PRODUCTSEARCH_REQUESTOPTIONS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4637,
-  serialized_end=4886,
+  serialized_start=5164,
+  serialized_end=5413,
 )
 
 _PRODUCTSEARCH_REQUESTSTOCKS = _descriptor.Descriptor(
   name='RequestStocks',
-  full_name='ProductSearch.RequestStocks',
+  full_name='degiro_connector.trading.ProductSearch.RequestStocks',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='is_in_us_green_list', full_name='ProductSearch.RequestStocks.is_in_us_green_list', index=0,
+      name='is_in_us_green_list', full_name='degiro_connector.trading.ProductSearch.RequestStocks.is_in_us_green_list', index=0,
       number=1, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='index_id', full_name='ProductSearch.RequestStocks.index_id', index=1,
+      name='index_id', full_name='degiro_connector.trading.ProductSearch.RequestStocks.index_id', index=1,
       number=2, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='stock_country_id', full_name='ProductSearch.RequestStocks.stock_country_id', index=2,
+      name='stock_country_id', full_name='degiro_connector.trading.ProductSearch.RequestStocks.stock_country_id', index=2,
       number=3, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='search_text', full_name='ProductSearch.RequestStocks.search_text', index=3,
+      name='search_text', full_name='degiro_connector.trading.ProductSearch.RequestStocks.search_text', index=3,
       number=4, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='offset', full_name='ProductSearch.RequestStocks.offset', index=4,
+      name='offset', full_name='degiro_connector.trading.ProductSearch.RequestStocks.offset', index=4,
       number=5, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='limit', full_name='ProductSearch.RequestStocks.limit', index=5,
+      name='limit', full_name='degiro_connector.trading.ProductSearch.RequestStocks.limit', index=5,
       number=6, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='require_total', full_name='ProductSearch.RequestStocks.require_total', index=6,
+      name='require_total', full_name='degiro_connector.trading.ProductSearch.RequestStocks.require_total', index=6,
       number=7, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='sort_columns', full_name='ProductSearch.RequestStocks.sort_columns', index=7,
+      name='sort_columns', full_name='degiro_connector.trading.ProductSearch.RequestStocks.sort_columns', index=7,
       number=8, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='sort_types', full_name='ProductSearch.RequestStocks.sort_types', index=8,
+      name='sort_types', full_name='degiro_connector.trading.ProductSearch.RequestStocks.sort_types', index=8,
       number=9, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -2054,55 +2054,55 @@ _PRODUCTSEARCH_REQUESTSTOCKS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4889,
-  serialized_end=5094,
+  serialized_start=5416,
+  serialized_end=5621,
 )
 
 _PRODUCTSEARCH_REQUESTWARRANTS = _descriptor.Descriptor(
   name='RequestWarrants',
-  full_name='ProductSearch.RequestWarrants',
+  full_name='degiro_connector.trading.ProductSearch.RequestWarrants',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='search_text', full_name='ProductSearch.RequestWarrants.search_text', index=0,
+      name='search_text', full_name='degiro_connector.trading.ProductSearch.RequestWarrants.search_text', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='offset', full_name='ProductSearch.RequestWarrants.offset', index=1,
+      name='offset', full_name='degiro_connector.trading.ProductSearch.RequestWarrants.offset', index=1,
       number=2, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='limit', full_name='ProductSearch.RequestWarrants.limit', index=2,
+      name='limit', full_name='degiro_connector.trading.ProductSearch.RequestWarrants.limit', index=2,
       number=3, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='require_total', full_name='ProductSearch.RequestWarrants.require_total', index=3,
+      name='require_total', full_name='degiro_connector.trading.ProductSearch.RequestWarrants.require_total', index=3,
       number=4, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='sort_columns', full_name='ProductSearch.RequestWarrants.sort_columns', index=4,
+      name='sort_columns', full_name='degiro_connector.trading.ProductSearch.RequestWarrants.sort_columns', index=4,
       number=5, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='sort_types', full_name='ProductSearch.RequestWarrants.sort_types', index=5,
+      name='sort_types', full_name='degiro_connector.trading.ProductSearch.RequestWarrants.sort_types', index=5,
       number=6, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -2120,41 +2120,41 @@ _PRODUCTSEARCH_REQUESTWARRANTS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5097,
-  serialized_end=5231,
+  serialized_start=5624,
+  serialized_end=5758,
 )
 
 _PRODUCTSEARCH = _descriptor.Descriptor(
   name='ProductSearch',
-  full_name='ProductSearch',
+  full_name='degiro_connector.trading.ProductSearch',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='offset', full_name='ProductSearch.offset', index=0,
+      name='offset', full_name='degiro_connector.trading.ProductSearch.offset', index=0,
       number=1, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='products', full_name='ProductSearch.products', index=1,
+      name='products', full_name='degiro_connector.trading.ProductSearch.products', index=1,
       number=2, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='response_datetime', full_name='ProductSearch.response_datetime', index=2,
+      name='response_datetime', full_name='degiro_connector.trading.ProductSearch.response_datetime', index=2,
       number=3, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='total', full_name='ProductSearch.total', index=3,
+      name='total', full_name='degiro_connector.trading.ProductSearch.total', index=3,
       number=4, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -2172,42 +2172,42 @@ _PRODUCTSEARCH = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3391,
-  serialized_end=5231,
+  serialized_start=3918,
+  serialized_end=5758,
 )
 
 
 _FAVOURITES_LIST = _descriptor.Descriptor(
   name='List',
-  full_name='Favourites.List',
+  full_name='degiro_connector.trading.Favourites.List',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='id', full_name='Favourites.List.id', index=0,
+      name='id', full_name='degiro_connector.trading.Favourites.List.id', index=0,
       number=1, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='name', full_name='Favourites.List.name', index=1,
+      name='name', full_name='degiro_connector.trading.Favourites.List.name', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='is_default', full_name='Favourites.List.is_default', index=2,
+      name='is_default', full_name='degiro_connector.trading.Favourites.List.is_default', index=2,
       number=3, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='product_ids', full_name='Favourites.List.product_ids', index=3,
+      name='product_ids', full_name='degiro_connector.trading.Favourites.List.product_ids', index=3,
       number=4, type=5, cpp_type=1, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -2225,27 +2225,27 @@ _FAVOURITES_LIST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5337,
-  serialized_end=5410,
+  serialized_start=5889,
+  serialized_end=5962,
 )
 
 _FAVOURITES = _descriptor.Descriptor(
   name='Favourites',
-  full_name='Favourites',
+  full_name='degiro_connector.trading.Favourites',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='values', full_name='Favourites.values', index=0,
+      name='values', full_name='degiro_connector.trading.Favourites.values', index=0,
       number=1, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='response_datetime', full_name='Favourites.response_datetime', index=1,
+      name='response_datetime', full_name='degiro_connector.trading.Favourites.response_datetime', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -2263,21 +2263,21 @@ _FAVOURITES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5234,
-  serialized_end=5410,
+  serialized_start=5761,
+  serialized_end=5962,
 )
 
 
 _PRODUCTSINFO_REQUEST = _descriptor.Descriptor(
   name='Request',
-  full_name='ProductsInfo.Request',
+  full_name='degiro_connector.trading.ProductsInfo.Request',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='products', full_name='ProductsInfo.Request.products', index=0,
+      name='products', full_name='degiro_connector.trading.ProductsInfo.Request.products', index=0,
       number=1, type=5, cpp_type=1, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -2295,20 +2295,20 @@ _PRODUCTSINFO_REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5469,
-  serialized_end=5496,
+  serialized_start=6021,
+  serialized_end=6048,
 )
 
 _PRODUCTSINFO = _descriptor.Descriptor(
   name='ProductsInfo',
-  full_name='ProductsInfo',
+  full_name='degiro_connector.trading.ProductsInfo',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='values', full_name='ProductsInfo.values', index=0,
+      name='values', full_name='degiro_connector.trading.ProductsInfo.values', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -2326,21 +2326,21 @@ _PRODUCTSINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5412,
-  serialized_end=5496,
+  serialized_start=5964,
+  serialized_end=6048,
 )
 
 
 _COMPANYRATIOS = _descriptor.Descriptor(
   name='CompanyRatios',
-  full_name='CompanyRatios',
+  full_name='degiro_connector.trading.CompanyRatios',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='values', full_name='CompanyRatios.values', index=0,
+      name='values', full_name='degiro_connector.trading.CompanyRatios.values', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -2358,21 +2358,21 @@ _COMPANYRATIOS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5498,
-  serialized_end=5554,
+  serialized_start=6050,
+  serialized_end=6106,
 )
 
 
 _COMPANYPROFILE = _descriptor.Descriptor(
   name='CompanyProfile',
-  full_name='CompanyProfile',
+  full_name='degiro_connector.trading.CompanyProfile',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='values', full_name='CompanyProfile.values', index=0,
+      name='values', full_name='degiro_connector.trading.CompanyProfile.values', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -2390,21 +2390,21 @@ _COMPANYPROFILE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5556,
-  serialized_end=5613,
+  serialized_start=6108,
+  serialized_end=6165,
 )
 
 
 _FINANCIALSTATEMENTS = _descriptor.Descriptor(
   name='FinancialStatements',
-  full_name='FinancialStatements',
+  full_name='degiro_connector.trading.FinancialStatements',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='values', full_name='FinancialStatements.values', index=0,
+      name='values', full_name='degiro_connector.trading.FinancialStatements.values', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -2422,35 +2422,35 @@ _FINANCIALSTATEMENTS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5615,
-  serialized_end=5677,
+  serialized_start=6167,
+  serialized_end=6229,
 )
 
 
 _LATESTNEWS_REQUEST = _descriptor.Descriptor(
   name='Request',
-  full_name='LatestNews.Request',
+  full_name='degiro_connector.trading.LatestNews.Request',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='offset', full_name='LatestNews.Request.offset', index=0,
+      name='offset', full_name='degiro_connector.trading.LatestNews.Request.offset', index=0,
       number=1, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='languages', full_name='LatestNews.Request.languages', index=1,
+      name='languages', full_name='degiro_connector.trading.LatestNews.Request.languages', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='limit', full_name='LatestNews.Request.limit', index=2,
+      name='limit', full_name='degiro_connector.trading.LatestNews.Request.limit', index=2,
       number=3, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -2468,34 +2468,34 @@ _LATESTNEWS_REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5765,
-  serialized_end=5824,
+  serialized_start=6317,
+  serialized_end=6376,
 )
 
 _LATESTNEWS = _descriptor.Descriptor(
   name='LatestNews',
-  full_name='LatestNews',
+  full_name='degiro_connector.trading.LatestNews',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='items', full_name='LatestNews.items', index=0,
+      name='items', full_name='degiro_connector.trading.LatestNews.items', index=0,
       number=1, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='offset', full_name='LatestNews.offset', index=1,
+      name='offset', full_name='degiro_connector.trading.LatestNews.offset', index=1,
       number=2, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='total', full_name='LatestNews.total', index=2,
+      name='total', full_name='degiro_connector.trading.LatestNews.total', index=2,
       number=3, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -2513,35 +2513,35 @@ _LATESTNEWS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5680,
-  serialized_end=5824,
+  serialized_start=6232,
+  serialized_end=6376,
 )
 
 
 _TOPNEWSPREVIEW = _descriptor.Descriptor(
   name='TopNewsPreview',
-  full_name='TopNewsPreview',
+  full_name='degiro_connector.trading.TopNewsPreview',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='items', full_name='TopNewsPreview.items', index=0,
+      name='items', full_name='degiro_connector.trading.TopNewsPreview.items', index=0,
       number=1, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='offset', full_name='TopNewsPreview.offset', index=1,
+      name='offset', full_name='degiro_connector.trading.TopNewsPreview.offset', index=1,
       number=2, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='total', full_name='TopNewsPreview.total', index=2,
+      name='total', full_name='degiro_connector.trading.TopNewsPreview.total', index=2,
       number=3, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -2559,42 +2559,42 @@ _TOPNEWSPREVIEW = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5826,
-  serialized_end=5913,
+  serialized_start=6378,
+  serialized_end=6465,
 )
 
 
 _NEWSBYCOMPANY_REQUEST = _descriptor.Descriptor(
   name='Request',
-  full_name='NewsByCompany.Request',
+  full_name='degiro_connector.trading.NewsByCompany.Request',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='isin', full_name='NewsByCompany.Request.isin', index=0,
+      name='isin', full_name='degiro_connector.trading.NewsByCompany.Request.isin', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='limit', full_name='NewsByCompany.Request.limit', index=1,
+      name='limit', full_name='degiro_connector.trading.NewsByCompany.Request.limit', index=1,
       number=2, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='offset', full_name='NewsByCompany.Request.offset', index=2,
+      name='offset', full_name='degiro_connector.trading.NewsByCompany.Request.offset', index=2,
       number=3, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='languages', full_name='NewsByCompany.Request.languages', index=3,
+      name='languages', full_name='degiro_connector.trading.NewsByCompany.Request.languages', index=3,
       number=4, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -2612,34 +2612,34 @@ _NEWSBYCOMPANY_REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6004,
-  serialized_end=6077,
+  serialized_start=6556,
+  serialized_end=6629,
 )
 
 _NEWSBYCOMPANY = _descriptor.Descriptor(
   name='NewsByCompany',
-  full_name='NewsByCompany',
+  full_name='degiro_connector.trading.NewsByCompany',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='items', full_name='NewsByCompany.items', index=0,
+      name='items', full_name='degiro_connector.trading.NewsByCompany.items', index=0,
       number=1, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='offset', full_name='NewsByCompany.offset', index=1,
+      name='offset', full_name='degiro_connector.trading.NewsByCompany.offset', index=1,
       number=2, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='total', full_name='NewsByCompany.total', index=2,
+      name='total', full_name='degiro_connector.trading.NewsByCompany.total', index=2,
       number=3, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -2657,35 +2657,35 @@ _NEWSBYCOMPANY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5916,
-  serialized_end=6077,
+  serialized_start=6468,
+  serialized_end=6629,
 )
 
 
 _CASHACCOUNTREPORT_REQUEST_DATE = _descriptor.Descriptor(
   name='Date',
-  full_name='CashAccountReport.Request.Date',
+  full_name='degiro_connector.trading.CashAccountReport.Request.Date',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='year', full_name='CashAccountReport.Request.Date.year', index=0,
+      name='year', full_name='degiro_connector.trading.CashAccountReport.Request.Date.year', index=0,
       number=1, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='month', full_name='CashAccountReport.Request.Date.month', index=1,
+      name='month', full_name='degiro_connector.trading.CashAccountReport.Request.Date.month', index=1,
       number=2, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='day', full_name='CashAccountReport.Request.Date.day', index=2,
+      name='day', full_name='degiro_connector.trading.CashAccountReport.Request.Date.day', index=2,
       number=3, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -2703,48 +2703,48 @@ _CASHACCOUNTREPORT_REQUEST_DATE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2739,
-  serialized_end=2787,
+  serialized_start=3166,
+  serialized_end=3214,
 )
 
 _CASHACCOUNTREPORT_REQUEST = _descriptor.Descriptor(
   name='Request',
-  full_name='CashAccountReport.Request',
+  full_name='degiro_connector.trading.CashAccountReport.Request',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='format', full_name='CashAccountReport.Request.format', index=0,
+      name='format', full_name='degiro_connector.trading.CashAccountReport.Request.format', index=0,
       number=1, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='country', full_name='CashAccountReport.Request.country', index=1,
+      name='country', full_name='degiro_connector.trading.CashAccountReport.Request.country', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='lang', full_name='CashAccountReport.Request.lang', index=2,
+      name='lang', full_name='degiro_connector.trading.CashAccountReport.Request.lang', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='from_date', full_name='CashAccountReport.Request.from_date', index=3,
+      name='from_date', full_name='degiro_connector.trading.CashAccountReport.Request.from_date', index=3,
       number=4, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='to_date', full_name='CashAccountReport.Request.to_date', index=4,
+      name='to_date', full_name='degiro_connector.trading.CashAccountReport.Request.to_date', index=4,
       number=5, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -2762,34 +2762,34 @@ _CASHACCOUNTREPORT_REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6217,
-  serialized_end=6452,
+  serialized_start=6794,
+  serialized_end=7104,
 )
 
 _CASHACCOUNTREPORT = _descriptor.Descriptor(
   name='CashAccountReport',
-  full_name='CashAccountReport',
+  full_name='degiro_connector.trading.CashAccountReport',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='content', full_name='CashAccountReport.content', index=0,
+      name='content', full_name='degiro_connector.trading.CashAccountReport.content', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='format', full_name='CashAccountReport.format', index=1,
+      name='format', full_name='degiro_connector.trading.CashAccountReport.format', index=1,
       number=2, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='response_datetime', full_name='CashAccountReport.response_datetime', index=2,
+      name='response_datetime', full_name='degiro_connector.trading.CashAccountReport.response_datetime', index=2,
       number=3, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -2808,84 +2808,84 @@ _CASHACCOUNTREPORT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6080,
-  serialized_end=6499,
+  serialized_start=6632,
+  serialized_end=7151,
 )
 
 
 _AGENDA_REQUEST = _descriptor.Descriptor(
   name='Request',
-  full_name='Agenda.Request',
+  full_name='degiro_connector.trading.Agenda.Request',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='calendar_type', full_name='Agenda.Request.calendar_type', index=0,
+      name='calendar_type', full_name='degiro_connector.trading.Agenda.Request.calendar_type', index=0,
       number=1, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='offset', full_name='Agenda.Request.offset', index=1,
+      name='offset', full_name='degiro_connector.trading.Agenda.Request.offset', index=1,
       number=2, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='limit', full_name='Agenda.Request.limit', index=2,
+      name='limit', full_name='degiro_connector.trading.Agenda.Request.limit', index=2,
       number=3, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='order_by_desc', full_name='Agenda.Request.order_by_desc', index=3,
+      name='order_by_desc', full_name='degiro_connector.trading.Agenda.Request.order_by_desc', index=3,
       number=4, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='start_date', full_name='Agenda.Request.start_date', index=4,
+      name='start_date', full_name='degiro_connector.trading.Agenda.Request.start_date', index=4,
       number=5, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='end_date', full_name='Agenda.Request.end_date', index=5,
+      name='end_date', full_name='degiro_connector.trading.Agenda.Request.end_date', index=5,
       number=6, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='company_name', full_name='Agenda.Request.company_name', index=6,
+      name='company_name', full_name='degiro_connector.trading.Agenda.Request.company_name', index=6,
       number=7, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='countries', full_name='Agenda.Request.countries', index=7,
+      name='countries', full_name='degiro_connector.trading.Agenda.Request.countries', index=7,
       number=8, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='classifications', full_name='Agenda.Request.classifications', index=8,
+      name='classifications', full_name='degiro_connector.trading.Agenda.Request.classifications', index=8,
       number=9, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='units', full_name='Agenda.Request.units', index=9,
+      name='units', full_name='degiro_connector.trading.Agenda.Request.units', index=9,
       number=10, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -2903,48 +2903,48 @@ _AGENDA_REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6684,
-  serialized_end=6967,
+  serialized_start=7361,
+  serialized_end=7669,
 )
 
 _AGENDA = _descriptor.Descriptor(
   name='Agenda',
-  full_name='Agenda',
+  full_name='degiro_connector.trading.Agenda',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='calendar_type', full_name='Agenda.calendar_type', index=0,
+      name='calendar_type', full_name='degiro_connector.trading.Agenda.calendar_type', index=0,
       number=1, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='items', full_name='Agenda.items', index=1,
+      name='items', full_name='degiro_connector.trading.Agenda.items', index=1,
       number=2, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='offset', full_name='Agenda.offset', index=2,
+      name='offset', full_name='degiro_connector.trading.Agenda.offset', index=2,
       number=3, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='total', full_name='Agenda.total', index=3,
+      name='total', full_name='degiro_connector.trading.Agenda.total', index=3,
       number=4, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='response_datetime', full_name='Agenda.response_datetime', index=4,
+      name='response_datetime', full_name='degiro_connector.trading.Agenda.response_datetime', index=4,
       number=5, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -2963,8 +2963,8 @@ _AGENDA = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6502,
-  serialized_end=7113,
+  serialized_start=7154,
+  serialized_end=7815,
 )
 
 _CREDENTIALS.oneofs_by_name['oneof_2fa'].fields.append(
@@ -3097,7 +3097,7 @@ _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 Credentials = _reflection.GeneratedProtocolMessageType('Credentials', (_message.Message,), {
   'DESCRIPTOR' : _CREDENTIALS,
   '__module__' : 'degiro_connector.trading.models.trading_pb2'
-  # @@protoc_insertion_point(class_scope:Credentials)
+  # @@protoc_insertion_point(class_scope:degiro_connector.trading.Credentials)
   })
 _sym_db.RegisterMessage(Credentials)
 
@@ -3106,19 +3106,19 @@ Order = _reflection.GeneratedProtocolMessageType('Order', (_message.Message,), {
   'CheckingResponse' : _reflection.GeneratedProtocolMessageType('CheckingResponse', (_message.Message,), {
     'DESCRIPTOR' : _ORDER_CHECKINGRESPONSE,
     '__module__' : 'degiro_connector.trading.models.trading_pb2'
-    # @@protoc_insertion_point(class_scope:Order.CheckingResponse)
+    # @@protoc_insertion_point(class_scope:degiro_connector.trading.Order.CheckingResponse)
     })
   ,
 
   'ConfirmationResponse' : _reflection.GeneratedProtocolMessageType('ConfirmationResponse', (_message.Message,), {
     'DESCRIPTOR' : _ORDER_CONFIRMATIONRESPONSE,
     '__module__' : 'degiro_connector.trading.models.trading_pb2'
-    # @@protoc_insertion_point(class_scope:Order.ConfirmationResponse)
+    # @@protoc_insertion_point(class_scope:degiro_connector.trading.Order.ConfirmationResponse)
     })
   ,
   'DESCRIPTOR' : _ORDER,
   '__module__' : 'degiro_connector.trading.models.trading_pb2'
-  # @@protoc_insertion_point(class_scope:Order)
+  # @@protoc_insertion_point(class_scope:degiro_connector.trading.Order)
   })
 _sym_db.RegisterMessage(Order)
 _sym_db.RegisterMessage(Order.CheckingResponse)
@@ -3129,68 +3129,68 @@ Update = _reflection.GeneratedProtocolMessageType('Update', (_message.Message,),
   'Request' : _reflection.GeneratedProtocolMessageType('Request', (_message.Message,), {
     'DESCRIPTOR' : _UPDATE_REQUEST,
     '__module__' : 'degiro_connector.trading.models.trading_pb2'
-    # @@protoc_insertion_point(class_scope:Update.Request)
+    # @@protoc_insertion_point(class_scope:degiro_connector.trading.Update.Request)
     })
   ,
 
   'RequestList' : _reflection.GeneratedProtocolMessageType('RequestList', (_message.Message,), {
     'DESCRIPTOR' : _UPDATE_REQUESTLIST,
     '__module__' : 'degiro_connector.trading.models.trading_pb2'
-    # @@protoc_insertion_point(class_scope:Update.RequestList)
+    # @@protoc_insertion_point(class_scope:degiro_connector.trading.Update.RequestList)
     })
   ,
 
   'Alerts' : _reflection.GeneratedProtocolMessageType('Alerts', (_message.Message,), {
     'DESCRIPTOR' : _UPDATE_ALERTS,
     '__module__' : 'degiro_connector.trading.models.trading_pb2'
-    # @@protoc_insertion_point(class_scope:Update.Alerts)
+    # @@protoc_insertion_point(class_scope:degiro_connector.trading.Update.Alerts)
     })
   ,
 
   'CashFunds' : _reflection.GeneratedProtocolMessageType('CashFunds', (_message.Message,), {
     'DESCRIPTOR' : _UPDATE_CASHFUNDS,
     '__module__' : 'degiro_connector.trading.models.trading_pb2'
-    # @@protoc_insertion_point(class_scope:Update.CashFunds)
+    # @@protoc_insertion_point(class_scope:degiro_connector.trading.Update.CashFunds)
     })
   ,
 
   'HistoricalOrders' : _reflection.GeneratedProtocolMessageType('HistoricalOrders', (_message.Message,), {
     'DESCRIPTOR' : _UPDATE_HISTORICALORDERS,
     '__module__' : 'degiro_connector.trading.models.trading_pb2'
-    # @@protoc_insertion_point(class_scope:Update.HistoricalOrders)
+    # @@protoc_insertion_point(class_scope:degiro_connector.trading.Update.HistoricalOrders)
     })
   ,
 
   'Orders' : _reflection.GeneratedProtocolMessageType('Orders', (_message.Message,), {
     'DESCRIPTOR' : _UPDATE_ORDERS,
     '__module__' : 'degiro_connector.trading.models.trading_pb2'
-    # @@protoc_insertion_point(class_scope:Update.Orders)
+    # @@protoc_insertion_point(class_scope:degiro_connector.trading.Update.Orders)
     })
   ,
 
   'Portfolio' : _reflection.GeneratedProtocolMessageType('Portfolio', (_message.Message,), {
     'DESCRIPTOR' : _UPDATE_PORTFOLIO,
     '__module__' : 'degiro_connector.trading.models.trading_pb2'
-    # @@protoc_insertion_point(class_scope:Update.Portfolio)
+    # @@protoc_insertion_point(class_scope:degiro_connector.trading.Update.Portfolio)
     })
   ,
 
   'TotalPortfolio' : _reflection.GeneratedProtocolMessageType('TotalPortfolio', (_message.Message,), {
     'DESCRIPTOR' : _UPDATE_TOTALPORTFOLIO,
     '__module__' : 'degiro_connector.trading.models.trading_pb2'
-    # @@protoc_insertion_point(class_scope:Update.TotalPortfolio)
+    # @@protoc_insertion_point(class_scope:degiro_connector.trading.Update.TotalPortfolio)
     })
   ,
 
   'Transactions' : _reflection.GeneratedProtocolMessageType('Transactions', (_message.Message,), {
     'DESCRIPTOR' : _UPDATE_TRANSACTIONS,
     '__module__' : 'degiro_connector.trading.models.trading_pb2'
-    # @@protoc_insertion_point(class_scope:Update.Transactions)
+    # @@protoc_insertion_point(class_scope:degiro_connector.trading.Update.Transactions)
     })
   ,
   'DESCRIPTOR' : _UPDATE,
   '__module__' : 'degiro_connector.trading.models.trading_pb2'
-  # @@protoc_insertion_point(class_scope:Update)
+  # @@protoc_insertion_point(class_scope:degiro_connector.trading.Update)
   })
 _sym_db.RegisterMessage(Update)
 _sym_db.RegisterMessage(Update.Request)
@@ -3210,17 +3210,17 @@ OrdersHistory = _reflection.GeneratedProtocolMessageType('OrdersHistory', (_mess
     'Date' : _reflection.GeneratedProtocolMessageType('Date', (_message.Message,), {
       'DESCRIPTOR' : _ORDERSHISTORY_REQUEST_DATE,
       '__module__' : 'degiro_connector.trading.models.trading_pb2'
-      # @@protoc_insertion_point(class_scope:OrdersHistory.Request.Date)
+      # @@protoc_insertion_point(class_scope:degiro_connector.trading.OrdersHistory.Request.Date)
       })
     ,
     'DESCRIPTOR' : _ORDERSHISTORY_REQUEST,
     '__module__' : 'degiro_connector.trading.models.trading_pb2'
-    # @@protoc_insertion_point(class_scope:OrdersHistory.Request)
+    # @@protoc_insertion_point(class_scope:degiro_connector.trading.OrdersHistory.Request)
     })
   ,
   'DESCRIPTOR' : _ORDERSHISTORY,
   '__module__' : 'degiro_connector.trading.models.trading_pb2'
-  # @@protoc_insertion_point(class_scope:OrdersHistory)
+  # @@protoc_insertion_point(class_scope:degiro_connector.trading.OrdersHistory)
   })
 _sym_db.RegisterMessage(OrdersHistory)
 _sym_db.RegisterMessage(OrdersHistory.Request)
@@ -3233,17 +3233,17 @@ TransactionsHistory = _reflection.GeneratedProtocolMessageType('TransactionsHist
     'Date' : _reflection.GeneratedProtocolMessageType('Date', (_message.Message,), {
       'DESCRIPTOR' : _TRANSACTIONSHISTORY_REQUEST_DATE,
       '__module__' : 'degiro_connector.trading.models.trading_pb2'
-      # @@protoc_insertion_point(class_scope:TransactionsHistory.Request.Date)
+      # @@protoc_insertion_point(class_scope:degiro_connector.trading.TransactionsHistory.Request.Date)
       })
     ,
     'DESCRIPTOR' : _TRANSACTIONSHISTORY_REQUEST,
     '__module__' : 'degiro_connector.trading.models.trading_pb2'
-    # @@protoc_insertion_point(class_scope:TransactionsHistory.Request)
+    # @@protoc_insertion_point(class_scope:degiro_connector.trading.TransactionsHistory.Request)
     })
   ,
   'DESCRIPTOR' : _TRANSACTIONSHISTORY,
   '__module__' : 'degiro_connector.trading.models.trading_pb2'
-  # @@protoc_insertion_point(class_scope:TransactionsHistory)
+  # @@protoc_insertion_point(class_scope:degiro_connector.trading.TransactionsHistory)
   })
 _sym_db.RegisterMessage(TransactionsHistory)
 _sym_db.RegisterMessage(TransactionsHistory.Request)
@@ -3256,17 +3256,17 @@ AccountOverview = _reflection.GeneratedProtocolMessageType('AccountOverview', (_
     'Date' : _reflection.GeneratedProtocolMessageType('Date', (_message.Message,), {
       'DESCRIPTOR' : _ACCOUNTOVERVIEW_REQUEST_DATE,
       '__module__' : 'degiro_connector.trading.models.trading_pb2'
-      # @@protoc_insertion_point(class_scope:AccountOverview.Request.Date)
+      # @@protoc_insertion_point(class_scope:degiro_connector.trading.AccountOverview.Request.Date)
       })
     ,
     'DESCRIPTOR' : _ACCOUNTOVERVIEW_REQUEST,
     '__module__' : 'degiro_connector.trading.models.trading_pb2'
-    # @@protoc_insertion_point(class_scope:AccountOverview.Request)
+    # @@protoc_insertion_point(class_scope:degiro_connector.trading.AccountOverview.Request)
     })
   ,
   'DESCRIPTOR' : _ACCOUNTOVERVIEW,
   '__module__' : 'degiro_connector.trading.models.trading_pb2'
-  # @@protoc_insertion_point(class_scope:AccountOverview)
+  # @@protoc_insertion_point(class_scope:degiro_connector.trading.AccountOverview)
   })
 _sym_db.RegisterMessage(AccountOverview)
 _sym_db.RegisterMessage(AccountOverview.Request)
@@ -3277,75 +3277,75 @@ ProductSearch = _reflection.GeneratedProtocolMessageType('ProductSearch', (_mess
   'Config' : _reflection.GeneratedProtocolMessageType('Config', (_message.Message,), {
     'DESCRIPTOR' : _PRODUCTSEARCH_CONFIG,
     '__module__' : 'degiro_connector.trading.models.trading_pb2'
-    # @@protoc_insertion_point(class_scope:ProductSearch.Config)
+    # @@protoc_insertion_point(class_scope:degiro_connector.trading.ProductSearch.Config)
     })
   ,
 
   'RequestBonds' : _reflection.GeneratedProtocolMessageType('RequestBonds', (_message.Message,), {
     'DESCRIPTOR' : _PRODUCTSEARCH_REQUESTBONDS,
     '__module__' : 'degiro_connector.trading.models.trading_pb2'
-    # @@protoc_insertion_point(class_scope:ProductSearch.RequestBonds)
+    # @@protoc_insertion_point(class_scope:degiro_connector.trading.ProductSearch.RequestBonds)
     })
   ,
 
   'RequestETFs' : _reflection.GeneratedProtocolMessageType('RequestETFs', (_message.Message,), {
     'DESCRIPTOR' : _PRODUCTSEARCH_REQUESTETFS,
     '__module__' : 'degiro_connector.trading.models.trading_pb2'
-    # @@protoc_insertion_point(class_scope:ProductSearch.RequestETFs)
+    # @@protoc_insertion_point(class_scope:degiro_connector.trading.ProductSearch.RequestETFs)
     })
   ,
 
   'RequestFunds' : _reflection.GeneratedProtocolMessageType('RequestFunds', (_message.Message,), {
     'DESCRIPTOR' : _PRODUCTSEARCH_REQUESTFUNDS,
     '__module__' : 'degiro_connector.trading.models.trading_pb2'
-    # @@protoc_insertion_point(class_scope:ProductSearch.RequestFunds)
+    # @@protoc_insertion_point(class_scope:degiro_connector.trading.ProductSearch.RequestFunds)
     })
   ,
 
   'RequestFutures' : _reflection.GeneratedProtocolMessageType('RequestFutures', (_message.Message,), {
     'DESCRIPTOR' : _PRODUCTSEARCH_REQUESTFUTURES,
     '__module__' : 'degiro_connector.trading.models.trading_pb2'
-    # @@protoc_insertion_point(class_scope:ProductSearch.RequestFutures)
+    # @@protoc_insertion_point(class_scope:degiro_connector.trading.ProductSearch.RequestFutures)
     })
   ,
 
   'RequestLeverageds' : _reflection.GeneratedProtocolMessageType('RequestLeverageds', (_message.Message,), {
     'DESCRIPTOR' : _PRODUCTSEARCH_REQUESTLEVERAGEDS,
     '__module__' : 'degiro_connector.trading.models.trading_pb2'
-    # @@protoc_insertion_point(class_scope:ProductSearch.RequestLeverageds)
+    # @@protoc_insertion_point(class_scope:degiro_connector.trading.ProductSearch.RequestLeverageds)
     })
   ,
 
   'RequestLookup' : _reflection.GeneratedProtocolMessageType('RequestLookup', (_message.Message,), {
     'DESCRIPTOR' : _PRODUCTSEARCH_REQUESTLOOKUP,
     '__module__' : 'degiro_connector.trading.models.trading_pb2'
-    # @@protoc_insertion_point(class_scope:ProductSearch.RequestLookup)
+    # @@protoc_insertion_point(class_scope:degiro_connector.trading.ProductSearch.RequestLookup)
     })
   ,
 
   'RequestOptions' : _reflection.GeneratedProtocolMessageType('RequestOptions', (_message.Message,), {
     'DESCRIPTOR' : _PRODUCTSEARCH_REQUESTOPTIONS,
     '__module__' : 'degiro_connector.trading.models.trading_pb2'
-    # @@protoc_insertion_point(class_scope:ProductSearch.RequestOptions)
+    # @@protoc_insertion_point(class_scope:degiro_connector.trading.ProductSearch.RequestOptions)
     })
   ,
 
   'RequestStocks' : _reflection.GeneratedProtocolMessageType('RequestStocks', (_message.Message,), {
     'DESCRIPTOR' : _PRODUCTSEARCH_REQUESTSTOCKS,
     '__module__' : 'degiro_connector.trading.models.trading_pb2'
-    # @@protoc_insertion_point(class_scope:ProductSearch.RequestStocks)
+    # @@protoc_insertion_point(class_scope:degiro_connector.trading.ProductSearch.RequestStocks)
     })
   ,
 
   'RequestWarrants' : _reflection.GeneratedProtocolMessageType('RequestWarrants', (_message.Message,), {
     'DESCRIPTOR' : _PRODUCTSEARCH_REQUESTWARRANTS,
     '__module__' : 'degiro_connector.trading.models.trading_pb2'
-    # @@protoc_insertion_point(class_scope:ProductSearch.RequestWarrants)
+    # @@protoc_insertion_point(class_scope:degiro_connector.trading.ProductSearch.RequestWarrants)
     })
   ,
   'DESCRIPTOR' : _PRODUCTSEARCH,
   '__module__' : 'degiro_connector.trading.models.trading_pb2'
-  # @@protoc_insertion_point(class_scope:ProductSearch)
+  # @@protoc_insertion_point(class_scope:degiro_connector.trading.ProductSearch)
   })
 _sym_db.RegisterMessage(ProductSearch)
 _sym_db.RegisterMessage(ProductSearch.Config)
@@ -3364,12 +3364,12 @@ Favourites = _reflection.GeneratedProtocolMessageType('Favourites', (_message.Me
   'List' : _reflection.GeneratedProtocolMessageType('List', (_message.Message,), {
     'DESCRIPTOR' : _FAVOURITES_LIST,
     '__module__' : 'degiro_connector.trading.models.trading_pb2'
-    # @@protoc_insertion_point(class_scope:Favourites.List)
+    # @@protoc_insertion_point(class_scope:degiro_connector.trading.Favourites.List)
     })
   ,
   'DESCRIPTOR' : _FAVOURITES,
   '__module__' : 'degiro_connector.trading.models.trading_pb2'
-  # @@protoc_insertion_point(class_scope:Favourites)
+  # @@protoc_insertion_point(class_scope:degiro_connector.trading.Favourites)
   })
 _sym_db.RegisterMessage(Favourites)
 _sym_db.RegisterMessage(Favourites.List)
@@ -3379,12 +3379,12 @@ ProductsInfo = _reflection.GeneratedProtocolMessageType('ProductsInfo', (_messag
   'Request' : _reflection.GeneratedProtocolMessageType('Request', (_message.Message,), {
     'DESCRIPTOR' : _PRODUCTSINFO_REQUEST,
     '__module__' : 'degiro_connector.trading.models.trading_pb2'
-    # @@protoc_insertion_point(class_scope:ProductsInfo.Request)
+    # @@protoc_insertion_point(class_scope:degiro_connector.trading.ProductsInfo.Request)
     })
   ,
   'DESCRIPTOR' : _PRODUCTSINFO,
   '__module__' : 'degiro_connector.trading.models.trading_pb2'
-  # @@protoc_insertion_point(class_scope:ProductsInfo)
+  # @@protoc_insertion_point(class_scope:degiro_connector.trading.ProductsInfo)
   })
 _sym_db.RegisterMessage(ProductsInfo)
 _sym_db.RegisterMessage(ProductsInfo.Request)
@@ -3392,21 +3392,21 @@ _sym_db.RegisterMessage(ProductsInfo.Request)
 CompanyRatios = _reflection.GeneratedProtocolMessageType('CompanyRatios', (_message.Message,), {
   'DESCRIPTOR' : _COMPANYRATIOS,
   '__module__' : 'degiro_connector.trading.models.trading_pb2'
-  # @@protoc_insertion_point(class_scope:CompanyRatios)
+  # @@protoc_insertion_point(class_scope:degiro_connector.trading.CompanyRatios)
   })
 _sym_db.RegisterMessage(CompanyRatios)
 
 CompanyProfile = _reflection.GeneratedProtocolMessageType('CompanyProfile', (_message.Message,), {
   'DESCRIPTOR' : _COMPANYPROFILE,
   '__module__' : 'degiro_connector.trading.models.trading_pb2'
-  # @@protoc_insertion_point(class_scope:CompanyProfile)
+  # @@protoc_insertion_point(class_scope:degiro_connector.trading.CompanyProfile)
   })
 _sym_db.RegisterMessage(CompanyProfile)
 
 FinancialStatements = _reflection.GeneratedProtocolMessageType('FinancialStatements', (_message.Message,), {
   'DESCRIPTOR' : _FINANCIALSTATEMENTS,
   '__module__' : 'degiro_connector.trading.models.trading_pb2'
-  # @@protoc_insertion_point(class_scope:FinancialStatements)
+  # @@protoc_insertion_point(class_scope:degiro_connector.trading.FinancialStatements)
   })
 _sym_db.RegisterMessage(FinancialStatements)
 
@@ -3415,12 +3415,12 @@ LatestNews = _reflection.GeneratedProtocolMessageType('LatestNews', (_message.Me
   'Request' : _reflection.GeneratedProtocolMessageType('Request', (_message.Message,), {
     'DESCRIPTOR' : _LATESTNEWS_REQUEST,
     '__module__' : 'degiro_connector.trading.models.trading_pb2'
-    # @@protoc_insertion_point(class_scope:LatestNews.Request)
+    # @@protoc_insertion_point(class_scope:degiro_connector.trading.LatestNews.Request)
     })
   ,
   'DESCRIPTOR' : _LATESTNEWS,
   '__module__' : 'degiro_connector.trading.models.trading_pb2'
-  # @@protoc_insertion_point(class_scope:LatestNews)
+  # @@protoc_insertion_point(class_scope:degiro_connector.trading.LatestNews)
   })
 _sym_db.RegisterMessage(LatestNews)
 _sym_db.RegisterMessage(LatestNews.Request)
@@ -3428,7 +3428,7 @@ _sym_db.RegisterMessage(LatestNews.Request)
 TopNewsPreview = _reflection.GeneratedProtocolMessageType('TopNewsPreview', (_message.Message,), {
   'DESCRIPTOR' : _TOPNEWSPREVIEW,
   '__module__' : 'degiro_connector.trading.models.trading_pb2'
-  # @@protoc_insertion_point(class_scope:TopNewsPreview)
+  # @@protoc_insertion_point(class_scope:degiro_connector.trading.TopNewsPreview)
   })
 _sym_db.RegisterMessage(TopNewsPreview)
 
@@ -3437,12 +3437,12 @@ NewsByCompany = _reflection.GeneratedProtocolMessageType('NewsByCompany', (_mess
   'Request' : _reflection.GeneratedProtocolMessageType('Request', (_message.Message,), {
     'DESCRIPTOR' : _NEWSBYCOMPANY_REQUEST,
     '__module__' : 'degiro_connector.trading.models.trading_pb2'
-    # @@protoc_insertion_point(class_scope:NewsByCompany.Request)
+    # @@protoc_insertion_point(class_scope:degiro_connector.trading.NewsByCompany.Request)
     })
   ,
   'DESCRIPTOR' : _NEWSBYCOMPANY,
   '__module__' : 'degiro_connector.trading.models.trading_pb2'
-  # @@protoc_insertion_point(class_scope:NewsByCompany)
+  # @@protoc_insertion_point(class_scope:degiro_connector.trading.NewsByCompany)
   })
 _sym_db.RegisterMessage(NewsByCompany)
 _sym_db.RegisterMessage(NewsByCompany.Request)
@@ -3454,17 +3454,17 @@ CashAccountReport = _reflection.GeneratedProtocolMessageType('CashAccountReport'
     'Date' : _reflection.GeneratedProtocolMessageType('Date', (_message.Message,), {
       'DESCRIPTOR' : _CASHACCOUNTREPORT_REQUEST_DATE,
       '__module__' : 'degiro_connector.trading.models.trading_pb2'
-      # @@protoc_insertion_point(class_scope:CashAccountReport.Request.Date)
+      # @@protoc_insertion_point(class_scope:degiro_connector.trading.CashAccountReport.Request.Date)
       })
     ,
     'DESCRIPTOR' : _CASHACCOUNTREPORT_REQUEST,
     '__module__' : 'degiro_connector.trading.models.trading_pb2'
-    # @@protoc_insertion_point(class_scope:CashAccountReport.Request)
+    # @@protoc_insertion_point(class_scope:degiro_connector.trading.CashAccountReport.Request)
     })
   ,
   'DESCRIPTOR' : _CASHACCOUNTREPORT,
   '__module__' : 'degiro_connector.trading.models.trading_pb2'
-  # @@protoc_insertion_point(class_scope:CashAccountReport)
+  # @@protoc_insertion_point(class_scope:degiro_connector.trading.CashAccountReport)
   })
 _sym_db.RegisterMessage(CashAccountReport)
 _sym_db.RegisterMessage(CashAccountReport.Request)
@@ -3475,12 +3475,12 @@ Agenda = _reflection.GeneratedProtocolMessageType('Agenda', (_message.Message,),
   'Request' : _reflection.GeneratedProtocolMessageType('Request', (_message.Message,), {
     'DESCRIPTOR' : _AGENDA_REQUEST,
     '__module__' : 'degiro_connector.trading.models.trading_pb2'
-    # @@protoc_insertion_point(class_scope:Agenda.Request)
+    # @@protoc_insertion_point(class_scope:degiro_connector.trading.Agenda.Request)
     })
   ,
   'DESCRIPTOR' : _AGENDA,
   '__module__' : 'degiro_connector.trading.models.trading_pb2'
-  # @@protoc_insertion_point(class_scope:Agenda)
+  # @@protoc_insertion_point(class_scope:degiro_connector.trading.Agenda)
   })
 _sym_db.RegisterMessage(Agenda)
 _sym_db.RegisterMessage(Agenda.Request)
