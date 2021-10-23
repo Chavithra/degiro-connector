@@ -98,14 +98,14 @@ class ActionProductSearch(AbstractAction):
                     )
                 Example 2:
                     request = ProductSearch.RequestStocks(
-                        indexId=5,
-                        isInUSGreenList=False,
-                        stockCountryId=886,
+                        index_id=5,
+                        is_in_us_green_list=False,
+                        stock_country_id=886,
                         offset=0,
                         limit=100,
-                        requireTotal=True,
-                        sortColumns='name',
-                        sortTypes='asc',
+                        require_total=True,
+                        sort_columns='name',
+                        sort_types='asc',
                     )
             session_id (str):
                 API's session id.

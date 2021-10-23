@@ -1,19 +1,23 @@
 # 1. **Degiro Connector : Extend**
 
-The purpose of this document is to explain how the features of this library are intended to be accessed or extended.
+The purpose of this document is to explain how to access or extend this library's features.
 
 ## 1.1. How features are grouped ?
 
-Each of the main feature of this library fall into one of these two `Python packages` :
+Each of the main features of this library fall into one of these two `Python packages` :
 
 |**Package**|**Description**|
 |:-|:-|
 |`quotecast`|Features providing metrics about financial produccts : `quotecast` or `charts`.|
-|`trading`|Features related to trading operations, accounts or products.|
+|`trading`|Features related to trading operations, account or products.|
+
+Notes :
+- A `module` is a `Python` file.
+- A `package` is a group of `Python` files.
 
 ## 1.2. How to access a `quotecast` feature ?
 
-To access features from `quotecast` package you will need an instance of `API` from the following module :
+To access features from `quotecast` package you will need an instance of the `API` class from the following module :
 - degiro_connector.quotecast.api
 
 Example :
@@ -28,7 +32,7 @@ quotecast.another_feature(param1, param2...)
 
 ## 1.3. How to access a `trading` feature ?
 
-To access features from `trading` package you will need an instance of `API` from the following module :
+To access features from `trading` package you will need an instance of the `API` class from the following module :
 - degiro_connector.trading.api
 
 Example :
@@ -75,19 +79,19 @@ An `Action` is a class which extends from :
 You want to add an `Action` called `some_feature` inside `trading` category.
 
 Here is the workflow to do so :
-- create a module : `degiro_connector.quotecast.actions.action_some_feature`
+- create a module : `degiro_connector.trading.actions.action_some_feature`
 - define a class : `ActionSomeFeature`
 - extends this class from `AbstractAction`
 
 Here is an example of code :
 
 ```python
-# FILE : degiro_connector/quotecast/actions/action_some_feature.py
+# FILE : degiro_connector/trading/actions/action_some_feature.py
 
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
 
 class ActionSomeFeature(AbstractAction):
-    def call(self):
+    def call(self) -> str:
         return "something"
 ```
 
@@ -101,7 +105,7 @@ trading.some_feature()
 
 ## 2.3. Which parameters can I get ?
 
-`AbstractAction` provide some parameters by default.
+`AbstractAction` provide some attributes and methods by default.
 
 Parameters available inside an `Action` :
 

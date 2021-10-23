@@ -1199,15 +1199,15 @@ Here is how to get this data :
 ```python
 # SETUP REQUEST
 request = ProductSearch.RequestBonds(
-    bondIssuerTypeId=0,
-    bondExchangeId=710,
+    bond_issuer_type_id=0,
+    bond_exchange_id=710,
 
-    searchText='',
+    search_text='',
     offset=0,
     limit=100,
-    requireTotal=True,
-    sortColumns='name',
-    sortTypes='asc',
+    require_total=True,
+    sort_columns='name',
+    sort_types='asc',
 )
 
 # FETCH DATA
@@ -1224,16 +1224,16 @@ Here is how to get this data :
 ```python
 # SETUP REQUEST
 request = ProductSearch.RequestETFs(
-    popularOnly=False,
-    inputAggregateTypes='',
-    inputAggregateValues='',
+    popular_only=False,
+    input_aggregate_types='',
+    input_aggregate_values='',
 
-    searchText='',
+    search_text='',
     offset=0,
     limit=100,
-    requireTotal=True,
-    sortColumns='name',
-    sortTypes='asc',
+    require_total=True,
+    sort_columns='name',
+    sort_types='asc',
 )
 
 # FETCH DATA
@@ -1250,12 +1250,12 @@ Here is how to get this data :
 ```python
 # SETUP REQUEST
 request = ProductSearch.RequestFunds(
-    searchText='',
+    search_text='',
     offset=0,
     limit=100,
-    requireTotal=True,
-    sortColumns='name',
-    sortTypes='asc',
+    require_total=True,
+    sort_columns='name',
+    sort_types='asc',
 )
 
 # FETCH DATA
@@ -1272,15 +1272,15 @@ Here is how to get this data :
 ```python
 # SETUP REQUEST
 request = ProductSearch.RequestFutures(
-    futureExchangeId=1,
-    underlyingIsin='FR0003500008',
+    future_exchange_id=1,
+    underlying_isin='FR0003500008',
 
-    searchText='',
+    search_text='',
     offset=0,
     limit=100,
-    requireTotal=True,
-    sortColumns='name',
-    sortTypes='asc',
+    require_total=True,
+    sort_columns='name',
+    sort_types='asc',
 )
 
 # FETCH DATA
@@ -1297,16 +1297,16 @@ Here is how to get this data :
 ```python
 # SETUP REQUEST
 request = ProductSearch.RequestLeverageds(
-    popularOnly=False,
-    inputAggregateTypes='',
-    inputAggregateValues='',
+    popular_only=False,
+    input_aggregate_types='',
+    input_aggregate_values='',
 
-    searchText='',
+    search_text='',
     offset=0,
     limit=100,
-    requireTotal=True,
-    sortColumns='name',
-    sortTypes='asc',
+    require_total=True,
+    sort_columns='name',
+    sort_types='asc',
 )
 
 # FETCH DATA
@@ -1322,17 +1322,17 @@ Here is how to get this data :
 ```python
 # SETUP REQUEST
 request = ProductSearch.RequestOptions(
-    inputAggregateTypes='',
-    inputAggregateValues='',
-    optionExchangeId=3,
-    underlyingIsin='FR0003500008',
+    input_aggregate_types='',
+    input_aggregate_values='',
+    option_exchange_id=3,
+    underlying_isin='FR0003500008',
 
-    searchText='',
+    search_text='',
     offset=0,
     limit=100,
-    requireTotal=True,
-    sortColumns='expirationDate,strike',
-    sortTypes='asc,asc',
+    require_total=True,
+    sort_columns='expirationDate,strike',
+    sort_types='asc,asc',
 )
 
 # FETCH DATA
@@ -1351,16 +1351,16 @@ Here is how to get this data :
 ```python
 # SETUP REQUEST
 request = ProductSearch.RequestStocks(
-    indexId=5,
-    isInUSGreenList=False,
-    stockCountryId=886,
+    index_id=5,
+    is_in_us_green_list=False,
+    stock_country_id=886,
 
-    searchText='',
+    search_text='',
     offset=0,
     limit=100,
-    requireTotal=True,
-    sortColumns='name',
-    sortTypes='asc',
+    require_total=True,
+    sort_columns='name',
+    sort_types='asc',
 )
 
 # FETCH DATA
@@ -1377,12 +1377,12 @@ Here is how to get this data :
 ```python
 # SETUP REQUEST
 request = ProductSearch.RequestWarrants(
-    searchText='',
+    search_text='',
     offset=0,
     limit=100,
-    requireTotal=True,
-    sortColumns='name',
-    sortTypes='asc',
+    require_total=True,
+    sort_columns='name',
+    sort_types='asc',
 )
 
 # FETCH DATA
