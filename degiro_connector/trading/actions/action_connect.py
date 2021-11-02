@@ -91,13 +91,14 @@ class ActionConnect(AbstractAction):
             json=payload_dict,
         )
         prepped = session.prepare_request(request)
+        response_raw = None
 
-        response = None
         try:
-            response = session.send(prepped, verify=False)
-            response_dict = response.json()
+            response_raw = session.send(prepped, verify=False)
+            response_raw.raise_for_status()
+            response_dict = response_raw.json()
         except Exception as e:
-            logger.fatal("response:%s", response)
+            logger.fatal("response_raw:%s", response_raw)
             raise ConnectionError(e)
 
         logger.info("get_session_id:response_dict: %s", response_dict)

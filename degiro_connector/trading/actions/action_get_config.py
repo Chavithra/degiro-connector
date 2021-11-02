@@ -28,18 +28,21 @@ class ActionGetConfig(AbstractAction):
         request = requests.Request(method="GET", url=url)
         prepped = session.prepare_request(request)
         prepped.headers["cookie"] = "JSESSIONID=" + session_id
+        response_raw = None
 
         try:
-            response = session.send(prepped, verify=False)
-            response = response.json()
+            response_raw = session.send(prepped, verify=False)
+            response_raw.raise_for_status()
+            response_dict = response_raw.json()
         except Exception as e:
+            logger.fatal(response_raw)
             logger.fatal(e)
             return None
 
-        if type(response) != dict:
+        if type(response_dict) != dict:
             return None
 
-        return response.get("data", None)
+        return response_dict.get("data", None)
 
     def call(self):
         connection_storage = self.connection_storage

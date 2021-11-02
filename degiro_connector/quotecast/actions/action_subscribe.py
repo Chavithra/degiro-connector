@@ -81,20 +81,19 @@ class ActionSubscribe(AbstractAction):
 
         session_request = requests.Request(method="POST", url=url, data=data)
         prepped = session.prepare_request(request=session_request)
-        response = False
+        response_raw = None
 
         try:
-            raw_response = session.send(request=prepped, verify=False)
+            response_raw = session.send(request=prepped, verify=False)
+            response_raw.raise_for_status()
 
-            if raw_response.text == '[{"m":"sr"}]':
+            if response_raw.text == '[{"m":"sr"}]':
                 raise BrokenPipeError('A new "session_id" is required.')
             else:
-                response = True
+                return True
         except Exception as e:
             logger.fatal(e)
             return None
-
-        return response
 
     def call(self, request: Quotecast.Request) -> Optional[bool]:
         session_id = self.connection_storage.session_id

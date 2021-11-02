@@ -31,17 +31,18 @@ class ActionGetClientDetails(AbstractAction):
 
         request = requests.Request(method="GET", url=url, params=params)
         prepped = session.prepare_request(request)
-        response = session.send(prepped, verify=False)
+        response_raw = None
 
-        if response.status_code != 200:
+        try:
+            response_raw = session.send(prepped, verify=False)
+            response_raw.raise_for_status()
+            response_dict = response_raw.json()
+        except Exception as e:
+            logger.fatal(response_raw)
+            logger.fatal(e)
             return None
 
-        response = response.json()
-
-        if type(response) != dict:
-            return None
-
-        return response
+        return response_dict
 
     def call(self) -> Union[Dict, None]:
         connection_storage = self.connection_storage

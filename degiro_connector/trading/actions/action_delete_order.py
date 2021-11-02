@@ -39,16 +39,17 @@ class ActionDeleteOrder(AbstractAction):
 
         request = requests.Request(method="DELETE", url=url, params=params)
         prepped = session.prepare_request(request)
-        raw_response = None
+        response_raw = None
 
         try:
-            raw_response = session.send(prepped, verify=False)
+            response_raw = session.send(prepped, verify=False)
+            response_raw.raise_for_status()
         except Exception as e:
-            logger.fatal(raw_response)
+            logger.fatal(response_raw)
             logger.fatal(e)
             return None
 
-        return raw_response.status_code == 200
+        return response_raw.status_code == 200
 
     def call(
         self,

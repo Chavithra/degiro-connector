@@ -32,12 +32,17 @@ class ActionGetAccountInfo(AbstractAction):
 
         request = requests.Request(method="GET", url=url)
         prepped = session.prepare_request(request)
-        response = session.send(prepped, verify=False)
 
-        if response.status_code != 200:
+        try:
+            response_raw = session.send(prepped, verify=False)
+            response_raw.raise_for_status()
+            response_dict = response_raw.json()
+        except Exception as e:
+            logger.fatal(response_raw)
+            logger.fatal(e)
             return None
 
-        return response.json()
+        return response_dict
 
     def call(self) -> Optional[dict]:
         connection_storage = self.connection_storage
