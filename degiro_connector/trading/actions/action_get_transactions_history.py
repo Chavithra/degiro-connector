@@ -113,6 +113,7 @@ class ActionGetTransactionsHistory(AbstractAction):
 
         try:
             response_raw = session.send(prepped, verify=False)
+            response_raw.raise_for_status()
             response_dict = response_raw.json()
 
             if raw is True:

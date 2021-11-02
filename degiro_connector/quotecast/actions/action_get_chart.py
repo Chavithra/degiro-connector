@@ -108,6 +108,7 @@ class ActionGetChart(AbstractAction):
 
         try:
             response_raw = session.send(prepped, verify=False)
+            response_raw.raise_for_status()
             response_dict = json.loads(response_raw.text)
 
             if raw is True:

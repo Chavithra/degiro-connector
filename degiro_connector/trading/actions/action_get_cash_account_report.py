@@ -116,6 +116,7 @@ class ActionGetCashAccountReport(AbstractAction):
 
         try:
             response_raw = session.send(prepped, verify=False)
+            response_raw.raise_for_status()
             response_text = response_raw.text
 
             if raw is True:

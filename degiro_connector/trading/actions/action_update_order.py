@@ -119,6 +119,7 @@ class ActionUpdateOrder(AbstractAction):
 
         try:
             response_raw = session.send(prepped, verify=False)
+            response_raw.raise_for_status()
         except Exception as e:
             logger.fatal(response_raw)
             logger.fatal(e)
