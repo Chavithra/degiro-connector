@@ -488,7 +488,7 @@ For a more comprehensive example :
 
 ## 2.15. How to find a : vwd_id ?
 
-In operations related to `Quotecast`, Degiro used the `vwd_id` to identify a product.
+In operations related to `Quotecast`, Degiro uses the `vwd_id` to identify a product.
 
 Which means that if you want a `Chart` or `Real-time data` for a specific product : you first need to find this product's `vwd_id`.
 
