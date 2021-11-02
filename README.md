@@ -90,6 +90,7 @@ pip uninstall degiro-connector
   * [2.12. What is inside the Dictionnary ?](#212-what-is-inside-the-dictionnary-)
   * [2.13. What is inside the DataFrame ?](#213-what-is-inside-the-dataframe-)
   * [2.14. How to get chart data ?](#214-how-to-get-chart-data-)
+  * [2.15. How to find a : vwd_id ?](#215-how-to-find-a--vwd_id-)
 - [3. Trading connection](#3-trading-connection)
   * [3.1. How to login ?](#31-how-to-login-)
   * [3.2. How to logout ?](#32-how-to-logout-)
@@ -247,6 +248,12 @@ request.subscriptions['AAPL.BATS,E'].extend([
     'BidPrice',
 ])
 ```
+
+In this example these are the `vwd_id` of the product from which you want `Real-time data` :
+- 360015751
+- AAPL.BATS,E
+
+See the section related to `vwd_id` for more information.
 
 Once you have built this Request object you can send it to Degiro's API like this :
 ```python
@@ -469,11 +476,37 @@ request.tz = 'Europe/Paris'
 chart = quotecast_api.get_chart(request=request)
 ```
 
+The `issueid` parameter is the `vwd_id` of the product from which you want the `Chart` data.
+
+See the section related to `vwd_id` for more information.
+
 All the options for the enumerations are available in this file :
 [quotecast.proto](protos/degiro_connector/quotecast/models/quotecast.proto)
 
 For a more comprehensive example :
 [chart.py](examples/quotecast/chart.py)
+
+## 2.15. How to find a : vwd_id ?
+
+In operations related to `Quotecast`, Degiro used the `vwd_id` to identify a product.
+
+Which means that if you want a `Chart` or `Real-time data` for a specific product : you first need to find this product's `vwd_id`.
+
+This two identifiers are not the same :
+
+|**Identifier**|**API name(s)**|**Description**|
+|:-|:-|:-|
+|id|str|Id used identify a product in `Trading` related endpoints.|
+|vwd_id|issueid <br /> vwdId <br /> vwdIdSecondary <br />|Id used identify a product in `Quotecast` (`Chart` and `Real-time data`) related endpoint.|
+
+Here are some methods you can use to fetch a product's `vwd_id` :
+- `product_search`
+- `get_products_info`
+
+The method `product_search` let you use the name or other attributes of a product to fetch it's `vwd_id`.
+
+The method `get_products_info` let you use a product's `id` to fetch it's `vwd_id`.
+
 
 # 3. Trading connection
 
