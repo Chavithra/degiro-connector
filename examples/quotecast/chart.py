@@ -18,7 +18,7 @@ user_token = config_dict.get("user_token")  # HERE GOES YOUR USER_TOKEN
 # SETUP API
 quotecast_api = QuotecastAPI(user_token=user_token)
 
-# SUBSCRIBE TO METRICS
+# PREPARE REQUEST
 request = Chart.Request()
 request.culture = "fr-FR"
 request.period = Chart.Interval.PT1H
