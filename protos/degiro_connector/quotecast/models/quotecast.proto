@@ -2,9 +2,9 @@ syntax = "proto3";
 
 package degiro_connector.quotecast;
 
-import "google/protobuf/timestamp.proto";
 import "google/protobuf/duration.proto";
 import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
 
 message Metadata {
   google.protobuf.Timestamp response_datetime = 1;
@@ -72,11 +72,18 @@ message Chart {
     repeated string series = 5;
     string tz = 6;
   }
+  message Serie {
+    string times = 1;
+    string expires = 2;
+    google.protobuf.ListValue data = 3;
+    string id = 4;
+    string type = 5; 
+  }
 
   // PROPERTIES
   string requestid = 1;
   string start = 2;
   string end = 3;
   string resolution = 4;
-  repeated google.protobuf.Struct series = 5;
+  repeated Serie series = 5;
 }
