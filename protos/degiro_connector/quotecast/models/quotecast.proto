@@ -60,7 +60,8 @@ message Chart {
     P3Y = 15;
     P5Y = 16;
     P10Y = 17;
-    YTD = 18;
+    P50Y = 18;
+    YTD = 19;
   }
 
   // MESSAGES

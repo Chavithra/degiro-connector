@@ -194,7 +194,8 @@ class Chart(google.protobuf.message.Message):
         P3Y = Chart.Interval.V(15)
         P5Y = Chart.Interval.V(16)
         P10Y = Chart.Interval.V(17)
-        YTD = Chart.Interval.V(18)
+        P50Y = Chart.Interval.V(18)
+        YTD = Chart.Interval.V(19)
 
     PT1S = Chart.Interval.V(0)
     PT15S = Chart.Interval.V(1)
@@ -214,7 +215,8 @@ class Chart(google.protobuf.message.Message):
     P3Y = Chart.Interval.V(15)
     P5Y = Chart.Interval.V(16)
     P10Y = Chart.Interval.V(17)
-    YTD = Chart.Interval.V(18)
+    P50Y = Chart.Interval.V(18)
+    YTD = Chart.Interval.V(19)
 
     class Request(google.protobuf.message.Message):
         """MESSAGES"""
