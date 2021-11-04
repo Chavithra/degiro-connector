@@ -463,17 +463,29 @@ Example of code :
 
 ```python
 request = Chart.Request()
-request.requestid = '1'
-request.resolution = Chart.Resolution.PT1M
-request.culture = 'fr-FR'
-request.series.append('issueid:360148977')
-request.series.append('price:issueid:360148977')
-request.series.append('ohlc:issueid:360148977')
-request.series.append('volume:issueid:360148977')
-request.period = Chart.Period.P1D
-request.tz = 'Europe/Paris'
+request.culture = "fr-FR"
+request.period = Chart.Interval.PT1H
+request.requestid = "1"
+request.resolution = Chart.Interval.P1D
+# request.series.append("issueid:360148977")
+# request.series.append("price:issueid:360148977")
+request.series.append("ohlc:issueid:360148977")
+# request.series.append("volume:issueid:360148977")
+# request.series.append("vwdkey:AAPL.BATS,E")
+# request.series.append("price:vwdkey:AAPL.BATS,E")
+# request.series.append("ohlc:vwdkey:AAPL.BATS,E")
+# request.series.append("volume:vwdkey:AAPL.BATS,E")
+request.tz = "Europe/Paris"
 
-chart = quotecast_api.get_chart(request=request)
+# FETCH DATA
+chart = quotecast_api.get_chart(
+    request=request,
+    override={
+        "resolution": "P1D",
+        "period": "P1W",
+    },
+    raw=True,
+)
 ```
 
 The `issueid` parameter is the `vwd_id` of the product from which you want the `Chart` data.
@@ -483,8 +495,9 @@ See the section related to `vwd_id` for more information.
 All the options for the enumerations are available in this file :
 [quotecast.proto](protos/degiro_connector/quotecast/models/quotecast.proto)
 
-For a more comprehensive example :
-[chart.py](examples/quotecast/chart.py)
+For a more comprehensive examples :
+ - [chart.py](examples/quotecast/chart.py)
+ - [chart_format.py](examples/quotecast/chart_format.py)
 
 ## 2.15. How to find a : vwd_id ?
 
