@@ -204,7 +204,6 @@ class ActionGetChart(AbstractAction):
     def chart_request_to_api(
         request: Chart.Request,
         user_token: int,
-        override: Dict[str, str] = None,
     ) -> dict:
         request_dict = json_format.MessageToDict(
             message=request,
@@ -218,9 +217,8 @@ class ActionGetChart(AbstractAction):
         request_dict["callback"] = "vwd.hchart.seriesRequestManager.sync_response"
         request_dict["userToken"] = user_token
 
-        if override is not None:
-            for key, value in override.items():
-                request_dict[key] = value
+        for key, value in request.override.items():
+            request_dict[key] = value
 
         return request_dict
 
@@ -246,7 +244,6 @@ class ActionGetChart(AbstractAction):
         request: Chart.Request,
         user_token: int,
         logger: logging.Logger = None,
-        override: Dict[str, str] = None,
         raw: bool = False,
         session: requests.Session = None,
     ) -> Optional[Chart]:
@@ -295,7 +292,6 @@ class ActionGetChart(AbstractAction):
         params = cls.chart_request_to_api(
             request=request,
             user_token=user_token,
-            override=override,
         )
 
         http_request = requests.Request(method="GET", url=url, params=params)
@@ -320,7 +316,6 @@ class ActionGetChart(AbstractAction):
     def call(
         self,
         request: Chart.Request,
-        override: Dict[str, str] = None,
         raw: bool = False,
     ) -> Optional[Chart]:
         session = self.session_storage.session
@@ -332,7 +327,6 @@ class ActionGetChart(AbstractAction):
             request=request,
             user_token=user_token,
             logger=logger,
-            override=override,
             raw=raw,
             session=session,
         )

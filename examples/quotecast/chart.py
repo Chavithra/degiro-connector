@@ -33,14 +33,12 @@ request.series.append("price:issueid:360148977")
 # request.series.append("ohlc:vwdkey:AAPL.BATS,E")
 # request.series.append("volume:vwdkey:AAPL.BATS,E")
 request.tz = "Europe/Paris"
+request.override["resolution"] = "P1D"
+request.override["period"] = "P1W"
 
 # FETCH DATA
 chart = quotecast_api.get_chart(
     request=request,
-    override={
-        "resolution": "P1D",
-        "period": "P1W",
-    },
     raw=True,
 )
 
