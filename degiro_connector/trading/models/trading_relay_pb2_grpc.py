@@ -10,7 +10,8 @@ from google.protobuf import wrappers_pb2 as google_dot_protobuf_dot_wrappers__pb
 
 
 class TradingRelayStub(object):
-    """Missing associated documentation comment in .proto file."""
+    """SERVICES
+    """
 
     def __init__(self, channel):
         """Constructor.
@@ -18,135 +19,153 @@ class TradingRelayStub(object):
         Args:
             channel: A grpc.Channel.
         """
+        self.confirm_order = channel.unary_unary(
+                '/degiro_connector.trading_relay.TradingRelay/confirm_order',
+                request_serializer=degiro__connector_dot_trading_dot_models_dot_trading__relay__pb2.ConfirmOrder.SerializeToString,
+                response_deserializer=degiro__connector_dot_trading_dot_models_dot_trading__pb2.Order.ConfirmationResponse.FromString,
+                )
+        self.product_search = channel.unary_unary(
+                '/degiro_connector.trading_relay.TradingRelay/product_search',
+                request_serializer=degiro__connector_dot_trading_dot_models_dot_trading__relay__pb2.ProductSearch.SerializeToString,
+                response_deserializer=degiro__connector_dot_trading_dot_models_dot_trading__pb2.ProductSearch.FromString,
+                )
         self.set_config = channel.unary_unary(
-                '/degiro_connector.trading.TradingRelay/set_config',
-                request_serializer=degiro__connector_dot_trading_dot_models_dot_trading__relay__pb2.Config.SerializeToString,
+                '/degiro_connector.trading_relay.TradingRelay/set_config',
+                request_serializer=degiro__connector_dot_trading_dot_models_dot_trading__relay__pb2.SetConfig.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_wrappers__pb2.BoolValue.FromString,
                 )
         self.check_order = channel.unary_unary(
-                '/degiro_connector.trading.TradingRelay/check_order',
+                '/degiro_connector.trading_relay.TradingRelay/check_order',
                 request_serializer=degiro__connector_dot_trading_dot_models_dot_trading__pb2.Order.SerializeToString,
                 response_deserializer=degiro__connector_dot_trading_dot_models_dot_trading__pb2.Order.CheckingResponse.FromString,
                 )
-        self.confirm_order = channel.unary_unary(
-                '/degiro_connector.trading.TradingRelay/confirm_order',
-                request_serializer=degiro__connector_dot_trading_dot_models_dot_trading__relay__pb2.ConfirmationRequest.SerializeToString,
-                response_deserializer=degiro__connector_dot_trading_dot_models_dot_trading__pb2.Order.ConfirmationResponse.FromString,
-                )
         self.connect = channel.unary_unary(
-                '/degiro_connector.trading.TradingRelay/connect',
+                '/degiro_connector.trading_relay.TradingRelay/connect',
                 request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_wrappers__pb2.StringValue.FromString,
                 )
         self.delete_order = channel.unary_unary(
-                '/degiro_connector.trading.TradingRelay/delete_order',
+                '/degiro_connector.trading_relay.TradingRelay/delete_order',
                 request_serializer=google_dot_protobuf_dot_wrappers__pb2.StringValue.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_wrappers__pb2.BoolValue.FromString,
                 )
         self.get_account_info = channel.unary_unary(
-                '/degiro_connector.trading.TradingRelay/get_account_info',
+                '/degiro_connector.trading_relay.TradingRelay/get_account_info',
                 request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_struct__pb2.Struct.FromString,
                 )
         self.get_account_overview = channel.unary_unary(
-                '/degiro_connector.trading.TradingRelay/get_account_overview',
+                '/degiro_connector.trading_relay.TradingRelay/get_account_overview',
                 request_serializer=degiro__connector_dot_trading_dot_models_dot_trading__pb2.AccountOverview.Request.SerializeToString,
                 response_deserializer=degiro__connector_dot_trading_dot_models_dot_trading__pb2.AccountOverview.FromString,
                 )
         self.get_agenda = channel.unary_unary(
-                '/degiro_connector.trading.TradingRelay/get_agenda',
+                '/degiro_connector.trading_relay.TradingRelay/get_agenda',
                 request_serializer=degiro__connector_dot_trading_dot_models_dot_trading__pb2.Agenda.Request.SerializeToString,
                 response_deserializer=degiro__connector_dot_trading_dot_models_dot_trading__pb2.Agenda.FromString,
                 )
         self.get_cash_account_report = channel.unary_unary(
-                '/degiro_connector.trading.TradingRelay/get_cash_account_report',
+                '/degiro_connector.trading_relay.TradingRelay/get_cash_account_report',
                 request_serializer=degiro__connector_dot_trading_dot_models_dot_trading__pb2.CashAccountReport.Request.SerializeToString,
                 response_deserializer=degiro__connector_dot_trading_dot_models_dot_trading__pb2.CashAccountReport.FromString,
                 )
         self.get_client_details = channel.unary_unary(
-                '/degiro_connector.trading.TradingRelay/get_client_details',
+                '/degiro_connector.trading_relay.TradingRelay/get_client_details',
                 request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_struct__pb2.Struct.FromString,
                 )
         self.get_company_profile = channel.unary_unary(
-                '/degiro_connector.trading.TradingRelay/get_company_profile',
+                '/degiro_connector.trading_relay.TradingRelay/get_company_profile',
                 request_serializer=google_dot_protobuf_dot_wrappers__pb2.StringValue.SerializeToString,
                 response_deserializer=degiro__connector_dot_trading_dot_models_dot_trading__pb2.CompanyProfile.FromString,
                 )
         self.get_company_ratios = channel.unary_unary(
-                '/degiro_connector.trading.TradingRelay/get_company_ratios',
+                '/degiro_connector.trading_relay.TradingRelay/get_company_ratios',
                 request_serializer=google_dot_protobuf_dot_wrappers__pb2.StringValue.SerializeToString,
                 response_deserializer=degiro__connector_dot_trading_dot_models_dot_trading__pb2.CompanyRatios.FromString,
                 )
         self.get_config = channel.unary_unary(
-                '/degiro_connector.trading.TradingRelay/get_config',
+                '/degiro_connector.trading_relay.TradingRelay/get_config',
                 request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_struct__pb2.Struct.FromString,
                 )
         self.get_favourites_list = channel.unary_unary(
-                '/degiro_connector.trading.TradingRelay/get_favourites_list',
+                '/degiro_connector.trading_relay.TradingRelay/get_favourites_list',
                 request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
                 response_deserializer=degiro__connector_dot_trading_dot_models_dot_trading__pb2.Favourites.FromString,
                 )
         self.get_financial_statements = channel.unary_unary(
-                '/degiro_connector.trading.TradingRelay/get_financial_statements',
+                '/degiro_connector.trading_relay.TradingRelay/get_financial_statements',
                 request_serializer=google_dot_protobuf_dot_wrappers__pb2.StringValue.SerializeToString,
                 response_deserializer=degiro__connector_dot_trading_dot_models_dot_trading__pb2.FinancialStatements.FromString,
                 )
         self.get_latest_news = channel.unary_unary(
-                '/degiro_connector.trading.TradingRelay/get_latest_news',
+                '/degiro_connector.trading_relay.TradingRelay/get_latest_news',
                 request_serializer=degiro__connector_dot_trading_dot_models_dot_trading__pb2.LatestNews.Request.SerializeToString,
                 response_deserializer=degiro__connector_dot_trading_dot_models_dot_trading__pb2.LatestNews.FromString,
                 )
         self.get_news_by_company = channel.unary_unary(
-                '/degiro_connector.trading.TradingRelay/get_news_by_company',
+                '/degiro_connector.trading_relay.TradingRelay/get_news_by_company',
                 request_serializer=degiro__connector_dot_trading_dot_models_dot_trading__pb2.NewsByCompany.Request.SerializeToString,
                 response_deserializer=degiro__connector_dot_trading_dot_models_dot_trading__pb2.NewsByCompany.FromString,
                 )
         self.get_orders_history = channel.unary_unary(
-                '/degiro_connector.trading.TradingRelay/get_orders_history',
+                '/degiro_connector.trading_relay.TradingRelay/get_orders_history',
                 request_serializer=degiro__connector_dot_trading_dot_models_dot_trading__pb2.OrdersHistory.Request.SerializeToString,
                 response_deserializer=degiro__connector_dot_trading_dot_models_dot_trading__pb2.OrdersHistory.FromString,
                 )
         self.get_products_config = channel.unary_unary(
-                '/degiro_connector.trading.TradingRelay/get_products_config',
+                '/degiro_connector.trading_relay.TradingRelay/get_products_config',
                 request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
                 response_deserializer=degiro__connector_dot_trading_dot_models_dot_trading__pb2.ProductSearch.Config.FromString,
                 )
         self.get_products_info = channel.unary_unary(
-                '/degiro_connector.trading.TradingRelay/get_products_info',
+                '/degiro_connector.trading_relay.TradingRelay/get_products_info',
                 request_serializer=degiro__connector_dot_trading_dot_models_dot_trading__pb2.ProductsInfo.Request.SerializeToString,
                 response_deserializer=degiro__connector_dot_trading_dot_models_dot_trading__pb2.ProductsInfo.FromString,
                 )
         self.get_top_news_preview = channel.unary_unary(
-                '/degiro_connector.trading.TradingRelay/get_top_news_preview',
+                '/degiro_connector.trading_relay.TradingRelay/get_top_news_preview',
                 request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
                 response_deserializer=degiro__connector_dot_trading_dot_models_dot_trading__pb2.TopNewsPreview.FromString,
                 )
         self.get_transactions_history = channel.unary_unary(
-                '/degiro_connector.trading.TradingRelay/get_transactions_history',
+                '/degiro_connector.trading_relay.TradingRelay/get_transactions_history',
                 request_serializer=degiro__connector_dot_trading_dot_models_dot_trading__pb2.TransactionsHistory.Request.SerializeToString,
                 response_deserializer=degiro__connector_dot_trading_dot_models_dot_trading__pb2.TransactionsHistory.FromString,
                 )
         self.get_update = channel.unary_unary(
-                '/degiro_connector.trading.TradingRelay/get_update',
+                '/degiro_connector.trading_relay.TradingRelay/get_update',
                 request_serializer=degiro__connector_dot_trading_dot_models_dot_trading__pb2.Update.RequestList.SerializeToString,
                 response_deserializer=degiro__connector_dot_trading_dot_models_dot_trading__pb2.Update.FromString,
                 )
         self.logout = channel.unary_unary(
-                '/degiro_connector.trading.TradingRelay/logout',
+                '/degiro_connector.trading_relay.TradingRelay/logout',
                 request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_wrappers__pb2.BoolValue.FromString,
                 )
         self.update_order = channel.unary_unary(
-                '/degiro_connector.trading.TradingRelay/update_order',
+                '/degiro_connector.trading_relay.TradingRelay/update_order',
                 request_serializer=degiro__connector_dot_trading_dot_models_dot_trading__pb2.Order.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_wrappers__pb2.BoolValue.FromString,
                 )
 
 
 class TradingRelayServicer(object):
-    """Missing associated documentation comment in .proto file."""
+    """SERVICES
+    """
+
+    def confirm_order(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def product_search(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
 
     def set_config(self, request, context):
         """Missing associated documentation comment in .proto file."""
@@ -155,12 +174,6 @@ class TradingRelayServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def check_order(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def confirm_order(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -293,8 +306,7 @@ class TradingRelayServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def update_order(self, request, context):
-        """rpc product_search() returns () {}
-        """
+        """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
@@ -302,20 +314,25 @@ class TradingRelayServicer(object):
 
 def add_TradingRelayServicer_to_server(servicer, server):
     rpc_method_handlers = {
+            'confirm_order': grpc.unary_unary_rpc_method_handler(
+                    servicer.confirm_order,
+                    request_deserializer=degiro__connector_dot_trading_dot_models_dot_trading__relay__pb2.ConfirmOrder.FromString,
+                    response_serializer=degiro__connector_dot_trading_dot_models_dot_trading__pb2.Order.ConfirmationResponse.SerializeToString,
+            ),
+            'product_search': grpc.unary_unary_rpc_method_handler(
+                    servicer.product_search,
+                    request_deserializer=degiro__connector_dot_trading_dot_models_dot_trading__relay__pb2.ProductSearch.FromString,
+                    response_serializer=degiro__connector_dot_trading_dot_models_dot_trading__pb2.ProductSearch.SerializeToString,
+            ),
             'set_config': grpc.unary_unary_rpc_method_handler(
                     servicer.set_config,
-                    request_deserializer=degiro__connector_dot_trading_dot_models_dot_trading__relay__pb2.Config.FromString,
+                    request_deserializer=degiro__connector_dot_trading_dot_models_dot_trading__relay__pb2.SetConfig.FromString,
                     response_serializer=google_dot_protobuf_dot_wrappers__pb2.BoolValue.SerializeToString,
             ),
             'check_order': grpc.unary_unary_rpc_method_handler(
                     servicer.check_order,
                     request_deserializer=degiro__connector_dot_trading_dot_models_dot_trading__pb2.Order.FromString,
                     response_serializer=degiro__connector_dot_trading_dot_models_dot_trading__pb2.Order.CheckingResponse.SerializeToString,
-            ),
-            'confirm_order': grpc.unary_unary_rpc_method_handler(
-                    servicer.confirm_order,
-                    request_deserializer=degiro__connector_dot_trading_dot_models_dot_trading__relay__pb2.ConfirmationRequest.FromString,
-                    response_serializer=degiro__connector_dot_trading_dot_models_dot_trading__pb2.Order.ConfirmationResponse.SerializeToString,
             ),
             'connect': grpc.unary_unary_rpc_method_handler(
                     servicer.connect,
@@ -429,13 +446,48 @@ def add_TradingRelayServicer_to_server(servicer, server):
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'degiro_connector.trading.TradingRelay', rpc_method_handlers)
+            'degiro_connector.trading_relay.TradingRelay', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
  # This class is part of an EXPERIMENTAL API.
 class TradingRelay(object):
-    """Missing associated documentation comment in .proto file."""
+    """SERVICES
+    """
+
+    @staticmethod
+    def confirm_order(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading_relay.TradingRelay/confirm_order',
+            degiro__connector_dot_trading_dot_models_dot_trading__relay__pb2.ConfirmOrder.SerializeToString,
+            degiro__connector_dot_trading_dot_models_dot_trading__pb2.Order.ConfirmationResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def product_search(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading_relay.TradingRelay/product_search',
+            degiro__connector_dot_trading_dot_models_dot_trading__relay__pb2.ProductSearch.SerializeToString,
+            degiro__connector_dot_trading_dot_models_dot_trading__pb2.ProductSearch.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def set_config(request,
@@ -448,8 +500,8 @@ class TradingRelay(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading.TradingRelay/set_config',
-            degiro__connector_dot_trading_dot_models_dot_trading__relay__pb2.Config.SerializeToString,
+        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading_relay.TradingRelay/set_config',
+            degiro__connector_dot_trading_dot_models_dot_trading__relay__pb2.SetConfig.SerializeToString,
             google_dot_protobuf_dot_wrappers__pb2.BoolValue.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
@@ -465,26 +517,9 @@ class TradingRelay(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading.TradingRelay/check_order',
+        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading_relay.TradingRelay/check_order',
             degiro__connector_dot_trading_dot_models_dot_trading__pb2.Order.SerializeToString,
             degiro__connector_dot_trading_dot_models_dot_trading__pb2.Order.CheckingResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
-
-    @staticmethod
-    def confirm_order(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading.TradingRelay/confirm_order',
-            degiro__connector_dot_trading_dot_models_dot_trading__relay__pb2.ConfirmationRequest.SerializeToString,
-            degiro__connector_dot_trading_dot_models_dot_trading__pb2.Order.ConfirmationResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -499,7 +534,7 @@ class TradingRelay(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading.TradingRelay/connect',
+        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading_relay.TradingRelay/connect',
             google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             google_dot_protobuf_dot_wrappers__pb2.StringValue.FromString,
             options, channel_credentials,
@@ -516,7 +551,7 @@ class TradingRelay(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading.TradingRelay/delete_order',
+        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading_relay.TradingRelay/delete_order',
             google_dot_protobuf_dot_wrappers__pb2.StringValue.SerializeToString,
             google_dot_protobuf_dot_wrappers__pb2.BoolValue.FromString,
             options, channel_credentials,
@@ -533,7 +568,7 @@ class TradingRelay(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading.TradingRelay/get_account_info',
+        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading_relay.TradingRelay/get_account_info',
             google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             google_dot_protobuf_dot_struct__pb2.Struct.FromString,
             options, channel_credentials,
@@ -550,7 +585,7 @@ class TradingRelay(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading.TradingRelay/get_account_overview',
+        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading_relay.TradingRelay/get_account_overview',
             degiro__connector_dot_trading_dot_models_dot_trading__pb2.AccountOverview.Request.SerializeToString,
             degiro__connector_dot_trading_dot_models_dot_trading__pb2.AccountOverview.FromString,
             options, channel_credentials,
@@ -567,7 +602,7 @@ class TradingRelay(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading.TradingRelay/get_agenda',
+        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading_relay.TradingRelay/get_agenda',
             degiro__connector_dot_trading_dot_models_dot_trading__pb2.Agenda.Request.SerializeToString,
             degiro__connector_dot_trading_dot_models_dot_trading__pb2.Agenda.FromString,
             options, channel_credentials,
@@ -584,7 +619,7 @@ class TradingRelay(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading.TradingRelay/get_cash_account_report',
+        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading_relay.TradingRelay/get_cash_account_report',
             degiro__connector_dot_trading_dot_models_dot_trading__pb2.CashAccountReport.Request.SerializeToString,
             degiro__connector_dot_trading_dot_models_dot_trading__pb2.CashAccountReport.FromString,
             options, channel_credentials,
@@ -601,7 +636,7 @@ class TradingRelay(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading.TradingRelay/get_client_details',
+        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading_relay.TradingRelay/get_client_details',
             google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             google_dot_protobuf_dot_struct__pb2.Struct.FromString,
             options, channel_credentials,
@@ -618,7 +653,7 @@ class TradingRelay(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading.TradingRelay/get_company_profile',
+        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading_relay.TradingRelay/get_company_profile',
             google_dot_protobuf_dot_wrappers__pb2.StringValue.SerializeToString,
             degiro__connector_dot_trading_dot_models_dot_trading__pb2.CompanyProfile.FromString,
             options, channel_credentials,
@@ -635,7 +670,7 @@ class TradingRelay(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading.TradingRelay/get_company_ratios',
+        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading_relay.TradingRelay/get_company_ratios',
             google_dot_protobuf_dot_wrappers__pb2.StringValue.SerializeToString,
             degiro__connector_dot_trading_dot_models_dot_trading__pb2.CompanyRatios.FromString,
             options, channel_credentials,
@@ -652,7 +687,7 @@ class TradingRelay(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading.TradingRelay/get_config',
+        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading_relay.TradingRelay/get_config',
             google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             google_dot_protobuf_dot_struct__pb2.Struct.FromString,
             options, channel_credentials,
@@ -669,7 +704,7 @@ class TradingRelay(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading.TradingRelay/get_favourites_list',
+        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading_relay.TradingRelay/get_favourites_list',
             google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             degiro__connector_dot_trading_dot_models_dot_trading__pb2.Favourites.FromString,
             options, channel_credentials,
@@ -686,7 +721,7 @@ class TradingRelay(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading.TradingRelay/get_financial_statements',
+        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading_relay.TradingRelay/get_financial_statements',
             google_dot_protobuf_dot_wrappers__pb2.StringValue.SerializeToString,
             degiro__connector_dot_trading_dot_models_dot_trading__pb2.FinancialStatements.FromString,
             options, channel_credentials,
@@ -703,7 +738,7 @@ class TradingRelay(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading.TradingRelay/get_latest_news',
+        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading_relay.TradingRelay/get_latest_news',
             degiro__connector_dot_trading_dot_models_dot_trading__pb2.LatestNews.Request.SerializeToString,
             degiro__connector_dot_trading_dot_models_dot_trading__pb2.LatestNews.FromString,
             options, channel_credentials,
@@ -720,7 +755,7 @@ class TradingRelay(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading.TradingRelay/get_news_by_company',
+        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading_relay.TradingRelay/get_news_by_company',
             degiro__connector_dot_trading_dot_models_dot_trading__pb2.NewsByCompany.Request.SerializeToString,
             degiro__connector_dot_trading_dot_models_dot_trading__pb2.NewsByCompany.FromString,
             options, channel_credentials,
@@ -737,7 +772,7 @@ class TradingRelay(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading.TradingRelay/get_orders_history',
+        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading_relay.TradingRelay/get_orders_history',
             degiro__connector_dot_trading_dot_models_dot_trading__pb2.OrdersHistory.Request.SerializeToString,
             degiro__connector_dot_trading_dot_models_dot_trading__pb2.OrdersHistory.FromString,
             options, channel_credentials,
@@ -754,7 +789,7 @@ class TradingRelay(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading.TradingRelay/get_products_config',
+        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading_relay.TradingRelay/get_products_config',
             google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             degiro__connector_dot_trading_dot_models_dot_trading__pb2.ProductSearch.Config.FromString,
             options, channel_credentials,
@@ -771,7 +806,7 @@ class TradingRelay(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading.TradingRelay/get_products_info',
+        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading_relay.TradingRelay/get_products_info',
             degiro__connector_dot_trading_dot_models_dot_trading__pb2.ProductsInfo.Request.SerializeToString,
             degiro__connector_dot_trading_dot_models_dot_trading__pb2.ProductsInfo.FromString,
             options, channel_credentials,
@@ -788,7 +823,7 @@ class TradingRelay(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading.TradingRelay/get_top_news_preview',
+        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading_relay.TradingRelay/get_top_news_preview',
             google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             degiro__connector_dot_trading_dot_models_dot_trading__pb2.TopNewsPreview.FromString,
             options, channel_credentials,
@@ -805,7 +840,7 @@ class TradingRelay(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading.TradingRelay/get_transactions_history',
+        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading_relay.TradingRelay/get_transactions_history',
             degiro__connector_dot_trading_dot_models_dot_trading__pb2.TransactionsHistory.Request.SerializeToString,
             degiro__connector_dot_trading_dot_models_dot_trading__pb2.TransactionsHistory.FromString,
             options, channel_credentials,
@@ -822,7 +857,7 @@ class TradingRelay(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading.TradingRelay/get_update',
+        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading_relay.TradingRelay/get_update',
             degiro__connector_dot_trading_dot_models_dot_trading__pb2.Update.RequestList.SerializeToString,
             degiro__connector_dot_trading_dot_models_dot_trading__pb2.Update.FromString,
             options, channel_credentials,
@@ -839,7 +874,7 @@ class TradingRelay(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading.TradingRelay/logout',
+        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading_relay.TradingRelay/logout',
             google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             google_dot_protobuf_dot_wrappers__pb2.BoolValue.FromString,
             options, channel_credentials,
@@ -856,7 +891,7 @@ class TradingRelay(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading.TradingRelay/update_order',
+        return grpc.experimental.unary_unary(request, target, '/degiro_connector.trading_relay.TradingRelay/update_order',
             degiro__connector_dot_trading_dot_models_dot_trading__pb2.Order.SerializeToString,
             google_dot_protobuf_dot_wrappers__pb2.BoolValue.FromString,
             options, channel_credentials,

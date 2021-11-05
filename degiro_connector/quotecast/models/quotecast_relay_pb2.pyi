@@ -9,7 +9,7 @@ import typing_extensions
 
 DESCRIPTOR: google.protobuf.descriptor.FileDescriptor = ...
 
-class Config(google.protobuf.message.Message):
+class SetConfig(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
     USER_TOKEN_FIELD_NUMBER: builtins.int
     AUTO_CONNECT_FIELD_NUMBER: builtins.int
@@ -21,4 +21,4 @@ class Config(google.protobuf.message.Message):
         auto_connect : builtins.bool = ...,
         ) -> None: ...
     def ClearField(self, field_name: typing_extensions.Literal[u"auto_connect",b"auto_connect",u"user_token",b"user_token"]) -> None: ...
-global___Config = Config
+global___SetConfig = SetConfig

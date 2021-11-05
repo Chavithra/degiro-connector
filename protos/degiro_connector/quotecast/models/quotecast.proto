@@ -72,6 +72,7 @@ message Chart {
     Interval period = 4;
     repeated string series = 5;
     string tz = 6;
+    map<string, string> override = 7;
   }
   message Serie {
     string times = 1;

@@ -18,34 +18,34 @@ from degiro_connector.quotecast.models import quotecast_pb2 as degiro__connector
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='degiro_connector/quotecast/models/quotecast_relay.proto',
-  package='degiro_connector.quotecast',
+  package='degiro_connector.quotecast_relay',
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n7degiro_connector/quotecast/models/quotecast_relay.proto\x12\x1a\x64\x65giro_connector.quotecast\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x31\x64\x65giro_connector/quotecast/models/quotecast.proto\"2\n\x06\x43onfig\x12\x12\n\nuser_token\x18\x01 \x01(\x05\x12\x14\n\x0c\x61uto_connect\x18\x02 \x01(\x08\x32\xa9\x03\n\x0eQuotecastRelay\x12N\n\nset_config\x12\".degiro_connector.quotecast.Config\x1a\x1a.google.protobuf.BoolValue\"\x00\x12\x41\n\x07\x63onnect\x12\x16.google.protobuf.Empty\x1a\x1c.google.protobuf.StringValue\"\x00\x12M\n\nfetch_data\x12\x16.google.protobuf.Empty\x1a%.degiro_connector.quotecast.Quotecast\"\x00\x12[\n\tget_chart\x12).degiro_connector.quotecast.Chart.Request\x1a!.degiro_connector.quotecast.Chart\"\x00\x12X\n\tsubscribe\x12-.degiro_connector.quotecast.Quotecast.Request\x1a\x1a.google.protobuf.BoolValue\"\x00\x62\x06proto3'
+  serialized_pb=b'\n7degiro_connector/quotecast/models/quotecast_relay.proto\x12 degiro_connector.quotecast_relay\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x31\x64\x65giro_connector/quotecast/models/quotecast.proto\"5\n\tSetConfig\x12\x12\n\nuser_token\x18\x01 \x01(\x05\x12\x14\n\x0c\x61uto_connect\x18\x02 \x01(\x08\x32\xb2\x03\n\x0eQuotecastRelay\x12W\n\nset_config\x12+.degiro_connector.quotecast_relay.SetConfig\x1a\x1a.google.protobuf.BoolValue\"\x00\x12\x41\n\x07\x63onnect\x12\x16.google.protobuf.Empty\x1a\x1c.google.protobuf.StringValue\"\x00\x12M\n\nfetch_data\x12\x16.google.protobuf.Empty\x1a%.degiro_connector.quotecast.Quotecast\"\x00\x12[\n\tget_chart\x12).degiro_connector.quotecast.Chart.Request\x1a!.degiro_connector.quotecast.Chart\"\x00\x12X\n\tsubscribe\x12-.degiro_connector.quotecast.Quotecast.Request\x1a\x1a.google.protobuf.BoolValue\"\x00\x62\x06proto3'
   ,
   dependencies=[google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,google_dot_protobuf_dot_empty__pb2.DESCRIPTOR,degiro__connector_dot_quotecast_dot_models_dot_quotecast__pb2.DESCRIPTOR,])
 
 
 
 
-_CONFIG = _descriptor.Descriptor(
-  name='Config',
-  full_name='degiro_connector.quotecast.Config',
+_SETCONFIG = _descriptor.Descriptor(
+  name='SetConfig',
+  full_name='degiro_connector.quotecast_relay.SetConfig',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='user_token', full_name='degiro_connector.quotecast.Config.user_token', index=0,
+      name='user_token', full_name='degiro_connector.quotecast_relay.SetConfig.user_token', index=0,
       number=1, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='auto_connect', full_name='degiro_connector.quotecast.Config.auto_connect', index=1,
+      name='auto_connect', full_name='degiro_connector.quotecast_relay.SetConfig.auto_connect', index=1,
       number=2, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
@@ -63,45 +63,45 @@ _CONFIG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=199,
-  serialized_end=249,
+  serialized_start=205,
+  serialized_end=258,
 )
 
-DESCRIPTOR.message_types_by_name['Config'] = _CONFIG
+DESCRIPTOR.message_types_by_name['SetConfig'] = _SETCONFIG
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
-Config = _reflection.GeneratedProtocolMessageType('Config', (_message.Message,), {
-  'DESCRIPTOR' : _CONFIG,
+SetConfig = _reflection.GeneratedProtocolMessageType('SetConfig', (_message.Message,), {
+  'DESCRIPTOR' : _SETCONFIG,
   '__module__' : 'degiro_connector.quotecast.models.quotecast_relay_pb2'
-  # @@protoc_insertion_point(class_scope:degiro_connector.quotecast.Config)
+  # @@protoc_insertion_point(class_scope:degiro_connector.quotecast_relay.SetConfig)
   })
-_sym_db.RegisterMessage(Config)
+_sym_db.RegisterMessage(SetConfig)
 
 
 
 _QUOTECASTRELAY = _descriptor.ServiceDescriptor(
   name='QuotecastRelay',
-  full_name='degiro_connector.quotecast.QuotecastRelay',
+  full_name='degiro_connector.quotecast_relay.QuotecastRelay',
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=252,
-  serialized_end=677,
+  serialized_start=261,
+  serialized_end=695,
   methods=[
   _descriptor.MethodDescriptor(
     name='set_config',
-    full_name='degiro_connector.quotecast.QuotecastRelay.set_config',
+    full_name='degiro_connector.quotecast_relay.QuotecastRelay.set_config',
     index=0,
     containing_service=None,
-    input_type=_CONFIG,
+    input_type=_SETCONFIG,
     output_type=google_dot_protobuf_dot_wrappers__pb2._BOOLVALUE,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
   ),
   _descriptor.MethodDescriptor(
     name='connect',
-    full_name='degiro_connector.quotecast.QuotecastRelay.connect',
+    full_name='degiro_connector.quotecast_relay.QuotecastRelay.connect',
     index=1,
     containing_service=None,
     input_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
@@ -111,7 +111,7 @@ _QUOTECASTRELAY = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='fetch_data',
-    full_name='degiro_connector.quotecast.QuotecastRelay.fetch_data',
+    full_name='degiro_connector.quotecast_relay.QuotecastRelay.fetch_data',
     index=2,
     containing_service=None,
     input_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
@@ -121,7 +121,7 @@ _QUOTECASTRELAY = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='get_chart',
-    full_name='degiro_connector.quotecast.QuotecastRelay.get_chart',
+    full_name='degiro_connector.quotecast_relay.QuotecastRelay.get_chart',
     index=3,
     containing_service=None,
     input_type=degiro__connector_dot_quotecast_dot_models_dot_quotecast__pb2._CHART_REQUEST,
@@ -131,7 +131,7 @@ _QUOTECASTRELAY = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='subscribe',
-    full_name='degiro_connector.quotecast.QuotecastRelay.subscribe',
+    full_name='degiro_connector.quotecast_relay.QuotecastRelay.subscribe',
     index=4,
     containing_service=None,
     input_type=degiro__connector_dot_quotecast_dot_models_dot_quotecast__pb2._QUOTECAST_REQUEST,

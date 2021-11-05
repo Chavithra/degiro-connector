@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package degiro_connector.trading;
+package degiro_connector.trading_relay;
 
 // import "google/protobuf/timestamp.proto";
 // import "google/protobuf/duration.proto";
@@ -9,37 +9,56 @@ import "google/protobuf/wrappers.proto";
 import "google/protobuf/empty.proto";
 import "degiro_connector/trading/models/trading.proto";
 
-message Config {
-    Credentials credentials = 1;
+// MESSAGES
+message SetConfig {
+    degiro_connector.trading.Credentials credentials = 1;
     bool auto_connect = 2;
 }
+message ConfirmOrder {
+    google.protobuf.StringValue confirmation_id = 1;
+    degiro_connector.trading.Order order = 2;
+}
+message ProductSearch {
+    oneof request {
+        degiro_connector.trading.ProductSearch.RequestBonds bonds = 1;
+        degiro_connector.trading.ProductSearch.RequestETFs etfs= 2;
+        degiro_connector.trading.ProductSearch.RequestFunds funds = 3;
+        degiro_connector.trading.ProductSearch.RequestFutures futures = 4;
+        degiro_connector.trading.ProductSearch.RequestLeverageds leverageds = 5;
+        degiro_connector.trading.ProductSearch.RequestLookup lookup = 6;
+        degiro_connector.trading.ProductSearch.RequestOptions options = 7;
+        degiro_connector.trading.ProductSearch.RequestStocks stocks = 8;
+        degiro_connector.trading.ProductSearch.RequestWarrants warrants = 9;
+    }
+}
 
+// SERVICES
 service TradingRelay {
-  rpc set_config (Config) returns (google.protobuf.BoolValue) {}
+  rpc confirm_order(ConfirmOrder) returns (degiro_connector.trading.Order.ConfirmationResponse) {}
+  rpc product_search(ProductSearch) returns (degiro_connector.trading.ProductSearch) {}
+  rpc set_config (SetConfig) returns (google.protobuf.BoolValue) {}
 
-  rpc check_order(Order) returns (Order.CheckingResponse) {}
-  // rpc confirm_order(ConfirmationRequest) returns (Order.ConfirmationResponse) {}
+  rpc check_order(degiro_connector.trading.Order) returns (degiro_connector.trading.Order.CheckingResponse) {}
   rpc connect (google.protobuf.Empty) returns (google.protobuf.StringValue) {}
   rpc delete_order(google.protobuf.StringValue) returns (google.protobuf.BoolValue) {}
   rpc get_account_info(google.protobuf.Empty) returns (google.protobuf.Struct) {}
-  rpc get_account_overview(AccountOverview.Request) returns (AccountOverview) {}
-  rpc get_agenda(Agenda.Request) returns (Agenda) {}
-  rpc get_cash_account_report(CashAccountReport.Request) returns (CashAccountReport) {}
+  rpc get_account_overview(degiro_connector.trading.AccountOverview.Request) returns (degiro_connector.trading.AccountOverview) {}
+  rpc get_agenda(degiro_connector.trading.Agenda.Request) returns (degiro_connector.trading.Agenda) {}
+  rpc get_cash_account_report(degiro_connector.trading.CashAccountReport.Request) returns (degiro_connector.trading.CashAccountReport) {}
   rpc get_client_details(google.protobuf.Empty) returns (google.protobuf.Struct)  {}
-  rpc get_company_profile(google.protobuf.StringValue) returns (CompanyProfile) {}
-  rpc get_company_ratios(google.protobuf.StringValue) returns (CompanyRatios) {}
+  rpc get_company_profile(google.protobuf.StringValue) returns (degiro_connector.trading.CompanyProfile) {}
+  rpc get_company_ratios(google.protobuf.StringValue) returns (degiro_connector.trading.CompanyRatios) {}
   rpc get_config (google.protobuf.Empty) returns (google.protobuf.Struct) {}
-  rpc get_favourites_list(google.protobuf.Empty) returns (Favourites) {}
-  rpc get_financial_statements(google.protobuf.StringValue) returns (FinancialStatements) {}
-  rpc get_latest_news(LatestNews.Request) returns (LatestNews) {}
-  rpc get_news_by_company(NewsByCompany.Request) returns (NewsByCompany) {}
-  rpc get_orders_history(OrdersHistory.Request) returns (OrdersHistory) {}
-  rpc get_products_config(google.protobuf.Empty) returns (ProductSearch.Config) {}
-  rpc get_products_info(ProductsInfo.Request) returns (ProductsInfo) {}
-  rpc get_top_news_preview(google.protobuf.Empty) returns (TopNewsPreview) {}
-  rpc get_transactions_history(TransactionsHistory.Request) returns (TransactionsHistory) {}
-  rpc get_update(Update.RequestList) returns (Update) {}
+  rpc get_favourites_list(google.protobuf.Empty) returns (degiro_connector.trading.Favourites) {}
+  rpc get_financial_statements(google.protobuf.StringValue) returns (degiro_connector.trading.FinancialStatements) {}
+  rpc get_latest_news(degiro_connector.trading.LatestNews.Request) returns (degiro_connector.trading.LatestNews) {}
+  rpc get_news_by_company(degiro_connector.trading.NewsByCompany.Request) returns (degiro_connector.trading.NewsByCompany) {}
+  rpc get_orders_history(degiro_connector.trading.OrdersHistory.Request) returns (degiro_connector.trading.OrdersHistory) {}
+  rpc get_products_config(google.protobuf.Empty) returns (degiro_connector.trading.ProductSearch.Config) {}
+  rpc get_products_info(degiro_connector.trading.ProductsInfo.Request) returns (degiro_connector.trading.ProductsInfo) {}
+  rpc get_top_news_preview(google.protobuf.Empty) returns (degiro_connector.trading.TopNewsPreview) {}
+  rpc get_transactions_history(degiro_connector.trading.TransactionsHistory.Request) returns (degiro_connector.trading.TransactionsHistory) {}
+  rpc get_update(degiro_connector.trading.Update.RequestList) returns (degiro_connector.trading.Update) {}
   rpc logout(google.protobuf.Empty) returns (google.protobuf.BoolValue) {}
-  // rpc product_search() returns () {}
-  rpc update_order(Order) returns (google.protobuf.BoolValue) {}
+  rpc update_order(degiro_connector.trading.Order) returns (google.protobuf.BoolValue) {}
 }

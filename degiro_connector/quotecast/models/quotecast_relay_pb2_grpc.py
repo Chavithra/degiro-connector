@@ -18,27 +18,27 @@ class QuotecastRelayStub(object):
             channel: A grpc.Channel.
         """
         self.set_config = channel.unary_unary(
-                '/degiro_connector.quotecast.QuotecastRelay/set_config',
-                request_serializer=degiro__connector_dot_quotecast_dot_models_dot_quotecast__relay__pb2.Config.SerializeToString,
+                '/degiro_connector.quotecast_relay.QuotecastRelay/set_config',
+                request_serializer=degiro__connector_dot_quotecast_dot_models_dot_quotecast__relay__pb2.SetConfig.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_wrappers__pb2.BoolValue.FromString,
                 )
         self.connect = channel.unary_unary(
-                '/degiro_connector.quotecast.QuotecastRelay/connect',
+                '/degiro_connector.quotecast_relay.QuotecastRelay/connect',
                 request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_wrappers__pb2.StringValue.FromString,
                 )
         self.fetch_data = channel.unary_unary(
-                '/degiro_connector.quotecast.QuotecastRelay/fetch_data',
+                '/degiro_connector.quotecast_relay.QuotecastRelay/fetch_data',
                 request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
                 response_deserializer=degiro__connector_dot_quotecast_dot_models_dot_quotecast__pb2.Quotecast.FromString,
                 )
         self.get_chart = channel.unary_unary(
-                '/degiro_connector.quotecast.QuotecastRelay/get_chart',
+                '/degiro_connector.quotecast_relay.QuotecastRelay/get_chart',
                 request_serializer=degiro__connector_dot_quotecast_dot_models_dot_quotecast__pb2.Chart.Request.SerializeToString,
                 response_deserializer=degiro__connector_dot_quotecast_dot_models_dot_quotecast__pb2.Chart.FromString,
                 )
         self.subscribe = channel.unary_unary(
-                '/degiro_connector.quotecast.QuotecastRelay/subscribe',
+                '/degiro_connector.quotecast_relay.QuotecastRelay/subscribe',
                 request_serializer=degiro__connector_dot_quotecast_dot_models_dot_quotecast__pb2.Quotecast.Request.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_wrappers__pb2.BoolValue.FromString,
                 )
@@ -82,7 +82,7 @@ def add_QuotecastRelayServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'set_config': grpc.unary_unary_rpc_method_handler(
                     servicer.set_config,
-                    request_deserializer=degiro__connector_dot_quotecast_dot_models_dot_quotecast__relay__pb2.Config.FromString,
+                    request_deserializer=degiro__connector_dot_quotecast_dot_models_dot_quotecast__relay__pb2.SetConfig.FromString,
                     response_serializer=google_dot_protobuf_dot_wrappers__pb2.BoolValue.SerializeToString,
             ),
             'connect': grpc.unary_unary_rpc_method_handler(
@@ -107,7 +107,7 @@ def add_QuotecastRelayServicer_to_server(servicer, server):
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'degiro_connector.quotecast.QuotecastRelay', rpc_method_handlers)
+            'degiro_connector.quotecast_relay.QuotecastRelay', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
@@ -126,8 +126,8 @@ class QuotecastRelay(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/degiro_connector.quotecast.QuotecastRelay/set_config',
-            degiro__connector_dot_quotecast_dot_models_dot_quotecast__relay__pb2.Config.SerializeToString,
+        return grpc.experimental.unary_unary(request, target, '/degiro_connector.quotecast_relay.QuotecastRelay/set_config',
+            degiro__connector_dot_quotecast_dot_models_dot_quotecast__relay__pb2.SetConfig.SerializeToString,
             google_dot_protobuf_dot_wrappers__pb2.BoolValue.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
@@ -143,7 +143,7 @@ class QuotecastRelay(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/degiro_connector.quotecast.QuotecastRelay/connect',
+        return grpc.experimental.unary_unary(request, target, '/degiro_connector.quotecast_relay.QuotecastRelay/connect',
             google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             google_dot_protobuf_dot_wrappers__pb2.StringValue.FromString,
             options, channel_credentials,
@@ -160,7 +160,7 @@ class QuotecastRelay(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/degiro_connector.quotecast.QuotecastRelay/fetch_data',
+        return grpc.experimental.unary_unary(request, target, '/degiro_connector.quotecast_relay.QuotecastRelay/fetch_data',
             google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             degiro__connector_dot_quotecast_dot_models_dot_quotecast__pb2.Quotecast.FromString,
             options, channel_credentials,
@@ -177,7 +177,7 @@ class QuotecastRelay(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/degiro_connector.quotecast.QuotecastRelay/get_chart',
+        return grpc.experimental.unary_unary(request, target, '/degiro_connector.quotecast_relay.QuotecastRelay/get_chart',
             degiro__connector_dot_quotecast_dot_models_dot_quotecast__pb2.Chart.Request.SerializeToString,
             degiro__connector_dot_quotecast_dot_models_dot_quotecast__pb2.Chart.FromString,
             options, channel_credentials,
@@ -194,7 +194,7 @@ class QuotecastRelay(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/degiro_connector.quotecast.QuotecastRelay/subscribe',
+        return grpc.experimental.unary_unary(request, target, '/degiro_connector.quotecast_relay.QuotecastRelay/subscribe',
             degiro__connector_dot_quotecast_dot_models_dot_quotecast__pb2.Quotecast.Request.SerializeToString,
             google_dot_protobuf_dot_wrappers__pb2.BoolValue.FromString,
             options, channel_credentials,
