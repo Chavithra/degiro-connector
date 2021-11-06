@@ -26,6 +26,7 @@ from degiro_connector.quotecast.models.quotecast_relay_pb2_grpc import (
 
 
 class Relay(QuotecastRelayServicer):
+    OVERRIDED_METHOD_LIST = []
     PB_WRAPPERS_PATH = "google/protobuf/wrappers.proto"
     PY_TO_PB_TABLE = {
         bool: BoolValue,
@@ -39,7 +40,7 @@ class Relay(QuotecastRelayServicer):
     def get_service_list(cls):
         service_list = list()
 
-        for attr in dir(QuotecastRelayServicer):
+        for attr in dir(cls.__bases__[0]):
             if attr[:2] != "__":
                 service_list.append(attr)
         return service_list
@@ -120,7 +121,8 @@ class Relay(QuotecastRelayServicer):
 
     def load_service(self, service: str):
         action_list = self._api.action_list
-        if service in action_list:
+
+        if service in action_list and not service in self.OVERRIDED_METHOD_LIST:
             action_func = getattr(self._api, service)
             service_func = self.build_service_func(action_func=action_func)
             setattr(self, service, service_func)
@@ -128,16 +130,6 @@ class Relay(QuotecastRelayServicer):
     def load_service_list(self, service_list: List[str]):
         for service in service_list:
             self.load_service(service=service)
-
-    def set_config(self, request, context):
-        print("REQUEST :", request)
-        user_token = request.user_token
-        auto_connect = request.auto_connect
-        self._api.credentials["user_token"] = user_token
-        self._auto_connect = auto_connect
-
-        print("RESPONSE :", True)
-        return BoolValue(value=True)
 
     def serve(self):
         server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
@@ -152,3 +144,14 @@ class Relay(QuotecastRelayServicer):
         except KeyboardInterrupt:
             print("KeyboardInterrupt")
             server.stop(grace=0)
+
+    def set_config(self, request, context):
+        print("REQUEST :", request)
+
+        user_token = request.user_token
+        auto_connect = request.auto_connect
+        self._api.credentials["user_token"] = user_token
+        self._auto_connect = auto_connect
+
+        print("RESPONSE :", True)
+        return BoolValue(value=True)

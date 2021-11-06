@@ -26,6 +26,10 @@ from degiro_connector.trading.models.trading_relay_pb2_grpc import (
 
 
 class Relay(TradingRelayServicer):
+    OVERRIDED_METHOD_LIST = [
+        "confirm_order",
+        "product_search",
+    ]
     PB_WRAPPERS_PATH = "google/protobuf/wrappers.proto"
     PY_TO_PB_TABLE = {
         bool: BoolValue,
@@ -39,7 +43,7 @@ class Relay(TradingRelayServicer):
     def get_service_list(cls):
         service_list = list()
 
-        for attr in dir(TradingRelayServicer):
+        for attr in dir(cls.__bases__[0]):
             if attr[:2] != "__":
                 service_list.append(attr)
         return service_list
@@ -120,7 +124,9 @@ class Relay(TradingRelayServicer):
 
     def load_service(self, service: str):
         action_list = self._api.action_list
-        if service in action_list:
+
+        if service in action_list and not service in self.OVERRIDED_METHOD_LIST:
+            print(service)
             action_func = getattr(self._api, service)
             service_func = self.build_service_func(action_func=action_func)
             setattr(self, service, service_func)
@@ -128,16 +134,6 @@ class Relay(TradingRelayServicer):
     def load_service_list(self, service_list: List[str]):
         for service in service_list:
             self.load_service(service=service)
-
-    def set_config(self, request, context):
-        print("REQUEST :", request)
-        credentials = request.credentials
-        auto_connect = request.auto_connect
-        self._api.credentials.CopyFrom(credentials)
-        self._auto_connect = auto_connect
-
-        print("RESPONSE :", True)
-        return BoolValue(value=True)
 
     def serve(self):
         server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
@@ -152,3 +148,39 @@ class Relay(TradingRelayServicer):
         except KeyboardInterrupt:
             print("KeyboardInterrupt")
             server.stop(grace=0)
+
+    def set_config(self, request, context):
+        print("REQUEST :", request)
+        credentials = request.credentials
+        auto_connect = request.auto_connect
+        self._api.credentials.CopyFrom(credentials)
+        self._auto_connect = auto_connect
+
+        print("RESPONSE :", True)
+        return BoolValue(value=True)
+
+    def confirm_order(self, request, context):
+        print("REQUEST :", request)
+        confirmation_id = request.confirmation_id
+        order = request.order
+        confirmation_response = self._api.confirm_order(
+            confirmation_id=confirmation_id,
+            order=order,
+            raw=False,
+        )
+
+        print("RESPONSE :", confirmation_response)
+        return confirmation_response
+
+    def product_search(self, request, context):
+        print("REQUEST :", request)
+
+        oneof = request.WhichOneof("request")
+        product_search_request = getattr(request, oneof)
+        product_search = self._api.product_search(
+            request=product_search_request,
+            raw=False,
+        )
+
+        print("RESPONSE :", product_search)
+        return product_search

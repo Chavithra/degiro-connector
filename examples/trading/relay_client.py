@@ -10,7 +10,7 @@ from google.protobuf.empty_pb2 import Empty
 
 # IMPORTATION INTERNAL
 from degiro_connector.trading.models.trading_pb2 import Credentials
-from degiro_connector.trading.models.trading_relay_pb2 import Config
+from degiro_connector.trading.models.trading_relay_pb2 import SetConfig
 from degiro_connector.trading.models.trading_relay_pb2_grpc import (
     TradingRelayStub,
 )
@@ -50,11 +50,11 @@ with open("config/config.json") as config_file:
     config = json.load(config_file)
 user_token = config["user_token"]
 
-config = Config(credentials=credentials)
-config.credentials.CopyFrom(credentials)
-config.auto_connect = True
+set_config = SetConfig(credentials=credentials)
+set_config.credentials.CopyFrom(credentials)
+set_config.auto_connect = True
 
-responses["set_config"] = relay_stub.set_config(request=config)
+responses["set_config"] = relay_stub.set_config(request=set_config)
 
 # CALL : connect
 responses["connect"] = relay_stub.connect(request=Empty())
