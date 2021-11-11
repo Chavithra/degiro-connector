@@ -37,7 +37,6 @@ def test_chart(quotecast_connected):
     # FETCH DATA
     chart = quotecast_connected.get_chart(
         request=request,
-        override=None,
         raw=True,
     )
 
