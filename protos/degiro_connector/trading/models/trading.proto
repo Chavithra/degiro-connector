@@ -322,14 +322,15 @@ message ProductSearch {
   message RequestStocks {
     bool is_in_us_green_list = 1;
     int32 index_id = 2;
-    int32 stock_country_id = 3;
+    int32 exchange_id = 3;
+    int32 stock_country_id = 4;
 
-    string search_text = 4;
-    int32 offset = 5;
-    int32 limit = 6;
-    bool require_total = 7;
-    string sort_columns = 8;
-    string sort_types = 9;
+    string search_text = 5;
+    int32 offset = 6;
+    int32 limit = 7;
+    bool require_total = 8;
+    string sort_columns = 9;
+    string sort_types = 10;
   }
   message RequestWarrants {
     string search_text = 1;

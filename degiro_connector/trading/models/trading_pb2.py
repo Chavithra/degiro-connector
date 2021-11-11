@@ -21,7 +21,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n-degiro_connector/trading/models/trading.proto\x12\x18\x64\x65giro_connector.trading\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\x8b\x01\n\x0b\x43redentials\x12\x13\n\x0bint_account\x18\x01 \x01(\x05\x12\x10\n\x08username\x18\x02 \x01(\t\x12\x10\n\x08password\x18\x03 \x01(\t\x12\x19\n\x0ftotp_secret_key\x18\x04 \x01(\tH\x00\x12\x1b\n\x11one_time_password\x18\x05 \x01(\x05H\x00\x42\x0b\n\toneof_2fa\"\xd9\t\n\x05Order\x12\x36\n\x06\x61\x63tion\x18\x01 \x01(\x0e\x32&.degiro_connector.trading.Order.Action\x12\n\n\x02id\x18\x02 \x01(\t\x12=\n\norder_type\x18\x03 \x01(\x0e\x32).degiro_connector.trading.Order.OrderType\x12\r\n\x05price\x18\x04 \x01(\x01\x12\x12\n\nstop_price\x18\x05 \x01(\x01\x12\x12\n\nproduct_id\x18\x06 \x01(\x05\x12\x0c\n\x04size\x18\x07 \x01(\x01\x12;\n\ttime_type\x18\x08 \x01(\x0e\x32(.degiro_connector.trading.Order.TimeType\x12\x15\n\rcontract_size\x18\t \x01(\x01\x12\x15\n\rcontract_type\x18\n \x01(\x05\x12\x10\n\x08\x63urrency\x18\x0b \x01(\t\x12\x0c\n\x04hour\x18\x0c \x01(\t\x12\x14\n\x0cis_deletable\x18\r \x01(\x08\x12\x15\n\ris_modifiable\x18\x0e \x01(\x08\x12\x0f\n\x07product\x18\x0f \x01(\t\x12\x10\n\x08quantity\x18\x10 \x01(\x01\x12\x19\n\x11total_order_value\x18\x11 \x01(\x01\x12\x16\n\x0eretained_order\x18\x12 \x01(\x08\x12\x18\n\x10sent_to_exchange\x18\x13 \x01(\x08\x1a\xc9\x03\n\x10\x43heckingResponse\x12\x17\n\x0f\x63onfirmation_id\x18\x01 \x01(\t\x12\x16\n\x0e\x66ree_space_new\x18\x02 \x01(\x01\x12\x35\n\x11response_datetime\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x31\n\x10transaction_fees\x18\x04 \x03(\x0b\x32\x17.google.protobuf.Struct\x12:\n\x19transaction_opposite_fees\x18\x05 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x32\n\x11transaction_taxes\x18\x06 \x03(\x0b\x32\x17.google.protobuf.Struct\x12?\n\x1etransaction_auto_fx_surcharges\x18\x07 \x03(\x0b\x32\x17.google.protobuf.Struct\x12H\n\'transaction_auto_fx_opposite_surcharges\x18\x08 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x1f\n\x17\x61uto_fx_conversion_rate\x18\t \x01(\x01\x1a_\n\x14\x43onfirmationResponse\x12\x10\n\x08order_id\x18\x01 \x01(\t\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"\x1b\n\x06\x41\x63tion\x12\x07\n\x03\x42UY\x10\x00\x12\x08\n\x04SELL\x10\x01\"A\n\tOrderType\x12\t\n\x05LIMIT\x10\x00\x12\x0e\n\nSTOP_LIMIT\x10\x01\x12\n\n\x06MARKET\x10\x02\x12\r\n\tSTOP_LOSS\x10\x03\"S\n\x08TimeType\x12\r\n\tUNKNOWN_0\x10\x00\x12\x11\n\rGOOD_TILL_DAY\x10\x01\x12\r\n\tUNKNOWN_2\x10\x02\x12\x16\n\x12GOOD_TILL_CANCELED\x10\x03\"\xd9\n\n\x06Update\x12\x35\n\x11response_datetime\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x37\n\x06\x61lerts\x18\x02 \x01(\x0b\x32\'.degiro_connector.trading.Update.Alerts\x12>\n\ncash_funds\x18\x03 \x01(\x0b\x32*.degiro_connector.trading.Update.CashFunds\x12L\n\x11historical_orders\x18\x04 \x01(\x0b\x32\x31.degiro_connector.trading.Update.HistoricalOrders\x12\x37\n\x06orders\x18\x05 \x01(\x0b\x32\'.degiro_connector.trading.Update.Orders\x12=\n\tportfolio\x18\x06 \x01(\x0b\x32*.degiro_connector.trading.Update.Portfolio\x12H\n\x0ftotal_portfolio\x18\x07 \x01(\x0b\x32/.degiro_connector.trading.Update.TotalPortfolio\x12\x43\n\x0ctransactions\x18\x08 \x01(\x0b\x32-.degiro_connector.trading.Update.Transactions\x1aX\n\x07Request\x12\x37\n\x06option\x18\x01 \x01(\x0e\x32\'.degiro_connector.trading.Update.Option\x12\x14\n\x0clast_updated\x18\x02 \x01(\x05\x1aG\n\x0bRequestList\x12\x38\n\x06values\x18\x01 \x03(\x0b\x32(.degiro_connector.trading.Update.Request\x1aG\n\x06\x41lerts\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1aJ\n\tCashFunds\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1aY\n\x10HistoricalOrders\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12/\n\x06values\x18\x02 \x03(\x0b\x32\x1f.degiro_connector.trading.Order\x1aO\n\x06Orders\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12/\n\x06values\x18\x02 \x03(\x0b\x32\x1f.degiro_connector.trading.Order\x1aJ\n\tPortfolio\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x03(\x0b\x32\x17.google.protobuf.Struct\x1aO\n\x0eTotalPortfolio\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1aM\n\x0cTransactions\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x03(\x0b\x32\x17.google.protobuf.Struct\"z\n\x06Option\x12\n\n\x06\x41LERTS\x10\x00\x12\r\n\tCASHFUNDS\x10\x01\x12\x14\n\x10HISTORICALORDERS\x10\x02\x12\n\n\x06ORDERS\x10\x03\x12\r\n\tPORTFOLIO\x10\x04\x12\x12\n\x0eTOTALPORTFOLIO\x10\x05\x12\x10\n\x0cTRANSACTIONS\x10\x06\"\xbd\x02\n\rOrdersHistory\x12\'\n\x06values\x18\x01 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\xcb\x01\n\x07Request\x12G\n\tfrom_date\x18\x01 \x01(\x0b\x32\x34.degiro_connector.trading.OrdersHistory.Request.Date\x12\x45\n\x07to_date\x18\x02 \x01(\x0b\x32\x34.degiro_connector.trading.OrdersHistory.Request.Date\x1a\x30\n\x04\x44\x61te\x12\x0c\n\x04year\x18\x01 \x01(\x05\x12\r\n\x05month\x18\x02 \x01(\x05\x12\x0b\n\x03\x64\x61y\x18\x03 \x01(\x05\"\xf4\x02\n\x13TransactionsHistory\x12\'\n\x06values\x18\x01 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\xfc\x01\n\x07Request\x12M\n\tfrom_date\x18\x01 \x01(\x0b\x32:.degiro_connector.trading.TransactionsHistory.Request.Date\x12K\n\x07to_date\x18\x02 \x01(\x0b\x32:.degiro_connector.trading.TransactionsHistory.Request.Date\x12#\n\x1bgroup_transactions_by_order\x18\x03 \x01(\x08\x1a\x30\n\x04\x44\x61te\x12\x0c\n\x04year\x18\x01 \x01(\x05\x12\r\n\x05month\x18\x02 \x01(\x05\x12\x0b\n\x03\x64\x61y\x18\x03 \x01(\x05\"\xc3\x02\n\x0f\x41\x63\x63ountOverview\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\xcf\x01\n\x07Request\x12I\n\tfrom_date\x18\x01 \x01(\x0b\x32\x36.degiro_connector.trading.AccountOverview.Request.Date\x12G\n\x07to_date\x18\x02 \x01(\x0b\x32\x36.degiro_connector.trading.AccountOverview.Request.Date\x1a\x30\n\x04\x44\x61te\x12\x0c\n\x04year\x18\x01 \x01(\x05\x12\r\n\x05month\x18\x02 \x01(\x05\x12\x0b\n\x03\x64\x61y\x18\x03 \x01(\x05\"\xb0\x0e\n\rProductSearch\x12\x0e\n\x06offset\x18\x01 \x01(\x05\x12)\n\x08products\x18\x02 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x35\n\x11response_datetime\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\r\n\x05total\x18\x04 \x01(\x05\x1a\x31\n\x06\x43onfig\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\x1a\xba\x01\n\x0cRequestBonds\x12\x1b\n\x13\x62ond_issuer_type_id\x18\x01 \x01(\x05\x12\x18\n\x10\x62ond_exchange_id\x18\x02 \x01(\x05\x12\x13\n\x0bsearch_text\x18\x03 \x01(\t\x12\x0e\n\x06offset\x18\x04 \x01(\x05\x12\r\n\x05limit\x18\x05 \x01(\x05\x12\x15\n\rrequire_total\x18\x06 \x01(\x08\x12\x14\n\x0csort_columns\x18\x07 \x01(\t\x12\x12\n\nsort_types\x18\x08 \x01(\t\x1a\xd7\x01\n\x0bRequestETFs\x12\x14\n\x0cpopular_only\x18\x01 \x01(\x08\x12\x1d\n\x15input_aggregate_types\x18\x02 \x01(\t\x12\x1e\n\x16input_aggregate_values\x18\x03 \x01(\t\x12\x13\n\x0bsearch_text\x18\x04 \x01(\t\x12\x0e\n\x06offset\x18\x05 \x01(\x05\x12\r\n\x05limit\x18\x06 \x01(\x05\x12\x15\n\rrequire_total\x18\x07 \x01(\x08\x12\x14\n\x0csort_columns\x18\x08 \x01(\t\x12\x12\n\nsort_types\x18\t \x01(\t\x1a\x83\x01\n\x0cRequestFunds\x12\x13\n\x0bsearch_text\x18\x01 \x01(\t\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05limit\x18\x03 \x01(\x05\x12\x15\n\rrequire_total\x18\x04 \x01(\x08\x12\x14\n\x0csort_columns\x18\x05 \x01(\t\x12\x12\n\nsort_types\x18\x06 \x01(\t\x1a\xba\x01\n\x0eRequestFutures\x12\x1a\n\x12\x66uture_exchange_id\x18\x01 \x01(\x05\x12\x17\n\x0funderlying_isin\x18\x02 \x01(\t\x12\x13\n\x0bsearch_text\x18\x03 \x01(\t\x12\x0e\n\x06offset\x18\x04 \x01(\x05\x12\r\n\x05limit\x18\x05 \x01(\x05\x12\x15\n\rrequire_total\x18\x06 \x01(\x08\x12\x14\n\x0csort_columns\x18\x07 \x01(\t\x12\x12\n\nsort_types\x18\x08 \x01(\t\x1a\xdd\x01\n\x11RequestLeverageds\x12\x14\n\x0cpopular_only\x18\x01 \x01(\x08\x12\x1d\n\x15input_aggregate_types\x18\x02 \x01(\t\x12\x1e\n\x16input_aggregate_values\x18\x03 \x01(\t\x12\x13\n\x0bsearch_text\x18\x04 \x01(\t\x12\x0e\n\x06offset\x18\x05 \x01(\x05\x12\r\n\x05limit\x18\x06 \x01(\x05\x12\x15\n\rrequire_total\x18\x07 \x01(\x08\x12\x14\n\x0csort_columns\x18\x08 \x01(\t\x12\x12\n\nsort_types\x18\t \x01(\t\x1a\\\n\rRequestLookup\x12\x13\n\x0bsearch_text\x18\x01 \x01(\t\x12\r\n\x05limit\x18\x02 \x01(\x05\x12\x0e\n\x06offset\x18\x03 \x01(\x05\x12\x17\n\x0fproduct_type_id\x18\x04 \x01(\x05\x1a\xf9\x01\n\x0eRequestOptions\x12\x1d\n\x15input_aggregate_types\x18\x01 \x01(\t\x12\x1e\n\x16input_aggregate_values\x18\x02 \x01(\t\x12\x1a\n\x12option_exchange_id\x18\x03 \x01(\x05\x12\x17\n\x0funderlying_isin\x18\x04 \x01(\t\x12\x13\n\x0bsearch_text\x18\x05 \x01(\t\x12\x0e\n\x06offset\x18\x06 \x01(\x05\x12\r\n\x05limit\x18\x07 \x01(\x05\x12\x15\n\rrequire_total\x18\x08 \x01(\x08\x12\x14\n\x0csort_columns\x18\t \x01(\t\x12\x12\n\nsort_types\x18\n \x01(\t\x1a\xcd\x01\n\rRequestStocks\x12\x1b\n\x13is_in_us_green_list\x18\x01 \x01(\x08\x12\x10\n\x08index_id\x18\x02 \x01(\x05\x12\x18\n\x10stock_country_id\x18\x03 \x01(\x05\x12\x13\n\x0bsearch_text\x18\x04 \x01(\t\x12\x0e\n\x06offset\x18\x05 \x01(\x05\x12\r\n\x05limit\x18\x06 \x01(\x05\x12\x15\n\rrequire_total\x18\x07 \x01(\x08\x12\x14\n\x0csort_columns\x18\x08 \x01(\t\x12\x12\n\nsort_types\x18\t \x01(\t\x1a\x86\x01\n\x0fRequestWarrants\x12\x13\n\x0bsearch_text\x18\x01 \x01(\t\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05limit\x18\x03 \x01(\x05\x12\x15\n\rrequire_total\x18\x04 \x01(\x08\x12\x14\n\x0csort_columns\x18\x05 \x01(\t\x12\x12\n\nsort_types\x18\x06 \x01(\t\"\xc9\x01\n\nFavourites\x12\x39\n\x06values\x18\x01 \x03(\x0b\x32).degiro_connector.trading.Favourites.List\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1aI\n\x04List\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x12\n\nis_default\x18\x03 \x01(\x08\x12\x13\n\x0bproduct_ids\x18\x04 \x03(\x05\"T\n\x0cProductsInfo\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\x1a\x1b\n\x07Request\x12\x10\n\x08products\x18\x01 \x03(\x05\"8\n\rCompanyRatios\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\"9\n\x0e\x43ompanyProfile\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\">\n\x13\x46inancialStatements\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\"\x90\x01\n\nLatestNews\x12&\n\x05items\x18\x01 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05total\x18\x03 \x01(\x05\x1a;\n\x07Request\x12\x0e\n\x06offset\x18\x01 \x01(\x05\x12\x11\n\tlanguages\x18\x02 \x01(\t\x12\r\n\x05limit\x18\x03 \x01(\x05\"W\n\x0eTopNewsPreview\x12&\n\x05items\x18\x01 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05total\x18\x03 \x01(\x05\"\xa1\x01\n\rNewsByCompany\x12&\n\x05items\x18\x01 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05total\x18\x03 \x01(\x05\x1aI\n\x07Request\x12\x0c\n\x04isin\x18\x01 \x01(\t\x12\r\n\x05limit\x18\x02 \x01(\x05\x12\x0e\n\x06offset\x18\x03 \x01(\x05\x12\x11\n\tlanguages\x18\x04 \x01(\t\"\x87\x04\n\x11\x43\x61shAccountReport\x12\x0f\n\x07\x63ontent\x18\x01 \x01(\t\x12\x42\n\x06\x66ormat\x18\x02 \x01(\x0e\x32\x32.degiro_connector.trading.CashAccountReport.Format\x12\x35\n\x11response_datetime\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\xb6\x02\n\x07Request\x12\x42\n\x06\x66ormat\x18\x01 \x01(\x0e\x32\x32.degiro_connector.trading.CashAccountReport.Format\x12\x0f\n\x07\x63ountry\x18\x02 \x01(\t\x12\x0c\n\x04lang\x18\x03 \x01(\t\x12K\n\tfrom_date\x18\x04 \x01(\x0b\x32\x38.degiro_connector.trading.CashAccountReport.Request.Date\x12I\n\x07to_date\x18\x05 \x01(\x0b\x32\x38.degiro_connector.trading.CashAccountReport.Request.Date\x1a\x30\n\x04\x44\x61te\x12\x0c\n\x04year\x18\x01 \x01(\x05\x12\r\n\x05month\x18\x02 \x01(\x05\x12\x0b\n\x03\x64\x61y\x18\x03 \x01(\x05\"-\n\x06\x46ormat\x12\x07\n\x03\x43SV\x10\x00\x12\x08\n\x04HTML\x10\x01\x12\x07\n\x03PDF\x10\x02\x12\x07\n\x03XLS\x10\x03\"\x95\x05\n\x06\x41genda\x12\x44\n\rcalendar_type\x18\x01 \x01(\x0e\x32-.degiro_connector.trading.Agenda.CalendarType\x12&\n\x05items\x18\x02 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x0e\n\x06offset\x18\x03 \x01(\x05\x12\r\n\x05total\x18\x04 \x01(\x05\x12\x35\n\x11response_datetime\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\xb4\x02\n\x07Request\x12\x44\n\rcalendar_type\x18\x01 \x01(\x0e\x32-.degiro_connector.trading.Agenda.CalendarType\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05limit\x18\x03 \x01(\x05\x12\x15\n\rorder_by_desc\x18\x04 \x01(\x08\x12.\n\nstart_date\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12,\n\x08\x65nd_date\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x14\n\x0c\x63ompany_name\x18\x07 \x01(\t\x12\x11\n\tcountries\x18\x08 \x01(\t\x12\x17\n\x0f\x63lassifications\x18\t \x01(\t\x12\r\n\x05units\x18\n \x01(\t\"\x8f\x01\n\x0c\x43\x61lendarType\x12\x15\n\x11\x44IVIDEND_CALENDAR\x10\x00\x12\x15\n\x11\x45\x43ONOMIC_CALENDAR\x10\x01\x12\x15\n\x11\x45\x41RNINGS_CALENDAR\x10\x02\x12\x14\n\x10HOLIDAY_CALENDAR\x10\x03\x12\x10\n\x0cIPO_CALENDAR\x10\x04\x12\x12\n\x0eSPLIT_CALENDAR\x10\x05\x62\x06proto3'
+  serialized_pb=b'\n-degiro_connector/trading/models/trading.proto\x12\x18\x64\x65giro_connector.trading\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\x8b\x01\n\x0b\x43redentials\x12\x13\n\x0bint_account\x18\x01 \x01(\x05\x12\x10\n\x08username\x18\x02 \x01(\t\x12\x10\n\x08password\x18\x03 \x01(\t\x12\x19\n\x0ftotp_secret_key\x18\x04 \x01(\tH\x00\x12\x1b\n\x11one_time_password\x18\x05 \x01(\x05H\x00\x42\x0b\n\toneof_2fa\"\xd9\t\n\x05Order\x12\x36\n\x06\x61\x63tion\x18\x01 \x01(\x0e\x32&.degiro_connector.trading.Order.Action\x12\n\n\x02id\x18\x02 \x01(\t\x12=\n\norder_type\x18\x03 \x01(\x0e\x32).degiro_connector.trading.Order.OrderType\x12\r\n\x05price\x18\x04 \x01(\x01\x12\x12\n\nstop_price\x18\x05 \x01(\x01\x12\x12\n\nproduct_id\x18\x06 \x01(\x05\x12\x0c\n\x04size\x18\x07 \x01(\x01\x12;\n\ttime_type\x18\x08 \x01(\x0e\x32(.degiro_connector.trading.Order.TimeType\x12\x15\n\rcontract_size\x18\t \x01(\x01\x12\x15\n\rcontract_type\x18\n \x01(\x05\x12\x10\n\x08\x63urrency\x18\x0b \x01(\t\x12\x0c\n\x04hour\x18\x0c \x01(\t\x12\x14\n\x0cis_deletable\x18\r \x01(\x08\x12\x15\n\ris_modifiable\x18\x0e \x01(\x08\x12\x0f\n\x07product\x18\x0f \x01(\t\x12\x10\n\x08quantity\x18\x10 \x01(\x01\x12\x19\n\x11total_order_value\x18\x11 \x01(\x01\x12\x16\n\x0eretained_order\x18\x12 \x01(\x08\x12\x18\n\x10sent_to_exchange\x18\x13 \x01(\x08\x1a\xc9\x03\n\x10\x43heckingResponse\x12\x17\n\x0f\x63onfirmation_id\x18\x01 \x01(\t\x12\x16\n\x0e\x66ree_space_new\x18\x02 \x01(\x01\x12\x35\n\x11response_datetime\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x31\n\x10transaction_fees\x18\x04 \x03(\x0b\x32\x17.google.protobuf.Struct\x12:\n\x19transaction_opposite_fees\x18\x05 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x32\n\x11transaction_taxes\x18\x06 \x03(\x0b\x32\x17.google.protobuf.Struct\x12?\n\x1etransaction_auto_fx_surcharges\x18\x07 \x03(\x0b\x32\x17.google.protobuf.Struct\x12H\n\'transaction_auto_fx_opposite_surcharges\x18\x08 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x1f\n\x17\x61uto_fx_conversion_rate\x18\t \x01(\x01\x1a_\n\x14\x43onfirmationResponse\x12\x10\n\x08order_id\x18\x01 \x01(\t\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"\x1b\n\x06\x41\x63tion\x12\x07\n\x03\x42UY\x10\x00\x12\x08\n\x04SELL\x10\x01\"A\n\tOrderType\x12\t\n\x05LIMIT\x10\x00\x12\x0e\n\nSTOP_LIMIT\x10\x01\x12\n\n\x06MARKET\x10\x02\x12\r\n\tSTOP_LOSS\x10\x03\"S\n\x08TimeType\x12\r\n\tUNKNOWN_0\x10\x00\x12\x11\n\rGOOD_TILL_DAY\x10\x01\x12\r\n\tUNKNOWN_2\x10\x02\x12\x16\n\x12GOOD_TILL_CANCELED\x10\x03\"\xd9\n\n\x06Update\x12\x35\n\x11response_datetime\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x37\n\x06\x61lerts\x18\x02 \x01(\x0b\x32\'.degiro_connector.trading.Update.Alerts\x12>\n\ncash_funds\x18\x03 \x01(\x0b\x32*.degiro_connector.trading.Update.CashFunds\x12L\n\x11historical_orders\x18\x04 \x01(\x0b\x32\x31.degiro_connector.trading.Update.HistoricalOrders\x12\x37\n\x06orders\x18\x05 \x01(\x0b\x32\'.degiro_connector.trading.Update.Orders\x12=\n\tportfolio\x18\x06 \x01(\x0b\x32*.degiro_connector.trading.Update.Portfolio\x12H\n\x0ftotal_portfolio\x18\x07 \x01(\x0b\x32/.degiro_connector.trading.Update.TotalPortfolio\x12\x43\n\x0ctransactions\x18\x08 \x01(\x0b\x32-.degiro_connector.trading.Update.Transactions\x1aX\n\x07Request\x12\x37\n\x06option\x18\x01 \x01(\x0e\x32\'.degiro_connector.trading.Update.Option\x12\x14\n\x0clast_updated\x18\x02 \x01(\x05\x1aG\n\x0bRequestList\x12\x38\n\x06values\x18\x01 \x03(\x0b\x32(.degiro_connector.trading.Update.Request\x1aG\n\x06\x41lerts\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1aJ\n\tCashFunds\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1aY\n\x10HistoricalOrders\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12/\n\x06values\x18\x02 \x03(\x0b\x32\x1f.degiro_connector.trading.Order\x1aO\n\x06Orders\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12/\n\x06values\x18\x02 \x03(\x0b\x32\x1f.degiro_connector.trading.Order\x1aJ\n\tPortfolio\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x03(\x0b\x32\x17.google.protobuf.Struct\x1aO\n\x0eTotalPortfolio\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\x1aM\n\x0cTransactions\x12\x14\n\x0clast_updated\x18\x01 \x01(\x05\x12\'\n\x06values\x18\x02 \x03(\x0b\x32\x17.google.protobuf.Struct\"z\n\x06Option\x12\n\n\x06\x41LERTS\x10\x00\x12\r\n\tCASHFUNDS\x10\x01\x12\x14\n\x10HISTORICALORDERS\x10\x02\x12\n\n\x06ORDERS\x10\x03\x12\r\n\tPORTFOLIO\x10\x04\x12\x12\n\x0eTOTALPORTFOLIO\x10\x05\x12\x10\n\x0cTRANSACTIONS\x10\x06\"\xbd\x02\n\rOrdersHistory\x12\'\n\x06values\x18\x01 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\xcb\x01\n\x07Request\x12G\n\tfrom_date\x18\x01 \x01(\x0b\x32\x34.degiro_connector.trading.OrdersHistory.Request.Date\x12\x45\n\x07to_date\x18\x02 \x01(\x0b\x32\x34.degiro_connector.trading.OrdersHistory.Request.Date\x1a\x30\n\x04\x44\x61te\x12\x0c\n\x04year\x18\x01 \x01(\x05\x12\r\n\x05month\x18\x02 \x01(\x05\x12\x0b\n\x03\x64\x61y\x18\x03 \x01(\x05\"\xf4\x02\n\x13TransactionsHistory\x12\'\n\x06values\x18\x01 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\xfc\x01\n\x07Request\x12M\n\tfrom_date\x18\x01 \x01(\x0b\x32:.degiro_connector.trading.TransactionsHistory.Request.Date\x12K\n\x07to_date\x18\x02 \x01(\x0b\x32:.degiro_connector.trading.TransactionsHistory.Request.Date\x12#\n\x1bgroup_transactions_by_order\x18\x03 \x01(\x08\x1a\x30\n\x04\x44\x61te\x12\x0c\n\x04year\x18\x01 \x01(\x05\x12\r\n\x05month\x18\x02 \x01(\x05\x12\x0b\n\x03\x64\x61y\x18\x03 \x01(\x05\"\xc3\x02\n\x0f\x41\x63\x63ountOverview\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\xcf\x01\n\x07Request\x12I\n\tfrom_date\x18\x01 \x01(\x0b\x32\x36.degiro_connector.trading.AccountOverview.Request.Date\x12G\n\x07to_date\x18\x02 \x01(\x0b\x32\x36.degiro_connector.trading.AccountOverview.Request.Date\x1a\x30\n\x04\x44\x61te\x12\x0c\n\x04year\x18\x01 \x01(\x05\x12\r\n\x05month\x18\x02 \x01(\x05\x12\x0b\n\x03\x64\x61y\x18\x03 \x01(\x05\"\xc5\x0e\n\rProductSearch\x12\x0e\n\x06offset\x18\x01 \x01(\x05\x12)\n\x08products\x18\x02 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x35\n\x11response_datetime\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\r\n\x05total\x18\x04 \x01(\x05\x1a\x31\n\x06\x43onfig\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\x1a\xba\x01\n\x0cRequestBonds\x12\x1b\n\x13\x62ond_issuer_type_id\x18\x01 \x01(\x05\x12\x18\n\x10\x62ond_exchange_id\x18\x02 \x01(\x05\x12\x13\n\x0bsearch_text\x18\x03 \x01(\t\x12\x0e\n\x06offset\x18\x04 \x01(\x05\x12\r\n\x05limit\x18\x05 \x01(\x05\x12\x15\n\rrequire_total\x18\x06 \x01(\x08\x12\x14\n\x0csort_columns\x18\x07 \x01(\t\x12\x12\n\nsort_types\x18\x08 \x01(\t\x1a\xd7\x01\n\x0bRequestETFs\x12\x14\n\x0cpopular_only\x18\x01 \x01(\x08\x12\x1d\n\x15input_aggregate_types\x18\x02 \x01(\t\x12\x1e\n\x16input_aggregate_values\x18\x03 \x01(\t\x12\x13\n\x0bsearch_text\x18\x04 \x01(\t\x12\x0e\n\x06offset\x18\x05 \x01(\x05\x12\r\n\x05limit\x18\x06 \x01(\x05\x12\x15\n\rrequire_total\x18\x07 \x01(\x08\x12\x14\n\x0csort_columns\x18\x08 \x01(\t\x12\x12\n\nsort_types\x18\t \x01(\t\x1a\x83\x01\n\x0cRequestFunds\x12\x13\n\x0bsearch_text\x18\x01 \x01(\t\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05limit\x18\x03 \x01(\x05\x12\x15\n\rrequire_total\x18\x04 \x01(\x08\x12\x14\n\x0csort_columns\x18\x05 \x01(\t\x12\x12\n\nsort_types\x18\x06 \x01(\t\x1a\xba\x01\n\x0eRequestFutures\x12\x1a\n\x12\x66uture_exchange_id\x18\x01 \x01(\x05\x12\x17\n\x0funderlying_isin\x18\x02 \x01(\t\x12\x13\n\x0bsearch_text\x18\x03 \x01(\t\x12\x0e\n\x06offset\x18\x04 \x01(\x05\x12\r\n\x05limit\x18\x05 \x01(\x05\x12\x15\n\rrequire_total\x18\x06 \x01(\x08\x12\x14\n\x0csort_columns\x18\x07 \x01(\t\x12\x12\n\nsort_types\x18\x08 \x01(\t\x1a\xdd\x01\n\x11RequestLeverageds\x12\x14\n\x0cpopular_only\x18\x01 \x01(\x08\x12\x1d\n\x15input_aggregate_types\x18\x02 \x01(\t\x12\x1e\n\x16input_aggregate_values\x18\x03 \x01(\t\x12\x13\n\x0bsearch_text\x18\x04 \x01(\t\x12\x0e\n\x06offset\x18\x05 \x01(\x05\x12\r\n\x05limit\x18\x06 \x01(\x05\x12\x15\n\rrequire_total\x18\x07 \x01(\x08\x12\x14\n\x0csort_columns\x18\x08 \x01(\t\x12\x12\n\nsort_types\x18\t \x01(\t\x1a\\\n\rRequestLookup\x12\x13\n\x0bsearch_text\x18\x01 \x01(\t\x12\r\n\x05limit\x18\x02 \x01(\x05\x12\x0e\n\x06offset\x18\x03 \x01(\x05\x12\x17\n\x0fproduct_type_id\x18\x04 \x01(\x05\x1a\xf9\x01\n\x0eRequestOptions\x12\x1d\n\x15input_aggregate_types\x18\x01 \x01(\t\x12\x1e\n\x16input_aggregate_values\x18\x02 \x01(\t\x12\x1a\n\x12option_exchange_id\x18\x03 \x01(\x05\x12\x17\n\x0funderlying_isin\x18\x04 \x01(\t\x12\x13\n\x0bsearch_text\x18\x05 \x01(\t\x12\x0e\n\x06offset\x18\x06 \x01(\x05\x12\r\n\x05limit\x18\x07 \x01(\x05\x12\x15\n\rrequire_total\x18\x08 \x01(\x08\x12\x14\n\x0csort_columns\x18\t \x01(\t\x12\x12\n\nsort_types\x18\n \x01(\t\x1a\xe2\x01\n\rRequestStocks\x12\x1b\n\x13is_in_us_green_list\x18\x01 \x01(\x08\x12\x10\n\x08index_id\x18\x02 \x01(\x05\x12\x13\n\x0b\x65xchange_id\x18\x03 \x01(\x05\x12\x18\n\x10stock_country_id\x18\x04 \x01(\x05\x12\x13\n\x0bsearch_text\x18\x05 \x01(\t\x12\x0e\n\x06offset\x18\x06 \x01(\x05\x12\r\n\x05limit\x18\x07 \x01(\x05\x12\x15\n\rrequire_total\x18\x08 \x01(\x08\x12\x14\n\x0csort_columns\x18\t \x01(\t\x12\x12\n\nsort_types\x18\n \x01(\t\x1a\x86\x01\n\x0fRequestWarrants\x12\x13\n\x0bsearch_text\x18\x01 \x01(\t\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05limit\x18\x03 \x01(\x05\x12\x15\n\rrequire_total\x18\x04 \x01(\x08\x12\x14\n\x0csort_columns\x18\x05 \x01(\t\x12\x12\n\nsort_types\x18\x06 \x01(\t\"\xc9\x01\n\nFavourites\x12\x39\n\x06values\x18\x01 \x03(\x0b\x32).degiro_connector.trading.Favourites.List\x12\x35\n\x11response_datetime\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1aI\n\x04List\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x12\n\nis_default\x18\x03 \x01(\x08\x12\x13\n\x0bproduct_ids\x18\x04 \x03(\x05\"T\n\x0cProductsInfo\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\x1a\x1b\n\x07Request\x12\x10\n\x08products\x18\x01 \x03(\x05\"8\n\rCompanyRatios\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\"9\n\x0e\x43ompanyProfile\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\">\n\x13\x46inancialStatements\x12\'\n\x06values\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\"\x90\x01\n\nLatestNews\x12&\n\x05items\x18\x01 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05total\x18\x03 \x01(\x05\x1a;\n\x07Request\x12\x0e\n\x06offset\x18\x01 \x01(\x05\x12\x11\n\tlanguages\x18\x02 \x01(\t\x12\r\n\x05limit\x18\x03 \x01(\x05\"W\n\x0eTopNewsPreview\x12&\n\x05items\x18\x01 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05total\x18\x03 \x01(\x05\"\xa1\x01\n\rNewsByCompany\x12&\n\x05items\x18\x01 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05total\x18\x03 \x01(\x05\x1aI\n\x07Request\x12\x0c\n\x04isin\x18\x01 \x01(\t\x12\r\n\x05limit\x18\x02 \x01(\x05\x12\x0e\n\x06offset\x18\x03 \x01(\x05\x12\x11\n\tlanguages\x18\x04 \x01(\t\"\x87\x04\n\x11\x43\x61shAccountReport\x12\x0f\n\x07\x63ontent\x18\x01 \x01(\t\x12\x42\n\x06\x66ormat\x18\x02 \x01(\x0e\x32\x32.degiro_connector.trading.CashAccountReport.Format\x12\x35\n\x11response_datetime\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\xb6\x02\n\x07Request\x12\x42\n\x06\x66ormat\x18\x01 \x01(\x0e\x32\x32.degiro_connector.trading.CashAccountReport.Format\x12\x0f\n\x07\x63ountry\x18\x02 \x01(\t\x12\x0c\n\x04lang\x18\x03 \x01(\t\x12K\n\tfrom_date\x18\x04 \x01(\x0b\x32\x38.degiro_connector.trading.CashAccountReport.Request.Date\x12I\n\x07to_date\x18\x05 \x01(\x0b\x32\x38.degiro_connector.trading.CashAccountReport.Request.Date\x1a\x30\n\x04\x44\x61te\x12\x0c\n\x04year\x18\x01 \x01(\x05\x12\r\n\x05month\x18\x02 \x01(\x05\x12\x0b\n\x03\x64\x61y\x18\x03 \x01(\x05\"-\n\x06\x46ormat\x12\x07\n\x03\x43SV\x10\x00\x12\x08\n\x04HTML\x10\x01\x12\x07\n\x03PDF\x10\x02\x12\x07\n\x03XLS\x10\x03\"\x95\x05\n\x06\x41genda\x12\x44\n\rcalendar_type\x18\x01 \x01(\x0e\x32-.degiro_connector.trading.Agenda.CalendarType\x12&\n\x05items\x18\x02 \x03(\x0b\x32\x17.google.protobuf.Struct\x12\x0e\n\x06offset\x18\x03 \x01(\x05\x12\r\n\x05total\x18\x04 \x01(\x05\x12\x35\n\x11response_datetime\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\xb4\x02\n\x07Request\x12\x44\n\rcalendar_type\x18\x01 \x01(\x0e\x32-.degiro_connector.trading.Agenda.CalendarType\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05limit\x18\x03 \x01(\x05\x12\x15\n\rorder_by_desc\x18\x04 \x01(\x08\x12.\n\nstart_date\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12,\n\x08\x65nd_date\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x14\n\x0c\x63ompany_name\x18\x07 \x01(\t\x12\x11\n\tcountries\x18\x08 \x01(\t\x12\x17\n\x0f\x63lassifications\x18\t \x01(\t\x12\r\n\x05units\x18\n \x01(\t\"\x8f\x01\n\x0c\x43\x61lendarType\x12\x15\n\x11\x44IVIDEND_CALENDAR\x10\x00\x12\x15\n\x11\x45\x43ONOMIC_CALENDAR\x10\x01\x12\x15\n\x11\x45\x41RNINGS_CALENDAR\x10\x02\x12\x14\n\x10HOLIDAY_CALENDAR\x10\x03\x12\x10\n\x0cIPO_CALENDAR\x10\x04\x12\x12\n\x0eSPLIT_CALENDAR\x10\x05\x62\x06proto3'
   ,
   dependencies=[google_dot_protobuf_dot_struct__pb2.DESCRIPTOR,google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,])
 
@@ -202,8 +202,8 @@ _CASHACCOUNTREPORT_FORMAT = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=7106,
-  serialized_end=7151,
+  serialized_start=7127,
+  serialized_end=7172,
 )
 _sym_db.RegisterEnumDescriptor(_CASHACCOUNTREPORT_FORMAT)
 
@@ -247,8 +247,8 @@ _AGENDA_CALENDARTYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=7672,
-  serialized_end=7815,
+  serialized_start=7693,
+  serialized_end=7836,
 )
 _sym_db.RegisterEnumDescriptor(_AGENDA_CALENDARTYPE)
 
@@ -1994,50 +1994,57 @@ _PRODUCTSEARCH_REQUESTSTOCKS = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='stock_country_id', full_name='degiro_connector.trading.ProductSearch.RequestStocks.stock_country_id', index=2,
+      name='exchange_id', full_name='degiro_connector.trading.ProductSearch.RequestStocks.exchange_id', index=2,
       number=3, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='search_text', full_name='degiro_connector.trading.ProductSearch.RequestStocks.search_text', index=3,
-      number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='offset', full_name='degiro_connector.trading.ProductSearch.RequestStocks.offset', index=4,
-      number=5, type=5, cpp_type=1, label=1,
+      name='stock_country_id', full_name='degiro_connector.trading.ProductSearch.RequestStocks.stock_country_id', index=3,
+      number=4, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='limit', full_name='degiro_connector.trading.ProductSearch.RequestStocks.limit', index=5,
+      name='search_text', full_name='degiro_connector.trading.ProductSearch.RequestStocks.search_text', index=4,
+      number=5, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='offset', full_name='degiro_connector.trading.ProductSearch.RequestStocks.offset', index=5,
       number=6, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='require_total', full_name='degiro_connector.trading.ProductSearch.RequestStocks.require_total', index=6,
-      number=7, type=8, cpp_type=7, label=1,
+      name='limit', full_name='degiro_connector.trading.ProductSearch.RequestStocks.limit', index=6,
+      number=7, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='require_total', full_name='degiro_connector.trading.ProductSearch.RequestStocks.require_total', index=7,
+      number=8, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='sort_columns', full_name='degiro_connector.trading.ProductSearch.RequestStocks.sort_columns', index=7,
-      number=8, type=9, cpp_type=9, label=1,
+      name='sort_columns', full_name='degiro_connector.trading.ProductSearch.RequestStocks.sort_columns', index=8,
+      number=9, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='sort_types', full_name='degiro_connector.trading.ProductSearch.RequestStocks.sort_types', index=8,
-      number=9, type=9, cpp_type=9, label=1,
+      name='sort_types', full_name='degiro_connector.trading.ProductSearch.RequestStocks.sort_types', index=9,
+      number=10, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -2055,7 +2062,7 @@ _PRODUCTSEARCH_REQUESTSTOCKS = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=5416,
-  serialized_end=5621,
+  serialized_end=5642,
 )
 
 _PRODUCTSEARCH_REQUESTWARRANTS = _descriptor.Descriptor(
@@ -2120,8 +2127,8 @@ _PRODUCTSEARCH_REQUESTWARRANTS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5624,
-  serialized_end=5758,
+  serialized_start=5645,
+  serialized_end=5779,
 )
 
 _PRODUCTSEARCH = _descriptor.Descriptor(
@@ -2173,7 +2180,7 @@ _PRODUCTSEARCH = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=3918,
-  serialized_end=5758,
+  serialized_end=5779,
 )
 
 
@@ -2225,8 +2232,8 @@ _FAVOURITES_LIST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5889,
-  serialized_end=5962,
+  serialized_start=5910,
+  serialized_end=5983,
 )
 
 _FAVOURITES = _descriptor.Descriptor(
@@ -2263,8 +2270,8 @@ _FAVOURITES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5761,
-  serialized_end=5962,
+  serialized_start=5782,
+  serialized_end=5983,
 )
 
 
@@ -2295,8 +2302,8 @@ _PRODUCTSINFO_REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6021,
-  serialized_end=6048,
+  serialized_start=6042,
+  serialized_end=6069,
 )
 
 _PRODUCTSINFO = _descriptor.Descriptor(
@@ -2326,8 +2333,8 @@ _PRODUCTSINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5964,
-  serialized_end=6048,
+  serialized_start=5985,
+  serialized_end=6069,
 )
 
 
@@ -2358,8 +2365,8 @@ _COMPANYRATIOS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6050,
-  serialized_end=6106,
+  serialized_start=6071,
+  serialized_end=6127,
 )
 
 
@@ -2390,8 +2397,8 @@ _COMPANYPROFILE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6108,
-  serialized_end=6165,
+  serialized_start=6129,
+  serialized_end=6186,
 )
 
 
@@ -2422,8 +2429,8 @@ _FINANCIALSTATEMENTS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6167,
-  serialized_end=6229,
+  serialized_start=6188,
+  serialized_end=6250,
 )
 
 
@@ -2468,8 +2475,8 @@ _LATESTNEWS_REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6317,
-  serialized_end=6376,
+  serialized_start=6338,
+  serialized_end=6397,
 )
 
 _LATESTNEWS = _descriptor.Descriptor(
@@ -2513,8 +2520,8 @@ _LATESTNEWS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6232,
-  serialized_end=6376,
+  serialized_start=6253,
+  serialized_end=6397,
 )
 
 
@@ -2559,8 +2566,8 @@ _TOPNEWSPREVIEW = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6378,
-  serialized_end=6465,
+  serialized_start=6399,
+  serialized_end=6486,
 )
 
 
@@ -2612,8 +2619,8 @@ _NEWSBYCOMPANY_REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6556,
-  serialized_end=6629,
+  serialized_start=6577,
+  serialized_end=6650,
 )
 
 _NEWSBYCOMPANY = _descriptor.Descriptor(
@@ -2657,8 +2664,8 @@ _NEWSBYCOMPANY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6468,
-  serialized_end=6629,
+  serialized_start=6489,
+  serialized_end=6650,
 )
 
 
@@ -2762,8 +2769,8 @@ _CASHACCOUNTREPORT_REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6794,
-  serialized_end=7104,
+  serialized_start=6815,
+  serialized_end=7125,
 )
 
 _CASHACCOUNTREPORT = _descriptor.Descriptor(
@@ -2808,8 +2815,8 @@ _CASHACCOUNTREPORT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6632,
-  serialized_end=7151,
+  serialized_start=6653,
+  serialized_end=7172,
 )
 
 
@@ -2903,8 +2910,8 @@ _AGENDA_REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7361,
-  serialized_end=7669,
+  serialized_start=7382,
+  serialized_end=7690,
 )
 
 _AGENDA = _descriptor.Descriptor(
@@ -2963,8 +2970,8 @@ _AGENDA = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7154,
-  serialized_end=7815,
+  serialized_start=7175,
+  serialized_end=7836,
 )
 
 _CREDENTIALS.oneofs_by_name['oneof_2fa'].fields.append(

@@ -35,9 +35,12 @@ trading_api.connect()
 
 # SETUP REQUEST
 request_stock = ProductSearch.RequestStocks(
-    index_id=5,
-    is_in_us_green_list=False,
-    stock_country_id=886,
+    index_id=122001,  # NASDAQ 100
+    exchange_id=663,  # NASDAQ
+    # You can either use `index_id` or `exchange id`
+    # See which one to use in the `ProductsConfig` table
+    is_in_us_green_list=True,
+    stock_country_id=846,  # US
     offset=0,
     limit=100,
     require_total=True,
