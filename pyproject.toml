@@ -13,14 +13,14 @@ packages = [
 ]
 readme = "README.md"
 repository = "https://github.com/chavithra/degiro-connector"
-version = "2.0.5"
+version = "2.0.6"
 
 [tool.poetry.dependencies]
 python = ">=3.6.2"
-grpcio = "^1.38.1"
+grpcio = "^1.41.1"
 onetimepass = "^1.0.1"
 orjson = "^3.6.0"
-protobuf = "^3.17.3"
+protobuf = "^3.19.1"
 requests = "^2.26.0"
 wrapt = "^1.12.1"
 pandas = "<=1.1.5"
