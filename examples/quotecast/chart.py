@@ -21,9 +21,9 @@ quotecast_api = QuotecastAPI(user_token=user_token)
 # PREPARE REQUEST
 request = Chart.Request()
 request.culture = "fr-FR"
-request.period = Chart.Interval.PT1H
+request.period = Chart.Interval.P1D
 request.requestid = "1"
-request.resolution = Chart.Interval.P1D
+request.resolution = Chart.Interval.PT1H
 # request.series.append("issueid:360148977")
 request.series.append("price:issueid:360148977")
 # request.series.append("ohlc:issueid:360148977")

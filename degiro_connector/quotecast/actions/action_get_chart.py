@@ -252,24 +252,26 @@ class ActionGetChart(AbstractAction):
             request (Chart.Request):
                 Example :
                     request = Chart.Request()
-                    request.requestid = '1'
-                    request.resolution = Chart.Interval.PT1M
-                    request.culture = 'fr-FR'
-                    request.series.append('issueid:360148977')
-                    request.series.append('price:issueid:360148977')
-                    request.series.append('ohlc:issueid:360148977')
-                    request.series.append('volume:issueid:360148977')
-                    request.period = Chart.Interval.P1D
-                    request.tz = 'Europe/Paris'
+                    request.culture = "fr-FR"
+                    request.period = Chart.Interval.PT1H
+                    request.requestid = "1"
+                    request.resolution = Chart.Interval.P1D
+                    # request.series.append("issueid:360148977")
+                    request.series.append("price:issueid:360148977")
+                    # request.series.append("ohlc:issueid:360148977")
+                    # request.series.append("volume:issueid:360148977")
+                    # request.series.append("vwdkey:AAPL.BATS,E")
+                    # request.series.append("price:vwdkey:AAPL.BATS,E")
+                    # request.series.append("ohlc:vwdkey:AAPL.BATS,E")
+                    # request.series.append("volume:vwdkey:AAPL.BATS,E")
+                    request.tz = "Europe/Paris"
+                    request.override["resolution"] = "P1D"
+                    request.override["period"] = "P1W"
+                    
+                    The parameter `request.override` allows overriding
+                    the request sent to Degiro's API.
             user_token (int):
                 User identifier in Degiro's API.
-            override (Dict[str], optional):
-                Overrides the request sent to Degiro's API.
-                Example :
-                    override = {
-                        'period':'P6D',
-                    }
-                Defaults to None.
             raw (bool, optional):
                 Whether are not we want the raw API response.
                 Defaults to False.
