@@ -50,12 +50,12 @@ chart = quotecast_api.get_chart(
 ChartHelper.format_chart(chart=chart, copy=False)
 
 # A `DataFrame` is easier to play with
-# Only series with the following types can be converted into DataFrame :
+# Only series with the following types can be converted into a DataFrame :
 # - serie.type == "time"
 # - serie.type == "ohlc"
 # Beware of series with the following type :
 #  - serie.type == "object"
-# These are not actual timeseries and can't converted into DataFrame.
+# These are not actual timeseries and can't be converted into a DataFrame.
 chart0_df = ChartHelper.serie_to_df(serie=chart.series[0])
 
 # Having `datetime` as `index` is even more convenient
