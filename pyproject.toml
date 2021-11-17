@@ -16,14 +16,14 @@ repository = "https://github.com/chavithra/degiro-connector"
 version = "2.0.7"
 
 [tool.poetry.dependencies]
-python = ">=3.6.2"
+python = "^3.7"
 grpcio = "^1.41.1"
 onetimepass = "^1.0.1"
 orjson = "^3.6.0"
 protobuf = "^3.19.1"
 requests = "^2.26.0"
 wrapt = "^1.12.1"
-pandas = "<=1.1.5"
+pandas = "^1.1.5"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.4"
