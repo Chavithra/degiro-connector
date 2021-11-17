@@ -35,7 +35,6 @@ request.series.append("ohlc:issueid:360148977")
 # request.series.append("ohlc:vwdkey:AAPL.BATS,E")
 # request.series.append("volume:vwdkey:AAPL.BATS,E")
 request.tz = "Europe/Paris"
-request.tz = "Europe/Paris"
 request.override["resolution"] = "P1D"
 request.override["period"] = "P1W"
 
