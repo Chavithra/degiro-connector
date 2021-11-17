@@ -35,6 +35,7 @@ types-protobuf = "^3.17.4"
 types-requests = "^2.25.9"
 types-orjson = "^3.6.0"
 mypy-protobuf = "^2.10"
+pytest-mock = "^3.6.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
