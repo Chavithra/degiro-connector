@@ -194,7 +194,7 @@ class ChartHelper:
         else:
             raise AttributeError(f"Unknown serie, serie.type = {serie.type}")
 
-        return pd.DataFrame(serie.data, columns=columns)
+        return pd.DataFrame.from_records(serie.data, columns=columns)
 
 
 class ActionGetChart(AbstractAction):
