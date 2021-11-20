@@ -1,12 +1,12 @@
 # IMPORTATION STANDARD
-import requests
 import logging
 from datetime import datetime
-from typing import Dict, Optional
+from typing import Optional
 
 # IMPORTATION THIRD PARTY
 import orjson as json
 import pandas as pd
+import requests
 from google.protobuf import json_format
 from google.protobuf.message import Message
 
@@ -194,7 +194,7 @@ class ChartHelper:
         else:
             raise AttributeError(f"Unknown serie, serie.type = {serie.type}")
 
-        return pd.DataFrame(serie.data, columns=columns)
+        return pd.DataFrame.from_records(serie.data, columns=columns)
 
 
 class ActionGetChart(AbstractAction):
