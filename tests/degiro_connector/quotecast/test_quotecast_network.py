@@ -98,10 +98,14 @@ def test_format_chart(quotecast_connected, stock_request):
     )
 
     ChartHelper.format_chart(chart=chart, copy=False)
-    chart0_df = ChartHelper.serie_to_df(serie=chart.series[1])
+    chart1 = chart.series[1]
+    chart1_df = ChartHelper.serie_to_df(serie=chart1)
 
-    assert isinstance(chart0_df, pandas.DataFrame)
-    assert len(chart0_df) > 0
+    assert isinstance(chart1_df, pandas.DataFrame)
+    assert len(chart1_df) == len(chart1.data)
+
+    for index, row in chart1_df.iterrows():
+        assert row.price == chart1.data[index][1]
 
 
 @pytest.mark.quotecast
