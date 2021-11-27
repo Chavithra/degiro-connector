@@ -1,12 +1,12 @@
 # IMPORTATION STANDARD
-import requests
 import logging
 from datetime import datetime
-from typing import Dict, Optional
+from typing import Optional
 
 # IMPORTATION THIRD PARTY
 import orjson as json
 import pandas as pd
+import requests
 from google.protobuf import json_format
 from google.protobuf.message import Message
 

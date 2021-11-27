@@ -4,13 +4,15 @@ import random
 import time
 
 # IMPORTATION THIRD PARTY
+import pandas
 import pytest
 import urllib3
 
 # IMPORTATION INTERNAL
 import degiro_connector.core.helpers.pb_handler as pb_handler
+from degiro_connector.quotecast.actions.action_get_chart import ChartHelper
 from degiro_connector.quotecast.models.quotecast_parser import QuotecastParser
-from degiro_connector.quotecast.models.quotecast_pb2 import Chart, Quotecast
+from degiro_connector.quotecast.models.quotecast_pb2 import Quotecast
 
 # SETUP LOGGING
 logging.basicConfig(level=logging.FATAL)
@@ -20,23 +22,12 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 # TESTS FEATURES
 @pytest.mark.network
 @pytest.mark.quotecast
-def test_chart(quotecast_connected):
+def test_chart(quotecast_connected, stock_request):
     time.sleep(random.uniform(0, 2))
-
-    request = Chart.Request()
-    request.requestid = "1"
-    request.resolution = Chart.Interval.PT1M
-    request.culture = "fr-FR"
-    request.series.append("issueid:360148977")
-    request.series.append("price:issueid:360148977")
-    request.series.append("ohlc:issueid:360148977")
-    request.series.append("volume:issueid:360148977")
-    request.period = Chart.Interval.P1D
-    request.tz = "Europe/Paris"
 
     # FETCH DATA
     chart = quotecast_connected.get_chart(
-        request=request,
+        request=stock_request,
         raw=True,
     )
 
@@ -93,6 +84,28 @@ def test_chart(quotecast_connected):
     assert chart["resolution"] == "PT1M"
     assert chart["series"][0]["data"]["quality"] == "REALTIME"
     assert chart["series"][0]["data"]["issueId"] == 360148977
+
+
+@pytest.mark.quotecast
+@pytest.mark.network
+def test_format_chart(quotecast_connected, stock_request):
+    time.sleep(random.uniform(0, 2))
+
+    # FETCH DATA
+    chart = quotecast_connected.get_chart(
+        request=stock_request,
+        raw=False,
+    )
+
+    ChartHelper.format_chart(chart=chart, copy=False)
+    chart1 = chart.series[1]
+    chart1_df = ChartHelper.serie_to_df(serie=chart1)
+
+    assert isinstance(chart1_df, pandas.DataFrame)
+    assert len(chart1_df) == len(chart1.data)
+
+    for index, row in chart1_df.iterrows():
+        assert row.price == chart1.data[index][1]
 
 
 @pytest.mark.quotecast

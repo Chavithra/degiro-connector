@@ -7,6 +7,7 @@ import urllib3
 
 # IMPORTATION INTERNAL
 from degiro_connector.quotecast.api import API as QuotecastAPI
+from degiro_connector.quotecast.models.quotecast_pb2 import Chart
 
 # SETUP LOGGING
 logging.basicConfig(level=logging.FATAL)
@@ -27,3 +28,21 @@ def quotecast_connected(quotecast) -> QuotecastAPI:
     quotecast.connect()
 
     return quotecast
+
+
+@pytest.mark.quotecast
+@pytest.fixture(scope="module")
+def stock_request() -> Chart.Request:
+    request = Chart.Request()
+
+    request.requestid = "1"
+    request.resolution = Chart.Interval.PT1M
+    request.culture = "fr-FR"
+    request.series.append("issueid:360148977")
+    request.series.append("price:issueid:360148977")
+    request.series.append("ohlc:issueid:360148977")
+    request.series.append("volume:issueid:360148977")
+    request.period = Chart.Interval.P1D
+    request.tz = "Europe/Paris"
+
+    return request
