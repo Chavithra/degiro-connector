@@ -134,7 +134,8 @@ class ActionProductSearch(AbstractAction):
         params = cls.product_search_request_to_api(
             request=request,
         )
-        params["intAccount"] = credentials.int_account
+        # this parameter caused 404
+        # params["intAccount"] = credentials.int_account
         params["sessionId"] = session_id
 
         http_request = requests.Request(method="GET", url=url, params=params)
