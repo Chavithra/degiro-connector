@@ -87,7 +87,7 @@ pip uninstall degiro-connector
   * [2.9. How to use this data ?](#29-how-to-use-this-data-)
   * [2.10. Which are the available data types ?](#210-which-are-the-available-data-types-)
   * [2.11. What is a Ticker ?](#211-what-is-a-ticker-)
-  * [2.12. What is inside the Dictionnary ?](#212-what-is-inside-the-dictionnary-)
+  * [2.12. What is inside the Dictionary ?](#212-what-is-inside-the-dictionary-)
   * [2.13. What is inside the DataFrame ?](#213-what-is-inside-the-dataframe-)
   * [2.14. How to get chart data ?](#214-how-to-get-chart-data-)
   * [2.15. How to find a : vwd_id ?](#215-how-to-find-a--vwd_id-)
@@ -150,10 +150,12 @@ For instance if one needs the following data from the "AAPL" stock :
 * LastPrice
 * LastVolume
 
-He can use this library to retrieve update like this :
+You can use this library to retrieve update like this :
 
     LastDate    LastTime    LastPrice LastVolume
     2020-11-13  22:00:00    119.26    4697040
+
+For a list of available metrics, see the example in [section 2.6](#26-how-to-subscribe-to-a-data-stream-).
 
 ## 2.1. What are the workflows ?
 
@@ -235,7 +237,9 @@ request.subscriptions['360015751'].extend([
     'LastPrice',
     'LastVolume',
     'AskPrice',
+    'AskVolume',
     'BidPrice',
+    'BidVolume'
 ])
 request.subscriptions['AAPL.BATS,E'].extend([
     'LastDate',
@@ -243,7 +247,9 @@ request.subscriptions['AAPL.BATS,E'].extend([
     'LastPrice',
     'LastVolume',
     'AskPrice',
+    'AskVolume',
     'BidPrice',
+    'BidVolume'
 ])
 ```
 
@@ -283,7 +289,9 @@ request.unsubscriptions['360015751'].extend([
     'LastPrice',
     'LastVolume',
     'AskPrice',
+    'AskVolume',
     'BidPrice',
+    'BidVolume'
 ])
 request.unsubscriptions['AAPL.BATS,E'].extend([
     'LastDate',
@@ -291,7 +299,9 @@ request.unsubscriptions['AAPL.BATS,E'].extend([
     'LastPrice',
     'LastVolume',
     'AskPrice',
+    'AskVolume',
     'BidPrice',
+    'BidVolume'
 ])
 ```
 
@@ -316,11 +326,11 @@ For a more comprehensive example :
 
 ## 2.9. How to use this data ?
 
-Received data is a Quotecast object with the following properties :
+Received data is a `Quotecast` object with the following properties :
 
 |**Parameter**|**Type**|**Description**|
 |:-|:-|:-|
-|json_data|dict|Dictionnary representation of what Degiro's API has sent.|
+|json_data|dict|Dictionary representation of what Degiro's API has sent.|
 |metadata|Metadata|Containing the "response_datetime" and "request_duration".|
 
 Here is how to access these properties :
@@ -329,6 +339,9 @@ json_data = quotecast.json_data
 response_datetime = quotecast.metadata.response_datetime
 request_duration= quotecast.metadata.request_duration
 ```
+Notes: 
+* The API sometimes might return an empty Quotecast object.
+* The API often returns a subset of the requested metrics, e.g. only `'LastPrice'`. Please take this into account when appending consecutive data responses.
 
 ## 2.10. Which are the available data types ?
 
@@ -339,7 +352,7 @@ Here is the list of available data types :
 |**Type**|**Description**|
 |:-|:-|
 |Ticker|Protobuf message (for GRPC).|
-|Dictionnaries|Standard Python Dictionaries : **dict**.|
+|Dictionaries|Standard Python Dictionaries : **dict**.|
 |DataFrame|DataFrame from the library Pandas.|
 
 Here is how to build each type :
@@ -365,7 +378,7 @@ The generated Ticker contains :
 |**Parameter**|**Type**|**Description**|
 |:-|:-|:-|
 |metadata|Metadata|Containing the "response_datetime" and "request_duration".|
-|products|MessageMap|Dictionnary like object containing the metrics group by "vwd_id".|
+|products|MessageMap|Dictionary like object containing the metrics group by "vwd_id".|
 |product_list|RepeatedScalarFieldContainer|List of available "vwd_id".|
 
 Here are some operations available :
@@ -393,13 +406,13 @@ A Ticker is a custom Protocol Buffer Message built for this library.
 
 It can be transmitted over GRPC framework.
 
-## 2.12. What is inside the Dictionnary ?
+## 2.12. What is inside the Dictionary ?
 
-The dictionnary representation of a ticker contains the metrics grouped by "vwd_id" (product id), with :
+The dictionary representation of a ticker contains the metrics grouped by "vwd_id" (product id), with :
 * keys : vwd_id
-* values : another dictionnary with the metrics concerning this specific product.
+* values : another dictionary with the metrics concerning this specific product.
 
-Example - Dictionnary :
+Example - Dictionary :
 
 ```python
 {
@@ -426,7 +439,7 @@ Example - Dictionnary :
 
 ## 2.13. What is inside the DataFrame ?
 
-In addition to whatever metrics you have chosen to subscribe to, the DataFrame will contain the following columns :
+In addition to whatever metrics you have chosen to subscribe to (see the example in [section 2.6](#26-how-to-subscribe-to-a-data-stream-)), the DataFrame will contain the following columns :
 |**Column**|**Description**|
 |:-|:-|
 |vwd_id|Product identifier, for instance "AAPL.BATS,E" for APPLE stock.|
