@@ -150,7 +150,7 @@ For instance if one needs the following data from the "AAPL" stock :
 * LastPrice
 * LastVolume
 
-You can use this library to retrieve update like this :
+You can use this library to retrieve updates like this :
 
     LastDate    LastTime    LastPrice LastVolume
     2020-11-13  22:00:00    119.26    4697040
@@ -189,7 +189,7 @@ You can find your "user_token" inside one of these tables :
 * "Config" : attribute "clientId"
 * "ClientDetails" : attribute "id"
 
-See section related to "Config" and "ClientDetails" tables.
+See sections related to ["Config"](#61-how-to-retrieve-the-table--config-) and ["ClientDetails"](#62-how-to-retrieve-the-table--clientdetails-) tables.
 
 ## 2.4. How to login ?
 
@@ -228,7 +228,7 @@ A Request has the following parameters :
 |subscriptions|MessageMap|List of products and metrics to subscribe to.|
 |unsubscriptions|MessageMap|List of products and metrics to unsubscribe to.|
 
-Here is an example of request :
+Here is an example of a request :
 ```python
 request = Quotecast.Request()
 request.subscriptions['360015751'].extend([
@@ -253,11 +253,11 @@ request.subscriptions['AAPL.BATS,E'].extend([
 ])
 ```
 
-In this example these are the `vwd_id` of the product from which you want `Real-time data` :
+In this example these are the `vwd_id` of the products from which you want `Real-time data` :
 - 360015751
 - AAPL.BATS,E
 
-See the section related to `vwd_id` for more information.
+See the [section](#215-how-to-find-a--vwd_id-) related to `vwd_id` for more information.
 
 Once you have built this Request object you can send it to Degiro's API like this :
 ```python
@@ -280,7 +280,7 @@ A Request has the following parameters :
 |subscriptions|MessageMap|List of products and metrics to subscribe to.|
 |unsubscriptions|MessageMap|List of products and metrics to unsubscribe to.|
 
-Here is an example of request :
+Here is an example of a request :
 ```python
 request = Quotecast.Request()
 request.unsubscriptions['360015751'].extend([
