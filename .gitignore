@@ -27,6 +27,7 @@ __pycache__
 *.ipynb
 *.log
 *.pickle
+*.png
 *.sh
 *.txt
 *.xlsx
