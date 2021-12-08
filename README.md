@@ -234,7 +234,6 @@ request.subscriptions['360015751'].extend([
     'LastTime',
     'LastPrice',
     'LastVolume',
-    'LastPrice',
     'AskPrice',
     'BidPrice',
 ])
@@ -243,7 +242,6 @@ request.subscriptions['AAPL.BATS,E'].extend([
     'LastTime',
     'LastPrice',
     'LastVolume',
-    'LastPrice',
     'AskPrice',
     'BidPrice',
 ])
@@ -284,7 +282,6 @@ request.unsubscriptions['360015751'].extend([
     'LastTime',
     'LastPrice',
     'LastVolume',
-    'LastPrice',
     'AskPrice',
     'BidPrice',
 ])
@@ -293,7 +290,6 @@ request.unsubscriptions['AAPL.BATS,E'].extend([
     'LastTime',
     'LastPrice',
     'LastVolume',
-    'LastPrice',
     'AskPrice',
     'BidPrice',
 ])
