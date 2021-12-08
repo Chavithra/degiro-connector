@@ -4,7 +4,7 @@ from datetime import datetime
 from typing import Optional
 
 # IMPORTATION THIRD PARTY
-import orjson as json
+import json
 import pandas as pd
 import requests
 from google.protobuf import json_format

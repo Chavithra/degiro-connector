@@ -1,6 +1,6 @@
 import datetime
 import logging
-import orjson as json
+import json
 import pandas as pd
 
 from degiro_connector.quotecast.models.metrics_storage import MetricsStorage
