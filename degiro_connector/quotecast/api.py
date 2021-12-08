@@ -100,7 +100,7 @@ class API:
         self._logger = logger or logging.getLogger(self.__module__)
         self._session_storage = session_storage or ModelSession(
             hooks=self._connection_storage.build_hooks(),
-            ssl_check=False,
+            ssl_check=True,
         )
         self._action_list = self.build_action_list()
 
