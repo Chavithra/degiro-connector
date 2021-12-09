@@ -140,9 +140,14 @@ class ActionConfirmOrder(AbstractAction):
         except requests.HTTPError as e:
             logger.fatal(response_raw.status_code)
             logger.fatal(response_raw.text)
+            response_dict = response_raw.json()
         except Exception as e:
             logger.fatal(e)
-            return None
+            response_dict = response_raw.json()
+            if raw is True:
+                return response_dict
+            else:
+                return None
 
         if (
             isinstance(response_dict, dict)
@@ -158,7 +163,10 @@ class ActionConfirmOrder(AbstractAction):
                     payload=response_dict,
                 )
         else:
-            return None
+            if raw is True:
+                return response_dict
+            else:
+                return None
 
     def call(
         self,
