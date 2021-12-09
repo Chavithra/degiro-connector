@@ -134,8 +134,10 @@ class ActionCheckOrder(AbstractAction):
             response_raw = session.send(prepped, verify=False)
             response_raw.raise_for_status()
             response_dict = response_raw.json()
+        except requests.HTTPError as e:
+            logger.fatal(response_raw.status_code)
+            logger.fatal(response_raw.text)
         except Exception as e:
-            logger.fatal(response_raw)
             logger.fatal(e)
             return None
 

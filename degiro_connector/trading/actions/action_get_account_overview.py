@@ -121,8 +121,10 @@ class ActionGetAccountOverview(AbstractAction):
                 return cls.account_overview_to_grpc(
                     payload=response_dict,
                 )
+        except requests.HTTPError as e:
+            logger.fatal(response_raw.status_code)
+            logger.fatal(response_raw.text)
         except Exception as e:
-            logger.fatal(response_raw)
             logger.fatal(e)
             return None
 

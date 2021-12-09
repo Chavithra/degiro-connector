@@ -126,8 +126,10 @@ class ActionGetCashAccountReport(AbstractAction):
                     request=request,
                     payload=response_text,
                 )
+        except requests.HTTPError as e:
+            logger.fatal(response_raw.status_code)
+            logger.fatal(response_raw.text)
         except Exception as e:
-            logger.fatal(response_raw)
             logger.fatal(e)
             return None
 
