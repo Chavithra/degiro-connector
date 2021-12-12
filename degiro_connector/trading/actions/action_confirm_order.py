@@ -140,6 +140,9 @@ class ActionConfirmOrder(AbstractAction):
         except requests.HTTPError as e:
             logger.fatal(response_raw.status_code)
             logger.fatal(response_raw.text)
+            response_dict = response_raw.json()
+            if raw is True:
+                return response_dict
         except Exception as e:
             logger.fatal(e)
             return None
