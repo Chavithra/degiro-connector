@@ -26,7 +26,7 @@ from degiro_connector.quotecast.models.quotecast_relay_pb2_grpc import (
 
 
 class Relay(QuotecastRelayServicer):
-    OVERRIDED_METHOD_LIST = []
+    OVERRIDED_METHOD_LIST: List[str] = []
     PB_WRAPPERS_PATH = "google/protobuf/wrappers.proto"
     PY_TO_PB_TABLE = {
         bool: BoolValue,

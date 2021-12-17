@@ -143,9 +143,8 @@ class API:
     def fetch_metrics(
         self,
         request: Quotecast.Request,
-    ) -> Dict[
-        Union[str, int], Dict[str, Union[str, int]]  # VWD_ID  # METRICS : NAME / VALUE
-    ]:
+    ) -> Dict[str, Dict[str, Union[str, int]]]:
+        # VWD_ID  # METRICS : NAME / VALUE
         """Fetch metrics from a request.
         If you seek realtime it's better to use "fetch_data".
         Since "fetch_data" consumes less ressources.
@@ -160,7 +159,7 @@ class API:
         logger = self._logger
 
         connection_attempts = 0
-        ticker_dict = dict()
+        ticker_dict: Dict[str, Dict[str, Union[str, int]]] = dict()
         while connection_attempts < 2:
             try:
                 self.subscribe(request=request)

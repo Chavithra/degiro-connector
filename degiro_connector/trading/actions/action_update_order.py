@@ -121,8 +121,11 @@ class ActionUpdateOrder(AbstractAction):
             response_raw = session.send(prepped, verify=False)
             response_raw.raise_for_status()
         except requests.HTTPError as e:
-            logger.fatal(response_raw.status_code)
-            logger.fatal(response_raw.text)
+            status_code = getattr(response_raw, "status_code", "No status_code found.")
+            text = getattr(response_raw, "text", "No text found.")
+            logger.fatal(status_code)
+            logger.fatal(text)
+            return None
         except Exception as e:
             logger.fatal(e)
             return None

@@ -19,7 +19,7 @@ class ModelConnection:
     def timeout(self) -> int:
         return self.__timeout
 
-    @property
+    @property  # type: ignore
     @synchronized
     def session_id(self) -> str:
         if not self.__session_id:
@@ -31,7 +31,7 @@ class ModelConnection:
 
         return self.__session_id
 
-    @session_id.setter
+    @session_id.setter  # type: ignore
     @synchronized
     def session_id(self, session_id: str):
         if session_id:

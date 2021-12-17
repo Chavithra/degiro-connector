@@ -141,6 +141,8 @@ class ChartHelper:
         for serie in chart.series:
             cls.format_serie(serie=serie, copy=False)
 
+        return chart
+
     @staticmethod
     def message_to_dict(message: Message) -> dict:
         return json_format.MessageToDict(
@@ -311,8 +313,11 @@ class ActionGetChart(AbstractAction):
                 return cls.api_to_chart(payload=response_dict)
 
         except requests.HTTPError as e:
-            logger.fatal(response_raw.status_code)
-            logger.fatal(response_raw.text)
+            status_code = getattr(response_raw, "status_code", "No status_code found.")
+            text = getattr(response_raw, "text", "No text found.")
+            logger.fatal(status_code)
+            logger.fatal(text)
+            return None
         except Exception as e:
             logger.fatal(e)
             return None

@@ -180,9 +180,8 @@ class QuotecastParser:
     def ticker_to_dict(
         ticker: Ticker,
         column_list: List[str] = None,
-    ) -> Dict[
-        Union[str, int], Dict[str, Union[str, int]]  # VWD_ID  # METRICS : NAME / VALUE
-    ]:
+    ) -> Dict[str, Dict[str, Union[str, int]]]:
+        # VWD_ID  # METRICS : NAME / VALUE
         """Converts a ticker to a "dict".
         Args:
             ticker (Ticker):
@@ -207,7 +206,7 @@ class QuotecastParser:
             ticker.metadata.request_duration.ToMicroseconds() / 10 ** 6
         )
 
-        ticker_dict = dict()
+        ticker_dict:Dict[str, Dict[str, Union[str, int]]] = dict()
         for product in ticker.products:
             ticker_dict[product] = empty_metrics.copy()
             ticker_dict[product]["vwd_id"] = product
@@ -322,7 +321,7 @@ class QuotecastParser:
         return ticker
 
     @property
-    def references(self) -> Dict[int, str]:
+    def references(self) -> Dict[int, List[str]]:
         return self.__references
 
     @property
@@ -338,9 +337,8 @@ class QuotecastParser:
     @property
     def ticker_dict(
         self,
-    ) -> Dict[
-        Union[str, int], Dict[str, Union[str, int]]  # VWD_ID  # METRICS : NAME / VALUE
-    ]:
+    ) -> Dict[str, Dict[str, Union[str, int]]]:
+        # VWD_ID  # METRICS : NAME / VALUE
         ticker = self.__ticker
         ticker_dict = self.ticker_to_dict(ticker=ticker)
         return ticker_dict
@@ -356,7 +354,7 @@ class QuotecastParser:
 
         self.__forward_fill = forward_fill
         self.__metrics_storage = MetricsStorage()
-        self.__references = dict()
+        self.__references:Dict[int, List[str]] = dict()
         self.__ticker = Ticker()
 
         self.__logger = logging.getLogger(self.__module__)
