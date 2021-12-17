@@ -267,7 +267,7 @@ class ActionGetChart(AbstractAction):
                     request.tz = "Europe/Paris"
                     request.override["resolution"] = "P1D"
                     request.override["period"] = "P1W"
-                    
+
                     The parameter `request.override` allows overriding
                     the request sent to Degiro's API.
             user_token (int):

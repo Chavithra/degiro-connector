@@ -134,10 +134,10 @@ class ActionProductSearch(AbstractAction):
         params = cls.product_search_request_to_api(
             request=request,
         )
-        
+
         if credentials.int_account > 0:
             params["intAccount"] = credentials.int_account
-        
+
         params["sessionId"] = session_id
 
         http_request = requests.Request(method="GET", url=url, params=params)
