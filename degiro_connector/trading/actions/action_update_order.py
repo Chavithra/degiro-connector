@@ -90,6 +90,7 @@ class ActionUpdateOrder(AbstractAction):
         credentials: Credentials,
         session: requests.Session = None,
         logger: logging.Logger = None,
+        raw: bool = False,
     ) -> Union[bool, None]:
         if logger is None:
             logger = cls.build_logger()
@@ -125,6 +126,9 @@ class ActionUpdateOrder(AbstractAction):
             text = getattr(response_raw, "text", "No text found.")
             logger.fatal(status_code)
             logger.fatal(text)
+            if raw is True:
+                response_dict = response_raw.json()
+                return response_dict
             return None
         except Exception as e:
             logger.fatal(e)
@@ -135,6 +139,7 @@ class ActionUpdateOrder(AbstractAction):
     def call(
         self,
         order: Order,
+        raw: bool = False,
     ) -> Union[bool, None]:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
@@ -148,4 +153,5 @@ class ActionUpdateOrder(AbstractAction):
             credentials=credentials,
             session=session,
             logger=logger,
+            raw=raw,
         )
