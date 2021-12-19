@@ -140,11 +140,11 @@ class ActionConfirmOrder(AbstractAction):
         except requests.HTTPError as e:
             status_code = getattr(response_raw, "status_code", "No status_code found.")
             text = getattr(response_raw, "text", "No text found.")
-            response_dict = getattr(response_raw, "json", "No json found.")
             logger.fatal(status_code)
             logger.fatal(text)
-            logger.fatal(response_dict)
             if raw is True:
+                response_dict = response_raw.json()
+                logger.fatal(response_dict)
                 return response_dict
             else:
                 return None
