@@ -121,7 +121,6 @@ class ActionUpdateOrder(AbstractAction):
         try:
             response_raw = session.send(prepped, verify=False)
             response_raw.raise_for_status()
-            response_dict = response_raw.json()
         except requests.HTTPError as e:
             status_code = getattr(response_raw, "status_code", "No status_code found.")
             text = getattr(response_raw, "text", "No text found.")
