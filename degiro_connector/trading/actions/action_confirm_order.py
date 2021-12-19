@@ -142,8 +142,9 @@ class ActionConfirmOrder(AbstractAction):
             text = getattr(response_raw, "text", "No text found.")
             logger.fatal(status_code)
             logger.fatal(text)
-            logger.fatal(response_dict)
             if raw is True:
+                response_dict = response_raw.json()
+                logger.fatal(response_dict)
                 return response_dict
             else:
                 return None
