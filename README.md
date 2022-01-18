@@ -102,6 +102,8 @@ pip uninstall degiro-connector
   * [3.8. Is there a timeout ?](#38-is-there-a-timeout-)
 - [4. Order](#4-order)
   * [4.1. How to create an Order ?](#41-how-to-create-an-order-)
+  * [4.1.1. Check Order](#411-check-order)
+  * [4.1.2. Confirm Order](#412-confirm-order)
   * [4.2. How to update an Order ?](#42-how-to-update-an-order-)
   * [4.3. How to delete an Order ?](#43-how-to-delete-an-order-)
 - [5. Portfolio](#5-portfolio)
@@ -741,48 +743,74 @@ Every time you do an operation using a connection, Degiro's API seems to reset t
 
 # 4. Order
 
-Here are the main parameters of an Order.
+Creating and updating of orders is done with an `Order` object. Here are the parameters:
 
 |**Parameter**|**Type**|**Description**|
 |:-|:-|:-|
-|action|Order.Action|Whether you want to : `BUY` or `SELL`.|
-|order_type|Order.OrderType|Type of order : `LIMIT`, `STOP_LIMIT`, `MARKET` or `STOP_LOSS`.|
-|price|float|Price of the order. <br /> Only used for the following `order_type` : `LIMIT` and `STOPLIMIT`.|
+|id|str|Optional for [`update_order()`](#42-how-to-update-an-order-) and [`delete_order()`](#43-how-to-delete-an-order-). It's the `order_id` of the created `Order` as returned by [`confirm_order()`](#412-confirm-order).|
+|action|`Order.Action`|Whether you want to : `BUY` or `SELL`.|
+|order_type|`Order.OrderType`|Type of order : `LIMIT`, `STOP_LIMIT`, `MARKET` or `STOP_LOSS`.|
+|price|float|Limit price of the order. <br /> Optional for the following `order_type` : `LIMIT` and `STOPLIMIT`.|
 |product_id|int|Identifier of the product concerned by the order.|
 |size|float|Size of the order.|
-|stop_price|float|Stop price of the order. <br /> Only used for the following `order_type` : `STOPLIMIT` and `STOPLOSS`|
-|time_type|Order.TimeType|Duration of the order : GOOD_TILL_DAY or GOOD_TILL_CANCELED|
+|stop_price|float|Stop price of the order. <br /> Optional for the following `order_type` : `STOPLIMIT` and `STOPLOSS`|
+|time_type|`Order.TimeType`|Duration of the order : `GOOD_TILL_DAY` or `GOOD_TILL_CANCELED`|
 
-The full description of an Order is available here :
+The full description of an `Order` is available here :
 [trading.proto](protos/degiro_connector/trading/models/trading.proto)
 
 ## 4.1. How to create an Order ?
 
-The Order creation is done in two step :
-* Checking : send the Order to the API to check if it is valid.
-* Confirmation : confirm the creation of the Order.
+The order creation is done in two steps :
+1. Checking : send the `Order` to the API to check if it is valid.
+2. Confirmation : confirm the creation of the `Order`.
 
 Keeping these two steps (instead of reducing to one single "create" function) provides more options.
 
-Here are the parameters of a CheckingResponse :
+## 4.1.1 Check order
+Use the `check_order()` function of the Trading API:
+
+### **Request parameters**
 
 |**Parameter**|**Type**|**Description**|
 |:-|:-|:-|
-|confirmation_id|str|Id necessary to confirm the creation of the Order.|
+|order|`Order`|The order to create with all necessary [parameters](#4-order).|
+
+### **Response parameters**
+On a succesfull request, a `dict` with the following parameters is returned:
+
+|**Parameter**|**Type**|**Description**|
+|:-|:-|:-|
+|confirmation_id|str|Id necessary to confirm the creation of the Order by the [`confirm_order()`](#412-confirm-order) function.|
 |free_space_new|float|New free space (balance) if the Order is confirmed.|
-|response_datetime|Timestamp|Timestamp can be converted to date string using : ToJsonString().|
+|response_datetime|[`Timestamp`](https://pythonhosted.org/gax-google-pubsub-v1/google.protobuf.timestamp_pb2.html)|A `Timestamp` represents a point in time independent of any time zone or calendar, represented as seconds (`seconds`) and fractions of seconds at nanosecond resolution (`nanos`) in UTC Epoch time. A `Timestamp` can be converted to a RFC 3339 date string by using `ToJsonString()`.<br> Note: This `Timestamp` is created by Degiro Connector on reception of the API response, not by DeGiro server.|
 |transaction_fees|repeated Struct|Transaction fees that will be applied to the Order.|
 |transaction_opposite_fees|repeated Struct|Other kind of fees that will be applied to the Order.|
 |transaction_taxes|repeated Struct|Taxes that will be applied to the Order.|
 
-Here are the parameters of a ConfirmationResponse :
+When the request fails, `None` is returned.
+
+## 4.1.2 Confirm order
+Use the `confirm_order()` function of the Trading API:
+
+### **Request parameters**
 
 |**Parameter**|**Type**|**Description**|
 |:-|:-|:-|
-|order_id|str|Id of the created Order.|
-|response_datetime|Timestamp|Timestamp can be converted to date string using : ToJsonString().|
+|confirmation_id|str|The confirmtation id from the [`check_order()`](#411-check-order) response.|
+|order|`Order`|The same order from the [`check_order()`](#411-check-order) request.|
 
-Here is an example :
+### **Response parameters**
+On a succesfull request, a `dict` with the following parameters is returned:
+
+|**Parameter**|**Type**|**Description**|
+|:-|:-|:-|
+|order_id|str|A unique id of the accepted order. This id is required to [update](#42-how-to-update-an-order-) or [delete](#43-how-to-delete-an-order-) the pending order.|
+|response_datetime|[`Timestamp`](https://pythonhosted.org/gax-google-pubsub-v1/google.protobuf.timestamp_pb2.html)|A `Timestamp` represents a point in time independent of any time zone or calendar, represented as seconds (`seconds`) and fractions of seconds at nanosecond resolution (`nanos`) in UTC Epoch time. A `Timestamp` can be converted to a RFC 3339 date string by using `ToJsonString()`.<br> Note: This `Timestamp` is created by Degiro Connector on reception of the API response, not by DeGiro server.|
+
+When the request fails, `None` is returned.
+
+## 4.1.3 Example of combining these functions
 
 ```python
 # SETUP ORDER
