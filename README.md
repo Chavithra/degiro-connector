@@ -782,11 +782,10 @@ On a succesfull request, a `dict` with the following parameters is returned:
 |**Parameter**|**Type**|**Description**|
 |:-|:-|:-|
 |confirmation_id|str|Id necessary to confirm the creation of the Order by the [`confirm_order()`](#412-confirm-order) function.|
-|free_space_new|float|New free space (balance) if the Order is confirmed.|
 |response_datetime|[`Timestamp`](https://pythonhosted.org/gax-google-pubsub-v1/google.protobuf.timestamp_pb2.html)|A `Timestamp` represents a point in time independent of any time zone or calendar, represented as seconds (`seconds`) and fractions of seconds at nanosecond resolution (`nanos`) in UTC Epoch time. A `Timestamp` can be converted to a RFC 3339 date string by using `ToJsonString()`.<br> Note: This `Timestamp` is created by Degiro Connector on reception of the API response, not by DeGiro server.|
-|transaction_fees|repeated Struct|Transaction fees that will be applied to the Order.|
-|transaction_opposite_fees|repeated Struct|Other kind of fees that will be applied to the Order.|
-|transaction_taxes|repeated Struct|Taxes that will be applied to the Order.|
+|free_space_new|float|New free space (balance) if the Order is confirmed.|
+|transaction_fees|float|Transaction fees that will be applied to the Order.|
+|show_ex_ante_report_link|bool|?|
 
 When the request fails, `None` is returned.
 
