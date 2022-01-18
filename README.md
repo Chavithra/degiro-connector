@@ -747,7 +747,7 @@ Creating and updating of orders is done with an `Order` object. Here are the par
 
 |**Parameter**|**Type**|**Description**|
 |:-|:-|:-|
-|id|str|Optional for [`update_order()`](#42-how-to-update-an-order-) and [`delete_order()`](#43-how-to-delete-an-order-). It's the `order_id` of the created `Order` as returned by [`confirm_order()`](#412-confirm-order).|
+|id|str|Optional for [`update_order()`](#42-how-to-update-an-order-). It's the `order_id` of the created `Order` as returned by [`confirm_order()`](#412-confirm-order).|
 |action|`Order.Action`|Whether you want to : `BUY` or `SELL`.|
 |order_type|`Order.OrderType`|Type of order : `LIMIT`, `STOP_LIMIT`, `MARKET` or `STOP_LOSS`.|
 |price|float|Limit price of the order. <br /> Optional for the following `order_type` : `LIMIT` and `STOPLIMIT`.|
