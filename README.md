@@ -841,14 +841,25 @@ For a more comprehensive example :
 
 ## 4.2. How to update an Order ?
 
-To modify a specific Order you need to setup it's "id".
+To modify a specific Order, you need to set it up with the `order_id` from the [`confirm_order()`](#412-confirm-order) response and use the `update_order()` function of the Trading API:
 
-Here is an example :
+### **Request parameters**
+
+|**Parameter**|**Type**|**Description**|
+|:-|:-|:-|
+|order|`Order`|The order to update with all necessary [parameters](#4-order), including `id` as returned by [`confirm_order()`](#412-confirm-order).|
+
+### **Response parameters**
+On a succesfull request, a `bool` with the value `True` is returned.
+
+When the request fails, `None` is returned. A valid reason is that the pending order has been already executed on the exchange, and this `order_id` no longer exists.
+
+Here is an example:
 
 ```python
 # ORDER SETUP
 order = Order(
-    id=YOUR_ORDER_ID,
+    id=YOUR_ORDER_ID,   # `order_id` from `confirm_order()` response
     action=Order.Action.BUY,
     order_type=Order.OrderType.LIMIT,
     price=10.60,
@@ -863,13 +874,24 @@ succcess = trading_api.update_order(order=order)
 
 ## 4.3. How to delete an Order ?
 
-To delete a specific Order you just need it's "id".
+To delete a specific Order you just need the `order_id` from the [`confirm_order()`](#412-confirm-order) response and use the `delete_order()` function of the Trading API:
 
-Here is an example :
+### **Request parameters**
+
+|**Parameter**|**Type**|**Description**|
+|:-|:-|:-|
+|order_id|str|The unique id of the accepted order as returned by [`confirm_order()`](#412-confirm-order).|
+
+### **Response parameters**
+On a succesfull request, a `bool` with the value `True` is returned.
+
+When the request fails, `None` is returned. A valid reason is that the pending order has been already executed on the exchange, and this `order_id` no longer exists.
+
+Here is an example:
 
 ```python
 # DELETE ORDER
-succcess = trading_api.delete_order(order_id=YOUR_ORDER_ID)
+succcess = trading_api.delete_order(order_id=YOUR_ORDER_ID) # `order_id` from `confirm_order()` response
 ```
 
 # 5. Portfolio
