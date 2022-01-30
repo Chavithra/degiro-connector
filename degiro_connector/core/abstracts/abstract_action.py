@@ -3,7 +3,7 @@ import abc
 import logging
 import requests
 from inspect import ismethod
-from typing import Dict, final
+from typing import Dict
 
 # IMPORTATION THIRD PARTY
 
@@ -13,37 +13,38 @@ from degiro_connector.core.models.model_session import ModelSession
 
 
 class AbstractAction(abc.ABC):
-    @final
+    # COMMENTING @final : FOR COMPATIBILITY WITH PYTHON 3.7
+    # @final
     @staticmethod
     def build_logger() -> logging.Logger:
         return logging.getLogger(__name__)
 
-    @final
+    # @final
     @staticmethod
     def build_session(headers: Dict[str, str] = None) -> requests.Session:
         return ModelSession.build_session()
 
-    @final
+    # @final
     @property
     def credentials(self):
         return self._credentials
 
-    @final
+    # @final
     @property
     def connection_storage(self):
         return self._connection_storage
 
-    @final
+    # @final
     @property
     def logger(self):
         return self._logger
 
-    @final
+    # @final
     @property
     def session_storage(self):
         return self._session_storage
 
-    @final
+    # @final
     def __init__(
         self,
         credentials,
@@ -67,7 +68,7 @@ class AbstractAction(abc.ABC):
 
         self.post_init(*args, **kwargs)
 
-    @final
+    # @final
     def __call__(self, *args, **kwargs):
         return self.call(*args, **kwargs)
 
