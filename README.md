@@ -100,6 +100,7 @@ pip uninstall degiro-connector
   * [3.6. How to find your : totp_secret_key ?](#36-how-to-find-your--totp_secret_key-)
   * [3.7. How to find your : one_time_password ?](#37-how-to-find-your--one_time_password-)
   * [3.8. Is there a timeout ?](#38-is-there-a-timeout-)
+  * [3.9. How to manage : TimeoutError ?](#39-how-to-manage--TimeoutError-)
 - [4. Order](#4-order)
   * [4.1. How to create an Order ?](#41-how-to-create-an-order-)
   * [4.1.1. Check Order](#411-check-order)
@@ -753,24 +754,16 @@ checking_response = trading_api.check_order(order=order)
 ```
 
 Will fail with `TimeoutError`:
-```python
-Traceback (most recent call last):
-  File "/Users/me/broker.py", line 499, in <module>
-    checking_response = trading_api.check_order(order=order)
-  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/degiro_connector/core/abstracts/abstract_action.py", line 72, in __call__
-    return self.call(*args, **kwargs)
-  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/degiro_connector/trading/actions/action_check_order.py", line 168, in call
-    session_id = connection_storage.session_id
-  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/wrapt/decorators.py", line 526, in _synchronized_wrapper
-    return wrapped(*args, **kwargs)
-  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/degiro_connector/core/models/model_connection.py", line 30, in session_id
-    raise TimeoutError("Connection has probably expired.")
+```
 TimeoutError: Connection has probably expired.
 ```
 
-### Handle the connection timeout gracefully
+## 3.9. How to manage : TimeoutError ?
 
-It's recommened to catch the `TimeoutError` on every function call to the `TradingAPI`.
+**HANDLE EXCEPTION**
+
+It's recommended to catch the `TimeoutError` on every function call to the `TradingAPI`.
+
 When it's detected, it's sufficient to call [`connect()`](#31-how-to-login-) again, followed by repeating the original call that threw the exception. 
 Example for the [`check_order()`](#411-check-order) call:
 
@@ -794,12 +787,16 @@ response_datetime {
 }
 ```
 
-### Prevent the timout
+**REFRESH TIMEOUT**
 
 As mentioned before, the timeout will be reset after each call to the `TradingAPI`. This provides the opportunity to make a periodic function call, for example every 10 minutes to [`get_update()`](#51-how-to-retrieve-pending-orders-).
-However, this might interfere with your other logic and might not be robust over time when DeGiro decides to decrease the timeout on their server. Therefor it's strongly recommended to always incorporate the exception handling for `TimeoutError` as indicated in the example above.
 
-### Change the timeout period
+However, this might interfere with your other logic and might not be robust over time when DeGiro decides to decrease the timeout on their server.
+
+Therefor it's strongly recommended to always incorporate the exception handling for `TimeoutError` as indicated in the example above.
+
+**CHANGE PERIOD**
+
 It's possible to change the timeout period while creating the `TradingAPI`. Just add a `ModelConnection` object for parameter `connection_storage`:
 ```python
 # SETUP TRADING API
@@ -814,8 +811,6 @@ trading_api = TradingAPI(
 trading_api.connect()
 ```
 The connection will now expire after 10 minutes (10 * 60 s).
-
-**Disclaimer**: Although larger values than the default 1800 seconds might work, these have not been verified. So use it on your own risk. It might be tempting to use a large timeout value to prevent the annoyance of connection issues during a trading day. However, this is not a robust solution since DeGiro might decide anytime to decrease the timeout on their server. Therefor it's strongly recommended to always incorporate the exception handling for `TimeoutError` as indicated in the example above.
 
 
 # 4. Order
