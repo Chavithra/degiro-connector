@@ -62,8 +62,8 @@ message Order {
     repeated google.protobuf.Struct transaction_auto_fx_surcharges = 7;
     repeated google.protobuf.Struct transaction_auto_fx_opposite_surcharges = 8;
     double auto_fx_conversion_rate = 9;
-    double transactionFee = 10;
-    bool showExAnteReportLink = 11;
+    double transaction_fee = 10;
+    bool show_ex_ante_report_link = 11;
   }
   message ConfirmationResponse {
     string order_id = 1;
