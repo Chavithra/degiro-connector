@@ -1396,3 +1396,36 @@ class Agenda(google.protobuf.message.Message):
     def HasField(self, field_name: typing_extensions.Literal[u"response_datetime",b"response_datetime"]) -> builtins.bool: ...
     def ClearField(self, field_name: typing_extensions.Literal[u"calendar_type",b"calendar_type",u"items",b"items",u"offset",b"offset",u"response_datetime",b"response_datetime",u"total",b"total"]) -> None: ...
 global___Agenda = Agenda
+
+class EstimatesSummaries(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+    ANNUAL_FIELD_NUMBER: builtins.int
+    CURRENCY_FIELD_NUMBER: builtins.int
+    INTERIM_FIELD_NUMBER: builtins.int
+    LASTRETRIEVED_FIELD_NUMBER: builtins.int
+    LASTUPDATED_FIELD_NUMBER: builtins.int
+    PREFERREDMEASURE_FIELD_NUMBER: builtins.int
+    RIC_FIELD_NUMBER: builtins.int
+    @property
+    def annual(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[google.protobuf.struct_pb2.Struct]:
+        """PROPERTIES"""
+        pass
+    currency: typing.Text = ...
+    @property
+    def interim(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[google.protobuf.struct_pb2.Struct]: ...
+    lastRetrieved: typing.Text = ...
+    lastUpdated: typing.Text = ...
+    preferredMeasure: typing.Text = ...
+    ric: typing.Text = ...
+    def __init__(self,
+        *,
+        annual : typing.Optional[typing.Iterable[google.protobuf.struct_pb2.Struct]] = ...,
+        currency : typing.Text = ...,
+        interim : typing.Optional[typing.Iterable[google.protobuf.struct_pb2.Struct]] = ...,
+        lastRetrieved : typing.Text = ...,
+        lastUpdated : typing.Text = ...,
+        preferredMeasure : typing.Text = ...,
+        ric : typing.Text = ...,
+        ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal[u"annual",b"annual",u"currency",b"currency",u"interim",b"interim",u"lastRetrieved",b"lastRetrieved",u"lastUpdated",b"lastUpdated",u"preferredMeasure",b"preferredMeasure",u"ric",b"ric"]) -> None: ...
+global___EstimatesSummaries = EstimatesSummaries

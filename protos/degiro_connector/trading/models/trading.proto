@@ -524,3 +524,14 @@ message Agenda {
   int32 total = 4;
   google.protobuf.Timestamp response_datetime = 5;
 }
+
+message EstimatesSummaries {
+  // PROPERTIES
+  repeated google.protobuf.Struct annual = 1;
+  string currency = 2;
+  repeated google.protobuf.Struct interim = 3;
+  string lastRetrieved = 4;
+  string lastUpdated = 5;
+  string preferredMeasure = 6;
+  string ric = 7;
+}

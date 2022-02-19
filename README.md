@@ -139,6 +139,7 @@ pip uninstall degiro-connector
   * [8.5. How to get : TopNewsPreview ?](#85-how-to-get--topnewspreview-)
   * [8.6. How to get : NewsByCompany ?](#86-how-to-get--newsbycompany-)
   * [8.7. How to get : Agenda ?](#87-how-to-get--agenda-)
+  * [8.8. How to get : EstimatesSummaries ?](#87-how-to-get--estimatessummaries-)
 - [9. Contributing](#9-contributing)
 - [10. License](#10-license)
 
@@ -1680,6 +1681,44 @@ Exact definitions of `Agenda` and `Agenda.Request` are in this file :
 
 For a more comprehensive example :
 [agenda.py](examples/trading/agenda.py)
+
+
+## 8.8. How to get : EstimatesSummaries ?
+Here is how to get this data :
+
+```python
+# SETUP REQUEST
+request = Agenda.Request()
+request.start_date.FromJsonString('2021-06-21T22:00:00Z')
+request.end_date.FromJsonString('2021-11-28T23:00:00Z')
+request.calendar_type = Agenda.CalendarType.DIVIDEND_CALENDAR
+request.offset = 0
+request.limit = 25
+
+# FETCH DATA
+agenda = trading_api.get_agenda(
+    request=request,
+    raw=False,
+)
+```
+
+Here are the available parameters for `Agenda.Request` :
+
+|**Parameter**|**Type**|**Description**|
+|:-|:-|:-|
+|annual|google.protobuf.Struct|Indicators by year.|
+|currency|str|currency, example `EUR`.|
+|interim|google.protobuf.Struct|Indicators by quarter.|
+|lastRetrieved|str|Last Retrieved, example : `2021-12-31T20:07:30.939Z`.|
+|lastUpdated|str|Last updated,, example : `2021-02-18T01:30:00Z`.|
+|preferredMeasure|str|Preferred measure, example : `EPS`.|
+|ric|str|Reuters Instrument Code, example : `BOUY.PA`.|
+
+Exact definition of `EstimatesSummaries` is in this file :
+[trading.proto](protos/degiro_connector/trading/models/trading.proto)
+
+For a more comprehensive example :
+[estimates_summaries.py](examples/trading/estimates_summaries.py)
 
 # 9. Contributing
 Pull requests are welcome.
