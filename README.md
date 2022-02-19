@@ -101,6 +101,7 @@ pip uninstall degiro-connector
   * [3.6. How to find your : totp_secret_key ?](#36-how-to-find-your--totp_secret_key-)
   * [3.7. How to find your : one_time_password ?](#37-how-to-find-your--one_time_password-)
   * [3.8. Is there a timeout ?](#38-is-there-a-timeout-)
+  * [3.9. How to manage : TimeoutError ?](#39-how-to-manage--TimeoutError-)
 - [4. Order](#4-order)
   * [4.1. How to create an Order ?](#41-how-to-create-an-order-)
   * [4.1.1. Check Order](#411-check-order)
@@ -737,11 +738,82 @@ Usually you get it through an app like **Google Authenticator**.
 It is preferable to use the parameter **totp_secret_key** instead of **one_time_password**.
 
 ## 3.8. Is there a timeout ?
-A connection for trading operations seems to have a timeout of : around 30 minutes.
+A connection for trading operations has a timeout of 30 minutes. 
+It's [defined](https://github.com/Chavithra/degiro-connector/blob/main/degiro_connector/core/constants/timeouts.py#L2) in seconds as constant `timeouts.TRADING_TIMEOUT`.
 
-If a connection is left unused for this amount of time it will cease to work.
+The timeout period is started when the [`TradingAPI.connect()`](#31-how-to-login-) results successfully.
 
-Every time you do an operation using a connection, Degiro's API seems to reset the timeout for this connection.
+Every time an operation is made to this `TradingAPI` connection, the timeout for this connection will be reset.
+
+If a `TradingAPI` connection is left unused during the timeout period, the connection will expire.
+Every consecutive function call to the `TraderAPI` will then throw a `TimeoutError` exception.
+
+A connection timeout might occur when your trading strategy only performs a few trades per day, e.g. once per hour.
+So when finally a buy opportuntiy occurs, [`check_order()`](#411-check-order):
+```python
+# FETCH CHECKING_RESPONSE
+checking_response = trading_api.check_order(order=order)
+```
+
+Will fail with `TimeoutError`:
+```
+TimeoutError: Connection has probably expired.
+```
+
+## 3.9. How to manage : TimeoutError ?
+
+**HANDLE EXCEPTION**
+
+It's recommended to catch the `TimeoutError` on every function call to the `TradingAPI`.
+
+When it's detected, it's sufficient to call [`connect()`](#31-how-to-login-) again, followed by repeating the original call that threw the exception. 
+Example for the [`check_order()`](#411-check-order) call:
+
+```python
+try:
+    checking_response = trading_api.check_order(order=order)
+except TimeoutError:
+    logging.warning("TradingAPI session did timeout, reconnecting for new session ID...")
+    trading_api.connect()
+    checking_response = trading_api.check_order(order=order)
+```
+
+This shows the following in the log, while the order is checked successfully after a successful reconnect:
+```python
+WARNING - TradingAPI session did timeout, reconnecting for new session ID...
+INFO - get_session_id:response_dict: {'isPassCodeEnabled': False, 'locale': 'nl_NL', 'redirectUrl': 'https://trader.degiro.nl/trader/', 'sessionId': '2BADBBEF3****', 'status': 0, 'statusText': 'success'}
+INFO - confirmation_id: "053df7cf-****"
+response_datetime {
+  seconds: 1643801134
+  nanos: 715765000
+}
+```
+
+**REFRESH TIMEOUT**
+
+As mentioned before, the timeout will be reset after each call to the `TradingAPI`. This provides the opportunity to make a periodic function call, for example every 10 minutes to [`get_update()`](#51-how-to-retrieve-pending-orders-).
+
+However, this might interfere with your other logic and might not be robust over time when DeGiro decides to decrease the timeout on their server.
+
+Therefor it's strongly recommended to always incorporate the exception handling for `TimeoutError` as indicated in the example above.
+
+**CHANGE PERIOD**
+
+It's possible to change the timeout period while creating the `TradingAPI`. Just add a `ModelConnection` object for parameter `connection_storage`:
+```python
+# SETUP TRADING API
+trading_api = TradingAPI(
+    credentials=credentials,
+    connection_storage=ModelConnection(
+        timeout=600,
+    )
+)
+
+# Connect:
+trading_api.connect()
+```
+The connection will now expire after 10 minutes (10 * 60 s).
+
 
 # 4. Order
 
