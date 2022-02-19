@@ -32,6 +32,7 @@ Here are the features you can access through this library :
 |CompanyProfile|Retrieve a company's profile using its ISIN code.|
 |CompanyRatios|Retrieve a company's ratios using its ISIN code.|
 |Config|Retrieve a table containing : "clientId" and URLs which are constitutive of Degiro's API.|
+|EstimatesSummaries|Retrieve a company's estimates summaries using its ISIN code.|
 |Favourites|Retrieve favorite products lists.|
 |FinancialStatements|Retrieve a company's financial statements using its ISIN code.|
 |LatestNews|Retrieve latest news about all the companies.|
