@@ -1,0 +1,7 @@
+{
+    "user_token":123,
+    "int_account":123,
+    "username":"YOUR_USERNAME",
+    "password":"YOUR_PASSWORD",
+    "totp_secret_key":"REMOVE_THIS_LINE_IF_YOU_DON_T_USE_2FA"
+}
