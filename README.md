@@ -120,6 +120,7 @@ pip uninstall degiro-connector
   * [6.3. How to retrieve the table : AccountInfo ?](#63-how-to-retrieve-the-table--accountinfo-)
   * [6.4. How to get the table : AccountOverview ?](#64-how-to-get-the-table--accountoverview-)
   * [6.5. How to export the table : CashAccountReport ?](#65-how-to-export-the-table--cashaccountreport-)
+  * [6.6. How to export the table : PositionReport ?](#66-how-to-export-the-table--positionreport-)
 - [7. Products](#7-products)
   * [7.1. How to get the table : ProductsConfig ?](#71-how-to-get-the-table--productsconfig-)
   * [7.2. How to get my favourite products ?](#72-how-to-get-my-favourite-products-)
@@ -1297,6 +1298,50 @@ Exact definitions of `CashAccountReport` and `CashAccountReport.Request` are in 
 
 For a more comprehensive example :
 [cash_account_report.py](examples/trading/cash_account_report.py)
+
+## 6.6. How to export the table : PositionReport ?
+
+It will export a list of cash movements in a specific format.
+
+Available formats :
+- CSV
+- HTML
+- PDF
+- XLS
+
+Here is how to get this content in `CSV` format :
+
+```python
+# SETUP REQUEST
+to_date = CashAccountReport.Request.Date(year=2020,month=10,day=15)
+request = CashAccountReport.Request(
+    format=CashAccountReport.Format.CSV,
+    country='FR',
+    lang='fr',
+    to_date=to_date,
+)
+
+# FETCH DATA
+position_report = trading_api.get_position_report(
+    request=request,
+    raw=False,
+)
+```
+
+Here are the available parameters for `PositionReport.Request` :
+
+|**Parameter**|**Type**|**Description**|
+|:-|:-|:-|
+|format|PositionReport.Format|Wanted format : <br>`CSV`<br>`HTML`<br>`PDF`<br>`XLS`|
+|country|str|Country name, like : `FR`|
+|lang|int|Language, like : `fr`|
+|to_date|PositionReport.Request.Date|Events before this date.|
+
+Exact definitions of `PositionReport` and `PositionReport.Request` are in this file :
+[trading.proto](protos/degiro_connector/trading/models/trading.proto)
+
+For a more comprehensive example :
+[position_report.py](examples/trading/position_report.py)
 
 # 7. Products
 

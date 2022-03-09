@@ -1429,3 +1429,85 @@ class EstimatesSummaries(google.protobuf.message.Message):
         ) -> None: ...
     def ClearField(self, field_name: typing_extensions.Literal[u"annual",b"annual",u"currency",b"currency",u"interim",b"interim",u"lastRetrieved",b"lastRetrieved",u"lastUpdated",b"lastUpdated",u"preferredMeasure",b"preferredMeasure",u"ric",b"ric"]) -> None: ...
 global___EstimatesSummaries = EstimatesSummaries
+
+class PositionReport(google.protobuf.message.Message):
+    """* For the payload from the following URL :
+    https://trader.degiro.nl/reporting/secure/v3/positionReport
+    """
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+    class Format(_Format, metaclass=_FormatEnumTypeWrapper):
+        """ENUMS"""
+        pass
+    class _Format:
+        V = typing.NewType('V', builtins.int)
+    class _FormatEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_Format.V], builtins.type):
+        DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor = ...
+        CSV = PositionReport.Format.V(0)
+        HTML = PositionReport.Format.V(1)
+        PDF = PositionReport.Format.V(2)
+        XLS = PositionReport.Format.V(3)
+
+    CSV = PositionReport.Format.V(0)
+    HTML = PositionReport.Format.V(1)
+    PDF = PositionReport.Format.V(2)
+    XLS = PositionReport.Format.V(3)
+
+    class Request(google.protobuf.message.Message):
+        """MESSAGES"""
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+        class Date(google.protobuf.message.Message):
+            """MESSAGES"""
+            DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+            YEAR_FIELD_NUMBER: builtins.int
+            MONTH_FIELD_NUMBER: builtins.int
+            DAY_FIELD_NUMBER: builtins.int
+            year: builtins.int = ...
+            month: builtins.int = ...
+            day: builtins.int = ...
+            def __init__(self,
+                *,
+                year : builtins.int = ...,
+                month : builtins.int = ...,
+                day : builtins.int = ...,
+                ) -> None: ...
+            def ClearField(self, field_name: typing_extensions.Literal[u"day",b"day",u"month",b"month",u"year",b"year"]) -> None: ...
+
+        FORMAT_FIELD_NUMBER: builtins.int
+        COUNTRY_FIELD_NUMBER: builtins.int
+        LANG_FIELD_NUMBER: builtins.int
+        TO_DATE_FIELD_NUMBER: builtins.int
+        format: global___PositionReport.Format.V = ...
+        """PROPERTIES"""
+
+        country: typing.Text = ...
+        lang: typing.Text = ...
+        @property
+        def to_date(self) -> global___PositionReport.Request.Date: ...
+        def __init__(self,
+            *,
+            format : global___PositionReport.Format.V = ...,
+            country : typing.Text = ...,
+            lang : typing.Text = ...,
+            to_date : typing.Optional[global___PositionReport.Request.Date] = ...,
+            ) -> None: ...
+        def HasField(self, field_name: typing_extensions.Literal[u"to_date",b"to_date"]) -> builtins.bool: ...
+        def ClearField(self, field_name: typing_extensions.Literal[u"country",b"country",u"format",b"format",u"lang",b"lang",u"to_date",b"to_date"]) -> None: ...
+
+    CONTENT_FIELD_NUMBER: builtins.int
+    FORMAT_FIELD_NUMBER: builtins.int
+    RESPONSE_DATETIME_FIELD_NUMBER: builtins.int
+    content: typing.Text = ...
+    """PROPERTIES"""
+
+    format: global___PositionReport.Format.V = ...
+    @property
+    def response_datetime(self) -> google.protobuf.timestamp_pb2.Timestamp: ...
+    def __init__(self,
+        *,
+        content : typing.Text = ...,
+        format : global___PositionReport.Format.V = ...,
+        response_datetime : typing.Optional[google.protobuf.timestamp_pb2.Timestamp] = ...,
+        ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal[u"response_datetime",b"response_datetime"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal[u"content",b"content",u"format",b"format",u"response_datetime",b"response_datetime"]) -> None: ...
+global___PositionReport = PositionReport

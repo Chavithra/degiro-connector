@@ -535,3 +535,38 @@ message EstimatesSummaries {
   string preferredMeasure = 6;
   string ric = 7;
 }
+
+/** For the payload from the following URL :
+ * https://trader.degiro.nl/reporting/secure/v3/positionReport
+ */
+message PositionReport {
+  // ENUMS
+  enum Format {
+    CSV = 0;
+    HTML = 1;
+    PDF = 2;
+    XLS = 3;
+  }
+
+  // MESSAGES
+  message Request {
+    // MESSAGES
+    message Date {
+      int32 year = 1;
+      int32 month = 2;
+      int32 day = 3;
+    }
+
+    // PROPERTIES
+    Format format = 1;
+    string country = 2;
+    string lang = 3;
+    Date to_date = 5;
+
+  }
+
+  // PROPERTIES
+  string content = 1;
+  Format format = 2;
+  google.protobuf.Timestamp response_datetime = 3;
+}
