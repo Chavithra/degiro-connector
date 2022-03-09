@@ -68,7 +68,7 @@ class ActionGetCashAccountReport(AbstractAction):
                         month=10,
                         day=15,
                     )
-                    from_date = CashAccountReport.Request.Date(
+                    to_date = CashAccountReport.Request.Date(
                         year=2020,
                         month=10,
                         day=16,
