@@ -142,7 +142,7 @@ pip uninstall degiro-connector
   * [8.5. How to get : TopNewsPreview ?](#85-how-to-get--topnewspreview-)
   * [8.6. How to get : NewsByCompany ?](#86-how-to-get--newsbycompany-)
   * [8.7. How to get : Agenda ?](#87-how-to-get--agenda-)
-  * [8.8. How to get : EstimatesSummaries ?](#87-how-to-get--estimatessummaries-)
+  * [8.8. How to get : EstimatesSummaries ?](#88-how-to-get--estimatessummaries-)
 - [9. Contributing](#9-contributing)
 - [10. License](#10-license)
 
@@ -1814,8 +1814,9 @@ request.offset = 0
 request.limit = 25
 
 # FETCH DATA
-agenda = trading_api.get_agenda(
-    request=request,
+product_isin = "FR0000131906"
+estimates_summaries = trading_api.get_estimates_summaries(
+    product_isin=product_isin,
     raw=False,
 )
 ```
