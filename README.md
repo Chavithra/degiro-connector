@@ -33,7 +33,8 @@ Here are the features you can access through this library :
 |CompanyRatios|Retrieve a company's ratios using its ISIN code.|
 |Config|Retrieve a table containing : "clientId" and URLs which are constitutive of Degiro's API.|
 |EstimatesSummaries|Retrieve a company's estimates summaries using its ISIN code.|
-|Favourites|Retrieve favorite products lists.|
+|FavouritesList|Add/Delete/Retrieve favourites lists.|
+|FavouritesListProducts|Add/Update favourites lists content.|
 |FinancialStatements|Retrieve a company's financial statements using its ISIN code.|
 |LatestNews|Retrieve latest news about all the companies.|
 |LoginQuotecast|Establish a connection for quotecast operations.|
@@ -134,6 +135,10 @@ pip uninstall degiro-connector
   * [7.10. How to search stocks ?](#710-how-to-search-stocks-)
   * [7.11. How to search warrants ?](#711-how-to-search-warrants-)
   * [7.12. How to search products from ids ?](#712-how-to-search-products-from-ids-)
+  * [7.13. How to create a favourite list ?](#72-how-to-create-a-favourite-list-)
+  * [7.14. How to delete a favourite list ?](#72-how-to-delete-a-favourite-list-)
+  * [7.15. How to put favourite list products ?](#72-how-to-put-favourite-list-products-)
+  * [7.16. How to delete favourite list products ?](#72-how-to-delete-favourite-list-products-)
 - [8. Companies](#8-companies)
   * [8.1. How to get : CompanyProfile ?](#81-how-to-get--companyprofile-)
   * [8.2. How to get : CompanyRatios ?](#82-how-to-get--companyratios-)
@@ -1644,6 +1649,56 @@ products_info = trading_api.get_products_info(
 
 For a more comprehensive example :
 [products_info.py](examples/trading/products_info.py)
+
+## 7.13. How to create a favourite list ?
+
+Example :
+
+```python
+favorite_list_id = trading_api.create_favourite_list(name="SOME_NAME")
+```
+
+For a more comprehensive example :
+[favourite_list_create.py](examples/trading/favourite_list_create.py)
+
+## 7.14. How to delete a favourite list ?
+
+Example :
+
+```python
+success = trading_api.delete_favourite_list(id=1234567)
+```
+
+For a more comprehensive example :
+[favourite_list_delete.py](examples/trading/favourite_list_delete.py)
+
+## 7.15. How to put favourite list products ?
+
+Example :
+
+```python
+success = trading_api.put_favourite_list_product(
+    id=1234567,
+    product_id=1234567,
+)
+```
+
+For a more comprehensive example :
+[favourite_list_put_product.py](examples/trading/favourite_list_put_product.py)
+
+## 7.16. How to delete favourite list products ?
+
+Example :
+
+```python
+success = trading_api.delete_favourite_list_product(
+    id=1234567,
+    product_id=1234567,
+)
+```
+
+For a more comprehensive example :
+[favourite_list_delete product.py](examples/trading/favourite_list_delete product.py)
 
 # 8. Companies
 
