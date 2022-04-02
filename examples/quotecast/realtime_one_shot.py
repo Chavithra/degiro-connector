@@ -18,6 +18,9 @@ user_token = config_dict.get("user_token")  # HERE GOES YOUR USER_TOKEN
 # SETUP API
 quotecast_api = QuotecastAPI(user_token=user_token)
 
+# CONNECTION
+quotecast_api.connect()
+
 # BUILD REQUEST
 request = Quotecast.Request()
 request.subscriptions["AAPL.BATS,E"].extend(
