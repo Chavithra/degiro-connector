@@ -591,7 +591,7 @@ You can use the following code to disconnect :
 
 ```python
 # DESTROY CONNECTION
-quotecast_api.logout()
+trading_api.logout()
 ```
 
 For a more comprehensive example :
