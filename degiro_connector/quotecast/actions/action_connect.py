@@ -48,7 +48,7 @@ class ActionConnect(AbstractAction):
         prepped = session.prepare_request(request=request)
 
         try:
-            response = session.send(request=prepped, verify=False)
+            response = session.send(request=prepped)
             response_dict = json.loads(response.text)
         except Exception as e:
             logger.fatal(e)

@@ -51,7 +51,7 @@ class ActionFetchData(AbstractAction):
         prepped = session.prepare_request(request=request)
 
         start_ns = time.perf_counter_ns()
-        response = session.send(request=prepped, verify=False)
+        response = session.send(request=prepped)
         # We could have used : response.elapsed.total_seconds()
         duration_ns = time.perf_counter_ns() - start_ns
 

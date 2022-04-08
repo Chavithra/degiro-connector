@@ -303,7 +303,7 @@ class ActionGetChart(AbstractAction):
         response_raw = None
 
         try:
-            response_raw = session.send(prepped, verify=False)
+            response_raw = session.send(prepped)
             response_raw.raise_for_status()
             response_dict = json.loads(response_raw.text[len(cls.CALLBACK) + 1 : -1])
 

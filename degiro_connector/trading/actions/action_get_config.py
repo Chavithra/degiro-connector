@@ -31,7 +31,7 @@ class ActionGetConfig(AbstractAction):
         response_raw = None
 
         try:
-            response_raw = session.send(prepped, verify=False)
+            response_raw = session.send(prepped)
             response_raw.raise_for_status()
             response_dict = response_raw.json()
         except requests.HTTPError as e:

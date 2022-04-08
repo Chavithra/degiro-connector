@@ -11,29 +11,24 @@ from urllib3 import poolmanager
 # IMPORTATION INTERNAL
 import degiro_connector.core.constants.headers as default_headers
 
-# DISABLE WARNINGS
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-
-
-class TLSAdapter(requests.adapters.HTTPAdapter):
-    def init_poolmanager(self, connections, maxsize, block=False):
-        """Create and initialize the urllib3 PoolManager."""
+class SecureAdapter(requests.adapters.HTTPAdapter):
+    def init_poolmanager(self, connections, maxsize, block=False, **pool_kwargs):
+        # create context with OS default trusted CA certificate list
         ctx = ssl.create_default_context()
-        ctx.set_ciphers("DEFAULT@SECLEVEL=1")
-
-        # FIX #33770129
-        # https://stackoverflow.com/questions/33770129/how-do-i-disable-the-ssl-check-in-python-3-x
-        ctx.check_hostname = False
-        ctx.verify_mode = ssl.CERT_NONE
-
+        ctx.check_hostname = True
+        ctx.set_ciphers("DEFAULT@SECLEVEL=2")  
+        ctx.verify_mode = ssl.CERT_REQUIRED
         self.poolmanager = poolmanager.PoolManager(
             num_pools=connections,
             maxsize=maxsize,
             block=block,
-            ssl_version=ssl.PROTOCOL_TLS,
+            ssl_version=ssl.PROTOCOL_TLSv1_2,
             ssl_context=ctx,
-        )
-
+            **pool_kwargs
+        )               
+    def cert_verify(self, conn, url, verify, cert):
+        # CERT_REQUIRED need to be repeated here if we want the certificate get verified
+        conn.cert_reqs = 'CERT_REQUIRED'
 
 class ModelSession:
     """Handle the Requests Session objects in a threadsafe manner."""
@@ -42,7 +37,7 @@ class ModelSession:
     def build_session(
         headers: dict = None,
         hooks: dict = None,
-        ssl_check: bool = False,
+        adapter: requests.adapters.HTTPAdapter = None,
     ) -> requests.Session:
         """Setup a "requests.Session" object.
         Args:
@@ -60,12 +55,10 @@ class ModelSession:
 
         session = requests.Session()
 
-        # FIX #61631955
-        # Degiro's server has a low level of security
-        # Which is not compatible with OpenSSL 1.1.1
-        # https://stackoverflow.com/questions/61631955/python-requests-ssl-error-during-requests
-        if ssl_check is False:
-            session.mount("https://", TLSAdapter())
+        if adapter:
+            session.mount("https://", adapter())
+        else:
+            session.mount("https://", SecureAdapter())
 
         if isinstance(headers, dict):
             session.headers.update(headers)
@@ -85,7 +78,7 @@ class ModelSession:
             self.__local_storage.session = self.build_session(
                 headers=self.__headers,
                 hooks=self.__hooks,
-                ssl_check=self.__ssl_check,
+                adapter=self.__adapter,
             )
 
         return self.__local_storage.session
@@ -100,19 +93,19 @@ class ModelSession:
         self,
         headers: dict = None,
         hooks: dict = None,
-        ssl_check: bool = False,
+        adapter: requests.adapters.HTTPAdapter = None,
     ):
         self.__local_storage.session = self.build_session(
             headers=headers,
             hooks=hooks,
-            ssl_check=ssl_check,
+            adapter=adapter,
         )
 
     def __init__(
         self,
         headers: dict = None,
         hooks: dict = None,
-        ssl_check: bool = False,
+        adapter: requests.adapters.HTTPAdapter = None,
     ):
         self.__logger = logging.getLogger(self.__module__)
         self.__local_storage = threading.local()
@@ -125,4 +118,4 @@ class ModelSession:
 
         self.__headers = headers
         self.__hooks = hooks
-        self.__ssl_check = ssl_check
+        self.__adapter = adapter

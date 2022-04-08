@@ -77,7 +77,7 @@ class ActionCreateFavouriteList(AbstractAction):
         response_raw = None
 
         try:
-            response_raw = session.send(prepped, verify=False)
+            response_raw = session.send(prepped)
             response_raw.raise_for_status()
             response_dict = response_raw.json()
             favorite_list_id = cls.api_to_favorite_list_id(response_dict=response_dict)
