@@ -4,14 +4,14 @@ import logging
 # IMPORTATION THIRD PARTY
 import pytest
 import requests
-import urllib3
+#import urllib3
 
 # IMPORTATION INTERNAL
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
 
 # SETUP LOGGING LEVEL
 logging.basicConfig(level=logging.FATAL)
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+#urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
 # TESTS FEATURES

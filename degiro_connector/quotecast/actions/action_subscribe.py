@@ -84,7 +84,7 @@ class ActionSubscribe(AbstractAction):
         response_raw = None
 
         try:
-            response_raw = session.send(request=prepped, verify=False)
+            response_raw = session.send(request=prepped)
             response_raw.raise_for_status()
 
             if response_raw.text == '[{"m":"sr"}]':

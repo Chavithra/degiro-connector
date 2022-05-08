@@ -97,8 +97,7 @@ class API:
         )
         self._logger = logger or logging.getLogger(self.__module__)
         self._session_storage = session_storage or ModelSession(
-            hooks=self._connection_storage.build_hooks(),
-            ssl_check=True,
+            hooks=self._connection_storage.build_hooks()
         )
         self._action_list = self.build_action_list()
 

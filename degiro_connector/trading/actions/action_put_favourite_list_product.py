@@ -65,7 +65,7 @@ class ActionPutFavouriteListProduct(AbstractAction):
         response_raw = None
 
         try:
-            response_raw = session.send(prepped, verify=False)
+            response_raw = session.send(prepped)
             response_raw.raise_for_status()
         except requests.HTTPError as e:
             status_code = getattr(response_raw, "status_code", "No status_code found.")
