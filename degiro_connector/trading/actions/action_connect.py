@@ -6,7 +6,7 @@ import onetimepass as otp
 import requests
 
 # IMPORTATION INTERNAL
-import degiro_connector.core.constants.urls as urls
+from degiro_connector.core.constants import urls
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
 from degiro_connector.trading.models.trading_pb2 import (
     Credentials,
