@@ -11,7 +11,7 @@ from google.protobuf import json_format
 from google.protobuf.message import Message
 
 # IMPORTATION INTERNAL
-import degiro_connector.core.constants.urls as urls
+from degiro_connector.core.constants import urls
 from degiro_connector.quotecast.models.quotecast_pb2 import (
     Chart,
 )

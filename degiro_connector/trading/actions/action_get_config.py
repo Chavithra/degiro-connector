@@ -6,7 +6,7 @@ import logging
 # IMPORTATION THIRD PARTY
 
 # IMPORTATION INTERNAL
-import degiro_connector.core.constants.urls as urls
+from degiro_connector.core.constants import urls
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
 
 

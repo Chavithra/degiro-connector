@@ -12,7 +12,7 @@ import requests
 
 # IMPORTATION INTERNAL
 from degiro_connector.core.models.model_session import ModelSession
-import degiro_connector.core.constants.urls as urls
+from degiro_connector.core.constants import urls
 
 
 # this adapter will use a wrong trusted CA certificate list
