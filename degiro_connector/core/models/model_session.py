@@ -56,7 +56,7 @@ class ModelSession:
         session = requests.Session()
 
         if adapter:
-            session.mount("https://", adapter())
+            session.mount("https://", adapter)
         else:
             session.mount("https://", SecureAdapter())
 
