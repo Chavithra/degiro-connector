@@ -1,7 +1,5 @@
 # IMPORTATIONS STANDARD
 import logging
-#import os
-#import sys
 
 # IMPORTATION THIRD PARTY
 import pytest
@@ -71,7 +69,7 @@ logging.basicConfig(level=logging.FATAL)
 # TESTS FEATURES -- test default SSL connection
 @pytest.mark.core
 @pytest.mark.network
-def test_model_session_DefaultAdapter():
+def test_default_adapter():
     session_storage=ModelSession()  # default adapter is set by default, relying on OS trusted CA certificates
     session = session_storage.session
     url = urls.LOGIN
@@ -97,8 +95,9 @@ def test_model_session_DefaultAdapter():
 # TESTS FEATURES -- test SSL connection with fixed CA list
 @pytest.mark.core
 @pytest.mark.network
-def test_model_session_valid():
-    session_storage=ModelSession(adapter=SecureAdapter) 
+def test_valid_adapter():
+    adapter= SecureAdapter()
+    session_storage=ModelSession(adapter=adapter) 
     session = session_storage.session
     url = urls.LOGIN
     payload_dict = {
@@ -122,8 +121,9 @@ def test_model_session_valid():
 # TESTS FEATURES -- test a failing SSL connection 
 @pytest.mark.core
 @pytest.mark.network
-def test_model_session_faulty():
-    session_storage=ModelSession(adapter=FaultyAdapter) 
+def test_faulty_adapter():
+    adapter= FaultyAdapter()
+    session_storage=ModelSession(adapter=adapter) 
     session = session_storage.session
     url = urls.LOGIN
     payload_dict = {
