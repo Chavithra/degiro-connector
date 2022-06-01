@@ -206,7 +206,7 @@ class QuotecastParser:
             ticker.metadata.request_duration.ToMicroseconds() / 10 ** 6
         )
 
-        ticker_dict:Dict[str, Dict[str, Union[str, int]]] = dict()
+        ticker_dict: Dict[str, Dict[str, Union[str, int]]] = dict()
         for product in ticker.products:
             ticker_dict[product] = empty_metrics.copy()
             ticker_dict[product]["vwd_id"] = product
@@ -354,7 +354,7 @@ class QuotecastParser:
 
         self.__forward_fill = forward_fill
         self.__metrics_storage = MetricsStorage()
-        self.__references:Dict[int, List[str]] = dict()
+        self.__references: Dict[int, List[str]] = dict()
         self.__ticker = Ticker()
 
         self.__logger = logging.getLogger(self.__module__)

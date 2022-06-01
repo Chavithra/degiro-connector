@@ -16,7 +16,7 @@ from degiro_connector.trading.models.trading_pb2 import (
 class ActionCreateFavouriteList(AbstractAction):
     @classmethod
     def favorite_list_to_api(cls, name: str) -> Dict[str, str]:
-        return {"name":name}
+        return {"name": name}
 
     @classmethod
     def api_to_favorite_list_id(cls, response_dict: Dict[str, int]) -> int:

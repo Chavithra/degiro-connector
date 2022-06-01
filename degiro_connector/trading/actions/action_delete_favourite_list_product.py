@@ -17,8 +17,8 @@ class ActionDeleteFavouriteListProduct(AbstractAction):
     @classmethod
     def delete_favourite_list_product(
         cls,
-        id:int,
-        product_id:int,
+        id: int,
+        product_id: int,
         session_id: str,
         credentials: Credentials,
         session: requests.Session = None,
@@ -81,8 +81,8 @@ class ActionDeleteFavouriteListProduct(AbstractAction):
 
     def call(
         self,
-        id:int,
-        product_id:int,
+        id: int,
+        product_id: int,
     ) -> Optional[bool]:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
