@@ -11,24 +11,6 @@ from urllib3 import poolmanager
 # IMPORTATION INTERNAL
 import degiro_connector.core.constants.headers as default_headers
 
-class SecureAdapter(requests.adapters.HTTPAdapter):
-    def init_poolmanager(self, connections, maxsize, block=False, **pool_kwargs):
-        # create context with OS default trusted CA certificate list
-        ctx = ssl.create_default_context()
-        ctx.check_hostname = True
-        ctx.set_ciphers("DEFAULT@SECLEVEL=2")  
-        ctx.verify_mode = ssl.CERT_REQUIRED
-        self.poolmanager = poolmanager.PoolManager(
-            num_pools=connections,
-            maxsize=maxsize,
-            block=block,
-            ssl_version=ssl.PROTOCOL_TLSv1_2,
-            ssl_context=ctx,
-            **pool_kwargs
-        )               
-    def cert_verify(self, conn, url, verify, cert):
-        # CERT_REQUIRED need to be repeated here if we want the certificate get verified
-        conn.cert_reqs = 'CERT_REQUIRED'
 
 class ModelSession:
     """Handle the Requests Session objects in a threadsafe manner."""
@@ -57,8 +39,6 @@ class ModelSession:
 
         if adapter:
             session.mount("https://", adapter)
-        else:
-            session.mount("https://", SecureAdapter())
 
         if isinstance(headers, dict):
             session.headers.update(headers)
