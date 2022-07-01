@@ -20,7 +20,7 @@ totp_secret_key = config_dict.get("totp_secret_key")
 one_time_password = config_dict.get("one_time_password")
 
 credentials = Credentials(
-    int_account=None,
+    int_account=int_account,
     username=username,
     password=password,
     totp_secret_key=totp_secret_key,
