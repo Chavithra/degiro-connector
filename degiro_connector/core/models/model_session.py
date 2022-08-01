@@ -4,9 +4,6 @@ import threading
 
 # IMPORTATION THIRD PARTY
 import requests
-import ssl
-import urllib3
-from urllib3 import poolmanager
 
 # IMPORTATION INTERNAL
 import degiro_connector.core.constants.headers as default_headers
