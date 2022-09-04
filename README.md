@@ -1014,6 +1014,8 @@ portfolio_df = pd.DataFrame(update_dict['portfolio']['values'])
 For a more comprehensive example :
 [update.py](examples/trading/update.py)
 
+Note: In order to resolve product IDs to Human readable names, see [7.12. How to search products from ids ?](#712-how-to-search-products-from-ids-)
+
 ## 5.3. How to get the TotalPortfolio ?
 
 This is how to get aggregated data about the portfolio :
