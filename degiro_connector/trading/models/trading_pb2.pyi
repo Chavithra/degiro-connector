@@ -3,42 +3,53 @@
 isort:skip_file
 """
 import builtins
+import collections.abc
 import google.protobuf.descriptor
 import google.protobuf.internal.containers
 import google.protobuf.internal.enum_type_wrapper
 import google.protobuf.message
 import google.protobuf.struct_pb2
 import google.protobuf.timestamp_pb2
+import sys
 import typing
-import typing_extensions
 
-DESCRIPTOR: google.protobuf.descriptor.FileDescriptor = ...
+if sys.version_info >= (3, 10):
+    import typing as typing_extensions
+else:
+    import typing_extensions
 
+DESCRIPTOR: google.protobuf.descriptor.FileDescriptor
+
+@typing_extensions.final
 class Credentials(google.protobuf.message.Message):
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
     INT_ACCOUNT_FIELD_NUMBER: builtins.int
     USERNAME_FIELD_NUMBER: builtins.int
     PASSWORD_FIELD_NUMBER: builtins.int
     TOTP_SECRET_KEY_FIELD_NUMBER: builtins.int
     ONE_TIME_PASSWORD_FIELD_NUMBER: builtins.int
-    int_account: builtins.int = ...
-    username: typing.Text = ...
-    password: typing.Text = ...
-    totp_secret_key: typing.Text = ...
-    one_time_password: builtins.int = ...
-    def __init__(self,
+    int_account: builtins.int
+    username: builtins.str
+    password: builtins.str
+    totp_secret_key: builtins.str
+    one_time_password: builtins.int
+    def __init__(
+        self,
         *,
-        int_account : builtins.int = ...,
-        username : typing.Text = ...,
-        password : typing.Text = ...,
-        totp_secret_key : typing.Text = ...,
-        one_time_password : builtins.int = ...,
-        ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal[u"one_time_password",b"one_time_password",u"oneof_2fa",b"oneof_2fa",u"totp_secret_key",b"totp_secret_key"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal[u"int_account",b"int_account",u"one_time_password",b"one_time_password",u"oneof_2fa",b"oneof_2fa",u"password",b"password",u"totp_secret_key",b"totp_secret_key",u"username",b"username"]) -> None: ...
-    def WhichOneof(self, oneof_group: typing_extensions.Literal[u"oneof_2fa",b"oneof_2fa"]) -> typing.Optional[typing_extensions.Literal["totp_secret_key","one_time_password"]]: ...
+        int_account: builtins.int = ...,
+        username: builtins.str = ...,
+        password: builtins.str = ...,
+        totp_secret_key: builtins.str = ...,
+        one_time_password: builtins.int = ...,
+    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["one_time_password", b"one_time_password", "oneof_2fa", b"oneof_2fa", "totp_secret_key", b"totp_secret_key"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["int_account", b"int_account", "one_time_password", b"one_time_password", "oneof_2fa", b"oneof_2fa", "password", b"password", "totp_secret_key", b"totp_secret_key", "username", b"username"]) -> None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["oneof_2fa", b"oneof_2fa"]) -> typing_extensions.Literal["totp_secret_key", "one_time_password"] | None: ...
+
 global___Credentials = Credentials
 
+@typing_extensions.final
 class Order(google.protobuf.message.Message):
     """* For the payload from the following URLs :
     https://trader.degiro.nl/trading/secure/v5/checkOrder
@@ -46,30 +57,34 @@ class Order(google.protobuf.message.Message):
     https://trader.degiro.nl/reporting/secure/v4/order-history
     https://trader.degiro.nl/trading/secure/v5/update
     """
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    class _Action:
+        ValueType = typing.NewType("ValueType", builtins.int)
+        V: typing_extensions.TypeAlias = ValueType
+
+    class _ActionEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[Order._Action.ValueType], builtins.type):  # noqa: F821
+        DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
+        BUY: Order._Action.ValueType  # 0
+        SELL: Order._Action.ValueType  # 1
+
     class Action(_Action, metaclass=_ActionEnumTypeWrapper):
         """ENUMS"""
-        pass
-    class _Action:
-        V = typing.NewType('V', builtins.int)
-    class _ActionEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_Action.V], builtins.type):
-        DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor = ...
-        BUY = Order.Action.V(0)
-        SELL = Order.Action.V(1)
 
-    BUY = Order.Action.V(0)
-    SELL = Order.Action.V(1)
+    BUY: Order.Action.ValueType  # 0
+    SELL: Order.Action.ValueType  # 1
 
-    class OrderType(_OrderType, metaclass=_OrderTypeEnumTypeWrapper):
-        pass
     class _OrderType:
-        V = typing.NewType('V', builtins.int)
-    class _OrderTypeEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_OrderType.V], builtins.type):
-        DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor = ...
-        LIMIT = Order.OrderType.V(0)
-        STOP_LIMIT = Order.OrderType.V(1)
-        MARKET = Order.OrderType.V(2)
-        STOP_LOSS = Order.OrderType.V(3)
+        ValueType = typing.NewType("ValueType", builtins.int)
+        V: typing_extensions.TypeAlias = ValueType
+
+    class _OrderTypeEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[Order._OrderType.ValueType], builtins.type):  # noqa: F821
+        DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
+        LIMIT: Order._OrderType.ValueType  # 0
+        STOP_LIMIT: Order._OrderType.ValueType  # 1
+        MARKET: Order._OrderType.ValueType  # 2
+        STOP_LOSS: Order._OrderType.ValueType  # 3
         """*
         LIMIT_HIT = ?;
         TRAILING_STOP = ?;
@@ -81,11 +96,11 @@ class Order(google.protobuf.message.Message):
         OCO = ?;
         """
 
-
-    LIMIT = Order.OrderType.V(0)
-    STOP_LIMIT = Order.OrderType.V(1)
-    MARKET = Order.OrderType.V(2)
-    STOP_LOSS = Order.OrderType.V(3)
+    class OrderType(_OrderType, metaclass=_OrderTypeEnumTypeWrapper): ...
+    LIMIT: Order.OrderType.ValueType  # 0
+    STOP_LIMIT: Order.OrderType.ValueType  # 1
+    MARKET: Order.OrderType.ValueType  # 2
+    STOP_LOSS: Order.OrderType.ValueType  # 3
     """*
     LIMIT_HIT = ?;
     TRAILING_STOP = ?;
@@ -97,26 +112,29 @@ class Order(google.protobuf.message.Message):
     OCO = ?;
     """
 
-
-    class TimeType(_TimeType, metaclass=_TimeTypeEnumTypeWrapper):
-        pass
     class _TimeType:
-        V = typing.NewType('V', builtins.int)
-    class _TimeTypeEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_TimeType.V], builtins.type):
-        DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor = ...
-        UNKNOWN_0 = Order.TimeType.V(0)
-        GOOD_TILL_DAY = Order.TimeType.V(1)
-        UNKNOWN_2 = Order.TimeType.V(2)
-        GOOD_TILL_CANCELED = Order.TimeType.V(3)
+        ValueType = typing.NewType("ValueType", builtins.int)
+        V: typing_extensions.TypeAlias = ValueType
 
-    UNKNOWN_0 = Order.TimeType.V(0)
-    GOOD_TILL_DAY = Order.TimeType.V(1)
-    UNKNOWN_2 = Order.TimeType.V(2)
-    GOOD_TILL_CANCELED = Order.TimeType.V(3)
+    class _TimeTypeEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[Order._TimeType.ValueType], builtins.type):  # noqa: F821
+        DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
+        UNKNOWN_0: Order._TimeType.ValueType  # 0
+        GOOD_TILL_DAY: Order._TimeType.ValueType  # 1
+        UNKNOWN_2: Order._TimeType.ValueType  # 2
+        GOOD_TILL_CANCELED: Order._TimeType.ValueType  # 3
 
+    class TimeType(_TimeType, metaclass=_TimeTypeEnumTypeWrapper): ...
+    UNKNOWN_0: Order.TimeType.ValueType  # 0
+    GOOD_TILL_DAY: Order.TimeType.ValueType  # 1
+    UNKNOWN_2: Order.TimeType.ValueType  # 2
+    GOOD_TILL_CANCELED: Order.TimeType.ValueType  # 3
+
+    @typing_extensions.final
     class CheckingResponse(google.protobuf.message.Message):
         """MESSAGES"""
-        DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
         CONFIRMATION_ID_FIELD_NUMBER: builtins.int
         FREE_SPACE_NEW_FIELD_NUMBER: builtins.int
         RESPONSE_DATETIME_FIELD_NUMBER: builtins.int
@@ -128,8 +146,8 @@ class Order(google.protobuf.message.Message):
         AUTO_FX_CONVERSION_RATE_FIELD_NUMBER: builtins.int
         TRANSACTION_FEE_FIELD_NUMBER: builtins.int
         SHOW_EX_ANTE_REPORT_LINK_FIELD_NUMBER: builtins.int
-        confirmation_id: typing.Text = ...
-        free_space_new: builtins.float = ...
+        confirmation_id: builtins.str
+        free_space_new: builtins.float
         @property
         def response_datetime(self) -> google.protobuf.timestamp_pb2.Timestamp: ...
         @property
@@ -142,40 +160,44 @@ class Order(google.protobuf.message.Message):
         def transaction_auto_fx_surcharges(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[google.protobuf.struct_pb2.Struct]: ...
         @property
         def transaction_auto_fx_opposite_surcharges(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[google.protobuf.struct_pb2.Struct]: ...
-        auto_fx_conversion_rate: builtins.float = ...
-        transaction_fee: builtins.float = ...
-        show_ex_ante_report_link: builtins.bool = ...
-        def __init__(self,
+        auto_fx_conversion_rate: builtins.float
+        transaction_fee: builtins.float
+        show_ex_ante_report_link: builtins.bool
+        def __init__(
+            self,
             *,
-            confirmation_id : typing.Text = ...,
-            free_space_new : builtins.float = ...,
-            response_datetime : typing.Optional[google.protobuf.timestamp_pb2.Timestamp] = ...,
-            transaction_fees : typing.Optional[typing.Iterable[google.protobuf.struct_pb2.Struct]] = ...,
-            transaction_opposite_fees : typing.Optional[typing.Iterable[google.protobuf.struct_pb2.Struct]] = ...,
-            transaction_taxes : typing.Optional[typing.Iterable[google.protobuf.struct_pb2.Struct]] = ...,
-            transaction_auto_fx_surcharges : typing.Optional[typing.Iterable[google.protobuf.struct_pb2.Struct]] = ...,
-            transaction_auto_fx_opposite_surcharges : typing.Optional[typing.Iterable[google.protobuf.struct_pb2.Struct]] = ...,
-            auto_fx_conversion_rate : builtins.float = ...,
-            transaction_fee : builtins.float = ...,
-            show_ex_ante_report_link : builtins.bool = ...,
-            ) -> None: ...
-        def HasField(self, field_name: typing_extensions.Literal[u"response_datetime",b"response_datetime"]) -> builtins.bool: ...
-        def ClearField(self, field_name: typing_extensions.Literal[u"auto_fx_conversion_rate",b"auto_fx_conversion_rate",u"confirmation_id",b"confirmation_id",u"free_space_new",b"free_space_new",u"response_datetime",b"response_datetime",u"show_ex_ante_report_link",b"show_ex_ante_report_link",u"transaction_auto_fx_opposite_surcharges",b"transaction_auto_fx_opposite_surcharges",u"transaction_auto_fx_surcharges",b"transaction_auto_fx_surcharges",u"transaction_fee",b"transaction_fee",u"transaction_fees",b"transaction_fees",u"transaction_opposite_fees",b"transaction_opposite_fees",u"transaction_taxes",b"transaction_taxes"]) -> None: ...
+            confirmation_id: builtins.str = ...,
+            free_space_new: builtins.float = ...,
+            response_datetime: google.protobuf.timestamp_pb2.Timestamp | None = ...,
+            transaction_fees: collections.abc.Iterable[google.protobuf.struct_pb2.Struct] | None = ...,
+            transaction_opposite_fees: collections.abc.Iterable[google.protobuf.struct_pb2.Struct] | None = ...,
+            transaction_taxes: collections.abc.Iterable[google.protobuf.struct_pb2.Struct] | None = ...,
+            transaction_auto_fx_surcharges: collections.abc.Iterable[google.protobuf.struct_pb2.Struct] | None = ...,
+            transaction_auto_fx_opposite_surcharges: collections.abc.Iterable[google.protobuf.struct_pb2.Struct] | None = ...,
+            auto_fx_conversion_rate: builtins.float = ...,
+            transaction_fee: builtins.float = ...,
+            show_ex_ante_report_link: builtins.bool = ...,
+        ) -> None: ...
+        def HasField(self, field_name: typing_extensions.Literal["response_datetime", b"response_datetime"]) -> builtins.bool: ...
+        def ClearField(self, field_name: typing_extensions.Literal["auto_fx_conversion_rate", b"auto_fx_conversion_rate", "confirmation_id", b"confirmation_id", "free_space_new", b"free_space_new", "response_datetime", b"response_datetime", "show_ex_ante_report_link", b"show_ex_ante_report_link", "transaction_auto_fx_opposite_surcharges", b"transaction_auto_fx_opposite_surcharges", "transaction_auto_fx_surcharges", b"transaction_auto_fx_surcharges", "transaction_fee", b"transaction_fee", "transaction_fees", b"transaction_fees", "transaction_opposite_fees", b"transaction_opposite_fees", "transaction_taxes", b"transaction_taxes"]) -> None: ...
 
+    @typing_extensions.final
     class ConfirmationResponse(google.protobuf.message.Message):
-        DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
         ORDER_ID_FIELD_NUMBER: builtins.int
         RESPONSE_DATETIME_FIELD_NUMBER: builtins.int
-        order_id: typing.Text = ...
+        order_id: builtins.str
         @property
         def response_datetime(self) -> google.protobuf.timestamp_pb2.Timestamp: ...
-        def __init__(self,
+        def __init__(
+            self,
             *,
-            order_id : typing.Text = ...,
-            response_datetime : typing.Optional[google.protobuf.timestamp_pb2.Timestamp] = ...,
-            ) -> None: ...
-        def HasField(self, field_name: typing_extensions.Literal[u"response_datetime",b"response_datetime"]) -> builtins.bool: ...
-        def ClearField(self, field_name: typing_extensions.Literal[u"order_id",b"order_id",u"response_datetime",b"response_datetime"]) -> None: ...
+            order_id: builtins.str = ...,
+            response_datetime: google.protobuf.timestamp_pb2.Timestamp | None = ...,
+        ) -> None: ...
+        def HasField(self, field_name: typing_extensions.Literal["response_datetime", b"response_datetime"]) -> builtins.bool: ...
+        def ClearField(self, field_name: typing_extensions.Literal["order_id", b"order_id", "response_datetime", b"response_datetime"]) -> None: ...
 
     ACTION_FIELD_NUMBER: builtins.int
     ID_FIELD_NUMBER: builtins.int
@@ -196,244 +218,264 @@ class Order(google.protobuf.message.Message):
     TOTAL_ORDER_VALUE_FIELD_NUMBER: builtins.int
     RETAINED_ORDER_FIELD_NUMBER: builtins.int
     SENT_TO_EXCHANGE_FIELD_NUMBER: builtins.int
-    action: global___Order.Action.V = ...
+    action: global___Order.Action.ValueType
     """USED TO CHECK ORDER
     called "buysell" by the API
     """
-
-    id: typing.Text = ...
-    order_type: global___Order.OrderType.V = ...
+    id: builtins.str
+    order_type: global___Order.OrderType.ValueType
     """called "orderTypeId" by the API"""
-
-    price: builtins.float = ...
-    stop_price: builtins.float = ...
+    price: builtins.float
+    stop_price: builtins.float
     """called "stopPrice" by the API"""
-
-    product_id: builtins.int = ...
+    product_id: builtins.int
     """called "productId" by the API"""
-
-    size: builtins.float = ...
-    time_type: global___Order.TimeType.V = ...
+    size: builtins.float
+    time_type: global___Order.TimeType.ValueType
     """called "orderTimeTypeId" by the API"""
-
-    contract_size: builtins.float = ...
+    contract_size: builtins.float
     """USED TO CONFIRM ORDER
     called "contractSize" by the API
     """
-
-    contract_type: builtins.int = ...
+    contract_type: builtins.int
     """called "contractType" by the API"""
-
-    currency: typing.Text = ...
-    hour: typing.Text = ...
+    currency: builtins.str
+    hour: builtins.str
     """called "date" by the API"""
-
-    is_deletable: builtins.bool = ...
+    is_deletable: builtins.bool
     """contains %H:%M if the date was not passed
     called "isDeletable" by the API
     """
-
-    is_modifiable: builtins.bool = ...
+    is_modifiable: builtins.bool
     """called "isModifiable" by the API"""
-
-    product: typing.Text = ...
-    quantity: builtins.float = ...
-    total_order_value: builtins.float = ...
+    product: builtins.str
+    quantity: builtins.float
+    total_order_value: builtins.float
     """called "totalOrderValue" by the API"""
-
-    retained_order: builtins.bool = ...
+    retained_order: builtins.bool
     """USED FOR ORDERS HISTORY
     called "retainedOrder" by the API
     """
-
-    sent_to_exchange: builtins.bool = ...
+    sent_to_exchange: builtins.bool
     """called "sentToExchange" by the API"""
-
-    def __init__(self,
+    def __init__(
+        self,
         *,
-        action : global___Order.Action.V = ...,
-        id : typing.Text = ...,
-        order_type : global___Order.OrderType.V = ...,
-        price : builtins.float = ...,
-        stop_price : builtins.float = ...,
-        product_id : builtins.int = ...,
-        size : builtins.float = ...,
-        time_type : global___Order.TimeType.V = ...,
-        contract_size : builtins.float = ...,
-        contract_type : builtins.int = ...,
-        currency : typing.Text = ...,
-        hour : typing.Text = ...,
-        is_deletable : builtins.bool = ...,
-        is_modifiable : builtins.bool = ...,
-        product : typing.Text = ...,
-        quantity : builtins.float = ...,
-        total_order_value : builtins.float = ...,
-        retained_order : builtins.bool = ...,
-        sent_to_exchange : builtins.bool = ...,
-        ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal[u"action",b"action",u"contract_size",b"contract_size",u"contract_type",b"contract_type",u"currency",b"currency",u"hour",b"hour",u"id",b"id",u"is_deletable",b"is_deletable",u"is_modifiable",b"is_modifiable",u"order_type",b"order_type",u"price",b"price",u"product",b"product",u"product_id",b"product_id",u"quantity",b"quantity",u"retained_order",b"retained_order",u"sent_to_exchange",b"sent_to_exchange",u"size",b"size",u"stop_price",b"stop_price",u"time_type",b"time_type",u"total_order_value",b"total_order_value"]) -> None: ...
+        action: global___Order.Action.ValueType = ...,
+        id: builtins.str = ...,
+        order_type: global___Order.OrderType.ValueType = ...,
+        price: builtins.float = ...,
+        stop_price: builtins.float = ...,
+        product_id: builtins.int = ...,
+        size: builtins.float = ...,
+        time_type: global___Order.TimeType.ValueType = ...,
+        contract_size: builtins.float = ...,
+        contract_type: builtins.int = ...,
+        currency: builtins.str = ...,
+        hour: builtins.str = ...,
+        is_deletable: builtins.bool = ...,
+        is_modifiable: builtins.bool = ...,
+        product: builtins.str = ...,
+        quantity: builtins.float = ...,
+        total_order_value: builtins.float = ...,
+        retained_order: builtins.bool = ...,
+        sent_to_exchange: builtins.bool = ...,
+    ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["action", b"action", "contract_size", b"contract_size", "contract_type", b"contract_type", "currency", b"currency", "hour", b"hour", "id", b"id", "is_deletable", b"is_deletable", "is_modifiable", b"is_modifiable", "order_type", b"order_type", "price", b"price", "product", b"product", "product_id", b"product_id", "quantity", b"quantity", "retained_order", b"retained_order", "sent_to_exchange", b"sent_to_exchange", "size", b"size", "stop_price", b"stop_price", "time_type", b"time_type", "total_order_value", b"total_order_value"]) -> None: ...
+
 global___Order = Order
 
+@typing_extensions.final
 class Update(google.protobuf.message.Message):
     """* For the payload from the following URL :
     https://trader.degiro.nl/trading/secure/v5/update
     """
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    class _Option:
+        ValueType = typing.NewType("ValueType", builtins.int)
+        V: typing_extensions.TypeAlias = ValueType
+
+    class _OptionEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[Update._Option.ValueType], builtins.type):  # noqa: F821
+        DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
+        ALERTS: Update._Option.ValueType  # 0
+        CASHFUNDS: Update._Option.ValueType  # 1
+        HISTORICALORDERS: Update._Option.ValueType  # 2
+        ORDERS: Update._Option.ValueType  # 3
+        PORTFOLIO: Update._Option.ValueType  # 4
+        TOTALPORTFOLIO: Update._Option.ValueType  # 5
+        TRANSACTIONS: Update._Option.ValueType  # 6
+
     class Option(_Option, metaclass=_OptionEnumTypeWrapper):
         """ENUMS"""
-        pass
-    class _Option:
-        V = typing.NewType('V', builtins.int)
-    class _OptionEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_Option.V], builtins.type):
-        DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor = ...
-        ALERTS = Update.Option.V(0)
-        CASHFUNDS = Update.Option.V(1)
-        HISTORICALORDERS = Update.Option.V(2)
-        ORDERS = Update.Option.V(3)
-        PORTFOLIO = Update.Option.V(4)
-        TOTALPORTFOLIO = Update.Option.V(5)
-        TRANSACTIONS = Update.Option.V(6)
 
-    ALERTS = Update.Option.V(0)
-    CASHFUNDS = Update.Option.V(1)
-    HISTORICALORDERS = Update.Option.V(2)
-    ORDERS = Update.Option.V(3)
-    PORTFOLIO = Update.Option.V(4)
-    TOTALPORTFOLIO = Update.Option.V(5)
-    TRANSACTIONS = Update.Option.V(6)
+    ALERTS: Update.Option.ValueType  # 0
+    CASHFUNDS: Update.Option.ValueType  # 1
+    HISTORICALORDERS: Update.Option.ValueType  # 2
+    ORDERS: Update.Option.ValueType  # 3
+    PORTFOLIO: Update.Option.ValueType  # 4
+    TOTALPORTFOLIO: Update.Option.ValueType  # 5
+    TRANSACTIONS: Update.Option.ValueType  # 6
 
+    @typing_extensions.final
     class Request(google.protobuf.message.Message):
         """MESSAGES"""
-        DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
         OPTION_FIELD_NUMBER: builtins.int
         LAST_UPDATED_FIELD_NUMBER: builtins.int
-        option: global___Update.Option.V = ...
-        last_updated: builtins.int = ...
-        def __init__(self,
+        option: global___Update.Option.ValueType
+        last_updated: builtins.int
+        def __init__(
+            self,
             *,
-            option : global___Update.Option.V = ...,
-            last_updated : builtins.int = ...,
-            ) -> None: ...
-        def ClearField(self, field_name: typing_extensions.Literal[u"last_updated",b"last_updated",u"option",b"option"]) -> None: ...
+            option: global___Update.Option.ValueType = ...,
+            last_updated: builtins.int = ...,
+        ) -> None: ...
+        def ClearField(self, field_name: typing_extensions.Literal["last_updated", b"last_updated", "option", b"option"]) -> None: ...
 
+    @typing_extensions.final
     class RequestList(google.protobuf.message.Message):
-        DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
         VALUES_FIELD_NUMBER: builtins.int
         @property
         def values(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___Update.Request]: ...
-        def __init__(self,
+        def __init__(
+            self,
             *,
-            values : typing.Optional[typing.Iterable[global___Update.Request]] = ...,
-            ) -> None: ...
-        def ClearField(self, field_name: typing_extensions.Literal[u"values",b"values"]) -> None: ...
+            values: collections.abc.Iterable[global___Update.Request] | None = ...,
+        ) -> None: ...
+        def ClearField(self, field_name: typing_extensions.Literal["values", b"values"]) -> None: ...
 
+    @typing_extensions.final
     class Alerts(google.protobuf.message.Message):
         """MESSAGES FOR PROPERTIES"""
-        DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
         LAST_UPDATED_FIELD_NUMBER: builtins.int
         VALUES_FIELD_NUMBER: builtins.int
-        last_updated: builtins.int = ...
+        last_updated: builtins.int
         @property
         def values(self) -> google.protobuf.struct_pb2.Struct: ...
-        def __init__(self,
+        def __init__(
+            self,
             *,
-            last_updated : builtins.int = ...,
-            values : typing.Optional[google.protobuf.struct_pb2.Struct] = ...,
-            ) -> None: ...
-        def HasField(self, field_name: typing_extensions.Literal[u"values",b"values"]) -> builtins.bool: ...
-        def ClearField(self, field_name: typing_extensions.Literal[u"last_updated",b"last_updated",u"values",b"values"]) -> None: ...
+            last_updated: builtins.int = ...,
+            values: google.protobuf.struct_pb2.Struct | None = ...,
+        ) -> None: ...
+        def HasField(self, field_name: typing_extensions.Literal["values", b"values"]) -> builtins.bool: ...
+        def ClearField(self, field_name: typing_extensions.Literal["last_updated", b"last_updated", "values", b"values"]) -> None: ...
 
+    @typing_extensions.final
     class CashFunds(google.protobuf.message.Message):
-        DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
         LAST_UPDATED_FIELD_NUMBER: builtins.int
         VALUES_FIELD_NUMBER: builtins.int
-        last_updated: builtins.int = ...
+        last_updated: builtins.int
         @property
         def values(self) -> google.protobuf.struct_pb2.Struct: ...
-        def __init__(self,
+        def __init__(
+            self,
             *,
-            last_updated : builtins.int = ...,
-            values : typing.Optional[google.protobuf.struct_pb2.Struct] = ...,
-            ) -> None: ...
-        def HasField(self, field_name: typing_extensions.Literal[u"values",b"values"]) -> builtins.bool: ...
-        def ClearField(self, field_name: typing_extensions.Literal[u"last_updated",b"last_updated",u"values",b"values"]) -> None: ...
+            last_updated: builtins.int = ...,
+            values: google.protobuf.struct_pb2.Struct | None = ...,
+        ) -> None: ...
+        def HasField(self, field_name: typing_extensions.Literal["values", b"values"]) -> builtins.bool: ...
+        def ClearField(self, field_name: typing_extensions.Literal["last_updated", b"last_updated", "values", b"values"]) -> None: ...
 
+    @typing_extensions.final
     class HistoricalOrders(google.protobuf.message.Message):
-        DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
         LAST_UPDATED_FIELD_NUMBER: builtins.int
         VALUES_FIELD_NUMBER: builtins.int
-        last_updated: builtins.int = ...
+        last_updated: builtins.int
         @property
         def values(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___Order]: ...
-        def __init__(self,
+        def __init__(
+            self,
             *,
-            last_updated : builtins.int = ...,
-            values : typing.Optional[typing.Iterable[global___Order]] = ...,
-            ) -> None: ...
-        def ClearField(self, field_name: typing_extensions.Literal[u"last_updated",b"last_updated",u"values",b"values"]) -> None: ...
+            last_updated: builtins.int = ...,
+            values: collections.abc.Iterable[global___Order] | None = ...,
+        ) -> None: ...
+        def ClearField(self, field_name: typing_extensions.Literal["last_updated", b"last_updated", "values", b"values"]) -> None: ...
 
+    @typing_extensions.final
     class Orders(google.protobuf.message.Message):
-        DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
         LAST_UPDATED_FIELD_NUMBER: builtins.int
         VALUES_FIELD_NUMBER: builtins.int
-        last_updated: builtins.int = ...
+        last_updated: builtins.int
         @property
         def values(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___Order]:
             """Order"""
-            pass
-        def __init__(self,
+        def __init__(
+            self,
             *,
-            last_updated : builtins.int = ...,
-            values : typing.Optional[typing.Iterable[global___Order]] = ...,
-            ) -> None: ...
-        def ClearField(self, field_name: typing_extensions.Literal[u"last_updated",b"last_updated",u"values",b"values"]) -> None: ...
+            last_updated: builtins.int = ...,
+            values: collections.abc.Iterable[global___Order] | None = ...,
+        ) -> None: ...
+        def ClearField(self, field_name: typing_extensions.Literal["last_updated", b"last_updated", "values", b"values"]) -> None: ...
 
+    @typing_extensions.final
     class Portfolio(google.protobuf.message.Message):
-        DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
         LAST_UPDATED_FIELD_NUMBER: builtins.int
         VALUES_FIELD_NUMBER: builtins.int
-        last_updated: builtins.int = ...
+        last_updated: builtins.int
         @property
         def values(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[google.protobuf.struct_pb2.Struct]:
             """positionrow"""
-            pass
-        def __init__(self,
+        def __init__(
+            self,
             *,
-            last_updated : builtins.int = ...,
-            values : typing.Optional[typing.Iterable[google.protobuf.struct_pb2.Struct]] = ...,
-            ) -> None: ...
-        def ClearField(self, field_name: typing_extensions.Literal[u"last_updated",b"last_updated",u"values",b"values"]) -> None: ...
+            last_updated: builtins.int = ...,
+            values: collections.abc.Iterable[google.protobuf.struct_pb2.Struct] | None = ...,
+        ) -> None: ...
+        def ClearField(self, field_name: typing_extensions.Literal["last_updated", b"last_updated", "values", b"values"]) -> None: ...
 
+    @typing_extensions.final
     class TotalPortfolio(google.protobuf.message.Message):
-        DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
         LAST_UPDATED_FIELD_NUMBER: builtins.int
         VALUES_FIELD_NUMBER: builtins.int
-        last_updated: builtins.int = ...
+        last_updated: builtins.int
         @property
         def values(self) -> google.protobuf.struct_pb2.Struct: ...
-        def __init__(self,
+        def __init__(
+            self,
             *,
-            last_updated : builtins.int = ...,
-            values : typing.Optional[google.protobuf.struct_pb2.Struct] = ...,
-            ) -> None: ...
-        def HasField(self, field_name: typing_extensions.Literal[u"values",b"values"]) -> builtins.bool: ...
-        def ClearField(self, field_name: typing_extensions.Literal[u"last_updated",b"last_updated",u"values",b"values"]) -> None: ...
+            last_updated: builtins.int = ...,
+            values: google.protobuf.struct_pb2.Struct | None = ...,
+        ) -> None: ...
+        def HasField(self, field_name: typing_extensions.Literal["values", b"values"]) -> builtins.bool: ...
+        def ClearField(self, field_name: typing_extensions.Literal["last_updated", b"last_updated", "values", b"values"]) -> None: ...
 
+    @typing_extensions.final
     class Transactions(google.protobuf.message.Message):
-        DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
         LAST_UPDATED_FIELD_NUMBER: builtins.int
         VALUES_FIELD_NUMBER: builtins.int
-        last_updated: builtins.int = ...
+        last_updated: builtins.int
         @property
         def values(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[google.protobuf.struct_pb2.Struct]:
             """Transaction"""
-            pass
-        def __init__(self,
+        def __init__(
+            self,
             *,
-            last_updated : builtins.int = ...,
-            values : typing.Optional[typing.Iterable[google.protobuf.struct_pb2.Struct]] = ...,
-            ) -> None: ...
-        def ClearField(self, field_name: typing_extensions.Literal[u"last_updated",b"last_updated",u"values",b"values"]) -> None: ...
+            last_updated: builtins.int = ...,
+            values: collections.abc.Iterable[google.protobuf.struct_pb2.Struct] | None = ...,
+        ) -> None: ...
+        def ClearField(self, field_name: typing_extensions.Literal["last_updated", b"last_updated", "values", b"values"]) -> None: ...
 
     RESPONSE_DATETIME_FIELD_NUMBER: builtins.int
     ALERTS_FIELD_NUMBER: builtins.int
@@ -446,7 +488,6 @@ class Update(google.protobuf.message.Message):
     @property
     def response_datetime(self) -> google.protobuf.timestamp_pb2.Timestamp:
         """PROPERTIES"""
-        pass
     @property
     def alerts(self) -> global___Update.Alerts: ...
     @property
@@ -461,103 +502,126 @@ class Update(google.protobuf.message.Message):
     def total_portfolio(self) -> global___Update.TotalPortfolio: ...
     @property
     def transactions(self) -> global___Update.Transactions: ...
-    def __init__(self,
+    def __init__(
+        self,
         *,
-        response_datetime : typing.Optional[google.protobuf.timestamp_pb2.Timestamp] = ...,
-        alerts : typing.Optional[global___Update.Alerts] = ...,
-        cash_funds : typing.Optional[global___Update.CashFunds] = ...,
-        historical_orders : typing.Optional[global___Update.HistoricalOrders] = ...,
-        orders : typing.Optional[global___Update.Orders] = ...,
-        portfolio : typing.Optional[global___Update.Portfolio] = ...,
-        total_portfolio : typing.Optional[global___Update.TotalPortfolio] = ...,
-        transactions : typing.Optional[global___Update.Transactions] = ...,
-        ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal[u"alerts",b"alerts",u"cash_funds",b"cash_funds",u"historical_orders",b"historical_orders",u"orders",b"orders",u"portfolio",b"portfolio",u"response_datetime",b"response_datetime",u"total_portfolio",b"total_portfolio",u"transactions",b"transactions"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal[u"alerts",b"alerts",u"cash_funds",b"cash_funds",u"historical_orders",b"historical_orders",u"orders",b"orders",u"portfolio",b"portfolio",u"response_datetime",b"response_datetime",u"total_portfolio",b"total_portfolio",u"transactions",b"transactions"]) -> None: ...
+        response_datetime: google.protobuf.timestamp_pb2.Timestamp | None = ...,
+        alerts: global___Update.Alerts | None = ...,
+        cash_funds: global___Update.CashFunds | None = ...,
+        historical_orders: global___Update.HistoricalOrders | None = ...,
+        orders: global___Update.Orders | None = ...,
+        portfolio: global___Update.Portfolio | None = ...,
+        total_portfolio: global___Update.TotalPortfolio | None = ...,
+        transactions: global___Update.Transactions | None = ...,
+    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["alerts", b"alerts", "cash_funds", b"cash_funds", "historical_orders", b"historical_orders", "orders", b"orders", "portfolio", b"portfolio", "response_datetime", b"response_datetime", "total_portfolio", b"total_portfolio", "transactions", b"transactions"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["alerts", b"alerts", "cash_funds", b"cash_funds", "historical_orders", b"historical_orders", "orders", b"orders", "portfolio", b"portfolio", "response_datetime", b"response_datetime", "total_portfolio", b"total_portfolio", "transactions", b"transactions"]) -> None: ...
+
 global___Update = Update
 
+@typing_extensions.final
 class OrdersHistory(google.protobuf.message.Message):
     """* For the payload from the following URL :
     https://trader.degiro.nl/reporting/secure/v4/order-history
     """
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    @typing_extensions.final
     class Request(google.protobuf.message.Message):
         """MESSAGES"""
-        DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+        @typing_extensions.final
         class Date(google.protobuf.message.Message):
             """MESSAGES"""
-            DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+
+            DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
             YEAR_FIELD_NUMBER: builtins.int
             MONTH_FIELD_NUMBER: builtins.int
             DAY_FIELD_NUMBER: builtins.int
-            year: builtins.int = ...
-            month: builtins.int = ...
-            day: builtins.int = ...
-            def __init__(self,
+            year: builtins.int
+            month: builtins.int
+            day: builtins.int
+            def __init__(
+                self,
                 *,
-                year : builtins.int = ...,
-                month : builtins.int = ...,
-                day : builtins.int = ...,
-                ) -> None: ...
-            def ClearField(self, field_name: typing_extensions.Literal[u"day",b"day",u"month",b"month",u"year",b"year"]) -> None: ...
+                year: builtins.int = ...,
+                month: builtins.int = ...,
+                day: builtins.int = ...,
+            ) -> None: ...
+            def ClearField(self, field_name: typing_extensions.Literal["day", b"day", "month", b"month", "year", b"year"]) -> None: ...
 
         FROM_DATE_FIELD_NUMBER: builtins.int
         TO_DATE_FIELD_NUMBER: builtins.int
         @property
         def from_date(self) -> global___OrdersHistory.Request.Date:
             """PROPERTIES"""
-            pass
         @property
         def to_date(self) -> global___OrdersHistory.Request.Date: ...
-        def __init__(self,
+        def __init__(
+            self,
             *,
-            from_date : typing.Optional[global___OrdersHistory.Request.Date] = ...,
-            to_date : typing.Optional[global___OrdersHistory.Request.Date] = ...,
-            ) -> None: ...
-        def HasField(self, field_name: typing_extensions.Literal[u"from_date",b"from_date",u"to_date",b"to_date"]) -> builtins.bool: ...
-        def ClearField(self, field_name: typing_extensions.Literal[u"from_date",b"from_date",u"to_date",b"to_date"]) -> None: ...
+            from_date: global___OrdersHistory.Request.Date | None = ...,
+            to_date: global___OrdersHistory.Request.Date | None = ...,
+        ) -> None: ...
+        def HasField(self, field_name: typing_extensions.Literal["from_date", b"from_date", "to_date", b"to_date"]) -> builtins.bool: ...
+        def ClearField(self, field_name: typing_extensions.Literal["from_date", b"from_date", "to_date", b"to_date"]) -> None: ...
 
     VALUES_FIELD_NUMBER: builtins.int
     RESPONSE_DATETIME_FIELD_NUMBER: builtins.int
     @property
     def values(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[google.protobuf.struct_pb2.Struct]:
         """PROPERTIES"""
-        pass
     @property
     def response_datetime(self) -> google.protobuf.timestamp_pb2.Timestamp: ...
-    def __init__(self,
+    def __init__(
+        self,
         *,
-        values : typing.Optional[typing.Iterable[google.protobuf.struct_pb2.Struct]] = ...,
-        response_datetime : typing.Optional[google.protobuf.timestamp_pb2.Timestamp] = ...,
-        ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal[u"response_datetime",b"response_datetime"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal[u"response_datetime",b"response_datetime",u"values",b"values"]) -> None: ...
+        values: collections.abc.Iterable[google.protobuf.struct_pb2.Struct] | None = ...,
+        response_datetime: google.protobuf.timestamp_pb2.Timestamp | None = ...,
+    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["response_datetime", b"response_datetime"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["response_datetime", b"response_datetime", "values", b"values"]) -> None: ...
+
 global___OrdersHistory = OrdersHistory
 
+@typing_extensions.final
 class TransactionsHistory(google.protobuf.message.Message):
     """* For the payload from the following URL :
     https://trader.degiro.nl/reporting/secure/v4/transactions
     """
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    @typing_extensions.final
     class Request(google.protobuf.message.Message):
         """MESSAGES"""
-        DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+        @typing_extensions.final
         class Date(google.protobuf.message.Message):
             """MESSAGES"""
-            DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+
+            DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
             YEAR_FIELD_NUMBER: builtins.int
             MONTH_FIELD_NUMBER: builtins.int
             DAY_FIELD_NUMBER: builtins.int
-            year: builtins.int = ...
-            month: builtins.int = ...
-            day: builtins.int = ...
-            def __init__(self,
+            year: builtins.int
+            month: builtins.int
+            day: builtins.int
+            def __init__(
+                self,
                 *,
-                year : builtins.int = ...,
-                month : builtins.int = ...,
-                day : builtins.int = ...,
-                ) -> None: ...
-            def ClearField(self, field_name: typing_extensions.Literal[u"day",b"day",u"month",b"month",u"year",b"year"]) -> None: ...
+                year: builtins.int = ...,
+                month: builtins.int = ...,
+                day: builtins.int = ...,
+            ) -> None: ...
+            def ClearField(self, field_name: typing_extensions.Literal["day", b"day", "month", b"month", "year", b"year"]) -> None: ...
 
         FROM_DATE_FIELD_NUMBER: builtins.int
         TO_DATE_FIELD_NUMBER: builtins.int
@@ -565,94 +629,107 @@ class TransactionsHistory(google.protobuf.message.Message):
         @property
         def from_date(self) -> global___TransactionsHistory.Request.Date:
             """PROPERTIES"""
-            pass
         @property
         def to_date(self) -> global___TransactionsHistory.Request.Date: ...
-        group_transactions_by_order: builtins.bool = ...
-        def __init__(self,
+        group_transactions_by_order: builtins.bool
+        def __init__(
+            self,
             *,
-            from_date : typing.Optional[global___TransactionsHistory.Request.Date] = ...,
-            to_date : typing.Optional[global___TransactionsHistory.Request.Date] = ...,
-            group_transactions_by_order : builtins.bool = ...,
-            ) -> None: ...
-        def HasField(self, field_name: typing_extensions.Literal[u"from_date",b"from_date",u"to_date",b"to_date"]) -> builtins.bool: ...
-        def ClearField(self, field_name: typing_extensions.Literal[u"from_date",b"from_date",u"group_transactions_by_order",b"group_transactions_by_order",u"to_date",b"to_date"]) -> None: ...
+            from_date: global___TransactionsHistory.Request.Date | None = ...,
+            to_date: global___TransactionsHistory.Request.Date | None = ...,
+            group_transactions_by_order: builtins.bool = ...,
+        ) -> None: ...
+        def HasField(self, field_name: typing_extensions.Literal["from_date", b"from_date", "to_date", b"to_date"]) -> builtins.bool: ...
+        def ClearField(self, field_name: typing_extensions.Literal["from_date", b"from_date", "group_transactions_by_order", b"group_transactions_by_order", "to_date", b"to_date"]) -> None: ...
 
     VALUES_FIELD_NUMBER: builtins.int
     RESPONSE_DATETIME_FIELD_NUMBER: builtins.int
     @property
     def values(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[google.protobuf.struct_pb2.Struct]:
         """PROPERTIES"""
-        pass
     @property
     def response_datetime(self) -> google.protobuf.timestamp_pb2.Timestamp: ...
-    def __init__(self,
+    def __init__(
+        self,
         *,
-        values : typing.Optional[typing.Iterable[google.protobuf.struct_pb2.Struct]] = ...,
-        response_datetime : typing.Optional[google.protobuf.timestamp_pb2.Timestamp] = ...,
-        ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal[u"response_datetime",b"response_datetime"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal[u"response_datetime",b"response_datetime",u"values",b"values"]) -> None: ...
+        values: collections.abc.Iterable[google.protobuf.struct_pb2.Struct] | None = ...,
+        response_datetime: google.protobuf.timestamp_pb2.Timestamp | None = ...,
+    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["response_datetime", b"response_datetime"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["response_datetime", b"response_datetime", "values", b"values"]) -> None: ...
+
 global___TransactionsHistory = TransactionsHistory
 
+@typing_extensions.final
 class AccountOverview(google.protobuf.message.Message):
     """* For the payload from the following URL :
     https://trader.degiro.nl/reporting/secure/v6/accountoverview
     """
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    @typing_extensions.final
     class Request(google.protobuf.message.Message):
         """MESSAGES"""
-        DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+        @typing_extensions.final
         class Date(google.protobuf.message.Message):
             """MESSAGES"""
-            DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+
+            DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
             YEAR_FIELD_NUMBER: builtins.int
             MONTH_FIELD_NUMBER: builtins.int
             DAY_FIELD_NUMBER: builtins.int
-            year: builtins.int = ...
-            month: builtins.int = ...
-            day: builtins.int = ...
-            def __init__(self,
+            year: builtins.int
+            month: builtins.int
+            day: builtins.int
+            def __init__(
+                self,
                 *,
-                year : builtins.int = ...,
-                month : builtins.int = ...,
-                day : builtins.int = ...,
-                ) -> None: ...
-            def ClearField(self, field_name: typing_extensions.Literal[u"day",b"day",u"month",b"month",u"year",b"year"]) -> None: ...
+                year: builtins.int = ...,
+                month: builtins.int = ...,
+                day: builtins.int = ...,
+            ) -> None: ...
+            def ClearField(self, field_name: typing_extensions.Literal["day", b"day", "month", b"month", "year", b"year"]) -> None: ...
 
         FROM_DATE_FIELD_NUMBER: builtins.int
         TO_DATE_FIELD_NUMBER: builtins.int
         @property
         def from_date(self) -> global___AccountOverview.Request.Date:
             """PROPERTIES"""
-            pass
         @property
         def to_date(self) -> global___AccountOverview.Request.Date: ...
-        def __init__(self,
+        def __init__(
+            self,
             *,
-            from_date : typing.Optional[global___AccountOverview.Request.Date] = ...,
-            to_date : typing.Optional[global___AccountOverview.Request.Date] = ...,
-            ) -> None: ...
-        def HasField(self, field_name: typing_extensions.Literal[u"from_date",b"from_date",u"to_date",b"to_date"]) -> builtins.bool: ...
-        def ClearField(self, field_name: typing_extensions.Literal[u"from_date",b"from_date",u"to_date",b"to_date"]) -> None: ...
+            from_date: global___AccountOverview.Request.Date | None = ...,
+            to_date: global___AccountOverview.Request.Date | None = ...,
+        ) -> None: ...
+        def HasField(self, field_name: typing_extensions.Literal["from_date", b"from_date", "to_date", b"to_date"]) -> builtins.bool: ...
+        def ClearField(self, field_name: typing_extensions.Literal["from_date", b"from_date", "to_date", b"to_date"]) -> None: ...
 
     VALUES_FIELD_NUMBER: builtins.int
     RESPONSE_DATETIME_FIELD_NUMBER: builtins.int
     @property
     def values(self) -> google.protobuf.struct_pb2.Struct:
         """PROPERTIES"""
-        pass
     @property
     def response_datetime(self) -> google.protobuf.timestamp_pb2.Timestamp: ...
-    def __init__(self,
+    def __init__(
+        self,
         *,
-        values : typing.Optional[google.protobuf.struct_pb2.Struct] = ...,
-        response_datetime : typing.Optional[google.protobuf.timestamp_pb2.Timestamp] = ...,
-        ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal[u"response_datetime",b"response_datetime",u"values",b"values"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal[u"response_datetime",b"response_datetime",u"values",b"values"]) -> None: ...
+        values: google.protobuf.struct_pb2.Struct | None = ...,
+        response_datetime: google.protobuf.timestamp_pb2.Timestamp | None = ...,
+    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["response_datetime", b"response_datetime", "values", b"values"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["response_datetime", b"response_datetime", "values", b"values"]) -> None: ...
+
 global___AccountOverview = AccountOverview
 
+@typing_extensions.final
 class ProductSearch(google.protobuf.message.Message):
     """* For the payload from the following URLs :
     https://trader.degiro.nl/product_search/secure/v5/bonds
@@ -665,22 +742,30 @@ class ProductSearch(google.protobuf.message.Message):
     https://trader.degiro.nl/product_search/secure/v5/stocks
     https://trader.degiro.nl/product_search/secure/v5/warrants
     """
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    @typing_extensions.final
     class Config(google.protobuf.message.Message):
         """MESSAGES"""
-        DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
         VALUES_FIELD_NUMBER: builtins.int
         @property
         def values(self) -> google.protobuf.struct_pb2.Struct: ...
-        def __init__(self,
+        def __init__(
+            self,
             *,
-            values : typing.Optional[google.protobuf.struct_pb2.Struct] = ...,
-            ) -> None: ...
-        def HasField(self, field_name: typing_extensions.Literal[u"values",b"values"]) -> builtins.bool: ...
-        def ClearField(self, field_name: typing_extensions.Literal[u"values",b"values"]) -> None: ...
+            values: google.protobuf.struct_pb2.Struct | None = ...,
+        ) -> None: ...
+        def HasField(self, field_name: typing_extensions.Literal["values", b"values"]) -> builtins.bool: ...
+        def ClearField(self, field_name: typing_extensions.Literal["values", b"values"]) -> None: ...
 
+    @typing_extensions.final
     class RequestBonds(google.protobuf.message.Message):
-        DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
         BOND_ISSUER_TYPE_ID_FIELD_NUMBER: builtins.int
         BOND_EXCHANGE_ID_FIELD_NUMBER: builtins.int
         SEARCH_TEXT_FIELD_NUMBER: builtins.int
@@ -689,29 +774,32 @@ class ProductSearch(google.protobuf.message.Message):
         REQUIRE_TOTAL_FIELD_NUMBER: builtins.int
         SORT_COLUMNS_FIELD_NUMBER: builtins.int
         SORT_TYPES_FIELD_NUMBER: builtins.int
-        bond_issuer_type_id: builtins.int = ...
-        bond_exchange_id: builtins.int = ...
-        search_text: typing.Text = ...
-        offset: builtins.int = ...
-        limit: builtins.int = ...
-        require_total: builtins.bool = ...
-        sort_columns: typing.Text = ...
-        sort_types: typing.Text = ...
-        def __init__(self,
+        bond_issuer_type_id: builtins.int
+        bond_exchange_id: builtins.int
+        search_text: builtins.str
+        offset: builtins.int
+        limit: builtins.int
+        require_total: builtins.bool
+        sort_columns: builtins.str
+        sort_types: builtins.str
+        def __init__(
+            self,
             *,
-            bond_issuer_type_id : builtins.int = ...,
-            bond_exchange_id : builtins.int = ...,
-            search_text : typing.Text = ...,
-            offset : builtins.int = ...,
-            limit : builtins.int = ...,
-            require_total : builtins.bool = ...,
-            sort_columns : typing.Text = ...,
-            sort_types : typing.Text = ...,
-            ) -> None: ...
-        def ClearField(self, field_name: typing_extensions.Literal[u"bond_exchange_id",b"bond_exchange_id",u"bond_issuer_type_id",b"bond_issuer_type_id",u"limit",b"limit",u"offset",b"offset",u"require_total",b"require_total",u"search_text",b"search_text",u"sort_columns",b"sort_columns",u"sort_types",b"sort_types"]) -> None: ...
+            bond_issuer_type_id: builtins.int = ...,
+            bond_exchange_id: builtins.int = ...,
+            search_text: builtins.str = ...,
+            offset: builtins.int = ...,
+            limit: builtins.int = ...,
+            require_total: builtins.bool = ...,
+            sort_columns: builtins.str = ...,
+            sort_types: builtins.str = ...,
+        ) -> None: ...
+        def ClearField(self, field_name: typing_extensions.Literal["bond_exchange_id", b"bond_exchange_id", "bond_issuer_type_id", b"bond_issuer_type_id", "limit", b"limit", "offset", b"offset", "require_total", b"require_total", "search_text", b"search_text", "sort_columns", b"sort_columns", "sort_types", b"sort_types"]) -> None: ...
 
+    @typing_extensions.final
     class RequestETFs(google.protobuf.message.Message):
-        DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
         POPULAR_ONLY_FIELD_NUMBER: builtins.int
         INPUT_AGGREGATE_TYPES_FIELD_NUMBER: builtins.int
         INPUT_AGGREGATE_VALUES_FIELD_NUMBER: builtins.int
@@ -721,56 +809,62 @@ class ProductSearch(google.protobuf.message.Message):
         REQUIRE_TOTAL_FIELD_NUMBER: builtins.int
         SORT_COLUMNS_FIELD_NUMBER: builtins.int
         SORT_TYPES_FIELD_NUMBER: builtins.int
-        popular_only: builtins.bool = ...
-        input_aggregate_types: typing.Text = ...
-        input_aggregate_values: typing.Text = ...
-        search_text: typing.Text = ...
-        offset: builtins.int = ...
-        limit: builtins.int = ...
-        require_total: builtins.bool = ...
-        sort_columns: typing.Text = ...
-        sort_types: typing.Text = ...
-        def __init__(self,
+        popular_only: builtins.bool
+        input_aggregate_types: builtins.str
+        input_aggregate_values: builtins.str
+        search_text: builtins.str
+        offset: builtins.int
+        limit: builtins.int
+        require_total: builtins.bool
+        sort_columns: builtins.str
+        sort_types: builtins.str
+        def __init__(
+            self,
             *,
-            popular_only : builtins.bool = ...,
-            input_aggregate_types : typing.Text = ...,
-            input_aggregate_values : typing.Text = ...,
-            search_text : typing.Text = ...,
-            offset : builtins.int = ...,
-            limit : builtins.int = ...,
-            require_total : builtins.bool = ...,
-            sort_columns : typing.Text = ...,
-            sort_types : typing.Text = ...,
-            ) -> None: ...
-        def ClearField(self, field_name: typing_extensions.Literal[u"input_aggregate_types",b"input_aggregate_types",u"input_aggregate_values",b"input_aggregate_values",u"limit",b"limit",u"offset",b"offset",u"popular_only",b"popular_only",u"require_total",b"require_total",u"search_text",b"search_text",u"sort_columns",b"sort_columns",u"sort_types",b"sort_types"]) -> None: ...
+            popular_only: builtins.bool = ...,
+            input_aggregate_types: builtins.str = ...,
+            input_aggregate_values: builtins.str = ...,
+            search_text: builtins.str = ...,
+            offset: builtins.int = ...,
+            limit: builtins.int = ...,
+            require_total: builtins.bool = ...,
+            sort_columns: builtins.str = ...,
+            sort_types: builtins.str = ...,
+        ) -> None: ...
+        def ClearField(self, field_name: typing_extensions.Literal["input_aggregate_types", b"input_aggregate_types", "input_aggregate_values", b"input_aggregate_values", "limit", b"limit", "offset", b"offset", "popular_only", b"popular_only", "require_total", b"require_total", "search_text", b"search_text", "sort_columns", b"sort_columns", "sort_types", b"sort_types"]) -> None: ...
 
+    @typing_extensions.final
     class RequestFunds(google.protobuf.message.Message):
-        DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
         SEARCH_TEXT_FIELD_NUMBER: builtins.int
         OFFSET_FIELD_NUMBER: builtins.int
         LIMIT_FIELD_NUMBER: builtins.int
         REQUIRE_TOTAL_FIELD_NUMBER: builtins.int
         SORT_COLUMNS_FIELD_NUMBER: builtins.int
         SORT_TYPES_FIELD_NUMBER: builtins.int
-        search_text: typing.Text = ...
-        offset: builtins.int = ...
-        limit: builtins.int = ...
-        require_total: builtins.bool = ...
-        sort_columns: typing.Text = ...
-        sort_types: typing.Text = ...
-        def __init__(self,
+        search_text: builtins.str
+        offset: builtins.int
+        limit: builtins.int
+        require_total: builtins.bool
+        sort_columns: builtins.str
+        sort_types: builtins.str
+        def __init__(
+            self,
             *,
-            search_text : typing.Text = ...,
-            offset : builtins.int = ...,
-            limit : builtins.int = ...,
-            require_total : builtins.bool = ...,
-            sort_columns : typing.Text = ...,
-            sort_types : typing.Text = ...,
-            ) -> None: ...
-        def ClearField(self, field_name: typing_extensions.Literal[u"limit",b"limit",u"offset",b"offset",u"require_total",b"require_total",u"search_text",b"search_text",u"sort_columns",b"sort_columns",u"sort_types",b"sort_types"]) -> None: ...
+            search_text: builtins.str = ...,
+            offset: builtins.int = ...,
+            limit: builtins.int = ...,
+            require_total: builtins.bool = ...,
+            sort_columns: builtins.str = ...,
+            sort_types: builtins.str = ...,
+        ) -> None: ...
+        def ClearField(self, field_name: typing_extensions.Literal["limit", b"limit", "offset", b"offset", "require_total", b"require_total", "search_text", b"search_text", "sort_columns", b"sort_columns", "sort_types", b"sort_types"]) -> None: ...
 
+    @typing_extensions.final
     class RequestFutures(google.protobuf.message.Message):
-        DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
         FUTURE_EXCHANGE_ID_FIELD_NUMBER: builtins.int
         UNDERLYING_ISIN_FIELD_NUMBER: builtins.int
         SEARCH_TEXT_FIELD_NUMBER: builtins.int
@@ -779,29 +873,32 @@ class ProductSearch(google.protobuf.message.Message):
         REQUIRE_TOTAL_FIELD_NUMBER: builtins.int
         SORT_COLUMNS_FIELD_NUMBER: builtins.int
         SORT_TYPES_FIELD_NUMBER: builtins.int
-        future_exchange_id: builtins.int = ...
-        underlying_isin: typing.Text = ...
-        search_text: typing.Text = ...
-        offset: builtins.int = ...
-        limit: builtins.int = ...
-        require_total: builtins.bool = ...
-        sort_columns: typing.Text = ...
-        sort_types: typing.Text = ...
-        def __init__(self,
+        future_exchange_id: builtins.int
+        underlying_isin: builtins.str
+        search_text: builtins.str
+        offset: builtins.int
+        limit: builtins.int
+        require_total: builtins.bool
+        sort_columns: builtins.str
+        sort_types: builtins.str
+        def __init__(
+            self,
             *,
-            future_exchange_id : builtins.int = ...,
-            underlying_isin : typing.Text = ...,
-            search_text : typing.Text = ...,
-            offset : builtins.int = ...,
-            limit : builtins.int = ...,
-            require_total : builtins.bool = ...,
-            sort_columns : typing.Text = ...,
-            sort_types : typing.Text = ...,
-            ) -> None: ...
-        def ClearField(self, field_name: typing_extensions.Literal[u"future_exchange_id",b"future_exchange_id",u"limit",b"limit",u"offset",b"offset",u"require_total",b"require_total",u"search_text",b"search_text",u"sort_columns",b"sort_columns",u"sort_types",b"sort_types",u"underlying_isin",b"underlying_isin"]) -> None: ...
+            future_exchange_id: builtins.int = ...,
+            underlying_isin: builtins.str = ...,
+            search_text: builtins.str = ...,
+            offset: builtins.int = ...,
+            limit: builtins.int = ...,
+            require_total: builtins.bool = ...,
+            sort_columns: builtins.str = ...,
+            sort_types: builtins.str = ...,
+        ) -> None: ...
+        def ClearField(self, field_name: typing_extensions.Literal["future_exchange_id", b"future_exchange_id", "limit", b"limit", "offset", b"offset", "require_total", b"require_total", "search_text", b"search_text", "sort_columns", b"sort_columns", "sort_types", b"sort_types", "underlying_isin", b"underlying_isin"]) -> None: ...
 
+    @typing_extensions.final
     class RequestLeverageds(google.protobuf.message.Message):
-        DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
         POPULAR_ONLY_FIELD_NUMBER: builtins.int
         INPUT_AGGREGATE_TYPES_FIELD_NUMBER: builtins.int
         INPUT_AGGREGATE_VALUES_FIELD_NUMBER: builtins.int
@@ -811,50 +908,56 @@ class ProductSearch(google.protobuf.message.Message):
         REQUIRE_TOTAL_FIELD_NUMBER: builtins.int
         SORT_COLUMNS_FIELD_NUMBER: builtins.int
         SORT_TYPES_FIELD_NUMBER: builtins.int
-        popular_only: builtins.bool = ...
-        input_aggregate_types: typing.Text = ...
-        input_aggregate_values: typing.Text = ...
-        search_text: typing.Text = ...
-        offset: builtins.int = ...
-        limit: builtins.int = ...
-        require_total: builtins.bool = ...
-        sort_columns: typing.Text = ...
-        sort_types: typing.Text = ...
-        def __init__(self,
+        popular_only: builtins.bool
+        input_aggregate_types: builtins.str
+        input_aggregate_values: builtins.str
+        search_text: builtins.str
+        offset: builtins.int
+        limit: builtins.int
+        require_total: builtins.bool
+        sort_columns: builtins.str
+        sort_types: builtins.str
+        def __init__(
+            self,
             *,
-            popular_only : builtins.bool = ...,
-            input_aggregate_types : typing.Text = ...,
-            input_aggregate_values : typing.Text = ...,
-            search_text : typing.Text = ...,
-            offset : builtins.int = ...,
-            limit : builtins.int = ...,
-            require_total : builtins.bool = ...,
-            sort_columns : typing.Text = ...,
-            sort_types : typing.Text = ...,
-            ) -> None: ...
-        def ClearField(self, field_name: typing_extensions.Literal[u"input_aggregate_types",b"input_aggregate_types",u"input_aggregate_values",b"input_aggregate_values",u"limit",b"limit",u"offset",b"offset",u"popular_only",b"popular_only",u"require_total",b"require_total",u"search_text",b"search_text",u"sort_columns",b"sort_columns",u"sort_types",b"sort_types"]) -> None: ...
+            popular_only: builtins.bool = ...,
+            input_aggregate_types: builtins.str = ...,
+            input_aggregate_values: builtins.str = ...,
+            search_text: builtins.str = ...,
+            offset: builtins.int = ...,
+            limit: builtins.int = ...,
+            require_total: builtins.bool = ...,
+            sort_columns: builtins.str = ...,
+            sort_types: builtins.str = ...,
+        ) -> None: ...
+        def ClearField(self, field_name: typing_extensions.Literal["input_aggregate_types", b"input_aggregate_types", "input_aggregate_values", b"input_aggregate_values", "limit", b"limit", "offset", b"offset", "popular_only", b"popular_only", "require_total", b"require_total", "search_text", b"search_text", "sort_columns", b"sort_columns", "sort_types", b"sort_types"]) -> None: ...
 
+    @typing_extensions.final
     class RequestLookup(google.protobuf.message.Message):
-        DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
         SEARCH_TEXT_FIELD_NUMBER: builtins.int
         LIMIT_FIELD_NUMBER: builtins.int
         OFFSET_FIELD_NUMBER: builtins.int
         PRODUCT_TYPE_ID_FIELD_NUMBER: builtins.int
-        search_text: typing.Text = ...
-        limit: builtins.int = ...
-        offset: builtins.int = ...
-        product_type_id: builtins.int = ...
-        def __init__(self,
+        search_text: builtins.str
+        limit: builtins.int
+        offset: builtins.int
+        product_type_id: builtins.int
+        def __init__(
+            self,
             *,
-            search_text : typing.Text = ...,
-            limit : builtins.int = ...,
-            offset : builtins.int = ...,
-            product_type_id : builtins.int = ...,
-            ) -> None: ...
-        def ClearField(self, field_name: typing_extensions.Literal[u"limit",b"limit",u"offset",b"offset",u"product_type_id",b"product_type_id",u"search_text",b"search_text"]) -> None: ...
+            search_text: builtins.str = ...,
+            limit: builtins.int = ...,
+            offset: builtins.int = ...,
+            product_type_id: builtins.int = ...,
+        ) -> None: ...
+        def ClearField(self, field_name: typing_extensions.Literal["limit", b"limit", "offset", b"offset", "product_type_id", b"product_type_id", "search_text", b"search_text"]) -> None: ...
 
+    @typing_extensions.final
     class RequestOptions(google.protobuf.message.Message):
-        DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
         INPUT_AGGREGATE_TYPES_FIELD_NUMBER: builtins.int
         INPUT_AGGREGATE_VALUES_FIELD_NUMBER: builtins.int
         OPTION_EXCHANGE_ID_FIELD_NUMBER: builtins.int
@@ -865,33 +968,36 @@ class ProductSearch(google.protobuf.message.Message):
         REQUIRE_TOTAL_FIELD_NUMBER: builtins.int
         SORT_COLUMNS_FIELD_NUMBER: builtins.int
         SORT_TYPES_FIELD_NUMBER: builtins.int
-        input_aggregate_types: typing.Text = ...
-        input_aggregate_values: typing.Text = ...
-        option_exchange_id: builtins.int = ...
-        underlying_isin: typing.Text = ...
-        search_text: typing.Text = ...
-        offset: builtins.int = ...
-        limit: builtins.int = ...
-        require_total: builtins.bool = ...
-        sort_columns: typing.Text = ...
-        sort_types: typing.Text = ...
-        def __init__(self,
+        input_aggregate_types: builtins.str
+        input_aggregate_values: builtins.str
+        option_exchange_id: builtins.int
+        underlying_isin: builtins.str
+        search_text: builtins.str
+        offset: builtins.int
+        limit: builtins.int
+        require_total: builtins.bool
+        sort_columns: builtins.str
+        sort_types: builtins.str
+        def __init__(
+            self,
             *,
-            input_aggregate_types : typing.Text = ...,
-            input_aggregate_values : typing.Text = ...,
-            option_exchange_id : builtins.int = ...,
-            underlying_isin : typing.Text = ...,
-            search_text : typing.Text = ...,
-            offset : builtins.int = ...,
-            limit : builtins.int = ...,
-            require_total : builtins.bool = ...,
-            sort_columns : typing.Text = ...,
-            sort_types : typing.Text = ...,
-            ) -> None: ...
-        def ClearField(self, field_name: typing_extensions.Literal[u"input_aggregate_types",b"input_aggregate_types",u"input_aggregate_values",b"input_aggregate_values",u"limit",b"limit",u"offset",b"offset",u"option_exchange_id",b"option_exchange_id",u"require_total",b"require_total",u"search_text",b"search_text",u"sort_columns",b"sort_columns",u"sort_types",b"sort_types",u"underlying_isin",b"underlying_isin"]) -> None: ...
+            input_aggregate_types: builtins.str = ...,
+            input_aggregate_values: builtins.str = ...,
+            option_exchange_id: builtins.int = ...,
+            underlying_isin: builtins.str = ...,
+            search_text: builtins.str = ...,
+            offset: builtins.int = ...,
+            limit: builtins.int = ...,
+            require_total: builtins.bool = ...,
+            sort_columns: builtins.str = ...,
+            sort_types: builtins.str = ...,
+        ) -> None: ...
+        def ClearField(self, field_name: typing_extensions.Literal["input_aggregate_types", b"input_aggregate_types", "input_aggregate_values", b"input_aggregate_values", "limit", b"limit", "offset", b"offset", "option_exchange_id", b"option_exchange_id", "require_total", b"require_total", "search_text", b"search_text", "sort_columns", b"sort_columns", "sort_types", b"sort_types", "underlying_isin", b"underlying_isin"]) -> None: ...
 
+    @typing_extensions.final
     class RequestStocks(google.protobuf.message.Message):
-        DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
         IS_IN_US_GREEN_LIST_FIELD_NUMBER: builtins.int
         INDEX_ID_FIELD_NUMBER: builtins.int
         EXCHANGE_ID_FIELD_NUMBER: builtins.int
@@ -902,233 +1008,270 @@ class ProductSearch(google.protobuf.message.Message):
         REQUIRE_TOTAL_FIELD_NUMBER: builtins.int
         SORT_COLUMNS_FIELD_NUMBER: builtins.int
         SORT_TYPES_FIELD_NUMBER: builtins.int
-        is_in_us_green_list: builtins.bool = ...
-        index_id: builtins.int = ...
-        exchange_id: builtins.int = ...
-        stock_country_id: builtins.int = ...
-        search_text: typing.Text = ...
-        offset: builtins.int = ...
-        limit: builtins.int = ...
-        require_total: builtins.bool = ...
-        sort_columns: typing.Text = ...
-        sort_types: typing.Text = ...
-        def __init__(self,
+        is_in_us_green_list: builtins.bool
+        index_id: builtins.int
+        exchange_id: builtins.int
+        stock_country_id: builtins.int
+        search_text: builtins.str
+        offset: builtins.int
+        limit: builtins.int
+        require_total: builtins.bool
+        sort_columns: builtins.str
+        sort_types: builtins.str
+        def __init__(
+            self,
             *,
-            is_in_us_green_list : builtins.bool = ...,
-            index_id : builtins.int = ...,
-            exchange_id : builtins.int = ...,
-            stock_country_id : builtins.int = ...,
-            search_text : typing.Text = ...,
-            offset : builtins.int = ...,
-            limit : builtins.int = ...,
-            require_total : builtins.bool = ...,
-            sort_columns : typing.Text = ...,
-            sort_types : typing.Text = ...,
-            ) -> None: ...
-        def ClearField(self, field_name: typing_extensions.Literal[u"exchange_id",b"exchange_id",u"index_id",b"index_id",u"is_in_us_green_list",b"is_in_us_green_list",u"limit",b"limit",u"offset",b"offset",u"require_total",b"require_total",u"search_text",b"search_text",u"sort_columns",b"sort_columns",u"sort_types",b"sort_types",u"stock_country_id",b"stock_country_id"]) -> None: ...
+            is_in_us_green_list: builtins.bool = ...,
+            index_id: builtins.int = ...,
+            exchange_id: builtins.int = ...,
+            stock_country_id: builtins.int = ...,
+            search_text: builtins.str = ...,
+            offset: builtins.int = ...,
+            limit: builtins.int = ...,
+            require_total: builtins.bool = ...,
+            sort_columns: builtins.str = ...,
+            sort_types: builtins.str = ...,
+        ) -> None: ...
+        def ClearField(self, field_name: typing_extensions.Literal["exchange_id", b"exchange_id", "index_id", b"index_id", "is_in_us_green_list", b"is_in_us_green_list", "limit", b"limit", "offset", b"offset", "require_total", b"require_total", "search_text", b"search_text", "sort_columns", b"sort_columns", "sort_types", b"sort_types", "stock_country_id", b"stock_country_id"]) -> None: ...
 
+    @typing_extensions.final
     class RequestWarrants(google.protobuf.message.Message):
-        DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
         SEARCH_TEXT_FIELD_NUMBER: builtins.int
         OFFSET_FIELD_NUMBER: builtins.int
         LIMIT_FIELD_NUMBER: builtins.int
         REQUIRE_TOTAL_FIELD_NUMBER: builtins.int
         SORT_COLUMNS_FIELD_NUMBER: builtins.int
         SORT_TYPES_FIELD_NUMBER: builtins.int
-        search_text: typing.Text = ...
-        offset: builtins.int = ...
-        limit: builtins.int = ...
-        require_total: builtins.bool = ...
-        sort_columns: typing.Text = ...
-        sort_types: typing.Text = ...
-        def __init__(self,
+        search_text: builtins.str
+        offset: builtins.int
+        limit: builtins.int
+        require_total: builtins.bool
+        sort_columns: builtins.str
+        sort_types: builtins.str
+        def __init__(
+            self,
             *,
-            search_text : typing.Text = ...,
-            offset : builtins.int = ...,
-            limit : builtins.int = ...,
-            require_total : builtins.bool = ...,
-            sort_columns : typing.Text = ...,
-            sort_types : typing.Text = ...,
-            ) -> None: ...
-        def ClearField(self, field_name: typing_extensions.Literal[u"limit",b"limit",u"offset",b"offset",u"require_total",b"require_total",u"search_text",b"search_text",u"sort_columns",b"sort_columns",u"sort_types",b"sort_types"]) -> None: ...
+            search_text: builtins.str = ...,
+            offset: builtins.int = ...,
+            limit: builtins.int = ...,
+            require_total: builtins.bool = ...,
+            sort_columns: builtins.str = ...,
+            sort_types: builtins.str = ...,
+        ) -> None: ...
+        def ClearField(self, field_name: typing_extensions.Literal["limit", b"limit", "offset", b"offset", "require_total", b"require_total", "search_text", b"search_text", "sort_columns", b"sort_columns", "sort_types", b"sort_types"]) -> None: ...
 
     OFFSET_FIELD_NUMBER: builtins.int
     PRODUCTS_FIELD_NUMBER: builtins.int
     RESPONSE_DATETIME_FIELD_NUMBER: builtins.int
     TOTAL_FIELD_NUMBER: builtins.int
-    offset: builtins.int = ...
+    offset: builtins.int
     """PROPERTIES"""
-
     @property
     def products(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[google.protobuf.struct_pb2.Struct]: ...
     @property
     def response_datetime(self) -> google.protobuf.timestamp_pb2.Timestamp: ...
-    total: builtins.int = ...
-    def __init__(self,
+    total: builtins.int
+    def __init__(
+        self,
         *,
-        offset : builtins.int = ...,
-        products : typing.Optional[typing.Iterable[google.protobuf.struct_pb2.Struct]] = ...,
-        response_datetime : typing.Optional[google.protobuf.timestamp_pb2.Timestamp] = ...,
-        total : builtins.int = ...,
-        ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal[u"response_datetime",b"response_datetime"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal[u"offset",b"offset",u"products",b"products",u"response_datetime",b"response_datetime",u"total",b"total"]) -> None: ...
+        offset: builtins.int = ...,
+        products: collections.abc.Iterable[google.protobuf.struct_pb2.Struct] | None = ...,
+        response_datetime: google.protobuf.timestamp_pb2.Timestamp | None = ...,
+        total: builtins.int = ...,
+    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["response_datetime", b"response_datetime"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["offset", b"offset", "products", b"products", "response_datetime", b"response_datetime", "total", b"total"]) -> None: ...
+
 global___ProductSearch = ProductSearch
 
+@typing_extensions.final
 class Favourites(google.protobuf.message.Message):
     """* For the payload from the following URL :
     https://trader.degiro.nl/pa/secure/favourites/lists
     """
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    @typing_extensions.final
     class List(google.protobuf.message.Message):
         """MESSAGES"""
-        DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
         ID_FIELD_NUMBER: builtins.int
         NAME_FIELD_NUMBER: builtins.int
         IS_DEFAULT_FIELD_NUMBER: builtins.int
         PRODUCT_IDS_FIELD_NUMBER: builtins.int
-        id: builtins.int = ...
+        id: builtins.int
         """PROPERTIES"""
-
-        name: typing.Text = ...
-        is_default: builtins.bool = ...
+        name: builtins.str
+        is_default: builtins.bool
         @property
         def product_ids(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[builtins.int]: ...
-        def __init__(self,
+        def __init__(
+            self,
             *,
-            id : builtins.int = ...,
-            name : typing.Text = ...,
-            is_default : builtins.bool = ...,
-            product_ids : typing.Optional[typing.Iterable[builtins.int]] = ...,
-            ) -> None: ...
-        def ClearField(self, field_name: typing_extensions.Literal[u"id",b"id",u"is_default",b"is_default",u"name",b"name",u"product_ids",b"product_ids"]) -> None: ...
+            id: builtins.int = ...,
+            name: builtins.str = ...,
+            is_default: builtins.bool = ...,
+            product_ids: collections.abc.Iterable[builtins.int] | None = ...,
+        ) -> None: ...
+        def ClearField(self, field_name: typing_extensions.Literal["id", b"id", "is_default", b"is_default", "name", b"name", "product_ids", b"product_ids"]) -> None: ...
 
     VALUES_FIELD_NUMBER: builtins.int
     RESPONSE_DATETIME_FIELD_NUMBER: builtins.int
     @property
     def values(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___Favourites.List]:
         """PROPERTIES"""
-        pass
     @property
     def response_datetime(self) -> google.protobuf.timestamp_pb2.Timestamp: ...
-    def __init__(self,
+    def __init__(
+        self,
         *,
-        values : typing.Optional[typing.Iterable[global___Favourites.List]] = ...,
-        response_datetime : typing.Optional[google.protobuf.timestamp_pb2.Timestamp] = ...,
-        ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal[u"response_datetime",b"response_datetime"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal[u"response_datetime",b"response_datetime",u"values",b"values"]) -> None: ...
+        values: collections.abc.Iterable[global___Favourites.List] | None = ...,
+        response_datetime: google.protobuf.timestamp_pb2.Timestamp | None = ...,
+    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["response_datetime", b"response_datetime"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["response_datetime", b"response_datetime", "values", b"values"]) -> None: ...
+
 global___Favourites = Favourites
 
+@typing_extensions.final
 class ProductsInfo(google.protobuf.message.Message):
     """* For the payload from the following URL :
     https://trader.degiro.nl/product_search/secure/v5/products/info
     """
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    @typing_extensions.final
     class Request(google.protobuf.message.Message):
         """MESSAGES"""
-        DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
         PRODUCTS_FIELD_NUMBER: builtins.int
         @property
         def products(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[builtins.int]:
             """PROPERTIES"""
-            pass
-        def __init__(self,
+        def __init__(
+            self,
             *,
-            products : typing.Optional[typing.Iterable[builtins.int]] = ...,
-            ) -> None: ...
-        def ClearField(self, field_name: typing_extensions.Literal[u"products",b"products"]) -> None: ...
+            products: collections.abc.Iterable[builtins.int] | None = ...,
+        ) -> None: ...
+        def ClearField(self, field_name: typing_extensions.Literal["products", b"products"]) -> None: ...
 
     VALUES_FIELD_NUMBER: builtins.int
     @property
     def values(self) -> google.protobuf.struct_pb2.Struct:
         """PROPERTIES"""
-        pass
-    def __init__(self,
+    def __init__(
+        self,
         *,
-        values : typing.Optional[google.protobuf.struct_pb2.Struct] = ...,
-        ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal[u"values",b"values"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal[u"values",b"values"]) -> None: ...
+        values: google.protobuf.struct_pb2.Struct | None = ...,
+    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["values", b"values"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["values", b"values"]) -> None: ...
+
 global___ProductsInfo = ProductsInfo
 
+@typing_extensions.final
 class CompanyRatios(google.protobuf.message.Message):
     """* For the payload from the following URL :
     https://trader.degiro.nl/dgtbxdsservice/company-ratios
     """
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
     VALUES_FIELD_NUMBER: builtins.int
     @property
     def values(self) -> google.protobuf.struct_pb2.Struct:
         """PROPERTIES"""
-        pass
-    def __init__(self,
+    def __init__(
+        self,
         *,
-        values : typing.Optional[google.protobuf.struct_pb2.Struct] = ...,
-        ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal[u"values",b"values"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal[u"values",b"values"]) -> None: ...
+        values: google.protobuf.struct_pb2.Struct | None = ...,
+    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["values", b"values"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["values", b"values"]) -> None: ...
+
 global___CompanyRatios = CompanyRatios
 
+@typing_extensions.final
 class CompanyProfile(google.protobuf.message.Message):
     """* For the payload from the following URL :
     https://trader.degiro.nl/dgtbxdsservice/company-profile/v2
     """
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
     VALUES_FIELD_NUMBER: builtins.int
     @property
     def values(self) -> google.protobuf.struct_pb2.Struct:
         """PROPERTIES"""
-        pass
-    def __init__(self,
+    def __init__(
+        self,
         *,
-        values : typing.Optional[google.protobuf.struct_pb2.Struct] = ...,
-        ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal[u"values",b"values"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal[u"values",b"values"]) -> None: ...
+        values: google.protobuf.struct_pb2.Struct | None = ...,
+    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["values", b"values"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["values", b"values"]) -> None: ...
+
 global___CompanyProfile = CompanyProfile
 
+@typing_extensions.final
 class FinancialStatements(google.protobuf.message.Message):
     """* For the payload from the following URL :
     https://trader.degiro.nl/dgtbxdsservice/financial-statements
     """
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
     VALUES_FIELD_NUMBER: builtins.int
     @property
     def values(self) -> google.protobuf.struct_pb2.Struct:
         """PROPERTIES"""
-        pass
-    def __init__(self,
+    def __init__(
+        self,
         *,
-        values : typing.Optional[google.protobuf.struct_pb2.Struct] = ...,
-        ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal[u"values",b"values"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal[u"values",b"values"]) -> None: ...
+        values: google.protobuf.struct_pb2.Struct | None = ...,
+    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["values", b"values"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["values", b"values"]) -> None: ...
+
 global___FinancialStatements = FinancialStatements
 
+@typing_extensions.final
 class LatestNews(google.protobuf.message.Message):
     """* For the payload from the following URL :
     https://trader.degiro.nl/dgtbxdsservice/newsfeed/v2/latest-news
     """
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    @typing_extensions.final
     class Request(google.protobuf.message.Message):
         """MESSAGES"""
-        DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
         OFFSET_FIELD_NUMBER: builtins.int
         LANGUAGES_FIELD_NUMBER: builtins.int
         LIMIT_FIELD_NUMBER: builtins.int
-        offset: builtins.int = ...
+        offset: builtins.int
         """PROPERTIES"""
-
-        languages: typing.Text = ...
-        limit: builtins.int = ...
-        def __init__(self,
+        languages: builtins.str
+        limit: builtins.int
+        def __init__(
+            self,
             *,
-            offset : builtins.int = ...,
-            languages : typing.Text = ...,
-            limit : builtins.int = ...,
-            ) -> None: ...
-        def ClearField(self, field_name: typing_extensions.Literal[u"languages",b"languages",u"limit",b"limit",u"offset",b"offset"]) -> None: ...
+            offset: builtins.int = ...,
+            languages: builtins.str = ...,
+            limit: builtins.int = ...,
+        ) -> None: ...
+        def ClearField(self, field_name: typing_extensions.Literal["languages", b"languages", "limit", b"limit", "offset", b"offset"]) -> None: ...
 
     ITEMS_FIELD_NUMBER: builtins.int
     OFFSET_FIELD_NUMBER: builtins.int
@@ -1136,67 +1279,78 @@ class LatestNews(google.protobuf.message.Message):
     @property
     def items(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[google.protobuf.struct_pb2.Struct]:
         """PROPERTIES"""
-        pass
-    offset: builtins.int = ...
-    total: builtins.int = ...
-    def __init__(self,
+    offset: builtins.int
+    total: builtins.int
+    def __init__(
+        self,
         *,
-        items : typing.Optional[typing.Iterable[google.protobuf.struct_pb2.Struct]] = ...,
-        offset : builtins.int = ...,
-        total : builtins.int = ...,
-        ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal[u"items",b"items",u"offset",b"offset",u"total",b"total"]) -> None: ...
+        items: collections.abc.Iterable[google.protobuf.struct_pb2.Struct] | None = ...,
+        offset: builtins.int = ...,
+        total: builtins.int = ...,
+    ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["items", b"items", "offset", b"offset", "total", b"total"]) -> None: ...
+
 global___LatestNews = LatestNews
 
+@typing_extensions.final
 class TopNewsPreview(google.protobuf.message.Message):
     """* For the payload from the following URL :
     https://trader.degiro.nl/dgtbxdsservice/newsfeed/v2/top-news-preview
     """
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
     ITEMS_FIELD_NUMBER: builtins.int
     OFFSET_FIELD_NUMBER: builtins.int
     TOTAL_FIELD_NUMBER: builtins.int
     @property
     def items(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[google.protobuf.struct_pb2.Struct]:
         """PROPERTIES"""
-        pass
-    offset: builtins.int = ...
-    total: builtins.int = ...
-    def __init__(self,
+    offset: builtins.int
+    total: builtins.int
+    def __init__(
+        self,
         *,
-        items : typing.Optional[typing.Iterable[google.protobuf.struct_pb2.Struct]] = ...,
-        offset : builtins.int = ...,
-        total : builtins.int = ...,
-        ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal[u"items",b"items",u"offset",b"offset",u"total",b"total"]) -> None: ...
+        items: collections.abc.Iterable[google.protobuf.struct_pb2.Struct] | None = ...,
+        offset: builtins.int = ...,
+        total: builtins.int = ...,
+    ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["items", b"items", "offset", b"offset", "total", b"total"]) -> None: ...
+
 global___TopNewsPreview = TopNewsPreview
 
+@typing_extensions.final
 class NewsByCompany(google.protobuf.message.Message):
     """* For the payload from the following URL :
     https://trader.degiro.nl/dgtbxdsservice/newsfeed/v2/news-by-company
     """
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    @typing_extensions.final
     class Request(google.protobuf.message.Message):
         """MESSAGES"""
-        DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
         ISIN_FIELD_NUMBER: builtins.int
         LIMIT_FIELD_NUMBER: builtins.int
         OFFSET_FIELD_NUMBER: builtins.int
         LANGUAGES_FIELD_NUMBER: builtins.int
-        isin: typing.Text = ...
+        isin: builtins.str
         """PROPERTIES"""
-
-        limit: builtins.int = ...
-        offset: builtins.int = ...
-        languages: typing.Text = ...
-        def __init__(self,
+        limit: builtins.int
+        offset: builtins.int
+        languages: builtins.str
+        def __init__(
+            self,
             *,
-            isin : typing.Text = ...,
-            limit : builtins.int = ...,
-            offset : builtins.int = ...,
-            languages : typing.Text = ...,
-            ) -> None: ...
-        def ClearField(self, field_name: typing_extensions.Literal[u"isin",b"isin",u"languages",b"languages",u"limit",b"limit",u"offset",b"offset"]) -> None: ...
+            isin: builtins.str = ...,
+            limit: builtins.int = ...,
+            offset: builtins.int = ...,
+            languages: builtins.str = ...,
+        ) -> None: ...
+        def ClearField(self, field_name: typing_extensions.Literal["isin", b"isin", "languages", b"languages", "limit", b"limit", "offset", b"offset"]) -> None: ...
 
     ITEMS_FIELD_NUMBER: builtins.int
     OFFSET_FIELD_NUMBER: builtins.int
@@ -1204,133 +1358,155 @@ class NewsByCompany(google.protobuf.message.Message):
     @property
     def items(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[google.protobuf.struct_pb2.Struct]:
         """PROPERTIES"""
-        pass
-    offset: builtins.int = ...
-    total: builtins.int = ...
-    def __init__(self,
+    offset: builtins.int
+    total: builtins.int
+    def __init__(
+        self,
         *,
-        items : typing.Optional[typing.Iterable[google.protobuf.struct_pb2.Struct]] = ...,
-        offset : builtins.int = ...,
-        total : builtins.int = ...,
-        ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal[u"items",b"items",u"offset",b"offset",u"total",b"total"]) -> None: ...
+        items: collections.abc.Iterable[google.protobuf.struct_pb2.Struct] | None = ...,
+        offset: builtins.int = ...,
+        total: builtins.int = ...,
+    ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["items", b"items", "offset", b"offset", "total", b"total"]) -> None: ...
+
 global___NewsByCompany = NewsByCompany
 
+@typing_extensions.final
 class CashAccountReport(google.protobuf.message.Message):
     """* For the payload from the following URL :
     https://trader.degiro.nl/reporting/secure/v3/cashAccountReport
     """
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    class _Format:
+        ValueType = typing.NewType("ValueType", builtins.int)
+        V: typing_extensions.TypeAlias = ValueType
+
+    class _FormatEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[CashAccountReport._Format.ValueType], builtins.type):  # noqa: F821
+        DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
+        CSV: CashAccountReport._Format.ValueType  # 0
+        HTML: CashAccountReport._Format.ValueType  # 1
+        PDF: CashAccountReport._Format.ValueType  # 2
+        XLS: CashAccountReport._Format.ValueType  # 3
+
     class Format(_Format, metaclass=_FormatEnumTypeWrapper):
         """ENUMS"""
-        pass
-    class _Format:
-        V = typing.NewType('V', builtins.int)
-    class _FormatEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_Format.V], builtins.type):
-        DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor = ...
-        CSV = CashAccountReport.Format.V(0)
-        HTML = CashAccountReport.Format.V(1)
-        PDF = CashAccountReport.Format.V(2)
-        XLS = CashAccountReport.Format.V(3)
 
-    CSV = CashAccountReport.Format.V(0)
-    HTML = CashAccountReport.Format.V(1)
-    PDF = CashAccountReport.Format.V(2)
-    XLS = CashAccountReport.Format.V(3)
+    CSV: CashAccountReport.Format.ValueType  # 0
+    HTML: CashAccountReport.Format.ValueType  # 1
+    PDF: CashAccountReport.Format.ValueType  # 2
+    XLS: CashAccountReport.Format.ValueType  # 3
 
+    @typing_extensions.final
     class Request(google.protobuf.message.Message):
         """MESSAGES"""
-        DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+        @typing_extensions.final
         class Date(google.protobuf.message.Message):
             """MESSAGES"""
-            DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+
+            DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
             YEAR_FIELD_NUMBER: builtins.int
             MONTH_FIELD_NUMBER: builtins.int
             DAY_FIELD_NUMBER: builtins.int
-            year: builtins.int = ...
-            month: builtins.int = ...
-            day: builtins.int = ...
-            def __init__(self,
+            year: builtins.int
+            month: builtins.int
+            day: builtins.int
+            def __init__(
+                self,
                 *,
-                year : builtins.int = ...,
-                month : builtins.int = ...,
-                day : builtins.int = ...,
-                ) -> None: ...
-            def ClearField(self, field_name: typing_extensions.Literal[u"day",b"day",u"month",b"month",u"year",b"year"]) -> None: ...
+                year: builtins.int = ...,
+                month: builtins.int = ...,
+                day: builtins.int = ...,
+            ) -> None: ...
+            def ClearField(self, field_name: typing_extensions.Literal["day", b"day", "month", b"month", "year", b"year"]) -> None: ...
 
         FORMAT_FIELD_NUMBER: builtins.int
         COUNTRY_FIELD_NUMBER: builtins.int
         LANG_FIELD_NUMBER: builtins.int
         FROM_DATE_FIELD_NUMBER: builtins.int
         TO_DATE_FIELD_NUMBER: builtins.int
-        format: global___CashAccountReport.Format.V = ...
+        format: global___CashAccountReport.Format.ValueType
         """PROPERTIES"""
-
-        country: typing.Text = ...
-        lang: typing.Text = ...
+        country: builtins.str
+        lang: builtins.str
         @property
         def from_date(self) -> global___CashAccountReport.Request.Date: ...
         @property
         def to_date(self) -> global___CashAccountReport.Request.Date: ...
-        def __init__(self,
+        def __init__(
+            self,
             *,
-            format : global___CashAccountReport.Format.V = ...,
-            country : typing.Text = ...,
-            lang : typing.Text = ...,
-            from_date : typing.Optional[global___CashAccountReport.Request.Date] = ...,
-            to_date : typing.Optional[global___CashAccountReport.Request.Date] = ...,
-            ) -> None: ...
-        def HasField(self, field_name: typing_extensions.Literal[u"from_date",b"from_date",u"to_date",b"to_date"]) -> builtins.bool: ...
-        def ClearField(self, field_name: typing_extensions.Literal[u"country",b"country",u"format",b"format",u"from_date",b"from_date",u"lang",b"lang",u"to_date",b"to_date"]) -> None: ...
+            format: global___CashAccountReport.Format.ValueType = ...,
+            country: builtins.str = ...,
+            lang: builtins.str = ...,
+            from_date: global___CashAccountReport.Request.Date | None = ...,
+            to_date: global___CashAccountReport.Request.Date | None = ...,
+        ) -> None: ...
+        def HasField(self, field_name: typing_extensions.Literal["from_date", b"from_date", "to_date", b"to_date"]) -> builtins.bool: ...
+        def ClearField(self, field_name: typing_extensions.Literal["country", b"country", "format", b"format", "from_date", b"from_date", "lang", b"lang", "to_date", b"to_date"]) -> None: ...
 
     CONTENT_FIELD_NUMBER: builtins.int
     FORMAT_FIELD_NUMBER: builtins.int
     RESPONSE_DATETIME_FIELD_NUMBER: builtins.int
-    content: typing.Text = ...
+    content: builtins.str
     """PROPERTIES"""
-
-    format: global___CashAccountReport.Format.V = ...
+    format: global___CashAccountReport.Format.ValueType
     @property
     def response_datetime(self) -> google.protobuf.timestamp_pb2.Timestamp: ...
-    def __init__(self,
+    def __init__(
+        self,
         *,
-        content : typing.Text = ...,
-        format : global___CashAccountReport.Format.V = ...,
-        response_datetime : typing.Optional[google.protobuf.timestamp_pb2.Timestamp] = ...,
-        ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal[u"response_datetime",b"response_datetime"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal[u"content",b"content",u"format",b"format",u"response_datetime",b"response_datetime"]) -> None: ...
+        content: builtins.str = ...,
+        format: global___CashAccountReport.Format.ValueType = ...,
+        response_datetime: google.protobuf.timestamp_pb2.Timestamp | None = ...,
+    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["response_datetime", b"response_datetime"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["content", b"content", "format", b"format", "response_datetime", b"response_datetime"]) -> None: ...
+
 global___CashAccountReport = CashAccountReport
 
+@typing_extensions.final
 class Agenda(google.protobuf.message.Message):
     """* For the payload from the following URL :
     https://trader.degiro.nl/dgtbxdsservice/agenda/v2
     """
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    class _CalendarType:
+        ValueType = typing.NewType("ValueType", builtins.int)
+        V: typing_extensions.TypeAlias = ValueType
+
+    class _CalendarTypeEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[Agenda._CalendarType.ValueType], builtins.type):  # noqa: F821
+        DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
+        DIVIDEND_CALENDAR: Agenda._CalendarType.ValueType  # 0
+        ECONOMIC_CALENDAR: Agenda._CalendarType.ValueType  # 1
+        EARNINGS_CALENDAR: Agenda._CalendarType.ValueType  # 2
+        HOLIDAY_CALENDAR: Agenda._CalendarType.ValueType  # 3
+        IPO_CALENDAR: Agenda._CalendarType.ValueType  # 4
+        SPLIT_CALENDAR: Agenda._CalendarType.ValueType  # 5
+
     class CalendarType(_CalendarType, metaclass=_CalendarTypeEnumTypeWrapper):
         """ENUMS"""
-        pass
-    class _CalendarType:
-        V = typing.NewType('V', builtins.int)
-    class _CalendarTypeEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_CalendarType.V], builtins.type):
-        DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor = ...
-        DIVIDEND_CALENDAR = Agenda.CalendarType.V(0)
-        ECONOMIC_CALENDAR = Agenda.CalendarType.V(1)
-        EARNINGS_CALENDAR = Agenda.CalendarType.V(2)
-        HOLIDAY_CALENDAR = Agenda.CalendarType.V(3)
-        IPO_CALENDAR = Agenda.CalendarType.V(4)
-        SPLIT_CALENDAR = Agenda.CalendarType.V(5)
 
-    DIVIDEND_CALENDAR = Agenda.CalendarType.V(0)
-    ECONOMIC_CALENDAR = Agenda.CalendarType.V(1)
-    EARNINGS_CALENDAR = Agenda.CalendarType.V(2)
-    HOLIDAY_CALENDAR = Agenda.CalendarType.V(3)
-    IPO_CALENDAR = Agenda.CalendarType.V(4)
-    SPLIT_CALENDAR = Agenda.CalendarType.V(5)
+    DIVIDEND_CALENDAR: Agenda.CalendarType.ValueType  # 0
+    ECONOMIC_CALENDAR: Agenda.CalendarType.ValueType  # 1
+    EARNINGS_CALENDAR: Agenda.CalendarType.ValueType  # 2
+    HOLIDAY_CALENDAR: Agenda.CalendarType.ValueType  # 3
+    IPO_CALENDAR: Agenda.CalendarType.ValueType  # 4
+    SPLIT_CALENDAR: Agenda.CalendarType.ValueType  # 5
 
+    @typing_extensions.final
     class Request(google.protobuf.message.Message):
         """MESSAGES"""
-        DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
         CALENDAR_TYPE_FIELD_NUMBER: builtins.int
         OFFSET_FIELD_NUMBER: builtins.int
         LIMIT_FIELD_NUMBER: builtins.int
@@ -1341,64 +1517,67 @@ class Agenda(google.protobuf.message.Message):
         COUNTRIES_FIELD_NUMBER: builtins.int
         CLASSIFICATIONS_FIELD_NUMBER: builtins.int
         UNITS_FIELD_NUMBER: builtins.int
-        calendar_type: global___Agenda.CalendarType.V = ...
+        calendar_type: global___Agenda.CalendarType.ValueType
         """PROPERTIES"""
-
-        offset: builtins.int = ...
-        limit: builtins.int = ...
-        order_by_desc: builtins.bool = ...
+        offset: builtins.int
+        limit: builtins.int
+        order_by_desc: builtins.bool
         @property
         def start_date(self) -> google.protobuf.timestamp_pb2.Timestamp: ...
         @property
         def end_date(self) -> google.protobuf.timestamp_pb2.Timestamp: ...
-        company_name: typing.Text = ...
-        countries: typing.Text = ...
-        classifications: typing.Text = ...
-        units: typing.Text = ...
-        def __init__(self,
+        company_name: builtins.str
+        countries: builtins.str
+        classifications: builtins.str
+        units: builtins.str
+        def __init__(
+            self,
             *,
-            calendar_type : global___Agenda.CalendarType.V = ...,
-            offset : builtins.int = ...,
-            limit : builtins.int = ...,
-            order_by_desc : builtins.bool = ...,
-            start_date : typing.Optional[google.protobuf.timestamp_pb2.Timestamp] = ...,
-            end_date : typing.Optional[google.protobuf.timestamp_pb2.Timestamp] = ...,
-            company_name : typing.Text = ...,
-            countries : typing.Text = ...,
-            classifications : typing.Text = ...,
-            units : typing.Text = ...,
-            ) -> None: ...
-        def HasField(self, field_name: typing_extensions.Literal[u"end_date",b"end_date",u"start_date",b"start_date"]) -> builtins.bool: ...
-        def ClearField(self, field_name: typing_extensions.Literal[u"calendar_type",b"calendar_type",u"classifications",b"classifications",u"company_name",b"company_name",u"countries",b"countries",u"end_date",b"end_date",u"limit",b"limit",u"offset",b"offset",u"order_by_desc",b"order_by_desc",u"start_date",b"start_date",u"units",b"units"]) -> None: ...
+            calendar_type: global___Agenda.CalendarType.ValueType = ...,
+            offset: builtins.int = ...,
+            limit: builtins.int = ...,
+            order_by_desc: builtins.bool = ...,
+            start_date: google.protobuf.timestamp_pb2.Timestamp | None = ...,
+            end_date: google.protobuf.timestamp_pb2.Timestamp | None = ...,
+            company_name: builtins.str = ...,
+            countries: builtins.str = ...,
+            classifications: builtins.str = ...,
+            units: builtins.str = ...,
+        ) -> None: ...
+        def HasField(self, field_name: typing_extensions.Literal["end_date", b"end_date", "start_date", b"start_date"]) -> builtins.bool: ...
+        def ClearField(self, field_name: typing_extensions.Literal["calendar_type", b"calendar_type", "classifications", b"classifications", "company_name", b"company_name", "countries", b"countries", "end_date", b"end_date", "limit", b"limit", "offset", b"offset", "order_by_desc", b"order_by_desc", "start_date", b"start_date", "units", b"units"]) -> None: ...
 
     CALENDAR_TYPE_FIELD_NUMBER: builtins.int
     ITEMS_FIELD_NUMBER: builtins.int
     OFFSET_FIELD_NUMBER: builtins.int
     TOTAL_FIELD_NUMBER: builtins.int
     RESPONSE_DATETIME_FIELD_NUMBER: builtins.int
-    calendar_type: global___Agenda.CalendarType.V = ...
+    calendar_type: global___Agenda.CalendarType.ValueType
     """PROPERTIES"""
-
     @property
     def items(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[google.protobuf.struct_pb2.Struct]: ...
-    offset: builtins.int = ...
-    total: builtins.int = ...
+    offset: builtins.int
+    total: builtins.int
     @property
     def response_datetime(self) -> google.protobuf.timestamp_pb2.Timestamp: ...
-    def __init__(self,
+    def __init__(
+        self,
         *,
-        calendar_type : global___Agenda.CalendarType.V = ...,
-        items : typing.Optional[typing.Iterable[google.protobuf.struct_pb2.Struct]] = ...,
-        offset : builtins.int = ...,
-        total : builtins.int = ...,
-        response_datetime : typing.Optional[google.protobuf.timestamp_pb2.Timestamp] = ...,
-        ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal[u"response_datetime",b"response_datetime"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal[u"calendar_type",b"calendar_type",u"items",b"items",u"offset",b"offset",u"response_datetime",b"response_datetime",u"total",b"total"]) -> None: ...
+        calendar_type: global___Agenda.CalendarType.ValueType = ...,
+        items: collections.abc.Iterable[google.protobuf.struct_pb2.Struct] | None = ...,
+        offset: builtins.int = ...,
+        total: builtins.int = ...,
+        response_datetime: google.protobuf.timestamp_pb2.Timestamp | None = ...,
+    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["response_datetime", b"response_datetime"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["calendar_type", b"calendar_type", "items", b"items", "offset", b"offset", "response_datetime", b"response_datetime", "total", b"total"]) -> None: ...
+
 global___Agenda = Agenda
 
+@typing_extensions.final
 class EstimatesSummaries(google.protobuf.message.Message):
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
     ANNUAL_FIELD_NUMBER: builtins.int
     CURRENCY_FIELD_NUMBER: builtins.int
     INTERIM_FIELD_NUMBER: builtins.int
@@ -1409,105 +1588,119 @@ class EstimatesSummaries(google.protobuf.message.Message):
     @property
     def annual(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[google.protobuf.struct_pb2.Struct]:
         """PROPERTIES"""
-        pass
-    currency: typing.Text = ...
+    currency: builtins.str
     @property
     def interim(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[google.protobuf.struct_pb2.Struct]: ...
-    lastRetrieved: typing.Text = ...
-    lastUpdated: typing.Text = ...
-    preferredMeasure: typing.Text = ...
-    ric: typing.Text = ...
-    def __init__(self,
+    lastRetrieved: builtins.str
+    lastUpdated: builtins.str
+    preferredMeasure: builtins.str
+    ric: builtins.str
+    def __init__(
+        self,
         *,
-        annual : typing.Optional[typing.Iterable[google.protobuf.struct_pb2.Struct]] = ...,
-        currency : typing.Text = ...,
-        interim : typing.Optional[typing.Iterable[google.protobuf.struct_pb2.Struct]] = ...,
-        lastRetrieved : typing.Text = ...,
-        lastUpdated : typing.Text = ...,
-        preferredMeasure : typing.Text = ...,
-        ric : typing.Text = ...,
-        ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal[u"annual",b"annual",u"currency",b"currency",u"interim",b"interim",u"lastRetrieved",b"lastRetrieved",u"lastUpdated",b"lastUpdated",u"preferredMeasure",b"preferredMeasure",u"ric",b"ric"]) -> None: ...
+        annual: collections.abc.Iterable[google.protobuf.struct_pb2.Struct] | None = ...,
+        currency: builtins.str = ...,
+        interim: collections.abc.Iterable[google.protobuf.struct_pb2.Struct] | None = ...,
+        lastRetrieved: builtins.str = ...,
+        lastUpdated: builtins.str = ...,
+        preferredMeasure: builtins.str = ...,
+        ric: builtins.str = ...,
+    ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["annual", b"annual", "currency", b"currency", "interim", b"interim", "lastRetrieved", b"lastRetrieved", "lastUpdated", b"lastUpdated", "preferredMeasure", b"preferredMeasure", "ric", b"ric"]) -> None: ...
+
 global___EstimatesSummaries = EstimatesSummaries
 
+@typing_extensions.final
 class PositionReport(google.protobuf.message.Message):
     """* For the payload from the following URL :
     https://trader.degiro.nl/reporting/secure/v3/positionReport
     """
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    class _Format:
+        ValueType = typing.NewType("ValueType", builtins.int)
+        V: typing_extensions.TypeAlias = ValueType
+
+    class _FormatEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[PositionReport._Format.ValueType], builtins.type):  # noqa: F821
+        DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
+        CSV: PositionReport._Format.ValueType  # 0
+        HTML: PositionReport._Format.ValueType  # 1
+        PDF: PositionReport._Format.ValueType  # 2
+        XLS: PositionReport._Format.ValueType  # 3
+
     class Format(_Format, metaclass=_FormatEnumTypeWrapper):
         """ENUMS"""
-        pass
-    class _Format:
-        V = typing.NewType('V', builtins.int)
-    class _FormatEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_Format.V], builtins.type):
-        DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor = ...
-        CSV = PositionReport.Format.V(0)
-        HTML = PositionReport.Format.V(1)
-        PDF = PositionReport.Format.V(2)
-        XLS = PositionReport.Format.V(3)
 
-    CSV = PositionReport.Format.V(0)
-    HTML = PositionReport.Format.V(1)
-    PDF = PositionReport.Format.V(2)
-    XLS = PositionReport.Format.V(3)
+    CSV: PositionReport.Format.ValueType  # 0
+    HTML: PositionReport.Format.ValueType  # 1
+    PDF: PositionReport.Format.ValueType  # 2
+    XLS: PositionReport.Format.ValueType  # 3
 
+    @typing_extensions.final
     class Request(google.protobuf.message.Message):
         """MESSAGES"""
-        DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+        @typing_extensions.final
         class Date(google.protobuf.message.Message):
             """MESSAGES"""
-            DESCRIPTOR: google.protobuf.descriptor.Descriptor = ...
+
+            DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
             YEAR_FIELD_NUMBER: builtins.int
             MONTH_FIELD_NUMBER: builtins.int
             DAY_FIELD_NUMBER: builtins.int
-            year: builtins.int = ...
-            month: builtins.int = ...
-            day: builtins.int = ...
-            def __init__(self,
+            year: builtins.int
+            month: builtins.int
+            day: builtins.int
+            def __init__(
+                self,
                 *,
-                year : builtins.int = ...,
-                month : builtins.int = ...,
-                day : builtins.int = ...,
-                ) -> None: ...
-            def ClearField(self, field_name: typing_extensions.Literal[u"day",b"day",u"month",b"month",u"year",b"year"]) -> None: ...
+                year: builtins.int = ...,
+                month: builtins.int = ...,
+                day: builtins.int = ...,
+            ) -> None: ...
+            def ClearField(self, field_name: typing_extensions.Literal["day", b"day", "month", b"month", "year", b"year"]) -> None: ...
 
         FORMAT_FIELD_NUMBER: builtins.int
         COUNTRY_FIELD_NUMBER: builtins.int
         LANG_FIELD_NUMBER: builtins.int
         TO_DATE_FIELD_NUMBER: builtins.int
-        format: global___PositionReport.Format.V = ...
+        format: global___PositionReport.Format.ValueType
         """PROPERTIES"""
-
-        country: typing.Text = ...
-        lang: typing.Text = ...
+        country: builtins.str
+        lang: builtins.str
         @property
         def to_date(self) -> global___PositionReport.Request.Date: ...
-        def __init__(self,
+        def __init__(
+            self,
             *,
-            format : global___PositionReport.Format.V = ...,
-            country : typing.Text = ...,
-            lang : typing.Text = ...,
-            to_date : typing.Optional[global___PositionReport.Request.Date] = ...,
-            ) -> None: ...
-        def HasField(self, field_name: typing_extensions.Literal[u"to_date",b"to_date"]) -> builtins.bool: ...
-        def ClearField(self, field_name: typing_extensions.Literal[u"country",b"country",u"format",b"format",u"lang",b"lang",u"to_date",b"to_date"]) -> None: ...
+            format: global___PositionReport.Format.ValueType = ...,
+            country: builtins.str = ...,
+            lang: builtins.str = ...,
+            to_date: global___PositionReport.Request.Date | None = ...,
+        ) -> None: ...
+        def HasField(self, field_name: typing_extensions.Literal["to_date", b"to_date"]) -> builtins.bool: ...
+        def ClearField(self, field_name: typing_extensions.Literal["country", b"country", "format", b"format", "lang", b"lang", "to_date", b"to_date"]) -> None: ...
 
     CONTENT_FIELD_NUMBER: builtins.int
     FORMAT_FIELD_NUMBER: builtins.int
     RESPONSE_DATETIME_FIELD_NUMBER: builtins.int
-    content: typing.Text = ...
+    content: builtins.str
     """PROPERTIES"""
-
-    format: global___PositionReport.Format.V = ...
+    format: global___PositionReport.Format.ValueType
     @property
     def response_datetime(self) -> google.protobuf.timestamp_pb2.Timestamp: ...
-    def __init__(self,
+    def __init__(
+        self,
         *,
-        content : typing.Text = ...,
-        format : global___PositionReport.Format.V = ...,
-        response_datetime : typing.Optional[google.protobuf.timestamp_pb2.Timestamp] = ...,
-        ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal[u"response_datetime",b"response_datetime"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal[u"content",b"content",u"format",b"format",u"response_datetime",b"response_datetime"]) -> None: ...
+        content: builtins.str = ...,
+        format: global___PositionReport.Format.ValueType = ...,
+        response_datetime: google.protobuf.timestamp_pb2.Timestamp | None = ...,
+    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["response_datetime", b"response_datetime"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["content", b"content", "format", b"format", "response_datetime", b"response_datetime"]) -> None: ...
+
 global___PositionReport = PositionReport
