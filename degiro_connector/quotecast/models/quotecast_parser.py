@@ -267,12 +267,25 @@ class QuotecastParser:
             if message["m"] == "un":
                 reference = message["v"][0]
                 value = message["v"][1]
-                product, metric = references[reference]
-                ticker.products[product].metrics[metric] = value
+                pm = references.get(reference)
+                if pm is not None:
+                    product, metric = pm
+                    ticker.products[product].metrics[metric] = value
+                else:
+                    logger = logging.getLogger('quotecast_parser')
+                    logger.warning(f'Reference {reference} unknown')
+                
             elif message["m"] == "us":
                 reference = message["v"][0]
                 value = message["v"][1]
-                product, metric = references[reference]
+
+                pm = references.get(reference)
+                if pm is not None:
+                    product, metric = pm
+                else:
+                    logger = logging.getLogger('quotecast_parser')
+                    logger.warning(f'Reference {reference} unknown')
+                    continue
 
                 if value[4] == "-":
                     date = datetime.datetime.strptime(
