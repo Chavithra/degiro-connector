@@ -641,22 +641,20 @@ First I will briefly explain what is : **Two-Factor Authentication (2FA)**.
 
 I recommend to skip a few paragraphs if you already know what is **2FA**.
 
-In a standard connection you are providing two parameters :
+In a standard connection you are providing two parameters:
 - username
 - password
 
-If you use **Two-Factor Authentication (2FA)** you need an extra parameter :
+If you use **Two-Factor Authentication (2FA)** you need an extra parameter:
 - one_time_password
 
 This **one_time_password** has a validity of 30 secondes and is generated using a **totp_secret_key** code.
 
-This **totp_secret_key** code is provided in Degiro's website when you enable **2FA** : it is the QRCode.
+Usually you use an app like **‎Google Authenticator** to store this **totp_secret_key** and generate the **one_time_password**.
 
-Usually you put this QRCode inside an app like **‎Google Authenticator**.
+The **totp_secret_key** is stored inside the QRCode which is displayed when you enable 2FA on Degiro's website
 
-**‎Google Authenticator** generates a **one_time_password** that you can to log in. 
-
-To use **2FA** with this library you have two solution.
+To use **2FA** with this library you have two solutions.
 
 **SOLUTION 1**
 
