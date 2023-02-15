@@ -1,12 +1,14 @@
-from pyzbar.pyzbar import decode
-from PIL import Image
+import cv2
 
 """
-    This is an example on how to extract the text from a QRCode image.
-    You will need to install the following libraries :
-        - pyzbar
-        - Pillow
+    You will need to install the following library  :
+        - opencv-python
+    
+    For instance by doing `pip install opencv-python`.
 """
 
-data = decode(Image.open("YOUR_QRCODE.png"))[0].data
-print("This is the content of your QRCode : ", data)
+img_path = "YOUR_QRCODE.png"
+img = cv2.imread(img_path)
+detect = cv2.QRCodeDetector()
+data, points, straight_qrcode = detect.detectAndDecode(img)
+print("This is the content of your QRCode : ", data, type(data))
