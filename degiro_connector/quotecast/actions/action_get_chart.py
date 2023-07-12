@@ -46,11 +46,29 @@ class ChartHelper:
         (start, resolution) = times.rsplit(sep="/", maxsplit=1)
 
         date_format = ""
+
+
+        # with "PT1M":
+        # {'requestid': '', 'start': '2023-06-30T00:00:00+02:00', 'end': '2023-06-30T21:59:59+02:00', 'resolution': 'PT1M', 'series': [{'times': '2023-06-30/PT1M', 'expires': '2023-07-02T14:10:43.1908462+02:00', 'data':
+        # error when doing : ChartHelper.format_chart(chart=chart, copy=False) :
+        # time data '2023-06-30' does not match format '%Y-%m-%dT%H:%M:%S'
+        # same with "PT5M"
+        # {'requestid': '', 'start': '2023-06-30T00:00:00+02:00', 'end': '2023-06-30T21:59:59+02:00', 'resolution': 'PT5M', 'series': [{'times': '2023-06-30/PT5M', 'expires': '2023-07-02T14:17:36.4487987+02:00', 'data':
+        # same with "PT{xxx}" ...
+        # conclusion : it's always --> date_format = "%Y-%m-%d"
+
+        '''
+        previous code:
         if resolution.startswith("PT"):
             date_format = "%Y-%m-%dT%H:%M:%S"
         else:
             date_format = "%Y-%m-%d"
+        '''
 
+        # new code :
+        date_format = "%Y-%m-%d"
+
+        
         start_datetime = datetime.strptime(start, date_format)
         start_timestamp = start_datetime.timestamp()
 
