@@ -267,8 +267,8 @@ class QuotecastParser:
             if message["m"] == "un":
                 reference = message["v"][0]
                 value = message["v"][1]
-                pm = references.get(reference)
-                if pm is not None:
+                if reference in references:
+                    pm = references[reference]
                     product, metric = pm
                     ticker.products[product].metrics[metric] = value
                 else:
@@ -279,8 +279,8 @@ class QuotecastParser:
                 reference = message["v"][0]
                 value = message["v"][1]
 
-                pm = references.get(reference)
-                if pm is not None:
+                if reference in references:
+                    pm = references[reference]
                     product, metric = pm
                 else:
                     logger = logging.getLogger('quotecast_parser')
