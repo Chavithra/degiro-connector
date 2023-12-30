@@ -2,21 +2,6 @@
 
 This is yet another library to access Degiro's API.
 
-Notes :
-- Migration scripts are available :
-```bash
-python -m degiro_connector.migration.from_0_1_3_to_1_0_0
-python -m degiro_connector.migration.from_1_0_4_to_1_0_5
-python -m degiro_connector.migration.from_1_0_10_to_2_0_0
-python -m degiro_connector.migration.from_2_0_2_to_2_0_3
-```
-- `GRPC` services are available to let you consume this library through other languages like Javascript, Java, Go, C++, Rust, etc :
-```bash
-python -m examples.quotecast.relay_server
-python -m examples.trading.relay_server
-
-```
-
 ## 1.1. Which features ?
 Here are the features you can access through this library :
 
