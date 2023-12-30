@@ -1,68 +1,74 @@
-# IMPORTATIONS
 import json
 import logging
 
-from degiro_connector.quotecast.api import API as QuotecastAPI
-from degiro_connector.quotecast.models.quotecast_parser import QuotecastParser
-from degiro_connector.quotecast.models.quotecast_pb2 import Quotecast
+from degiro_connector.quotecast.models.ticker import TickerRequest
+from degiro_connector.quotecast.tools.ticker_fetcher import TickerFetcher
+from degiro_connector.quotecast.tools.ticker_to_df import TickerToDF
 
-# SETUP LOGGING
 logging.basicConfig(level=logging.INFO)
 
-# SETUP CONFIG DICT
 with open("config/config.json") as config_file:
     config_dict = json.load(config_file)
 
-# SETUP CREDENTIALS
 user_token = config_dict.get("user_token")  # HERE GOES YOUR USER_TOKEN
 
-# SETUP API
-quotecast_api = QuotecastAPI(user_token=user_token)
-
-# CONNECTION
-quotecast_api.connect()
-
-# SUBSCRIBE TO METRICS
-request = Quotecast.Request()
-request.subscriptions["AAPL.BATS,E"].extend(
-    [
-        "LastDate",
-        "LastTime",
-        "LastPrice",
-        "LastVolume",
-        "AskPrice",
-        "BidPrice",
-    ]
+logger = TickerFetcher.build_logger()
+session = TickerFetcher.build_session()
+ticker_to_df = TickerToDF()
+product_list = [
+    "AAPL.BATS,E",  # Apple 
+    "360017018",    # Air Liquide
+    "360114899",    # AIRBUS
+    "365019496",    # Alstom
+]
+ticker_request = TickerRequest(
+    request_type="subscription",
+    request_map={
+        "360015751": [
+            "LastDate",
+            "LastTime",
+            "LastPrice",
+            "LastVolume",
+        ],
+        "AAPL.BATS,E": [
+            'LastDate',
+            'LastTime',
+            'LastPrice',
+            'LastVolume',
+        ],
+    },
 )
-quotecast_api.subscribe(request=request)
 
-# SETUP JSON PARSER
-quotecast_parser = QuotecastParser()
+session_id = TickerFetcher.get_session_id(user_token=user_token)
+
+if session_id is None:
+    raise TypeError("`session_id` is None")
+
+TickerFetcher.subscribe(
+    ticker_request=ticker_request,
+    session_id=session_id,
+    session=session,
+    logger=logger,
+)
 
 while True:
     try:
-        # FETCH DATA
-        quotecast = quotecast_api.fetch_data()
+        ticker = TickerFetcher.fetch_ticker(
+            session_id=session_id,
+            session=session,
+            logger=logger,
+        )
 
-        # DISPLAY RAW JSON
-        print(quotecast.json_data)
+        if ticker is None:
+            raise TypeError("`ticker` is None")
 
-        # DISPLAY TICKER (PROTOBUF/GRPC OBJECT)
-        quotecast_parser.put_quotecast(quotecast=quotecast)
-        ticker = quotecast_parser.ticker
-        print(ticker)
+        df = ticker_to_df.parse(ticker=ticker)
 
-        # DISPLAY DICT
-        ticker_dict = quotecast_parser.ticker_dict
-        print(ticker_dict)
-
-        # DISPLAY PANDAS.DATAFRAME
-        ticker_df = quotecast_parser.ticker_df
-        print(ticker_df)
+        print(df)
 
         # REMOVE THIS LINE TO RUN IT IN LOOP
         # USE : CTRL+C TO QUIT
-        break
+        # break
 
     except Exception as e:
         print(e)
