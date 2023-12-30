@@ -487,9 +487,9 @@ In addition to whatever metrics you have chosen to subscribe to (see the example
 
 Example - DataFrame :
 
-           product_id response_datetime  request_duration    LastDate  LastTime LastPrice LastVolume
-    0   360114899  2020-11-08 12:00:27          1.022489  2020-11-06  17:39:57      70.0        100
-    1   360015751  2020-11-08 12:00:27          1.022489  2020-11-06  17:36:17     22.99        470
+    product_id response_datetime   request_duration LastDate   LastTime LastPrice LastVolume
+    360114899  2020-11-08 12:00:27 1.022489         2020-11-06 17:39:57 70.0      100
+    360015751  2020-11-08 12:00:27 1.022489         2020-11-06 17:36:17 22.99     470
 
 ## 2.14. How to get chart data ?
 You can fetch an object containing the same data than in Degiro's website graph.
@@ -1429,7 +1429,7 @@ Here is how to get this data :
 
 ```python
 # SETUP REQUEST
-request = ProductSearch.RequestLookup(
+product_request = LookupRequest(
     search_text='APPLE',
     limit=10,
     offset=0,
@@ -1437,7 +1437,7 @@ request = ProductSearch.RequestLookup(
 )
 
 # FETCH DATA
-products_lookup = trading_api.product_search(request=request)
+products_lookup = trading_api.product_search(product_request=product_request)
 ```
 
 For a more comprehensive example :
@@ -1449,7 +1449,7 @@ Here is how to get this data :
 
 ```python
 # SETUP REQUEST
-request = ProductSearch.RequestBonds(
+product_request = BondsRequest(
     bond_issuer_type_id=0,
     bond_exchange_id=710,
 
@@ -1462,7 +1462,7 @@ request = ProductSearch.RequestBonds(
 )
 
 # FETCH DATA
-bond_list = trading_api.product_search(request=request)
+bond_list = trading_api.product_search(product_request=product_request)
 ```
 
 For a more comprehensive example :
@@ -1474,7 +1474,7 @@ Here is how to get this data :
 
 ```python
 # SETUP REQUEST
-request = ProductSearch.RequestETFs(
+product_request = ETFsRequest(
     popular_only=False,
     input_aggregate_types='',
     input_aggregate_values='',
@@ -1488,7 +1488,7 @@ request = ProductSearch.RequestETFs(
 )
 
 # FETCH DATA
-etf_list = trading_api.product_search(request=request)
+etf_list = trading_api.product_search(product_request=product_request)
 ```
 
 For a more comprehensive example :
@@ -1500,7 +1500,7 @@ Here is how to get this data :
 
 ```python
 # SETUP REQUEST
-request = ProductSearch.RequestFunds(
+product_request = FundsRequest(
     search_text='',
     offset=0,
     limit=100,
@@ -1510,7 +1510,7 @@ request = ProductSearch.RequestFunds(
 )
 
 # FETCH DATA
-fund_list = trading_api.product_search(request=request)
+fund_list = trading_api.product_search(product_request=product_request)
 ```
 
 For a more comprehensive example :
@@ -1522,7 +1522,7 @@ Here is how to get this data :
 
 ```python
 # SETUP REQUEST
-request = ProductSearch.RequestFutures(
+product_request = FuturesRequest(
     future_exchange_id=1,
     underlying_isin='FR0003500008',
 
@@ -1535,7 +1535,7 @@ request = ProductSearch.RequestFutures(
 )
 
 # FETCH DATA
-fund_list = trading_api.product_search(request=request)
+fund_list = trading_api.product_search(product_request=product_request)
 ```
 
 For a more comprehensive example :
@@ -1547,7 +1547,7 @@ Here is how to get this data :
 
 ```python
 # SETUP REQUEST
-request = ProductSearch.RequestLeverageds(
+product_request = LeveragedsRequest(
     popular_only=False,
     input_aggregate_types='',
     input_aggregate_values='',
@@ -1561,7 +1561,7 @@ request = ProductSearch.RequestLeverageds(
 )
 
 # FETCH DATA
-etf_list = trading_api.product_search(request=request)
+etf_list = trading_api.product_search(product_request=product_request)
 ```
 
 For a more comprehensive example :
@@ -1572,7 +1572,7 @@ Here is how to get this data :
 
 ```python
 # SETUP REQUEST
-request = ProductSearch.RequestOptions(
+product_request = OptionsRequest(
     input_aggregate_types='',
     input_aggregate_values='',
     option_exchange_id=3,
@@ -1587,7 +1587,7 @@ request = ProductSearch.RequestOptions(
 )
 
 # FETCH DATA
-option_list = trading_api.product_search(request=request)
+option_list = trading_api.product_search(product_request=product_request)
 ```
 
 For a more comprehensive example :
@@ -1601,9 +1601,9 @@ Here is how to get this data :
 
 ```python
 # SETUP REQUEST
-request = ProductSearch.RequestStocks(
+product_request = StocksRequest(
     index_id=122001,    # NASDAQ 100
-    exchange_id=663,    # NASDAQ
+    # exchange_id=663,  # NASDAQ
                         # You can either use `index_id` or `exchange id`
                         # See which one to use in the `ProductsConfig` table
     is_in_us_green_list=True,
@@ -1618,7 +1618,7 @@ request = ProductSearch.RequestStocks(
 )
 
 # FETCH DATA
-stock_list = trading_api.product_search(request=request)
+stock_list = trading_api.product_search(product_request=product_request)
 ```
 
 For a more comprehensive example :
@@ -1630,7 +1630,7 @@ Here is how to get this data :
 
 ```python
 # SETUP REQUEST
-request = ProductSearch.RequestWarrants(
+product_request = WarrantsRequest(
     search_text='',
     offset=0,
     limit=100,
@@ -1640,7 +1640,7 @@ request = ProductSearch.RequestWarrants(
 )
 
 # FETCH DATA
-warrant_list = trading_api.product_search(request=request)
+warrant_list = trading_api.product_search(product_request=product_request)
 ```
 
 For a more comprehensive example :
