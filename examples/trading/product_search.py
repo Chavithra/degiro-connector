@@ -56,4 +56,3 @@ product_search = trading_api.product_search(product_request=request_stock, raw=F
 # LOOP OVER PRODUCTS
 for product in product_search.products:
     print(dict(product))
-
