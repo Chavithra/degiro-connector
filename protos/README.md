@@ -15,19 +15,17 @@ The models are in two parts:
 - `.py` files : which are generated from the `.proto` files 
 
 `Protocol Buffer` definition files :
-- protos\degiro_connector\quotecast\models\quotecast.proto
 - protos\degiro_connector\trading\models\trading.proto
 
 `Python` files :
-- degiro_connector.quotecast.models.quotecast_pb2.py
+- degiro_connector.quotecast.models
 - degiro_connector.trading.models.trading_pb2.py
-- degiro_connector.quotecast.models.quotecast_pb2_grpc.py
 - degiro_connector.trading.models.trading_pb2_grpc.py
 
 
 ## 1.3. How to generate the models ?
 
-Here is the command to build `quotecast` models :
+Here is the command to build the models :
 
 ```bash
 python -m grpc_tools.protoc \
@@ -35,22 +33,19 @@ python -m grpc_tools.protoc \
     --grpc_python_out=. \
     --proto_path=protos \
     --mypy_out=. \
-    protos\degiro_connector\quotecast\models\quotecast.proto \
     protos\degiro_connector\trading\models\trading.proto
 ```
 
 This command will generate the following files :
 
-- degiro_connector.quotecast.models.quotecast_pb2.py
 - degiro_connector.trading.models.trading_pb2.py
-- degiro_connector.quotecast.models.quotecast_pb2_grpc.py
 - degiro_connector.trading.models.trading_pb2_grpc.py
 
 
 ## 1.4. Workflow : new model
 
-Here is the workflow to add a model called `NewModel` inside `quotecast` :
-- Define it in either `quotecast.proto` file :
+Here is the workflow to add a model called `NewModel` inside `trading` :
+- Define it in either `trading.proto` file :
 
 ```
 message NewModel {
@@ -69,13 +64,13 @@ python -m grpc_tools.protoc \
     --grpc_python_out=. \
     --proto_path=protos \
     --mypy_out=. \
-    protos\degiro_connector\quotecast\models\quotecast.proto
+    protos\degiro_connector\trading\models\trading.proto
 ```
 
 - Import and use the model.
 
 ```python
-from degiro_connector.quotecast.models.quotecast_pb2 import NewModel
+from degiro_connector.trading.models.trading_pb2 import NewModel
 
 new_model = NewModel()
 new_model.first_value = 123
