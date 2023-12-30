@@ -3,7 +3,8 @@ import json
 import logging
 
 from degiro_connector.trading.api import API as TradingAPI
-from degiro_connector.trading.models.trading_pb2 import Credentials, ProductSearch
+from degiro_connector.trading.models.trading_pb2 import Credentials
+from degiro_connector.trading.models.product_search import StocksRequest
 
 # SETUP LOGGING LEVEL
 logging.basicConfig(level=logging.DEBUG)
@@ -34,9 +35,9 @@ trading_api = TradingAPI(credentials=credentials)
 trading_api.connect()
 
 # SETUP REQUEST
-request_stock = ProductSearch.RequestStocks(
+request_stock = StocksRequest(
     index_id=122001,  # NASDAQ 100
-    exchange_id=663,  # NASDAQ
+    # exchange_id=663,  # NASDAQ
     # You can either use `index_id` or `exchange id`
     # See which one to use in the `ProductsConfig` table
     is_in_us_green_list=True,
@@ -48,14 +49,11 @@ request_stock = ProductSearch.RequestStocks(
     sort_types="asc",
 )
 
+
 # FETCH DATA
-stock_list = trading_api.product_search(request=request_stock, raw=False)
+product_search = trading_api.product_search(product_request=request_stock, raw=False)
 
 # LOOP OVER PRODUCTS
-for product in stock_list.products:
+for product in product_search.products:
     print(dict(product))
 
-# LOOP OVER COLUMNS
-product = stock_list.products[0]
-for column in product:
-    print(column, product[column])
