@@ -203,7 +203,7 @@ class QuotecastParser:
             "response_datetime"
         ] = ticker.metadata.response_datetime.ToJsonString()
         empty_metrics["request_duration"] = (
-            ticker.metadata.request_duration.ToMicroseconds() / 10 ** 6
+            ticker.metadata.request_duration.ToMicroseconds() / 10**6
         )
 
         ticker_dict: Dict[str, Dict[str, Union[str, int]]] = dict()

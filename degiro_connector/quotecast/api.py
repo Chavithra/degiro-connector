@@ -1,20 +1,17 @@
 # IMPORTATION STANDARD
 import logging
 import pkgutil
-from degiro_connector.core.abstracts.abstract_action import AbstractAction
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List, Optional
 
 # IMPORTATION THIRD PARTY
 
 # IMPORTATION INTERNAL
-import degiro_connector.core.constants.timeouts as timeouts
+from degiro_connector.core.constants import timeouts
+from degiro_connector.core.abstracts.abstract_action import AbstractAction
 from degiro_connector.core.helpers.lazy_loader import InitArgs, LazyLoader, Pair
 from degiro_connector.core.models.model_connection import ModelConnection
 from degiro_connector.core.models.model_session import ModelSession
-
-from degiro_connector.quotecast.models.quotecast_pb2 import Quotecast
-from degiro_connector.quotecast.models.quotecast_parser import QuotecastParser
 
 
 class API:
@@ -59,7 +56,7 @@ class API:
     def load(
         self,
         action: str,
-        init_args: InitArgs = None,
+        init_args: InitArgs | None = None,
     ) -> Optional[object]:
         logger = self._logger
         action_list = self._action_list
@@ -88,10 +85,10 @@ class API:
     def __init__(
         self,
         user_token: int,
-        connection_storage: ModelConnection = None,
-        logger: logging.Logger = None,
+        connection_storage: ModelConnection | None = None,
+        logger: logging.Logger | None = None,
         preload: bool = True,
-        session_storage: ModelSession = None,
+        session_storage: ModelSession | None = None,
     ):
         self._credentials = {"user_token": user_token}
         self._connection_storage = connection_storage or ModelConnection(
@@ -138,41 +135,3 @@ class API:
             self.setup_one_action(action=action)
 
             return getattr(self, action)
-
-    def fetch_metrics(
-        self,
-        request: Quotecast.Request,
-    ) -> Dict[str, Dict[str, Union[str, int]]]:
-        # VWD_ID  # METRICS : NAME / VALUE
-        """Fetch metrics from a request.
-        If you seek realtime it's better to use "fetch_data".
-        Since "fetch_data" consumes less ressources.
-        Args:
-            request (QuotecastAPI.Request):
-                List of subscriptions & unsubscriptions to do.
-        Returns:
-            Dict[Union[str, int], Dict[str, Union[str, int]]]:
-                Dict containing all the metrics grouped by "vwd_id".
-        """
-
-        logger = self._logger
-
-        connection_attempts = 0
-        ticker_dict: Dict[str, Dict[str, Union[str, int]]] = dict()
-        while connection_attempts < 2:
-            try:
-                self.subscribe(request=request)
-                quotecast = self.fetch_data()
-                quotecast_parser = QuotecastParser(forward_fill=True)
-                quotecast_parser.put_quotecast(quotecast=quotecast)
-                ticker_dict = quotecast_parser.ticker_dict
-                break
-            except (ConnectionError, BrokenPipeError, TimeoutError) as e:
-                logger.info(e)
-                self.connect()
-                connection_attempts += 1
-            except Exception as e:
-                logger.fatal(e)
-                break
-
-        return ticker_dict

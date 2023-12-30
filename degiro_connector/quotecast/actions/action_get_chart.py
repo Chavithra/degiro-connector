@@ -47,7 +47,6 @@ class ChartHelper:
 
         date_format = ""
 
-
         # with "PT1M":
         # {'requestid': '', 'start': '2023-06-30T00:00:00+02:00', 'end': '2023-06-30T21:59:59+02:00', 'resolution': 'PT1M', 'series': [{'times': '2023-06-30/PT1M', 'expires': '2023-07-02T14:10:43.1908462+02:00', 'data':
         # error when doing : ChartHelper.format_chart(chart=chart, copy=False) :
@@ -57,18 +56,17 @@ class ChartHelper:
         # same with "PT{xxx}" ...
         # conclusion : it's always --> date_format = "%Y-%m-%d"
 
-        '''
+        """
         previous code:
         if resolution.startswith("PT"):
             date_format = "%Y-%m-%dT%H:%M:%S"
         else:
             date_format = "%Y-%m-%d"
-        '''
+        """
 
         # new code :
         date_format = "%Y-%m-%d"
 
-        
         start_datetime = datetime.strptime(start, date_format)
         start_timestamp = start_datetime.timestamp()
 
@@ -263,9 +261,9 @@ class ActionGetChart(AbstractAction):
         cls,
         request: Chart.Request,
         user_token: int,
-        logger: logging.Logger = None,
+        logger: logging.Logger | None = None,
         raw: bool = False,
-        session: requests.Session = None,
+        session: requests.Session | None = None,
     ) -> Optional[Chart]:
         """Fetches chart's data.
         Args:
