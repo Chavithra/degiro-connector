@@ -1,14 +1,8 @@
-# IMPORTATION STANDARD
 import logging
 import threading
 
-# IMPORTATION THIRD PARTY
 import requests
-import ssl
-import urllib3
-from urllib3 import poolmanager
 
-# IMPORTATION INTERNAL
 import degiro_connector.core.constants.headers as default_headers
 
 
@@ -17,9 +11,8 @@ class ModelSession:
 
     @staticmethod
     def build_session(
-        headers: dict = None,
-        hooks: dict = None,
-        adapter: requests.adapters.HTTPAdapter = None,
+        headers: dict | None = None,
+        hooks: dict | None = None,
     ) -> requests.Session:
         """Setup a "requests.Session" object.
         Args:
@@ -36,9 +29,6 @@ class ModelSession:
         """
 
         session = requests.Session()
-
-        if adapter:
-            session.mount("https://", adapter)
 
         if isinstance(headers, dict):
             session.headers.update(headers)
@@ -58,7 +48,6 @@ class ModelSession:
             self.__local_storage.session = self.build_session(
                 headers=self.__headers,
                 hooks=self.__hooks,
-                adapter=self.__adapter,
             )
 
         return self.__local_storage.session
@@ -71,21 +60,18 @@ class ModelSession:
 
     def reset_session(
         self,
-        headers: dict = None,
-        hooks: dict = None,
-        adapter: requests.adapters.HTTPAdapter = None,
+        headers: dict | None = None,
+        hooks: dict | None = None,
     ):
         self.__local_storage.session = self.build_session(
             headers=headers,
             hooks=hooks,
-            adapter=adapter,
         )
 
     def __init__(
         self,
-        headers: dict = None,
-        hooks: dict = None,
-        adapter: requests.adapters.HTTPAdapter = None,
+        headers: dict | None = None,
+        hooks: dict | None = None,
     ):
         self.__logger = logging.getLogger(self.__module__)
         self.__local_storage = threading.local()
@@ -98,4 +84,3 @@ class ModelSession:
 
         self.__headers = headers
         self.__hooks = hooks
-        self.__adapter = adapter
