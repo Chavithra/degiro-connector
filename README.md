@@ -209,11 +209,8 @@ In order to fetch data you need to establish a connection.
 You can use the following code to connect :
 
 ```python
-# SETUP QUOTECAST API
-quotecast_api = API(user_token=YOUR_USER_TOKEN)
-
-# CONNECTION
-quotecast_api.connect()
+# CONNECTION : GET `SESSION_ID`
+session_id = TickerFetcher.get_session_id(user_token=YOUR_USER_TOKEN)
 ```
 
 ## 2.5. Is there a timeout ?
@@ -230,42 +227,50 @@ So if you use it nonstop (in a loop) you won't need to reconnect.
 
 ## 2.6. How to subscribe to a data-stream ?
 
-To subscribe to a data-stream you need to setup a Request message.
+To subscribe to a data-stream you need to setup a TickerRequest.
 
 A Request has the following parameters :
 
 |**Parameter**|**Type**|**Description**|
 |:-|:-|:-|
-|subscriptions|MessageMap|List of products and metrics to subscribe to.|
-|unsubscriptions|MessageMap|List of products and metrics to unsubscribe to.|
+|request_type|str|The value "subscription" or "unsubscription".|
+|request_map|dict|Map of products and metrics to subscribe/unsubscribe to.|
 
 Here is an example of a request :
 ```python
-request = Quotecast.Request()
-request.subscriptions['360015751'].extend([
-    'LastDate',
-    'LastTime',
-    'LastPrice',
-    'LastVolume',
-    'AskPrice',
-    'AskVolume',
-    'LowPrice',
-    'HighPrice',
-    'BidPrice',
-    'BidVolume'
-])
-request.subscriptions['AAPL.BATS,E'].extend([
-    'LastDate',
-    'LastTime',
-    'LastPrice',
-    'LastVolume',
-    'AskPrice',
-    'AskVolume',
-    'LowPrice',
-    'HighPrice',
-    'BidPrice',
-    'BidVolume'
-])
+ticker_request = TickerRequest(
+    request_type="subscription",
+    request_map={
+        "360015751": [
+            'LastDate',
+            'LastTime',
+            'LastPrice',
+            'LastVolume',
+            'AskPrice',
+            'AskVolume',
+            'LowPrice',
+            'HighPrice',
+            'BidPrice',
+            'BidVolume'
+        ],
+        "AAPL.BATS,E": [
+            'LastDate',
+            'LastTime',
+            'LastPrice',
+            'LastVolume',
+            'AskPrice',
+            'AskVolume',
+            'LowPrice',
+            'HighPrice',
+            'BidPrice',
+            'BidVolume'
+        ],
+    },
+)
+TickerFetcher.subscribe(
+    ticker_request=ticker_request,
+    session_id=session_id,
+)
 ```
 
 In this example these are the `vwd_id` of the products from which you want `Real-time data` :
@@ -285,48 +290,52 @@ For more comprehensive examples :
 
 ## 2.7. How to unsubscribe to a data-stream ?
 
-To remove metrics from the data-stream you need to setup a Request message.
+To remove metrics from the data-stream you need to setup a TickerRequest.
 
 If you try to unsubscribe to a metric to which you didn't subscribed previously it will most likely have no impact.
 
 A Request has the following parameters :
+
 |**Parameter**|**Type**|**Description**|
 |:-|:-|:-|
-|subscriptions|MessageMap|List of products and metrics to subscribe to.|
-|unsubscriptions|MessageMap|List of products and metrics to unsubscribe to.|
+|request_type|str|The value "subscription" or "unsubscription".|
+|request_map|dict|Map of products and metrics to subscribe/unsubscribe to.|
 
 Here is an example of a request :
 ```python
-request = Quotecast.Request()
-request.unsubscriptions['360015751'].extend([
-    'LastDate',
-    'LastTime',
-    'LastPrice',
-    'LastVolume',
-    'AskPrice',
-    'AskVolume',
-    'LowPrice',
-    'HighPrice',
-    'BidPrice',
-    'BidVolume'
-])
-request.unsubscriptions['AAPL.BATS,E'].extend([
-    'LastDate',
-    'LastTime',
-    'LastPrice',
-    'LastVolume',
-    'AskPrice',
-    'AskVolume',
-    'LowPrice',
-    'HighPrice',
-    'BidPrice',
-    'BidVolume'
-])
-```
-
-Once you have built this Request object you can send it to Degiro's API like this :
-```python
-quotecast_api.subscribe(request=request)
+ticker_request = TickerRequest(
+    request_type="unsubscription",
+    request_map={
+        "360015751": [
+            'LastDate',
+            'LastTime',
+            'LastPrice',
+            'LastVolume',
+            'AskPrice',
+            'AskVolume',
+            'LowPrice',
+            'HighPrice',
+            'BidPrice',
+            'BidVolume'
+        ],
+        "AAPL.BATS,E": [
+            'LastDate',
+            'LastTime',
+            'LastPrice',
+            'LastVolume',
+            'AskPrice',
+            'AskVolume',
+            'LowPrice',
+            'HighPrice',
+            'BidPrice',
+            'BidVolume'
+        ],
+    },
+)
+TickerFetcher.subscribe(
+    ticker_request=ticker_request,
+    session_id=session_id,
+)
 ```
 
 For more comprehensive examples :
@@ -337,7 +346,14 @@ For more comprehensive examples :
 
 You can use the following code :
 ```python
-quotecast = quotecast_api.fetch_data()
+session_id = TickerFetcher.get_session_id(user_token=user_token)
+logger = TickerFetcher.build_logger()
+session = TickerFetcher.build_session()
+ticker = TickerFetcher.fetch_ticker(
+    session_id=session_id,
+    session=session,
+    logger=logger,
+)
 ```
 
 For a more comprehensive example :
@@ -370,24 +386,27 @@ Here is the list of available data types :
 
 |**Type**|**Description**|
 |:-|:-|
-|Ticker|Protobuf message (for GRPC).|
-|Dictionaries|Standard Python Dictionaries : **dict**.|
-|DataFrame|DataFrame from the library Pandas.|
+|list[Metric]|List of Metric, which is a Pydantic BaseModel.|
+|polars.DataFrame|DataFrame from the library Polars.|
+
+There are integrated method to turn `polars.DataFrame` into Python `dict`/`list` or `pandas.DataFrame`.
 
 Here is how to build each type :
 
 ```python
-# UPDATE PARSER
-quotecast_parser.put_quotecast(quotecast=quotecast)
+# BUILD `LIST[METRIC]`
+ticker_to_metric_list = TickerToMetricList()
+metric_list = ticker_to_metric_list.parse(ticker=ticker)
 
-# BUILD TICKER
-ticker = quotecast_parser.ticker
+# BUILD `POLARS.DATAFRAME`
+ticker_to_df = TickerToDF()
+polars_df = ticker_to_df.parse(ticker=ticker)
 
-# BUILD DICT
-ticker_dict = quotecast_parser.ticker_dict
+# BUILD `LIST[DICT]`
+python_list = polars_df.to_dicts()
 
 # BUILD PANDAS.DATAFRAME
-ticker_df = quotecast_parser.ticker_df
+pandas_df = df.to_pandas()
 ```
 
 ## 2.11. What is a Ticker ?
