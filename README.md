@@ -251,10 +251,6 @@ ticker_request = TickerRequest(
         ],
     },
 )
-TickerFetcher.subscribe(
-    ticker_request=ticker_request,
-    session_id=session_id,
-)
 ```
 
 In this example these are the `vwd_id` of the products from which you want `Real-time data` :
@@ -265,7 +261,10 @@ See the [section](#215-how-to-find-a--vwd_id-) related to `vwd_id` for more info
 
 Once you have built this Request object you can send it to Degiro's API like this :
 ```python
-quotecast_api.subscribe(request=request)
+TickerFetcher.subscribe(
+    ticker_request=ticker_request,
+    session_id=session_id,
+)
 ```
 
 For more comprehensive examples :
@@ -495,9 +494,9 @@ Example - DataFrame :
 ## 2.14. How to get chart data ?
 You can fetch an object containing the same data than in Degiro's website graph.
 
-For that you need to prepare a Chart.Request object.
+For that you need to prepare a ChartRequest.
 
-Here is a table with the available attributes for Chart.Request.
+Here is a table with the available attributes for ChartRequest.
 
 |**Parameter**|**Type**|**Description**|
 |:-|:-|:-|
@@ -511,28 +510,23 @@ Here is a table with the available attributes for Chart.Request.
 Example of code :
 
 ```python
-request = Chart.Request()
-request.culture = "fr-FR"
-request.period = Chart.Interval.PT1H
-request.requestid = "1"
-request.resolution = Chart.Interval.P1D
-# request.series.append("issueid:360148977")
-# request.series.append("price:issueid:360148977")
-request.series.append("ohlc:issueid:360148977")
-# request.series.append("volume:issueid:360148977")
-# request.series.append("vwdkey:AAPL.BATS,E")
-# request.series.append("price:vwdkey:AAPL.BATS,E")
-# request.series.append("ohlc:vwdkey:AAPL.BATS,E")
-# request.series.append("volume:vwdkey:AAPL.BATS,E")
-request.tz = "Europe/Paris"
+chart_fetcher = ChartFetcher(user_token=user_token)
 
-# FETCH DATA
-chart = quotecast_api.get_chart(
-    request=request,
-    override={
-        "resolution": "P1D",
-        "period": "P1W",
-    },
+chart_request = ChartRequest(
+    culture = "fr-FR",
+    period = Interval.P1W,
+    requestid = "1",
+    resolution = Interval.P1D,
+    series=[
+        "price:vwdkey:AAPL.BATS,E",
+        "ohlc:vwdkey:AAPL.BATS,E",
+        "volume:vwdkey:AAPL.BATS,E",
+    ],
+    tz = "Europe/Paris",
+)
+
+chart = chart_fetcher.get_chart(
+    chart_request=chart_request,
     raw=True,
 )
 ```
