@@ -194,7 +194,6 @@ In order to fetch data you need to establish a connection.
 You can use the following code to connect :
 
 ```python
-# CONNECTION : GET `SESSION_ID`
 session_id = TickerFetcher.get_session_id(user_token=YOUR_USER_TOKEN)
 ```
 
@@ -355,13 +354,13 @@ Received data is a `Quotecast` object with the following properties :
 
 Here is how to access these properties :
 ```python
-json_data = quotecast.json_data
-response_datetime = quotecast.metadata.response_datetime
-request_duration= quotecast.metadata.request_duration
+json_text = ticker.json_text
+response_datetime = ticker.response_datetime
+request_duration= ticker.request_duration
 ```
 Notes: 
-* The API sometimes might return an empty Quotecast object.
-* The API often returns a subset of the requested metrics, e.g. only `'LastPrice'`. Please take this into account when appending consecutive data responses.
+* The API sometimes might return an empty Quotecast message.
+* The API often returns a subset of the requested metrics, e.g. only `'LastPrice'`. This should be considered when appending consecutive data responses.
 
 ## 2.10. Which are the available data types ?
 
@@ -400,63 +399,81 @@ The generated Ticker contains :
 
 |**Parameter**|**Type**|**Description**|
 |:-|:-|:-|
-|metadata|Metadata|Containing the "response_datetime" and "request_duration".|
-|products|MessageMap|Dictionary like object containing the metrics group by "vwd_id".|
-|product_list|RepeatedScalarFieldContainer|List of available "vwd_id".|
+|json_text|str|The json message received|
+|response_datetime|datetime|Datetime of the response.|
+|request_duration|timedelta|Duration of the request.|
 
-Here are some operations available :
+A Ticker is Pydantic BaseModel, it can serialize and deserialize into json.
+
+Here is how to manipulate a Ticker object :
 
 ```python
-product = '360015751'
-metric_name = 'LastPrice'
+# GET ICKER PARAMETERS
+json_text = ticker.json_text
+response_datetime = ticker.response_datetime
+request_duration= ticker.request_duration
 
-# ACCESS SPECIFIC PRODUCT
-product = ticker.products[product]
-
-# ACCESS SPECIFIC METRIC
-metric = product[metric_name]
-
-# LOOP OVER PRODUCTS
-for product in ticker.products:
-    product = ticker.products[product]
-
-# LOOP OVER METRICS
-for metric_name in product.metrics:
-    metric = product.metrics[metric_name]
+# SERIALIZE/DESERIALIZE
+ticker_json = Ticker.model_dump_json()
+ticker_json = Ticker.model_validate_json(json_data=ticker_json)
 ```
 
-A Ticker is a custom Protocol Buffer Message built for this library.
+## 2.12. What is inside the `list[Metric]` ?
 
-It can be transmitted over GRPC framework.
+The `list[Metric]` is the parsed version of the `json` message received from Degiro's API.
 
-## 2.12. What is inside the Dictionary ?
+A Metric contains the following parameters :
 
-The dictionary representation of a ticker contains the metrics grouped by "vwd_id" (product id), with :
-* keys : vwd_id
-* values : another dictionary with the metrics concerning this specific product.
+|**Parameter**|**Type**|**Description**|
+|:-|:-|:-|
+|metric_type|MetricType|str|A metric type like "LastDate", "LastPrice", etc|
+|product_id|str|The product identifier in the Quotecast API.|
+|value|str|float|The value of the metric.|
 
-Example - Dictionary :
+Example - `list[Metric]` :
 
 ```python
-{
-    '360114899': {
-        'vwd_id': 360114899,
-        'response_datetime': '2020-11-08 12:00:27',
-        'request_duration': 1.0224891666870117,
-        'LastDate': '2020-11-06',
-        'LastTime': '17:36:17',
-        'LastPrice': '70.0',
-        'LastVolume': '100'
-    },
-    '360015751': {
-        'vwd_id': 360015751,
-        'response_datetime': '2020-11-08 12:00:27',
-        'request_duration': 1.0224891666870117,
-        'LastDate': '2020-11-06',
-        'LastTime': '17:36:17',
-        'LastPrice': '22.99',
-        'LastVolume': '470'
-    }
+metric_list = [
+    Metric(
+        product_id=360114899,
+        metric_type="LastDate",
+        value="2020-11-06",
+    ),
+    Metric(
+        product_id=360114899,
+        metric_type="LastTime",
+        value="17:36:17",
+    ),
+    Metric(
+        product_id=360114899,
+        metric_type="LastPrice",
+        value=70.0,
+    ),
+    Metric(
+        product_id=360114899,
+        metric_type="LastVolume",
+        value=100,
+    ),
+    Metric(
+        product_id=360015751,
+        metric_type="LastDate",
+        value="2020-11-06",
+    ),
+    Metric(
+        product_id=360015751,
+        metric_type="LastTime",
+        value="17:36:17",
+    ),
+    Metric(
+        product_id=360015751,
+        metric_type="LastPrice",
+        value=22.99,
+    ),
+    Metric(
+        product_id=360015751,
+        metric_type="LastVolume",
+        value=470,
+    ),
 }
 ```
 
@@ -465,13 +482,13 @@ Example - Dictionary :
 In addition to whatever metrics you have chosen to subscribe to (see the example in [section 2.6](#26-how-to-subscribe-to-a-data-stream-)), the DataFrame will contain the following columns :
 |**Column**|**Description**|
 |:-|:-|
-|vwd_id|Product identifier, for instance "AAPL.BATS,E" for APPLE stock.|
+|product_id|Product identifier, for instance "AAPL.BATS,E" for APPLE stock.|
 |response_datetime|Datetime at which the data was received.|
 |request_duration|Duration of the request used to fetch the data.|
 
 Example - DataFrame :
 
-           vwd_id    response_datetime  request_duration    LastDate  LastTime LastPrice LastVolume
+           product_id response_datetime  request_duration    LastDate  LastTime LastPrice LastVolume
     0   360114899  2020-11-08 12:00:27          1.022489  2020-11-06  17:39:57      70.0        100
     1   360015751  2020-11-08 12:00:27          1.022489  2020-11-06  17:36:17     22.99        470
 
