@@ -16,4 +16,4 @@ class Ticker(BaseModel):
 
 class TickerRequest(BaseModel):
     request_type: Literal["subscription", "unsubscription"]
-    request_map: dict[str, list[MetricType | str]]
+    request_map: dict[str, list[MetricType]] | dict[str, list[str]]
