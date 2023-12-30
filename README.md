@@ -535,8 +535,8 @@ The `issueid` parameter is the `vwd_id` of the product from which you want the `
 
 See the section related to `vwd_id` for more information.
 
-All the options for the enumerations are available in this file :
-[quotecast.proto](protos/degiro_connector/quotecast/models/quotecast.proto)
+All the options for the enumerations are available in this module :
+[chart.py](degiro_connector/quotecast/models/chart.py)
 
 For a more comprehensive examples :
  - [chart.py](examples/quotecast/chart.py)
