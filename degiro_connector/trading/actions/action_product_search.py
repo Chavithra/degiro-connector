@@ -9,95 +9,81 @@ from google.protobuf import json_format
 # IMPORTATION INTERNAL
 from degiro_connector.core.constants import urls
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
-from degiro_connector.trading.models.trading_pb2 import (
-    Credentials,
+from degiro_connector.trading.models.product_search import (
     ProductSearch,
+    BondsRequest,
+    ETFsRequest,
+    FundsRequest,
+    FuturesRequest,
+    LeveragedsRequest,
+    LookupRequest,
+    OptionsRequest,
+    StocksRequest,
+    WarrantsRequest,
+)
+from degiro_connector.trading.models.trading_pb2 import Credentials
+
+ProductRequest = (
+    BondsRequest
+    | ETFsRequest
+    | FundsRequest
+    | FuturesRequest
+    | LeveragedsRequest
+    | LookupRequest
+    | OptionsRequest
+    | StocksRequest
+    | WarrantsRequest
 )
 
 
 class ActionProductSearch(AbstractAction):
-    PRODUCT_SEARCH_REQUEST_URL_MATCHING = {
-        ProductSearch.RequestBonds.DESCRIPTOR.full_name: urls.PRODUCT_SEARCH_BONDS,
-        ProductSearch.RequestETFs.DESCRIPTOR.full_name: urls.PRODUCT_SEARCH_ETFS,
-        ProductSearch.RequestFunds.DESCRIPTOR.full_name: urls.PRODUCT_SEARCH_FUNDS,
-        ProductSearch.RequestFutures.DESCRIPTOR.full_name: urls.PRODUCT_SEARCH_FUTURES,
-        ProductSearch.RequestLeverageds.DESCRIPTOR.full_name: urls.PRODUCT_SEARCH_LEVERAGEDS,
-        ProductSearch.RequestLookup.DESCRIPTOR.full_name: urls.PRODUCT_SEARCH_LOOKUP,
-        ProductSearch.RequestOptions.DESCRIPTOR.full_name: urls.PRODUCT_SEARCH_OPTIONS,
-        ProductSearch.RequestStocks.DESCRIPTOR.full_name: urls.PRODUCT_SEARCH_STOCKS,
-        ProductSearch.RequestWarrants.DESCRIPTOR.full_name: urls.PRODUCT_SEARCH_WARRANTS,
+    URL_MATCHING = {
+        BondsRequest: urls.PRODUCT_SEARCH_BONDS,
+        ETFsRequest: urls.PRODUCT_SEARCH_ETFS,
+        FundsRequest: urls.PRODUCT_SEARCH_FUNDS,
+        FuturesRequest: urls.PRODUCT_SEARCH_FUTURES,
+        LeveragedsRequest: urls.PRODUCT_SEARCH_LEVERAGEDS,
+        LookupRequest: urls.PRODUCT_SEARCH_LOOKUP,
+        OptionsRequest: urls.PRODUCT_SEARCH_OPTIONS,
+        StocksRequest: urls.PRODUCT_SEARCH_STOCKS,
+        WarrantsRequest: urls.PRODUCT_SEARCH_WARRANTS,
     }
 
-    @staticmethod
-    def product_search_request_to_api(
-        request: Union[
-            ProductSearch.RequestBonds,
-            ProductSearch.RequestETFs,
-            ProductSearch.RequestFunds,
-            ProductSearch.RequestFutures,
-            ProductSearch.RequestLeverageds,
-            ProductSearch.RequestLookup,
-            ProductSearch.RequestOptions,
-            ProductSearch.RequestStocks,
-            ProductSearch.RequestWarrants,
-        ],
-    ) -> dict:
-        request_dict = json_format.MessageToDict(
-            message=request,
-            including_default_value_fields=False,
-            preserving_proto_field_name=False,
-            use_integers_for_enums=True,
-            descriptor_pool=None,
-            float_precision=None,
-        )
+    # @staticmethod
+    # def product_search_to_grpc(payload: dict) -> ProductSearch:
+    #     product_search = ProductSearch()
+    #     product_search.response_datetime.GetCurrentTime()
+    #     json_format.ParseDict(
+    #         js_dict=payload,
+    #         message=product_search,
+    #         ignore_unknown_fields=True,
+    #         descriptor_pool=None,
+    #     )
 
-        return request_dict
-
-    @staticmethod
-    def product_search_to_grpc(payload: dict) -> ProductSearch:
-        product_search = ProductSearch()
-        product_search.response_datetime.GetCurrentTime()
-        json_format.ParseDict(
-            js_dict=payload,
-            message=product_search,
-            ignore_unknown_fields=True,
-            descriptor_pool=None,
-        )
-
-        return product_search
+    #     return product_search
 
     @classmethod
     def product_search(
         cls,
-        request: Union[
-            ProductSearch.RequestBonds,
-            ProductSearch.RequestETFs,
-            ProductSearch.RequestFunds,
-            ProductSearch.RequestFutures,
-            ProductSearch.RequestLeverageds,
-            ProductSearch.RequestLookup,
-            ProductSearch.RequestOptions,
-            ProductSearch.RequestStocks,
-            ProductSearch.RequestWarrants,
-        ],
+        product_request: ProductRequest,
         session_id: str,
         credentials: Credentials,
         raw: bool = False,
-        session: requests.Session = None,
-        logger: logging.Logger = None,
+        session: requests.Session | None = None,
+        logger: logging.Logger | None = None,
     ) -> Union[ProductSearch, Dict, None]:
         """Search products.
         Args:
             request (StockList.Request):
                 List of options that we want to retrieve from the endpoint.
                 Example 1:
-                    request = ProductSearch.RequestLookup(
+                    request = ProductSearch.LookupRequest(
                         search_text='APPLE',
                         limit=10,
                         offset=0,
                     )
                 Example 2:
-                    request = ProductSearch.RequestStocks(
+                    request = ProductSearch.StocksRequest(
                         index_id=5,
                         is_in_us_green_list=False,
                         stock_country_id=886,
@@ -129,16 +115,18 @@ class ActionProductSearch(AbstractAction):
         if session is None:
             session = cls.build_session()
 
-        url = cls.PRODUCT_SEARCH_REQUEST_URL_MATCHING[request.DESCRIPTOR.full_name]
+        url = cls.URL_MATCHING[type(product_request)]
 
-        params = cls.product_search_request_to_api(
-            request=request,
+        params = product_request.model_dump(
+            mode="json", by_alias=True, exclude_none=True
         )
 
         if credentials.int_account > 0:
             params["intAccount"] = credentials.int_account
 
         params["sessionId"] = session_id
+
+        print(params)
 
         http_request = requests.Request(method="GET", url=url, params=params)
         prepped = session.prepare_request(http_request)
@@ -147,15 +135,16 @@ class ActionProductSearch(AbstractAction):
         try:
             response_raw = session.send(prepped)
             response_raw.raise_for_status()
-            response_dict = response_raw.json()
+            response_map = response_raw.json()
 
             if raw is True:
-                return response_dict
+                product_search = response_map
             else:
-                return cls.product_search_to_grpc(
-                    payload=response_dict,
-                )
+                product_search = ProductSearch.model_validate(obj=response_map)
+
+            return product_search
         except requests.HTTPError as e:
+            logger.fatal(e)
             status_code = getattr(response_raw, "status_code", "No status_code found.")
             text = getattr(response_raw, "text", "No text found.")
             logger.fatal(status_code)
@@ -167,17 +156,7 @@ class ActionProductSearch(AbstractAction):
 
     def call(
         self,
-        request: Union[
-            ProductSearch.RequestBonds,
-            ProductSearch.RequestETFs,
-            ProductSearch.RequestFunds,
-            ProductSearch.RequestFutures,
-            ProductSearch.RequestLeverageds,
-            ProductSearch.RequestLookup,
-            ProductSearch.RequestOptions,
-            ProductSearch.RequestStocks,
-            ProductSearch.RequestWarrants,
-        ],
+        product_request: ProductRequest,
         raw: bool = False,
     ) -> Union[ProductSearch, Dict, None]:
         connection_storage = self.connection_storage
@@ -187,7 +166,7 @@ class ActionProductSearch(AbstractAction):
         logger = self.logger
 
         return self.product_search(
-            request=request,
+            product_request=product_request,
             session_id=session_id,
             credentials=credentials,
             raw=raw,
