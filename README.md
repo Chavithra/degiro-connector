@@ -408,7 +408,7 @@ A Ticker is Pydantic BaseModel, it can serialize and deserialize into json.
 Here is how to manipulate a Ticker object :
 
 ```python
-# GET ICKER PARAMETERS
+# GET TICKER PARAMETERS
 json_text = ticker.json_text
 response_datetime = ticker.response_datetime
 request_duration= ticker.request_duration
