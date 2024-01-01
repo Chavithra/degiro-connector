@@ -10,16 +10,17 @@ with open("config/config.json") as config_file:
     config_dict = json.load(config_file)
 
 credentials = Credentials.model_validate(obj=config_dict)
-
 trading_api = TradingAPI(credentials=credentials)
-
 trading_api.connect()
 
-# CREATE A FAVORITE LIST
-name = "SOME_LIST"
-favorite_list_id = trading_api.create_favorite_list(name=name)
+# DELETE AN EXISTING FAVORITE LIST
+product_id = 1234567
+list_id = 1234567
+success = trading_api.delete_favorite_product(
+    list_id=list_id, product_id=product_id
+)
 
-if favorite_list_id:
-    print(f"The following list was created : {name} = {favorite_list_id}.")
+if success:
+    print(f"The following product was deleted : {product_id} => {list_id}")
 else:
-    print(f"Can't create this list : {name}.")
+    print(f"Can't delete the following product : {product_id} => {list_id}")
