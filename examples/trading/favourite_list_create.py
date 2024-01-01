@@ -17,9 +17,9 @@ trading_api.connect()
 
 # CREATE A FAVORITE LIST
 name = "SOME_LIST"
-favourite_list_id = trading_api.create_favourite_list(name=name)
+favorite_list_id = trading_api.create_favorite_list(name=name)
 
-if favourite_list_id:
-    print(f"The following list was created : {name} = {favourite_list_id}.")
+if favorite_list_id:
+    print(f"The following list was created : {name} = {favorite_list_id}.")
 else:
     print(f"Can't create this list : {name}.")

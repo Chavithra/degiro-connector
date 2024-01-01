@@ -19,7 +19,7 @@ trading_api.connect()
 list_id = 1234567
 position = 2
 
-success = trading_api.move_favourite(
+success = trading_api.move_favorite(
     list_id=list_id,
     position=position,
 )

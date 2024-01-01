@@ -18,8 +18,8 @@ trading_api = TradingAPI(credentials=credentials)
 trading_api.connect()
 
 # GET FAVORITES
-favourite_batch = trading_api.get_favourite(raw=False)
+favorite_batch = trading_api.get_favorite(raw=False)
 
-favourite_df = pl.DataFrame(favourite_batch.data)
+favorite_df = pl.DataFrame(favorite_batch.data)
 
-print(favourite_df)
+print(favorite_df)

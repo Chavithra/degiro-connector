@@ -16,7 +16,7 @@ trading_api.connect()
 
 # DELETE AN EXISTING FAVORITE LIST
 list_id = 1234567
-success = trading_api.delete_favourite_list(list_id=list_id)
+success = trading_api.delete_favorite_list(list_id=list_id)
 
 if success:
     print(f"The following list was deleted : {list_id}.")

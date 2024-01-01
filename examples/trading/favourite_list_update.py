@@ -20,7 +20,7 @@ trading_api.connect()
 # UPDATE A FAVORITE LIST NAME
 id = 1234567
 name = "SOME_OTHER_NAME"
-success = trading_api.update_favourite_list(id=id, name=name)
+success = trading_api.update_favorite_list(id=id, name=name)
 
 # DISPLAY - MESSAGE
 if success:

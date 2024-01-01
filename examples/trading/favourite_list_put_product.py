@@ -16,7 +16,7 @@ trading_api.connect()
 # DELETE AN EXISTING FAVORITE LIST
 product_id = 65009
 list_id = 2608650
-success = trading_api.put_favourite_list_product(list_id=list_id, product_id=product_id)
+success = trading_api.put_favorite_list_product(list_id=list_id, product_id=product_id)
 
 if success:
     print(f"The following product was added : {product_id} => {list_id}")

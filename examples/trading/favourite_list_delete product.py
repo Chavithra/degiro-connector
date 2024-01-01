@@ -16,7 +16,7 @@ trading_api.connect()
 # DELETE AN EXISTING FAVORITE LIST
 product_id = 1234567
 list_id = 1234567
-success = trading_api.delete_favourite_list_product(
+success = trading_api.delete_favorite_list_product(
     list_id=list_id, product_id=product_id
 )
 
