@@ -7,9 +7,9 @@ from degiro_connector.core.abstracts.abstract_action import AbstractAction
 from degiro_connector.trading.models.credentials import Credentials
 
 
-class ActionPutFavouriteListProduct(AbstractAction):
+class ActionPutFavoriteListProduct(AbstractAction):
     @classmethod
-    def put_favourite_list_product(
+    def put_favorite_list_product(
         cls,
         list_id: int,
         product_id: int,
@@ -18,10 +18,10 @@ class ActionPutFavouriteListProduct(AbstractAction):
         session: requests.Session | None = None,
         logger: logging.Logger | None = None,
     ) -> bool | None:
-        """Put a product into a favourite list.
+        """Put a product into a favorite list.
         Args:
             id (int):
-                Id of the favourite list.
+                Id of the favorite list.
             product_id (int):
                 Id of the product.
             session_id (str):
@@ -38,7 +38,7 @@ class ActionPutFavouriteListProduct(AbstractAction):
                 This object will be generated if None.
                 Defaults to None.
         Returns:
-            Favourites: API response.
+            Favorites: API response.
         """
 
         if logger is None:
@@ -83,7 +83,7 @@ class ActionPutFavouriteListProduct(AbstractAction):
         credentials = self.credentials
         logger = self.logger
 
-        return self.put_favourite_list_product(
+        return self.put_favorite_list_product(
             list_id=list_id,
             product_id=product_id,
             session_id=session_id,

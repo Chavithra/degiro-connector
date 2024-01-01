@@ -8,13 +8,13 @@ from degiro_connector.core.abstracts.abstract_action import AbstractAction
 from degiro_connector.trading.models.credentials import Credentials
 
 
-class ActionRenameFavouriteList(AbstractAction):
+class ActionRenameFavoriteList(AbstractAction):
     @classmethod
-    def favourite_list_to_api(cls, name: str) -> dict[str, str]:
+    def favorite_list_to_api(cls, name: str) -> dict[str, str]:
         return {"name": name}
 
     @classmethod
-    def rename_favourite_list(
+    def rename_favorite_list(
         cls,
         list_id: int,
         name: str,
@@ -23,12 +23,12 @@ class ActionRenameFavouriteList(AbstractAction):
         session: requests.Session | None = None,
         logger: logging.Logger | None = None,
     ) -> Optional[int]:
-        """Update a favourite list name.
+        """Update a favorite list name.
         Args:
             list_id (str):
-                Id of the favourite list to update.
+                Id of the favorite list to update.
             name (str):
-                New name of the favourite list.
+                New name of the favorite list.
             session_id (str):
                 API's session id.
             credentials (Credentials):
@@ -43,7 +43,7 @@ class ActionRenameFavouriteList(AbstractAction):
                 This object will be generated if None.
                 Defaults to None.
         Returns:
-            Favourites: API response.
+            Favorites: API response.
         """
 
         if logger is None:
@@ -59,13 +59,13 @@ class ActionRenameFavouriteList(AbstractAction):
             "sessionId": session_id,
         }
 
-        favourite_list_dict = cls.favourite_list_to_api(name=name)
+        favorite_list_dict = cls.favorite_list_to_api(name=name)
 
         request = requests.Request(
             method="PUT",
             url=url,
             params=params,
-            json=favourite_list_dict,
+            json=favorite_list_dict,
         )
         prepped = session.prepare_request(request)
         response_raw = None
@@ -95,7 +95,7 @@ class ActionRenameFavouriteList(AbstractAction):
         credentials = self.credentials
         logger = self.logger
 
-        return self.rename_favourite_list(
+        return self.rename_favorite_list(
             list_id=list_id,
             name=name,
             session_id=session_id,

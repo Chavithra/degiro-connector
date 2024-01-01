@@ -7,9 +7,9 @@ from degiro_connector.core.abstracts.abstract_action import AbstractAction
 from degiro_connector.trading.models.credentials import Credentials
 
 
-class ActionDeleteFavouriteListProduct(AbstractAction):
+class ActionDeleteFavoriteListProduct(AbstractAction):
     @classmethod
-    def delete_favourite_list_product(
+    def delete_favorite_list_product(
         cls,
         list_id: int,
         product_id: int,
@@ -18,7 +18,7 @@ class ActionDeleteFavouriteListProduct(AbstractAction):
         session: requests.Session | None = None,
         logger: logging.Logger | None = None,
     ) -> bool | None:
-        """Delete a product from a favourite list.
+        """Delete a product from a favorite list.
         Args:
             list_id (int):
                 Id of the list.
@@ -38,7 +38,7 @@ class ActionDeleteFavouriteListProduct(AbstractAction):
                 This object will be generated if None.
                 Defaults to None.
         Returns:
-            Favourites: API response.
+            Favorites: API response.
         """
 
         if logger is None:
@@ -82,7 +82,7 @@ class ActionDeleteFavouriteListProduct(AbstractAction):
         credentials = self.credentials
         logger = self.logger
 
-        return self.delete_favourite_list_product(
+        return self.delete_favorite_list_product(
             list_id=list_id,
             product_id=product_id,
             session_id=session_id,

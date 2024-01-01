@@ -6,20 +6,20 @@ from orjson import loads
 from degiro_connector.core.constants import urls
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
 from degiro_connector.trading.models.credentials import Credentials
-from degiro_connector.trading.models.favourite import FavouriteBatch
+from degiro_connector.trading.models.favorite import FavoriteBatch
 
 
-class ActionGetFavourite(AbstractAction):
+class ActionGetFavorite(AbstractAction):
     @classmethod
-    def get_favourite(
+    def get_favorite(
         cls,
         session_id: str,
         credentials: Credentials,
         raw: bool = False,
         session: requests.Session | None = None,
         logger: logging.Logger | None = None,
-    ) -> FavouriteBatch | None:
-        """Move a favourite list.
+    ) -> FavoriteBatch | None:
+        """Move a favorite list.
         Args:.
             session_id (str):
                 API's session id.
@@ -35,7 +35,7 @@ class ActionGetFavourite(AbstractAction):
                 This object will be generated if None.
                 Defaults to None.
         Returns:
-            Favourites: API response.
+            Favorites: API response.
         """
         if logger is None:
             logger = cls.build_logger()
@@ -62,13 +62,13 @@ class ActionGetFavourite(AbstractAction):
             print(response.text)
 
             if raw is True:
-                favourite_batch = loads(response.text)
+                favorite_batch = loads(response.text)
             else:
-                favourite_batch = FavouriteBatch.model_validate_json(
+                favorite_batch = FavoriteBatch.model_validate_json(
                     json_data=response.text
                 )
 
-            return favourite_batch
+            return favorite_batch
         except requests.HTTPError as e:
             logger.fatal(e)
             if isinstance(e.response, requests.Response):
@@ -81,14 +81,14 @@ class ActionGetFavourite(AbstractAction):
     def call(
         self,
         raw: bool = False,
-    ) -> FavouriteBatch | None:
+    ) -> FavoriteBatch | None:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
         session = self.session_storage.session
         credentials = self.credentials
         logger = self.logger
 
-        return self.get_favourite(
+        return self.get_favorite(
             raw=raw,
             session_id=session_id,
             credentials=credentials,

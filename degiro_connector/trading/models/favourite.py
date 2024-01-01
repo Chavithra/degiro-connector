@@ -2,13 +2,13 @@ from pydantic import BaseModel, ConfigDict, Field
 from pydantic.alias_generators import to_camel
 
 
-class FavouriteName(BaseModel):
+class FavoriteName(BaseModel):
     name: str
 
-class FavouriteId(BaseModel):
+class FavoriteId(BaseModel):
     data: int
 
-class FavouritePosition(BaseModel):
+class FavoritePosition(BaseModel):
     model_config = ConfigDict(
         alias_generator=to_camel,
         populate_by_name=True,
@@ -18,7 +18,7 @@ class FavouritePosition(BaseModel):
     list_id: int
 
 
-class FavouriteItem(BaseModel):
+class FavoriteItem(BaseModel):
     model_config = ConfigDict(
         alias_generator=to_camel,
         populate_by_name=True,
@@ -30,5 +30,5 @@ class FavouriteItem(BaseModel):
     name: str | None = Field(default=None)
 
 
-class FavouriteBatch(BaseModel):
-    data: list[FavouriteItem] = Field(default_factory=list)
+class FavoriteBatch(BaseModel):
+    data: list[FavoriteItem] = Field(default_factory=list)

@@ -5,20 +5,20 @@ import requests
 from degiro_connector.core.constants import urls
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
 from degiro_connector.trading.models.credentials import Credentials
-from degiro_connector.trading.models.favourite import FavouriteId, FavouriteName
+from degiro_connector.trading.models.favorite import FavoriteId, FavoriteName
 
 
-class ActionCreateFavouriteList(AbstractAction):
+class ActionCreateFavoriteList(AbstractAction):
     @classmethod
-    def favourite_list_to_api(cls, name: str) -> dict[str, str]:
+    def favorite_list_to_api(cls, name: str) -> dict[str, str]:
         return {"name": name}
 
     @classmethod
-    def api_to_favourite_list_id(cls, response_dict: dict[str, int]) -> int:
+    def api_to_favorite_list_id(cls, response_dict: dict[str, int]) -> int:
         return response_dict["data"]
 
     @classmethod
-    def create_favourite_list(
+    def create_favorite_list(
         cls,
         name: str,
         session_id: str,
@@ -26,10 +26,10 @@ class ActionCreateFavouriteList(AbstractAction):
         session: requests.Session | None = None,
         logger: logging.Logger | None = None,
     ) -> int | None:
-        """Create a favourite list.
+        """Create a favorite list.
         Args:
             name (str):
-                New name of the favourite list.
+                New name of the favorite list.
             session_id (str):
                 API's session id.
             credentials (Credentials):
@@ -44,7 +44,7 @@ class ActionCreateFavouriteList(AbstractAction):
                 This object will be generated if None.
                 Defaults to None.
         Returns:
-            Favourites: API response.
+            Favorites: API response.
         """
 
         if logger is None:
@@ -60,7 +60,7 @@ class ActionCreateFavouriteList(AbstractAction):
             "sessionId": session_id,
         }
 
-        json_obj = FavouriteName(name=name).model_dump(
+        json_obj = FavoriteName(name=name).model_dump(
             mode="python", by_alias=True, exclude_none=True
         )
 
@@ -72,11 +72,11 @@ class ActionCreateFavouriteList(AbstractAction):
         )
         prepped = session.prepare_request(request)
 
-        favourite_list_id = None
+        favorite_list_id = None
         try:
             response = session.send(prepped)
             response.raise_for_status()
-            favourite_list_id = FavouriteId.model_validate_json(
+            favorite_list_id = FavoriteId.model_validate_json(
                 json_data=response.text
             ).data
         except requests.HTTPError as e:
@@ -88,7 +88,7 @@ class ActionCreateFavouriteList(AbstractAction):
             logger.fatal(e)
             return None
 
-        return favourite_list_id
+        return favorite_list_id
 
     def call(
         self,
@@ -100,7 +100,7 @@ class ActionCreateFavouriteList(AbstractAction):
         credentials = self.credentials
         logger = self.logger
 
-        return self.create_favourite_list(
+        return self.create_favorite_list(
             name=name,
             session_id=session_id,
             credentials=credentials,

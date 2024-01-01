@@ -5,12 +5,12 @@ import requests
 from degiro_connector.core.constants import urls
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
 from degiro_connector.trading.models.credentials import Credentials
-from degiro_connector.trading.models.favourite import FavouritePosition
+from degiro_connector.trading.models.favorite import FavoritePosition
 
 
-class ActionMoveFavourite(AbstractAction):
+class ActionMoveFavorite(AbstractAction):
     @classmethod
-    def move_favourite(
+    def move_favorite(
         cls,
         list_id: int,
         position: int,
@@ -19,7 +19,7 @@ class ActionMoveFavourite(AbstractAction):
         session: requests.Session | None = None,
         logger: logging.Logger | None = None,
     ) -> bool | None:
-        """Move a favourite list.
+        """Move a favorite list.
         Args:
             list_id (int):
                 Id of the list.
@@ -39,7 +39,7 @@ class ActionMoveFavourite(AbstractAction):
                 This object will be generated if None.
                 Defaults to None.
         Returns:
-            Favourites: API response.
+            Favorites: API response.
         """
 
         if logger is None:
@@ -55,7 +55,7 @@ class ActionMoveFavourite(AbstractAction):
             "sessionId": session_id,
         }
 
-        json_obj = FavouritePosition(list_id=list_id, position=position).model_dump(
+        json_obj = FavoritePosition(list_id=list_id, position=position).model_dump(
             mode="python", by_alias=True, exclude_none=True
         )
 
@@ -92,7 +92,7 @@ class ActionMoveFavourite(AbstractAction):
         credentials = self.credentials
         logger = self.logger
 
-        return self.move_favourite(
+        return self.move_favorite(
             list_id=list_id,
             position=position,
             session_id=session_id,
