@@ -150,8 +150,12 @@ For instance if one needs the following data from the "AAPL" stock :
 
 You can use this library to retrieve updates like this :
 
-    LastDate    LastTime    LastPrice LastVolume
-    2020-11-13  22:00:00    119.26    4697040
+| product_id    | LastPrice | LastVolume | LastDatetimeUTC         | request_duration_s | response_datetime_utc          |
+|---------------|-----------|------------|-------------------------|---------------------|---------------------------------|
+| str           | f64       | i64        | datetime[μs]            | f64                 | datetime[μs]                    |
+| 360015751     | 34.6      | 1          | 2023-12-29 16:35:23     | 1.021337            | 2024-01-01 17:31:22.482618     |
+| AAPL.BATS,E   | 192.55    | null       | 2023-12-29 20:59:59     | 1.021337            | 2024-01-01 17:31:22.482618     |
+
 
 For a list of available metrics, see the example in [section 2.6](#26-how-to-subscribe-to-a-data-stream-).
 
