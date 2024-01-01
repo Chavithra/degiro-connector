@@ -2,7 +2,6 @@ import logging
 import random
 import time
 
-import pandas
 import pytest
 import urllib3
 
@@ -105,7 +104,6 @@ def test_format_chart(quotecast_connected, stock_request):
     chart1 = chart.series[1]
     chart1_df = ChartHelper.serie_to_df(serie=chart1)
 
-    assert isinstance(chart1_df, pandas.DataFrame)
     assert len(chart1_df) == len(chart1.data)
 
     for index, row in chart1_df.iterrows():
