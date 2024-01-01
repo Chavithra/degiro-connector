@@ -11,9 +11,9 @@ logging.basicConfig(level=logging.INFO)
 
 with open("config/config.json") as config_file:
     config_dict = json.load(config_file)
-user_token = config_dict.get("user_token")  # HERE GOES YOUR USER_TOKEN
 
 # FETCH CHART
+user_token = config_dict.get("user_token")  # HERE GOES YOUR USER_TOKEN
 chart_fetcher = ChartFetcher(user_token=user_token)
 chart_request = ChartRequest(
     culture="fr-FR",
@@ -23,7 +23,7 @@ chart_request = ChartRequest(
     # },
     period=Interval.P1D,
     requestid="1",
-    resolution=Interval.PT1H,
+    resolution=Interval.PT60M,
     series=[
         "issueid:360148977",
         "price:issueid:360148977",
