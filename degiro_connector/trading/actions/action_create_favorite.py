@@ -8,17 +8,17 @@ from degiro_connector.trading.models.credentials import Credentials
 from degiro_connector.trading.models.favorite import FavoriteId, FavoriteName
 
 
-class ActionCreateFavoriteList(AbstractAction):
+class ActionCreateFavorite(AbstractAction):
     @classmethod
-    def favorite_list_to_api(cls, name: str) -> dict[str, str]:
+    def favorite_to_api(cls, name: str) -> dict[str, str]:
         return {"name": name}
 
     @classmethod
-    def api_to_favorite_list_id(cls, response_dict: dict[str, int]) -> int:
+    def api_to_favorite_id(cls, response_dict: dict[str, int]) -> int:
         return response_dict["data"]
 
     @classmethod
-    def create_favorite_list(
+    def create_favorite(
         cls,
         name: str,
         session_id: str,
@@ -72,11 +72,11 @@ class ActionCreateFavoriteList(AbstractAction):
         )
         prepped = session.prepare_request(request)
 
-        favorite_list_id = None
+        favorite_id = None
         try:
             response = session.send(prepped)
             response.raise_for_status()
-            favorite_list_id = FavoriteId.model_validate_json(
+            favorite_id = FavoriteId.model_validate_json(
                 json_data=response.text
             ).data
         except requests.HTTPError as e:
@@ -88,7 +88,7 @@ class ActionCreateFavoriteList(AbstractAction):
             logger.fatal(e)
             return None
 
-        return favorite_list_id
+        return favorite_id
 
     def call(
         self,
@@ -100,7 +100,7 @@ class ActionCreateFavoriteList(AbstractAction):
         credentials = self.credentials
         logger = self.logger
 
-        return self.create_favorite_list(
+        return self.create_favorite(
             name=name,
             session_id=session_id,
             credentials=credentials,

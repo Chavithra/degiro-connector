@@ -8,13 +8,13 @@ from degiro_connector.core.abstracts.abstract_action import AbstractAction
 from degiro_connector.trading.models.credentials import Credentials
 
 
-class ActionRenameFavoriteList(AbstractAction):
+class ActionRenameFavorite(AbstractAction):
     @classmethod
-    def favorite_list_to_api(cls, name: str) -> dict[str, str]:
+    def favorite_to_api(cls, name: str) -> dict[str, str]:
         return {"name": name}
 
     @classmethod
-    def rename_favorite_list(
+    def rename_favorite(
         cls,
         list_id: int,
         name: str,
@@ -59,13 +59,13 @@ class ActionRenameFavoriteList(AbstractAction):
             "sessionId": session_id,
         }
 
-        favorite_list_dict = cls.favorite_list_to_api(name=name)
+        favorite_dict = cls.favorite_to_api(name=name)
 
         request = requests.Request(
             method="PUT",
             url=url,
             params=params,
-            json=favorite_list_dict,
+            json=favorite_dict,
         )
         prepped = session.prepare_request(request)
         response_raw = None
@@ -95,7 +95,7 @@ class ActionRenameFavoriteList(AbstractAction):
         credentials = self.credentials
         logger = self.logger
 
-        return self.rename_favorite_list(
+        return self.rename_favorite(
             list_id=list_id,
             name=name,
             session_id=session_id,

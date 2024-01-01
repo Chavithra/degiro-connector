@@ -7,9 +7,9 @@ from degiro_connector.core.abstracts.abstract_action import AbstractAction
 from degiro_connector.trading.models.credentials import Credentials
 
 
-class ActionDeleteFavoriteListProduct(AbstractAction):
+class ActionDeleteFavoriteProduct(AbstractAction):
     @classmethod
-    def delete_favorite_list_product(
+    def delete_favorite_product(
         cls,
         list_id: int,
         product_id: int,
@@ -82,7 +82,7 @@ class ActionDeleteFavoriteListProduct(AbstractAction):
         credentials = self.credentials
         logger = self.logger
 
-        return self.delete_favorite_list_product(
+        return self.delete_favorite_product(
             list_id=list_id,
             product_id=product_id,
             session_id=session_id,

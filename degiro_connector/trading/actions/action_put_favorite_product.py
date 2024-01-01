@@ -7,9 +7,9 @@ from degiro_connector.core.abstracts.abstract_action import AbstractAction
 from degiro_connector.trading.models.credentials import Credentials
 
 
-class ActionPutFavoriteListProduct(AbstractAction):
+class ActionPutFavoriteProduct(AbstractAction):
     @classmethod
-    def put_favorite_list_product(
+    def put_favorite_product(
         cls,
         list_id: int,
         product_id: int,
@@ -83,7 +83,7 @@ class ActionPutFavoriteListProduct(AbstractAction):
         credentials = self.credentials
         logger = self.logger
 
-        return self.put_favorite_list_product(
+        return self.put_favorite_product(
             list_id=list_id,
             product_id=product_id,
             session_id=session_id,
