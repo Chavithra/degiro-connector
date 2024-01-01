@@ -1,4 +1,3 @@
-from typing import List
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field
 from pydantic.alias_generators import to_camel
@@ -92,8 +91,8 @@ class OptionsRequest(ProductRequest):
 
 class StocksRequest(ProductRequest):
     exchange_id: int | None = Field(default=None)
-    is_in_us_green_list: bool | None = Field(default=None)
-    index_id: int
+    is_in_us_green_list: bool | None = Field(default=None, alias="isInUSGreenList")
+    index_id: int | None = Field(default=None)
     offset: int = Field(default=10)
     limit: int = Field(default=0)
     require_total: bool = Field(default=False)
@@ -112,8 +111,8 @@ class WarrantsRequest(ProductRequest):
     sort_types: str
 
 
-class ProductSearch(BaseModel):
+class ProductBatch(BaseModel):
     offset: int
-    products: List[dict]
+    products: list[dict]
     response_datetime: datetime = Field(default_factory=datetime.now)
     total: int = Field(default=0)

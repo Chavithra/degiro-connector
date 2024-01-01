@@ -1,14 +1,11 @@
-# IMPORTATION STANDARD
 import requests
 import logging
-from typing import Dict, Union
+from typing import Union
 
-# IMPORTATION THIRD PARTY
 
-# IMPORTATION INTERNAL
 from degiro_connector.core.constants import urls
+from degiro_connector.trading.models.credentials import Credentials
 from degiro_connector.trading.models.trading_pb2 import (
-    Credentials,
     Order,
     Update,
 )
@@ -54,7 +51,7 @@ class ActionGetUpdate(AbstractAction):
         """Makes a payload compatible with the API.
         Parameters:
             update_option_list {UpdateOptionList}
-                List of option available from grpc "consume_update".
+                list of option available from grpc "consume_update".
         Returns:
             {dict}
                 Payload that Degiro's update endpoint can understand.
@@ -148,14 +145,14 @@ class ActionGetUpdate(AbstractAction):
         request_list: Update.RequestList,
         session_id: str,
         credentials: Credentials,
-        logger: logging.Logger = None,
+        logger: logging.Logger | None = None,
         raw: bool = False,
-        session: requests.Session = None,
-    ) -> Union[Update, Dict, None]:
+        session: requests.Session | None = None,
+    ) -> Union[Update, dict, None]:
         """Retrieve information from Degiro's Trading Update endpoint.
         Args:
             request (Update.RequestList):
-                List of options that we want to retrieve from the endpoint.
+                list of options that we want to retrieve from the endpoint.
                 Example :
                     request = Update.RequestList()
                     request.list.extend(
@@ -245,7 +242,7 @@ class ActionGetUpdate(AbstractAction):
         self,
         request_list: Update.RequestList,
         raw: bool = False,
-    ) -> Union[Update, Dict, None]:
+    ) -> Union[Update, dict, None]:
         credentials = self.credentials
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id

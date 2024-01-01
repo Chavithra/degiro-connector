@@ -1,16 +1,14 @@
-# IMPORTATION STANDARD
 import logging
-from typing import Dict, Union
+from typing import Union
 
-# IMPORTATION THIRD PARTY
 import requests
-from google.protobuf import json_format
+from orjson import loads
 
-# IMPORTATION INTERNAL
 from degiro_connector.core.constants import urls
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
+from degiro_connector.trading.models.credentials import Credentials
 from degiro_connector.trading.models.product_search import (
-    ProductSearch,
+    ProductBatch,
     BondsRequest,
     ETFsRequest,
     FundsRequest,
@@ -21,7 +19,6 @@ from degiro_connector.trading.models.product_search import (
     StocksRequest,
     WarrantsRequest,
 )
-from degiro_connector.trading.models.trading_pb2 import Credentials
 
 ProductRequest = (
     BondsRequest
@@ -49,19 +46,6 @@ class ActionProductSearch(AbstractAction):
         WarrantsRequest: urls.PRODUCT_SEARCH_WARRANTS,
     }
 
-    # @staticmethod
-    # def product_search_to_grpc(payload: dict) -> ProductSearch:
-    #     product_search = ProductSearch()
-    #     product_search.response_datetime.GetCurrentTime()
-    #     json_format.ParseDict(
-    #         js_dict=payload,
-    #         message=product_search,
-    #         ignore_unknown_fields=True,
-    #         descriptor_pool=None,
-    #     )
-
-    #     return product_search
-
     @classmethod
     def product_search(
         cls,
@@ -71,19 +55,19 @@ class ActionProductSearch(AbstractAction):
         raw: bool = False,
         session: requests.Session | None = None,
         logger: logging.Logger | None = None,
-    ) -> Union[ProductSearch, Dict, None]:
+    ) -> Union[ProductBatch, dict, None]:
         """Search products.
         Args:
             request (StockList.Request):
-                List of options that we want to retrieve from the endpoint.
+                list of options that we want to retrieve from the endpoint.
                 Example 1:
-                    request = ProductSearch.LookupRequest(
+                    request = ProductBatch.LookupRequest(
                         search_text='APPLE',
                         limit=10,
                         offset=0,
                     )
                 Example 2:
-                    request = ProductSearch.StocksRequest(
+                    request = ProductBatch.StocksRequest(
                         index_id=5,
                         is_in_us_green_list=False,
                         stock_country_id=886,
@@ -107,7 +91,7 @@ class ActionProductSearch(AbstractAction):
                 This object will be generated if None.
                 Defaults to None.
         Returns:
-            ProductSearch: API response.
+            ProductBatch: API response.
         """
 
         if logger is None:
@@ -121,34 +105,30 @@ class ActionProductSearch(AbstractAction):
             mode="json", by_alias=True, exclude_none=True
         )
 
-        if credentials.int_account > 0:
+        if credentials.int_account is not None:
             params["intAccount"] = credentials.int_account
 
         params["sessionId"] = session_id
 
-        print(params)
-
         http_request = requests.Request(method="GET", url=url, params=params)
         prepped = session.prepare_request(http_request)
-        response_raw = None
 
         try:
-            response_raw = session.send(prepped)
-            response_raw.raise_for_status()
-            response_map = response_raw.json()
+            response = session.send(prepped)
+            response.raise_for_status()
 
             if raw is True:
-                product_search = response_map
+                product_search = loads(response.text)
             else:
-                product_search = ProductSearch.model_validate(obj=response_map)
+                product_search = ProductBatch.model_validate_json(
+                    json_data=response.text
+                )
 
             return product_search
         except requests.HTTPError as e:
             logger.fatal(e)
-            status_code = getattr(response_raw, "status_code", "No status_code found.")
-            text = getattr(response_raw, "text", "No text found.")
-            logger.fatal(status_code)
-            logger.fatal(text)
+            if isinstance(e.response, requests.Response):
+                logger.fatal(e.response.text)
             return None
         except Exception as e:
             logger.fatal(e)
@@ -158,7 +138,7 @@ class ActionProductSearch(AbstractAction):
         self,
         product_request: ProductRequest,
         raw: bool = False,
-    ) -> Union[ProductSearch, Dict, None]:
+    ) -> Union[ProductBatch, dict, None]:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
         session = self.session_storage.session

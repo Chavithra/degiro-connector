@@ -5,22 +5,26 @@ import requests
 from degiro_connector.core.constants import urls
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
 from degiro_connector.trading.models.credentials import Credentials
+from degiro_connector.trading.models.favourite import FavouritePosition
 
 
-class ActionDeleteFavouriteList(AbstractAction):
+class ActionMoveFavourite(AbstractAction):
     @classmethod
-    def delete_favourite_list(
+    def move_favourite(
         cls,
         list_id: int,
+        position: int,
         session_id: str,
         credentials: Credentials,
         session: requests.Session | None = None,
         logger: logging.Logger | None = None,
     ) -> bool | None:
-        """Delete a favourite list.
+        """Move a favourite list.
         Args:
             list_id (int):
                 Id of the list.
+            position (int):
+                Expected position.
             session_id (str):
                 API's session id.
             credentials (Credentials):
@@ -44,14 +48,23 @@ class ActionDeleteFavouriteList(AbstractAction):
             session = cls.build_session()
 
         int_account = credentials.int_account
-        url = f"{urls.FAVOURITES_LIST}/{list_id}"
+        url = f"{urls.FAVOURITES_LIST}/reorder"
 
         params = {
             "intAccount": int_account,
             "sessionId": session_id,
         }
 
-        request = requests.Request(method="DELETE", url=url, params=params)
+        json_obj = FavouritePosition(list_id=list_id, position=position).model_dump(
+            mode="python", by_alias=True, exclude_none=True
+        )
+
+        request = requests.Request(
+            method="PUT",
+            url=url,
+            params=params,
+            json=json_obj,
+        )
         prepped = session.prepare_request(request)
 
         try:
@@ -71,6 +84,7 @@ class ActionDeleteFavouriteList(AbstractAction):
     def call(
         self,
         list_id: int,
+        position: int,
     ) -> bool | None:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
@@ -78,8 +92,9 @@ class ActionDeleteFavouriteList(AbstractAction):
         credentials = self.credentials
         logger = self.logger
 
-        return self.delete_favourite_list(
+        return self.move_favourite(
             list_id=list_id,
+            position=position,
             session_id=session_id,
             credentials=credentials,
             session=session,

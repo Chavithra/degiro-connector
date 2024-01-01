@@ -1,39 +1,34 @@
-# IMPORTATION STANDARD
 import logging
-from typing import Dict, Optional
+from typing import Optional
 
-# IMPORTATION THIRD PARTY
 import requests
 
-# IMPORTATION INTERNAL
 from degiro_connector.core.constants import urls
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
-from degiro_connector.trading.models.trading_pb2 import (
-    Credentials,
-)
+from degiro_connector.trading.models.credentials import Credentials
 
 
-class ActionUpdateFavouriteList(AbstractAction):
+class ActionRenameFavouriteList(AbstractAction):
     @classmethod
-    def favorite_list_to_api(cls, name: str) -> Dict[str, str]:
+    def favourite_list_to_api(cls, name: str) -> dict[str, str]:
         return {"name": name}
 
     @classmethod
-    def update_favourite_list(
+    def rename_favourite_list(
         cls,
-        id: int,
+        list_id: int,
         name: str,
         session_id: str,
         credentials: Credentials,
-        session: requests.Session = None,
-        logger: logging.Logger = None,
+        session: requests.Session | None = None,
+        logger: logging.Logger | None = None,
     ) -> Optional[int]:
-        """Update a favourite list.
+        """Update a favourite list name.
         Args:
-            id (str):
-                Id of the favorite list to update.
+            list_id (str):
+                Id of the favourite list to update.
             name (str):
-                New name of the favorite list.
+                New name of the favourite list.
             session_id (str):
                 API's session id.
             credentials (Credentials):
@@ -57,20 +52,20 @@ class ActionUpdateFavouriteList(AbstractAction):
             session = cls.build_session()
 
         int_account = credentials.int_account
-        url = f"{urls.PRODUCT_FAVOURITES_LISTS}/{id}"
+        url = f"{urls.FAVOURITES_LIST}/{list_id}"
 
         params = {
             "intAccount": int_account,
             "sessionId": session_id,
         }
 
-        favorite_list_dict = cls.favorite_list_to_api(name=name)
+        favourite_list_dict = cls.favourite_list_to_api(name=name)
 
         request = requests.Request(
             method="PUT",
             url=url,
             params=params,
-            json=favorite_list_dict,
+            json=favourite_list_dict,
         )
         prepped = session.prepare_request(request)
         response_raw = None
@@ -79,10 +74,9 @@ class ActionUpdateFavouriteList(AbstractAction):
             response_raw = session.send(prepped)
             response_raw.raise_for_status()
         except requests.HTTPError as e:
-            status_code = getattr(response_raw, "status_code", "No status_code found.")
-            text = getattr(response_raw, "text", "No text found.")
-            logger.fatal(status_code)
-            logger.fatal(text)
+            logger.fatal(e)
+            if isinstance(e.response, requests.Response):
+                logger.fatal(e.response.text)
             return None
         except Exception as e:
             logger.fatal(e)
@@ -92,7 +86,7 @@ class ActionUpdateFavouriteList(AbstractAction):
 
     def call(
         self,
-        id: int,
+        list_id: int,
         name: str,
     ) -> Optional[int]:
         connection_storage = self.connection_storage
@@ -101,8 +95,8 @@ class ActionUpdateFavouriteList(AbstractAction):
         credentials = self.credentials
         logger = self.logger
 
-        return self.update_favourite_list(
-            id=id,
+        return self.rename_favourite_list(
+            list_id=list_id,
             name=name,
             session_id=session_id,
             credentials=credentials,

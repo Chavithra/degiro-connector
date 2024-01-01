@@ -1,15 +1,12 @@
-# IMPORTATION STANDARD
 import logging
-from typing import Dict, Union
+from typing import Union
 
-# IMPORTATION THIRD PARTY
 import requests
 from google.protobuf import json_format
 
-# IMPORTATION INTERNAL
 from degiro_connector.core.constants import urls
+from degiro_connector.trading.models.credentials import Credentials
 from degiro_connector.trading.models.trading_pb2 import (
-    Credentials,
     Order,
 )
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
@@ -52,7 +49,7 @@ class ActionCheckOrder(AbstractAction):
     }
 
     @classmethod
-    def order_to_api(cls, order: Order) -> Dict[str, Union[float, int, str]]:
+    def order_to_api(cls, order: Order) -> dict[str, Union[float, int, str]]:
         # Build dict from message
         order_dict = json_format.MessageToDict(
             message=order,
@@ -101,10 +98,10 @@ class ActionCheckOrder(AbstractAction):
         credentials: Credentials,
         order: Order,
         session_id: str,
-        logger: logging.Logger = None,
+        logger: logging.Logger | None = None,
         raw: bool = False,
-        session: requests.Session = None,
-    ) -> Union[Order.CheckingResponse, Dict, None]:
+        session: requests.Session | None = None,
+    ) -> Union[Order.CheckingResponse, dict, None]:
         if logger is None:
             logger = cls.build_logger()
         if session is None:
@@ -163,7 +160,7 @@ class ActionCheckOrder(AbstractAction):
         self,
         order: Order,
         raw: bool = False,
-    ) -> Union[Order.CheckingResponse, Dict, None]:
+    ) -> Union[Order.CheckingResponse, dict, None]:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
         credentials = self.credentials

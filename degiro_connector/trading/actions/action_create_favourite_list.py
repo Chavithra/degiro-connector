@@ -1,25 +1,20 @@
-# IMPORTATION STANDARD
 import logging
-from typing import Dict, Optional
 
-# IMPORTATION THIRD PARTY
 import requests
 
-# IMPORTATION INTERNAL
 from degiro_connector.core.constants import urls
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
-from degiro_connector.trading.models.trading_pb2 import (
-    Credentials,
-)
+from degiro_connector.trading.models.credentials import Credentials
+from degiro_connector.trading.models.favourite import FavouriteId, FavouriteName
 
 
 class ActionCreateFavouriteList(AbstractAction):
     @classmethod
-    def favorite_list_to_api(cls, name: str) -> Dict[str, str]:
+    def favourite_list_to_api(cls, name: str) -> dict[str, str]:
         return {"name": name}
 
     @classmethod
-    def api_to_favorite_list_id(cls, response_dict: Dict[str, int]) -> int:
+    def api_to_favourite_list_id(cls, response_dict: dict[str, int]) -> int:
         return response_dict["data"]
 
     @classmethod
@@ -28,13 +23,13 @@ class ActionCreateFavouriteList(AbstractAction):
         name: str,
         session_id: str,
         credentials: Credentials,
-        session: requests.Session = None,
-        logger: logging.Logger = None,
-    ) -> Optional[int]:
+        session: requests.Session | None = None,
+        logger: logging.Logger | None = None,
+    ) -> int | None:
         """Create a favourite list.
         Args:
             name (str):
-                New name of the favorite list.
+                New name of the favourite list.
             session_id (str):
                 API's session id.
             credentials (Credentials):
@@ -58,45 +53,47 @@ class ActionCreateFavouriteList(AbstractAction):
             session = cls.build_session()
 
         int_account = credentials.int_account
-        url = urls.PRODUCT_FAVOURITES_LISTS
+        url = urls.FAVOURITES_LIST
 
         params = {
             "intAccount": int_account,
             "sessionId": session_id,
         }
 
-        favorite_list_dict = cls.favorite_list_to_api(name=name)
+        json_obj = FavouriteName(name=name).model_dump(
+            mode="python", by_alias=True, exclude_none=True
+        )
 
         request = requests.Request(
             method="POST",
             url=url,
             params=params,
-            json=favorite_list_dict,
+            json=json_obj,
         )
         prepped = session.prepare_request(request)
-        response_raw = None
 
+        favourite_list_id = None
         try:
-            response_raw = session.send(prepped)
-            response_raw.raise_for_status()
-            response_dict = response_raw.json()
-            favorite_list_id = cls.api_to_favorite_list_id(response_dict=response_dict)
+            response = session.send(prepped)
+            response.raise_for_status()
+            favourite_list_id = FavouriteId.model_validate_json(
+                json_data=response.text
+            ).data
         except requests.HTTPError as e:
-            status_code = getattr(response_raw, "status_code", "No status_code found.")
-            text = getattr(response_raw, "text", "No text found.")
-            logger.fatal(status_code)
-            logger.fatal(text)
+            logger.fatal(e)
+            if isinstance(e.response, requests.Response):
+                logger.fatal(e.response.text)
             return None
         except Exception as e:
             logger.fatal(e)
             return None
 
-        return favorite_list_id
+        return favourite_list_id
 
     def call(
         self,
         name: str,
-    ) -> Optional[int]:
+    ) -> int | None:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
         session = self.session_storage.session

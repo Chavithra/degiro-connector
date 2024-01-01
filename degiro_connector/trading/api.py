@@ -1,18 +1,14 @@
-# IMPORTATION STANDARD
 import logging
 import pkgutil
 from pathlib import Path
-from typing import List, Optional
+from typing import Any, Callable
 
-# IMPORTATION THIRD PARTY
-
-# IMPORTATION INTERNAL
 import degiro_connector.core.constants.timeouts as timeouts
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
 from degiro_connector.core.helpers.lazy_loader import InitArgs, LazyLoader, Pair
 from degiro_connector.core.models.model_connection import ModelConnection
 from degiro_connector.core.models.model_session import ModelSession
-from degiro_connector.trading.models.trading_pb2 import Credentials
+from degiro_connector.trading.models.credentials import Credentials
 
 
 class API:
@@ -22,7 +18,7 @@ class API:
     ROOT_PATH = Path(__file__).absolute().parent.parent.parent.resolve()
 
     @classmethod
-    def build_action_list(cls) -> List[str]:
+    def build_action_list(cls) -> list[str]:
         # SETUP PATH
         path = cls.PKG_PATH
         path = str(Path(cls.ROOT_PATH, *path.split(".")).resolve())
@@ -39,7 +35,7 @@ class API:
         return action_list
 
     @property
-    def action_list(self) -> List[str]:
+    def action_list(self) -> list[str]:
         return self._action_list
 
     @property
@@ -57,8 +53,8 @@ class API:
     def load(
         self,
         action: str,
-        init_args: InitArgs = None,
-    ) -> Optional[object]:
+        init_args: InitArgs | None = None,
+    ) -> object | None:
         logger = self._logger
         action_list = self._action_list
 
@@ -86,10 +82,10 @@ class API:
     def __init__(
         self,
         credentials: Credentials,
-        connection_storage: ModelConnection = None,
-        logger: logging.Logger = None,
+        connection_storage: ModelConnection | None = None,
+        logger: logging.Logger | None = None,
         preload: bool = True,
-        session_storage: ModelSession = None,
+        session_storage: ModelSession | None = None,
     ):
         self._credentials = credentials
         self._connection_storage = connection_storage or ModelConnection(
@@ -128,7 +124,7 @@ class API:
         logger.debug("setup_one_action : %s", action)
         setattr(self, action, action_instance)
 
-    def __getattr__(self, item):
+    def __getattr__(self, item) -> Callable[..., Any]:
         logger = self._logger
         logger.debug("CALLING __GETATTR__, on item : %s", item)
         if item in self._action_list:
@@ -136,3 +132,5 @@ class API:
             self.setup_one_action(action=action)
 
             return getattr(self, action)
+
+        raise AttributeError(f"'{self.__class__.__name__}' object has no attribute '{item}'")

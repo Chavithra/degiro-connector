@@ -1,16 +1,12 @@
-# IMPORTATION STANDARD
 import logging
 
-# IMPORTATION THIRD PARTY
 import onetimepass as otp
 import requests
 
-# IMPORTATION INTERNAL
 from degiro_connector.core.constants import urls
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
-from degiro_connector.trading.models.trading_pb2 import (
-    Credentials,
-)
+from degiro_connector.trading.models.credentials import Credentials
+from degiro_connector.trading.models.login import Login, LoginError, LoginSuccess
 
 
 class ActionConnect(AbstractAction):
@@ -18,8 +14,8 @@ class ActionConnect(AbstractAction):
     def get_session_id(
         cls,
         credentials: Credentials,
-        session: requests.Session = None,
-        logger: logging.Logger = None,
+        session: requests.Session | None = None,
+        logger: logging.Logger | None = None,
     ) -> str:
         """Establish a connection with Degiro's Trading API.
         Args:
@@ -53,64 +49,64 @@ class ActionConnect(AbstractAction):
         if session is None:
             session = cls.build_session()
 
-        if credentials.HasField("oneof_2fa") is True:
+        if credentials.one_time_password or credentials.totp_secret_key:
             url = urls.LOGIN + "/totp"
-            username = credentials.username
-            password = credentials.password
 
-            if credentials.HasField("totp_secret_key") is True:
+            if credentials.one_time_password:
+                one_time_password = str(credentials.one_time_password)
+            else:
                 totp_secret_key = credentials.totp_secret_key
                 one_time_password = str(otp.get_totp(totp_secret_key))
-            else:
-                one_time_password = str(credentials.one_time_password)
-
-            payload_dict = {
-                "username": username,
-                "password": password,
-                "isPassCodeReset": False,
-                "isRedirectToMobile": False,
-                "queryParams": {},
-                "oneTimePassword": one_time_password,
-            }
         else:
             url = urls.LOGIN
-            username = credentials.username
-            password = credentials.password
+            one_time_password = None
 
-            payload_dict = {
-                "username": username,
-                "password": password,
-                "isPassCodeReset": False,
-                "isRedirectToMobile": False,
-                "queryParams": {},
-            }
-
+        login = Login(
+            username=credentials.username,
+            password=credentials.password,
+            is_pass_code_reset=False,
+            is_redirect_to_mobile=False,
+            query_tarams={},
+            one_time_password=one_time_password,
+        )
+        payload = login.model_dump(mode="python", by_alias=True, exclude_none=True)
         request = requests.Request(
             method="POST",
             url=url,
-            json=payload_dict,
+            json=payload,
         )
         prepped = session.prepare_request(request)
-        response_raw = None
+        login_error = None
+        login_sucess = None
 
         try:
-            response_raw = session.send(prepped)
-            response_raw.raise_for_status()
-            response_dict = response_raw.json()
+            response = session.send(prepped)
+
+            if response.status_code == 200:
+                login_sucess = LoginSuccess.model_validate_json(json_data=response.text)
+            else:
+                login_error = LoginError.model_validate_json(json_data=response.text)
         except Exception as e:
-            logger.fatal("response_raw:%s", response_raw)
-            raise ConnectionError(e)
+            logger.fatal(e)
 
-        logger.info("get_session_id:response_dict: %s", response_dict)
+        if login_error:
+            logger.fatal(
+                "login_error:%s",
+                login_error.model_dump(mode="python", by_alias=True, exclude_none=True),
+            )
 
-        if "sessionId" in response_dict:
-            return response_dict["sessionId"]
-        elif "status" in response_dict and response_dict["status"] == 6:
-            logger.fatal("response_dict:%s", response_dict)
+        if login_error and login_error.status == 6:
             raise ConnectionError('2FA is enabled, please provide the "totp_secret".')
-        else:
-            logger.fatal("response_dict:%s", response_dict)
+
+        if login_sucess is None:
             raise ConnectionError("No session id returned.")
+
+        logger.info(
+            "login_sucess: %s",
+            login_sucess.model_dump(mode="python", by_alias=True, exclude_none=True),
+        )
+
+        return login_sucess.session_id
 
     def call(self):
         connection_storage = self.connection_storage

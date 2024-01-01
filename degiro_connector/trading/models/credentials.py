@@ -2,7 +2,7 @@ from pydantic import BaseModel, Field, validator
 
 
 class Credentials(BaseModel):
-    int_account: int
+    int_account: int | None = Field(default=None)
     username: str
     password: str
     totp_secret_key: str | None = Field(default=None)

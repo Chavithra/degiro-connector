@@ -1,17 +1,14 @@
-# IMPORTATION STANDARD
 import datetime
 import logging
-from typing import Dict, Union
+from typing import Union
 
-# IMPORTATION THIRD PARTY
 import requests
 from google.protobuf import json_format
 
-# IMPORTATION INTERNAL
 from degiro_connector.core.constants import urls
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
+from degiro_connector.trading.models.credentials import Credentials
 from degiro_connector.trading.models.trading_pb2 import (
-    Credentials,
     OrdersHistory,
 )
 
@@ -53,13 +50,13 @@ class ActionGetOrdersHistory(AbstractAction):
         session_id: str,
         credentials: Credentials,
         raw: bool = False,
-        session: requests.Session = None,
-        logger: logging.Logger = None,
-    ) -> Union[OrdersHistory, Dict, None]:
+        session: requests.Session | None = None,
+        logger: logging.Logger | None = None,
+    ) -> Union[OrdersHistory, dict, None]:
         """Retrieve history about orders.
         Args:
             request (OrdersHistory.Request):
-                List of options that we want to retrieve from the endpoint.
+                list of options that we want to retrieve from the endpoint.
                 Example :
                     from_date = OrdersHistory.Request.Date(
                         year=2020,
@@ -134,7 +131,7 @@ class ActionGetOrdersHistory(AbstractAction):
         self,
         request: OrdersHistory.Request,
         raw: bool = False,
-    ) -> Union[OrdersHistory, Dict, None]:
+    ) -> Union[OrdersHistory, dict, None]:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
         session = self.session_storage.session

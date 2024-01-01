@@ -1,56 +1,26 @@
-# IMPORTATION STANDARD
 import logging
-from typing import Dict, Union
+from typing import Union
 
-# IMPORTATION THIRD PARTY
 import requests
-from google.protobuf import json_format
+from orjson import loads
 
-# IMPORTATION INTERNAL
 from degiro_connector.core.constants import urls
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
-from degiro_connector.trading.models.trading_pb2 import (
-    Credentials,
-    NewsByCompany,
-)
+from degiro_connector.trading.models.credentials import Credentials
+from degiro_connector.trading.models.news import BatchWrapper, NewsBatch, NewsRequest
 
 
 class ActionGetNewsByCompany(AbstractAction):
-    @staticmethod
-    def news_by_company_request_to_api(
-        request: NewsByCompany.Request,
-    ) -> dict:
-        request_dict = {
-            "isin": request.isin,
-            "limit": request.limit,
-            "offset": request.offset,
-            "languages": request.languages,
-        }
-
-        return request_dict
-
-    @staticmethod
-    def news_by_company_to_grpc(payload: dict) -> NewsByCompany:
-        news_by_company = NewsByCompany()
-        json_format.ParseDict(
-            js_dict=payload["data"],
-            message=news_by_company,
-            ignore_unknown_fields=False,
-            descriptor_pool=None,
-        )
-
-        return news_by_company
-
     @classmethod
     def get_news_by_company(
         cls,
-        request: NewsByCompany.Request,
+        news_request: NewsRequest,
         session_id: str,
         credentials: Credentials,
         raw: bool = False,
-        session: requests.Session = None,
-        logger: logging.Logger = None,
-    ) -> Union[NewsByCompany, Dict, None]:
+        session: requests.Session | None = None,
+        logger: logging.Logger | None = None,
+    ) -> Union[NewsBatch, dict, None]:
         if logger is None:
             logger = cls.build_logger()
         if session is None:
@@ -58,8 +28,8 @@ class ActionGetNewsByCompany(AbstractAction):
 
         url = urls.NEWS_BY_COMPANY
 
-        params = cls.news_by_company_request_to_api(
-            request=request,
+        params = news_request.model_dump(
+            mode="python", by_alias=True, exclude_none=True
         )
         params["intAccount"] = credentials.int_account
         params["sessionId"] = session_id
@@ -71,27 +41,27 @@ class ActionGetNewsByCompany(AbstractAction):
         response_raw = None
 
         try:
-            response_raw = session.send(prepped)
-            response_raw.raise_for_status()
-            response_dict = response_raw.json()
+            response = session.send(prepped)
+            response.raise_for_status()
 
             if raw is True:
-                return response_dict
+                company_news = loads(response.text)
             else:
-                return cls.news_by_company_to_grpc(
-                    payload=response_dict,
-                )
+                company_news = BatchWrapper.model_validate_json(
+                    json_data=response.text
+                ).data
+
+            return company_news
         except Exception as e:
-            logger.fatal("error")
-            logger.fatal(response_raw)
             logger.fatal(e)
+            logger.fatal(response_raw)
             return None
 
     def call(
         self,
-        request: NewsByCompany.Request,
+        news_request: NewsRequest,
         raw: bool = False,
-    ) -> Union[NewsByCompany, Dict, None]:
+    ) -> Union[NewsBatch, dict, None]:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
         session = self.session_storage.session
@@ -99,7 +69,7 @@ class ActionGetNewsByCompany(AbstractAction):
         logger = self.logger
 
         return self.get_news_by_company(
-            request=request,
+            news_request=news_request,
             session_id=session_id,
             credentials=credentials,
             raw=raw,

@@ -1,11 +1,8 @@
-# IMPORTATION STANDARD
 import logging
-from typing import Dict, Union
+from typing import Union
 
-# IMPORTATION THIRD PARTY
 import requests
 
-# IMPORTATION INTERNAL
 from degiro_connector.core.constants import urls
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
 
@@ -15,9 +12,9 @@ class ActionGetClientDetails(AbstractAction):
     def get_client_details(
         cls,
         session_id: str,
-        session: requests.Session = None,
-        logger: logging.Logger = None,
-    ) -> Union[Dict, None]:
+        session: requests.Session | None = None,
+        logger: logging.Logger | None = None,
+    ) -> dict | None:
         if logger is None:
             logger = cls.build_logger()
         if session is None:
@@ -49,7 +46,7 @@ class ActionGetClientDetails(AbstractAction):
 
         return response_dict
 
-    def call(self) -> Union[Dict, None]:
+    def call(self) -> dict | None:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
         session = self.session_storage.session

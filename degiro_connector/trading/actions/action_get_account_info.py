@@ -1,16 +1,11 @@
-# IMPORTATION STANDARD
 import logging
 from typing import Optional
 
-# IMPORTATION THIRD PARTY
 import requests
 
-# IMPORTATION INTERNAL
 from degiro_connector.core.constants import urls
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
-from degiro_connector.trading.models.trading_pb2 import (
-    Credentials,
-)
+from degiro_connector.trading.models.credentials import Credentials
 
 
 class ActionGetAccountInfo(AbstractAction):
@@ -19,8 +14,8 @@ class ActionGetAccountInfo(AbstractAction):
         cls,
         session_id: str,
         credentials: Credentials,
-        session: requests.Session = None,
-        logger: logging.Logger = None,
+        session: requests.Session | None = None,
+        logger: logging.Logger | None = None,
     ) -> Optional[dict]:
         if logger is None:
             logger = cls.build_logger()

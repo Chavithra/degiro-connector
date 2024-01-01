@@ -1,16 +1,13 @@
-# IMPORTATION STANDARD
 import datetime
 import logging
 from typing import Union
 
-# IMPORTATION THIRD PARTY
 import requests
 
-# IMPORTATION INTERNAL
 from degiro_connector.core.constants import urls
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
+from degiro_connector.trading.models.credentials import Credentials
 from degiro_connector.trading.models.trading_pb2 import (
-    Credentials,
     PositionReport,
 )
 
@@ -50,13 +47,13 @@ class ActionGetPositionReport(AbstractAction):
         session_id: str,
         credentials: Credentials,
         raw: bool = False,
-        session: requests.Session = None,
-        logger: logging.Logger = None,
+        session: requests.Session | None = None,
+        logger: logging.Logger | None = None,
     ) -> Union[PositionReport, str, None]:
         """Retrieve information about the account in a specific format.
         Args:
             request (PositionReport.Request):
-                List of options that we want to retrieve from the endpoint.
+                list of options that we want to retrieve from the endpoint.
                 Example :
                     to_date = PositionReport.Request.Date(
                         year=2020,

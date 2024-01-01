@@ -1,33 +1,27 @@
-# IMPORTATION STANDARD
 import logging
-from typing import Dict, Optional
 
-# IMPORTATION THIRD PARTY
 import requests
 
-# IMPORTATION INTERNAL
 from degiro_connector.core.constants import urls
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
-from degiro_connector.trading.models.trading_pb2 import (
-    Credentials,
-)
+from degiro_connector.trading.models.credentials import Credentials
 
 
 class ActionDeleteFavouriteListProduct(AbstractAction):
     @classmethod
     def delete_favourite_list_product(
         cls,
-        id: int,
+        list_id: int,
         product_id: int,
         session_id: str,
         credentials: Credentials,
-        session: requests.Session = None,
-        logger: logging.Logger = None,
-    ) -> Optional[bool]:
+        session: requests.Session | None = None,
+        logger: logging.Logger | None = None,
+    ) -> bool | None:
         """Delete a product from a favourite list.
         Args:
-            id (int):
-                Id of the favorite list.
+            list_id (int):
+                Id of the list.
             product_id (int):
                 Id of the product.
             session_id (str):
@@ -53,7 +47,7 @@ class ActionDeleteFavouriteListProduct(AbstractAction):
             session = cls.build_session()
 
         int_account = credentials.int_account
-        url = f"{urls.PRODUCT_FAVOURITES_LISTS}/{id}/products/{product_id}"
+        url = f"{urls.FAVOURITES_LIST}/{list_id}/products/{product_id}"
 
         params = {
             "intAccount": int_account,
@@ -62,28 +56,26 @@ class ActionDeleteFavouriteListProduct(AbstractAction):
 
         request = requests.Request(method="DELETE", url=url, params=params)
         prepped = session.prepare_request(request)
-        response_raw = None
 
         try:
-            response_raw = session.send(prepped)
-            response_raw.raise_for_status()
+            response = session.send(prepped)
+            response.raise_for_status()
         except requests.HTTPError as e:
-            status_code = getattr(response_raw, "status_code", "No status_code found.")
-            text = getattr(response_raw, "text", "No text found.")
-            logger.fatal(status_code)
-            logger.fatal(text)
+            logger.fatal(e)
+            if isinstance(e.response, requests.Response):
+                logger.fatal(e.response.text)
             return None
         except Exception as e:
             logger.fatal(e)
             return None
 
-        return response_raw.status_code == 200
+        return response.status_code == 200
 
     def call(
         self,
-        id: int,
+        list_id: int,
         product_id: int,
-    ) -> Optional[bool]:
+    ) -> bool | None:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
         session = self.session_storage.session
@@ -91,7 +83,7 @@ class ActionDeleteFavouriteListProduct(AbstractAction):
         logger = self.logger
 
         return self.delete_favourite_list_product(
-            id=id,
+            list_id=list_id,
             product_id=product_id,
             session_id=session_id,
             credentials=credentials,

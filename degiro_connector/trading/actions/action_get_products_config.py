@@ -1,16 +1,13 @@
-# IMPORTATION STANDARD
 import logging
-from typing import Dict, Union
+from typing import Union
 
-# IMPORTATION THIRD PARTY
 import requests
 from google.protobuf import json_format
 
-# IMPORTATION INTERNAL
 from degiro_connector.core.constants import urls
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
+from degiro_connector.trading.models.credentials import Credentials
 from degiro_connector.trading.models.trading_pb2 import (
-    Credentials,
     ProductSearch,
 )
 
@@ -34,9 +31,9 @@ class ActionGetProductsConfig(AbstractAction):
         session_id: str,
         credentials: Credentials,
         raw: bool = False,
-        session: requests.Session = None,
-        logger: logging.Logger = None,
-    ) -> Union[ProductSearch.Config, Dict, None]:
+        session: requests.Session | None = None,
+        logger: logging.Logger | None = None,
+    ) -> Union[ProductSearch.Config, dict, None]:
         """Fetch the product search config table.
         No credentials or logging seems to be required for this endpoint.
         Just adding the credentials and session_id because the website is
@@ -100,7 +97,7 @@ class ActionGetProductsConfig(AbstractAction):
     def call(
         self,
         raw: bool = False,
-    ) -> Union[ProductSearch.Config, Dict, None]:
+    ) -> Union[ProductSearch.Config, dict, None]:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
         session = self.session_storage.session

@@ -1,16 +1,13 @@
-# IMPORTATION STANDARD
 import logging
-from typing import Dict, List, Union
+from typing import Union
 
-# IMPORTATION THIRD PARTY
 import requests
 from google.protobuf import json_format
 
-# IMPORTATION INTERNAL
 from degiro_connector.core.constants import urls
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
+from degiro_connector.trading.models.credentials import Credentials
 from degiro_connector.trading.models.trading_pb2 import (
-    Credentials,
     ProductsInfo,
 )
 
@@ -19,7 +16,7 @@ class ActionGetProductsInfo(AbstractAction):
     @staticmethod
     def products_info_to_api(
         request: ProductsInfo.Request,
-    ) -> List[str]:
+    ) -> list[str]:
         request_dict = json_format.MessageToDict(
             message=request,
             including_default_value_fields=True,
@@ -51,13 +48,13 @@ class ActionGetProductsInfo(AbstractAction):
         session_id: str,
         credentials: Credentials,
         raw: bool = False,
-        session: requests.Session = None,
-        logger: logging.Logger = None,
-    ) -> Union[ProductsInfo, Dict, None]:
+        session: requests.Session | None = None,
+        logger: logging.Logger | None = None,
+    ) -> Union[ProductsInfo, dict, None]:
         """Search for products using their ids.
         Args:
             request (ProductsInfo.Request):
-                List of products ids.
+                list of products ids.
                 Example :
                     request = ProductsInfo.Request()
                     request.products.extend([96008, 1153605, 5462588])
@@ -127,7 +124,7 @@ class ActionGetProductsInfo(AbstractAction):
         self,
         request: ProductsInfo.Request,
         raw: bool = False,
-    ) -> Union[ProductsInfo, Dict, None]:
+    ) -> Union[ProductsInfo, dict, None]:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
         session = self.session_storage.session

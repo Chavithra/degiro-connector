@@ -1,15 +1,13 @@
-# IMPORTATION STANDARD
 import logging
-from typing import Dict, Union
+from typing import Union
 
-# IMPORTATION THIRD PARTY
 import requests
 from google.protobuf import json_format
 
-# IMPORTATION INTERNAL
 from degiro_connector.core.constants import urls
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
-from degiro_connector.trading.models.trading_pb2 import Credentials, FinancialStatements
+from degiro_connector.trading.models.credentials import Credentials
+from degiro_connector.trading.models.trading_pb2 import FinancialStatements
 
 
 class ActionGetFinancialStatements(AbstractAction):
@@ -31,9 +29,9 @@ class ActionGetFinancialStatements(AbstractAction):
         session_id: str,
         credentials: Credentials,
         raw: bool = False,
-        session: requests.Session = None,
-        logger: logging.Logger = None,
-    ) -> Union[FinancialStatements, Dict, None]:
+        session: requests.Session | None = None,
+        logger: logging.Logger | None = None,
+    ) -> Union[FinancialStatements, dict, None]:
         if logger is None:
             logger = cls.build_logger()
         if session is None:
@@ -74,7 +72,7 @@ class ActionGetFinancialStatements(AbstractAction):
         self,
         product_isin: str,
         raw: bool = False,
-    ) -> Union[FinancialStatements, Dict, None]:
+    ) -> Union[FinancialStatements, dict, None]:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
         session = self.session_storage.session

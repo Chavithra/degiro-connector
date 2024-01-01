@@ -1,16 +1,13 @@
-# IMPORTATION STANDARD
 import logging
-from typing import Dict, Union
+from typing import Union
 
-# IMPORTATION THIRD PARTY
 import requests
 from google.protobuf import json_format
 
-# IMPORTATION INTERNAL
 from degiro_connector.core.constants import urls
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
+from degiro_connector.trading.models.credentials import Credentials
 from degiro_connector.trading.models.trading_pb2 import (
-    Credentials,
     Order,
 )
 
@@ -52,7 +49,7 @@ class ActionUpdateOrder(AbstractAction):
     }
 
     @classmethod
-    def order_to_api(cls, order: Order) -> Dict[str, Union[float, int, str]]:
+    def order_to_api(cls, order: Order) -> dict[str, Union[float, int, str]]:
         # Build dict from message
         order_dict = json_format.MessageToDict(
             message=order,
@@ -88,8 +85,8 @@ class ActionUpdateOrder(AbstractAction):
         order: Order,
         session_id: str,
         credentials: Credentials,
-        session: requests.Session = None,
-        logger: logging.Logger = None,
+        session: requests.Session | None = None,
+        logger: logging.Logger | None = None,
         raw: bool = False,
     ) -> Union[bool, None]:
         if logger is None:

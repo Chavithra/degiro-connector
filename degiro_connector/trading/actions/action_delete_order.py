@@ -1,16 +1,11 @@
-# IMPORTATION STANDARD
 import logging
 from typing import Optional
 
-# IMPORTATION THIRD PARTY
 import requests
 
-# IMPORTATION INTERNAL
 from degiro_connector.core.constants import urls
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
-from degiro_connector.trading.models.trading_pb2 import (
-    Credentials,
-)
+from degiro_connector.trading.models.credentials import Credentials
 
 
 class ActionDeleteOrder(AbstractAction):
@@ -20,9 +15,9 @@ class ActionDeleteOrder(AbstractAction):
         order_id: str,
         session_id: str,
         credentials: Credentials,
-        session: requests.Session = None,
-        logger: logging.Logger = None,
-    ) -> Optional[bool]:
+        session: requests.Session | None = None,
+        logger: logging.Logger | None = None,
+    ) -> bool | None:
         if logger is None:
             logger = cls.build_logger()
         if session is None:
@@ -59,7 +54,7 @@ class ActionDeleteOrder(AbstractAction):
     def call(
         self,
         order_id: str,
-    ) -> Optional[bool]:
+    ) -> bool | None:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
         session = self.session_storage.session

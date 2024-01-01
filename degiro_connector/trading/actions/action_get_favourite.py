@@ -1,26 +1,26 @@
 import logging
 
 import requests
+from orjson import loads
 
 from degiro_connector.core.constants import urls
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
 from degiro_connector.trading.models.credentials import Credentials
+from degiro_connector.trading.models.favourite import FavouriteBatch
 
 
-class ActionDeleteFavouriteList(AbstractAction):
+class ActionGetFavourite(AbstractAction):
     @classmethod
-    def delete_favourite_list(
+    def get_favourite(
         cls,
-        list_id: int,
         session_id: str,
         credentials: Credentials,
+        raw: bool = False,
         session: requests.Session | None = None,
         logger: logging.Logger | None = None,
-    ) -> bool | None:
-        """Delete a favourite list.
-        Args:
-            list_id (int):
-                Id of the list.
+    ) -> FavouriteBatch | None:
+        """Move a favourite list.
+        Args:.
             session_id (str):
                 API's session id.
             credentials (Credentials):
@@ -37,26 +37,37 @@ class ActionDeleteFavouriteList(AbstractAction):
         Returns:
             Favourites: API response.
         """
-
         if logger is None:
             logger = cls.build_logger()
         if session is None:
             session = cls.build_session()
 
         int_account = credentials.int_account
-        url = f"{urls.FAVOURITES_LIST}/{list_id}"
+        url = urls.FAVOURITES_LIST
 
         params = {
             "intAccount": int_account,
             "sessionId": session_id,
         }
 
-        request = requests.Request(method="DELETE", url=url, params=params)
-        prepped = session.prepare_request(request)
+        params["sessionId"] = session_id
+
+        http_request = requests.Request(method="GET", url=url, params=params)
+        prepped = session.prepare_request(http_request)
 
         try:
             response = session.send(prepped)
             response.raise_for_status()
+
+            print(response.text)
+
+            if raw is True:
+                favourite_batch = loads(response.text)
+            else:
+                favourite_batch = FavouriteBatch.model_validate_json(json_data=response.text)
+
+
+            return favourite_batch
         except requests.HTTPError as e:
             logger.fatal(e)
             if isinstance(e.response, requests.Response):
@@ -66,20 +77,18 @@ class ActionDeleteFavouriteList(AbstractAction):
             logger.fatal(e)
             return None
 
-        return response.status_code == 200
-
     def call(
         self,
-        list_id: int,
-    ) -> bool | None:
+        raw: bool = False,
+    ) -> FavouriteBatch | None:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
         session = self.session_storage.session
         credentials = self.credentials
         logger = self.logger
 
-        return self.delete_favourite_list(
-            list_id=list_id,
+        return self.get_favourite(
+            raw=raw,
             session_id=session_id,
             credentials=credentials,
             session=session,

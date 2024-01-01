@@ -1,16 +1,13 @@
-# IMPORTATION STANDARD
 import logging
-from typing import Dict, Union
+from typing import Union
 
-# IMPORTATION THIRD PARTY
 import requests
 from google.protobuf import json_format
 
-# IMPORTATION INTERNAL
 from degiro_connector.core.constants import urls
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
+from degiro_connector.trading.models.credentials import Credentials
 from degiro_connector.trading.models.trading_pb2 import (
-    Credentials,
     Favourites,
 )
 
@@ -35,9 +32,9 @@ class ActionGetFavouritesList(AbstractAction):
         session_id: str,
         credentials: Credentials,
         raw: bool = False,
-        session: requests.Session = None,
-        logger: logging.Logger = None,
-    ) -> Union[Favourites, Dict, None]:
+        session: requests.Session | None = None,
+        logger: logging.Logger | None = None,
+    ) -> Union[Favourites, dict, None]:
         """Retrieve the lists of favourite products.
         Args:
             session_id (str):
@@ -63,7 +60,7 @@ class ActionGetFavouritesList(AbstractAction):
             session = cls.build_session()
 
         int_account = credentials.int_account
-        url = urls.PRODUCT_FAVOURITES_LISTS
+        url = urls.FAVOURITES_LIST
 
         params = {
             "intAccount": int_account,
@@ -98,7 +95,7 @@ class ActionGetFavouritesList(AbstractAction):
     def call(
         self,
         raw: bool = False,
-    ) -> Union[Favourites, Dict, None]:
+    ) -> Union[Favourites, dict, None]:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
         session = self.session_storage.session
