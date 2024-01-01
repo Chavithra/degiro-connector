@@ -3,7 +3,7 @@ import logging
 
 import polars as pl
 
-from degiro_connector.quotecast.tools.chart_fetcher import ChartFetcher, ChartFormatter
+from degiro_connector.quotecast.tools.chart_fetcher import ChartFetcher, SeriesFormatter
 from degiro_connector.quotecast.models.chart import ChartRequest, Interval
 
 logging.basicConfig(level=logging.INFO)
@@ -43,8 +43,5 @@ chart = chart_fetcher.get_chart(
 
 if chart:
     for series in chart.series:
-        if ChartFormatter.can_format(series=series):
-            df = ChartFormatter.format_series(series=series)
-        else:
-            df = pl.DataFrame(series.data)
-        print(df)
+        df = SeriesFormatter.format_series(series=series)
+        print(df.to_pandas())
