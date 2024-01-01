@@ -1,31 +1,16 @@
-# IMPORTATIONS
 import json
 import logging
 
 from degiro_connector.trading.api import API as TradingAPI
-from degiro_connector.trading.models.trading_pb2 import Credentials, NewsByCompany
+from degiro_connector.trading.models.credentials import Credentials
+from degiro_connector.trading.models.news import NewsRequest
 
-# SETUP LOGGING LEVEL
 logging.basicConfig(level=logging.DEBUG)
 
-# SETUP CONFIG DICT
 with open("config/config.json") as config_file:
     config_dict = json.load(config_file)
 
-# SETUP CREDENTIALS
-int_account = config_dict.get("int_account")
-username = config_dict.get("username")
-password = config_dict.get("password")
-totp_secret_key = config_dict.get("totp_secret_key")
-one_time_password = config_dict.get("one_time_password")
-
-credentials = Credentials(
-    int_account=int_account,
-    username=username,
-    password=password,
-    totp_secret_key=totp_secret_key,
-    one_time_password=one_time_password,
-)
+credentials = Credentials.model_validate(obj=config_dict)
 
 # SETUP TRADING API
 trading_api = TradingAPI(credentials=credentials)
@@ -34,7 +19,7 @@ trading_api = TradingAPI(credentials=credentials)
 trading_api.connect()
 
 # SETUP REQUEST
-request = NewsByCompany.Request(
+news_request = NewsRequest(
     isin="NL0000235190",
     limit=10,
     offset=0,
@@ -42,9 +27,6 @@ request = NewsByCompany.Request(
 )
 
 # FETCH DATA
-news_by_company = trading_api.get_news_by_company(request=request, raw=True)
+company_news = trading_api.get_news_by_company(news_request=news_request, raw=False)
 
-# DISPLAY DATA
-config_pretty = json.dumps(news_by_company, sort_keys=True, indent=4)
-
-print("Here are the company news :", config_pretty)
+print("Here are the company news :", company_news)

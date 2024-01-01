@@ -1,6 +1,8 @@
 import json
 import logging
 
+import polars as pl
+
 from degiro_connector.trading.api import API as TradingAPI
 from degiro_connector.trading.models.credentials import Credentials
 
@@ -9,21 +11,15 @@ logging.basicConfig(level=logging.DEBUG)
 with open("config/config.json") as config_file:
     config_dict = json.load(config_file)
 
-credentials = Credentials(
-    int_account=None,
-    username=username,
-    password=password,
-    totp_secret_key=totp_secret_key,
-    one_time_password=None,
-)
+credentials = Credentials.model_validate(obj=config_dict)
 
-# SETUP TRADING API
 trading_api = TradingAPI(credentials=credentials)
 
-# CONNECT
 trading_api.connect()
 
-# ACCESS SESSION_ID
-session_id = trading_api.connection_storage.session_id
+# GET FAVORITES
+favourite_batch = trading_api.get_favourite(raw=False)
 
-print("You are now connected, with the session id :", session_id)
+favourite_df = pl.DataFrame(favourite_batch.data)
+
+print(favourite_df)

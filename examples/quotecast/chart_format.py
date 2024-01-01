@@ -1,4 +1,3 @@
-# IMPORTATIONS
 import json
 import logging
 
@@ -8,11 +7,10 @@ from degiro_connector.quotecast.models.chart import ChartRequest, Interval
 # SETUP LOGGING
 logging.basicConfig(level=logging.INFO)
 
-# SETUP CONFIG DICT
 with open("config/config.json") as config_file:
     config_dict = json.load(config_file)
 
-# SETUP CREDENTIALS
+
 user_token = config_dict.get("user_token")  # HERE GOES YOUR USER_TOKEN
 
 # SETUP API
@@ -20,14 +18,14 @@ chart_fetcher = ChartFetcher(user_token=user_token)
 
 # PREPARE REQUEST
 chart_request = ChartRequest(
-    culture = "fr-FR",
+    culture="fr-FR",
     # override={
     #     "resolution": "P1D",
     #     "period": "P1W",
     # },
-    period = Interval.P1W,
-    requestid = "1",
-    resolution = Interval.P1D,
+    period=Interval.P1W,
+    requestid="1",
+    resolution=Interval.P1D,
     series=[
         # "issueid:360148977",
         # "price:issueid:360148977",
@@ -38,7 +36,7 @@ chart_request = ChartRequest(
         # "ohlc:vwdkey:AAPL.BATS,E",
         # "volume:vwdkey:AAPL.BATS,E",
     ],
-    tz = "Europe/Paris",
+    tz="Europe/Paris",
 )
 
 # FETCH DATA

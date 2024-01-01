@@ -9,21 +9,23 @@ logging.basicConfig(level=logging.DEBUG)
 with open("config/config.json") as config_file:
     config_dict = json.load(config_file)
 
-credentials = Credentials(
-    int_account=None,
-    username=username,
-    password=password,
-    totp_secret_key=totp_secret_key,
-    one_time_password=None,
-)
+credentials = Credentials.model_validate(obj=config_dict)
 
-# SETUP TRADING API
 trading_api = TradingAPI(credentials=credentials)
 
-# CONNECT
 trading_api.connect()
 
-# ACCESS SESSION_ID
-session_id = trading_api.connection_storage.session_id
+# MOVE A FAVORITE LIST
+list_id = 1234567
+position = 2
 
-print("You are now connected, with the session id :", session_id)
+success = trading_api.move_favourite(
+    list_id=list_id,
+    position=position,
+)
+
+
+if success:
+    print(f"The following list was moved : {list_id}.")
+else:
+    print(f"Can't move this list : {list_id}.")
