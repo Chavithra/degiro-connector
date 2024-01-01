@@ -493,9 +493,12 @@ In addition to whatever metrics you have chosen to subscribe to (see the example
 
 Example - DataFrame :
 
-    product_id response_datetime   request_duration LastDate   LastTime LastPrice LastVolume
-    360114899  2020-11-08 12:00:27 1.022489         2020-11-06 17:39:57 70.0      100
-    360015751  2020-11-08 12:00:27 1.022489         2020-11-06 17:36:17 22.99     470
+
+| product_id    | LastPrice | LastVolume | LastDatetimeUTC         | request_duration_s | response_datetime_utc          |
+|---------------|-----------|------------|-------------------------|---------------------|---------------------------------|
+| str           | f64       | i64        | datetime[μs]            | f64                 | datetime[μs]                    |
+| 360015751     | 34.6      | 1          | 2023-12-29 16:35:23     | 1.021337            | 2024-01-01 17:31:22.482618     |
+| AAPL.BATS,E   | 192.55    | null       | 2023-12-29 20:59:59     | 1.021337            | 2024-01-01 17:31:22.482618     |
 
 ## 2.14. How to find a : vwd_id ?
 
