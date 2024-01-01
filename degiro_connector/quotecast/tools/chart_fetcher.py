@@ -1,12 +1,11 @@
 import logging
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Any
 
 import json
-import pandas as pd
+import polars as pl
 import requests
-from google.protobuf import json_format
-from google.protobuf.message import Message
+from isodate import parse_duration
 
 from degiro_connector.core.constants import urls
 from degiro_connector.quotecast.models.chart import Chart, ChartRequest, Series
@@ -14,62 +13,13 @@ from degiro_connector.core.models.model_connection import ModelConnection
 from degiro_connector.core.models.model_session import ModelSession
 
 
-class ChartHelper:
-    UNITS_MATCHING = {
-        "PT1S": 1,
-        "PT1M": 60,
-        "PT1H": 3600,
-        "P1D": 3600 * 24,
-        "P1W": 3600 * 24 * 7,
-        "P1M": 3600 * 24 * 30,
-        "P1Y": 3600 * 24 * 365,  # Year resolution doesn't seem to be supported
-    }
+class ChartFormatter:
+    @staticmethod
+    def can_format(series: Series) -> bool:
+        return series.type in ["time", "ohlc"]
 
     @staticmethod
-    def parse_start_timestamp(times: str) -> float:
-        """Extract the start timestamp of a timeserie.
-        Args:
-            times (str):
-                Combination of `start date` and `resolution` of the serie.
-                Example :
-                    times = "2021-10-28/P6M"
-                    times = "2021-11-03T00:00:00/PT1H"
-        Returns:
-            float:
-                Timestamp of the start date of the serie.
-        """
-
-        (start, resolution) = times.rsplit(sep="/", maxsplit=1)
-
-        date_format = ""
-
-        # with "PT1M":
-        # {'requestid': '', 'start': '2023-06-30T00:00:00+02:00', 'end': '2023-06-30T21:59:59+02:00', 'resolution': 'PT1M', 'series': [{'times': '2023-06-30/PT1M', 'expires': '2023-07-02T14:10:43.1908462+02:00', 'data':
-        # error when doing : ChartHelper.format_chart(chart=chart, copy=False) :
-        # time data '2023-06-30' does not match format '%Y-%m-%dT%H:%M:%S'
-        # same with "PT5M"
-        # {'requestid': '', 'start': '2023-06-30T00:00:00+02:00', 'end': '2023-06-30T21:59:59+02:00', 'resolution': 'PT5M', 'series': [{'times': '2023-06-30/PT5M', 'expires': '2023-07-02T14:17:36.4487987+02:00', 'data':
-        # same with "PT{xxx}" ...
-        # conclusion : it's always --> date_format = "%Y-%m-%d"
-
-        """
-        previous code:
-        if resolution.startswith("PT"):
-            date_format = "%Y-%m-%dT%H:%M:%S"
-        else:
-            date_format = "%Y-%m-%d"
-        """
-
-        # new code :
-        date_format = "%Y-%m-%d"
-
-        start_datetime = datetime.strptime(start, date_format)
-        start_timestamp = start_datetime.timestamp()
-
-        return start_timestamp
-
-    @classmethod
-    def parse_interval_in_seconds(cls, times: str) -> int:
+    def parse_date_and_resolution(times: str) -> tuple[datetime, timedelta]:
         """Extract the interval of a timeserie.
         Args:
             times (str):
@@ -81,131 +31,62 @@ class ChartHelper:
             AttributeError:
                 if the resolution is unknown.
         Returns:
-            int:
-                Number of seconds in the interval.
+            tuple[datetime, timedelta]:
+                Start datetime and resolution.
         """
-        (_start, resolution) = times.rsplit(sep="/", maxsplit=1)
+        start, resolution = times.split(sep="/", maxsplit=1)
+        start_datetime = datetime.fromisoformat(start)
+        resolution_interval = parse_duration(resolution)
 
-        prefix = ""
-        if resolution.startswith("PT"):
-            prefix = "PT"
-        elif resolution.startswith("P"):
-            prefix = "P"
-        else:
-            raise AttributeError("Unkown resolution")
-
-        unit = prefix + "1" + resolution[-1]
-        number = int(resolution[len(prefix) : -1])
-
-        interval = cls.UNITS_MATCHING[unit] * int(number)
-
-        return interval
-
-    @classmethod
-    def format_serie(cls, serie: Series, copy: bool = True) -> Series:
-        """By default a time serie uses the order as index.
-        This method convert the indexes into `timestamp in seconds`.
-        Args:
-            serie (Series):
-                Serie to format.
-            copy (bool, optional):
-                Whether or not to make a copy before the formatting.
-                Defaults to True.
-
-        Returns:
-            Series: [description]
-        """
-        if copy:
-            serie = serie.model_copy()
-
-        if serie.type in ["time"]:
-            times = serie.times
-            if times:
-                start = cls.parse_start_timestamp(times=times)
-                interval = cls.parse_interval_in_seconds(times=times)
-
-                for datapoint in serie.data:
-                    datapoint[0] = start + datapoint[0] * interval
-
-        return serie
-
-    @classmethod
-    def format_chart(cls, chart: Chart, copy: bool = True) -> Chart:
-        """By default a time serie uses the order as index.
-        This method convert series`s indexes into `timestamp in seconds`.
-        Args:
-            chart (Chart):
-                Chart containing the series.
-            copy (bool, optional):
-                Whether or not to make a copy before the formatting.
-                Defaults to True.
-        Returns:
-            Chart:
-                Formatted Chart.
-        """
-
-        if copy:
-            chart = chart.model_copy()
-
-        for serie in chart.series:
-            cls.format_serie(serie=serie, copy=False)
-
-        return chart
+        return start_datetime, resolution_interval
 
     @staticmethod
-    def message_to_dict(message: Message) -> dict:
-        return json_format.MessageToDict(
-            message=message,
-            including_default_value_fields=True,
-            preserving_proto_field_name=True,
-            use_integers_for_enums=True,
-            descriptor_pool=None,
-            float_precision=None,
-        )
+    def format_timestamp(
+        df: pl.DataFrame,
+        column: str,
+        start: datetime,
+        resolution: timedelta,
+    ):
+        df = df.with_columns((pl.col(column) * resolution).cast(pl.Duration) + start)
+
+        return df
 
     @classmethod
-    def serie_to_df(cls, serie: Series) -> pd.DataFrame:
-        """Converts a timeserie into a DataFrame.
-        Only series with the following types can be converted into DataFrame :
-        - serie.type == "time"
-        - serie.type == "ohlc"
-        Beware of series with the following type :
-         - serie.type == "object"
-        These are not actual timeseries and can't converted into DataFrame.
-        Args:
-            serie (Series):
-                The serie to convert.
-        Raises:
-            AttributeError:
-                If the serie.type is incorrect.
-        Returns:
-            pd.DataFrame: [description]
-        """
-        columns = []
-        if serie.type == "ohlc" and serie.id.startswith("ohlc:"):
-            columns = [
-                "timestamp",
-                "open",
-                "high",
-                "low",
-                "close",
-            ]
-        elif serie.type == "time" and serie.id.startswith("price:"):
-            columns = [
-                "timestamp",
-                "price",
-            ]
-        elif serie.type == "time" and serie.id.startswith("volume:"):
-            columns = [
-                "timestamp",
-                "volume",
-            ]
-        elif serie.type == "object":
-            raise AttributeError(f"Not a timeserie, serie.type = {serie.type}")
-        else:
-            raise AttributeError(f"Unknown serie, serie.type = {serie.type}")
+    def format_series(
+        cls, series: Series, columns: list[str] | None = None
+    ) -> pl.DataFrame:
+        if series.type is None:
+            raise TypeError("Can't parse `None` series.")
 
-        return pd.DataFrame.from_records(serie.data, columns=columns)
+        if series.type not in ["time", "ohlc"]:
+            raise TypeError(f"Only `time` and `ohlc` are acceped, type={series.type}")
+
+        if series.times is None or series.type not in ["time", "ohlc"]:
+            raise AttributeError("The attributes `times` is empty.")
+
+        if columns:
+            pass
+        elif series.id.startswith("price"):
+            columns = ["timestamp", "price"]
+        elif series.id.startswith("volume"):
+            columns = ["timestamp", "price"]
+        elif series.id.startswith("ohlc"):
+            columns = ["timestamp", "open", "high", "low", "close"]
+        else:
+            columns = None
+
+        df = pl.DataFrame(
+            data=series.data,
+            orient="row",
+            schema=columns,
+        )
+        start, resolution = cls.parse_date_and_resolution(times=series.times)
+        column = df.columns[0]
+        formatted_df = cls.format_timestamp(
+            df=df, column=column, start=start, resolution=resolution
+        )
+
+        return formatted_df
 
 
 class ChartFetcher:
@@ -320,7 +201,9 @@ class ChartFetcher:
         try:
             response = session.send(prepped)
             response.raise_for_status()
-            response_map = json.loads(response.text[len(chart_request.callback) + 1 : -1])
+            response_map = json.loads(
+                response.text[len(chart_request.callback) + 1 : -1]
+            )
 
             if raw is True:
                 chart = response_map

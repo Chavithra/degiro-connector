@@ -64,8 +64,9 @@ class ActionGetFavourite(AbstractAction):
             if raw is True:
                 favourite_batch = loads(response.text)
             else:
-                favourite_batch = FavouriteBatch.model_validate_json(json_data=response.text)
-
+                favourite_batch = FavouriteBatch.model_validate_json(
+                    json_data=response.text
+                )
 
             return favourite_batch
         except requests.HTTPError as e:

@@ -6,27 +6,6 @@ from pydantic.alias_generators import to_camel
 
 
 class Interval(str, Enum):
-    # PT1S = 0
-    # PT15S = 1
-    # PT30S = 2
-    # PT1M = 3
-    # PT5M = 4
-    # PT15M = 5
-    # PT30M = 6
-    # PT60M = 7
-    # PT1H = 8
-    # P1D = 9
-    # P1W = 10
-    # P1M = 11
-    # P3M = 12
-    # P6M = 13
-    # P1Y = 14
-    # P3Y = 15
-    # P5Y = 16
-    # P10Y = 17
-    # P50Y = 18
-    # YTD = 19
-
     PT15S = "PT15S"
     PT30S = "PT30S"
     PT1M = "PT1M"
@@ -68,9 +47,10 @@ class ChartRequest(BaseModel):
 
 class Series(BaseModel):
     expires: datetime
-    data: list|dict
+    data: list | dict
     id: str
     type: str
+    times: str | None = Field(default=None)
 
 
 class Chart(BaseModel):
