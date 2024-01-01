@@ -13,9 +13,9 @@ from degiro_connector.core.models.model_connection import ModelConnection
 from degiro_connector.core.models.model_session import ModelSession
 
 
-class ChartFormatter:
+class SeriesFormatter:
     @staticmethod
-    def can_format(series: Series) -> bool:
+    def is_timeseries(series: Series) -> bool:
         return series.type in ["time", "ohlc"]
 
     @staticmethod
@@ -52,14 +52,16 @@ class ChartFormatter:
         return df
 
     @classmethod
-    def format_series(
-        cls, series: Series, columns: list[str] | None = None
+    def format_timeseries(
+        cls,
+        series: Series,
+        columns: list[str] | None = None,
     ) -> pl.DataFrame:
         if series.type is None:
             raise TypeError("Can't parse `None` series.")
 
-        if series.type not in ["time", "ohlc"]:
-            raise TypeError(f"Only `time` and `ohlc` are acceped, type={series.type}")
+        if not cls.is_timeseries(series=series):
+            raise TypeError(f"Only timeseries can be formatted, type={series.type}")
 
         if series.times is None or series.type not in ["time", "ohlc"]:
             raise AttributeError("The attributes `times` is empty.")
@@ -69,7 +71,7 @@ class ChartFormatter:
         elif series.id.startswith("price"):
             columns = ["timestamp", "price"]
         elif series.id.startswith("volume"):
-            columns = ["timestamp", "price"]
+            columns = ["timestamp", "volume"]
         elif series.id.startswith("ohlc"):
             columns = ["timestamp", "open", "high", "low", "close"]
         else:
@@ -87,6 +89,22 @@ class ChartFormatter:
         )
 
         return formatted_df
+
+    @classmethod
+    def format_series(
+        cls,
+        series: Series,
+        columns: list[str] | None = None,
+    ) -> pl.DataFrame:
+        if cls.is_timeseries(series=series):
+            df = cls.format_timeseries(
+                series=series,
+                columns=columns,
+            )
+        else:
+            df = pl.DataFrame(series.data)
+
+        return df
 
 
 class ChartFetcher:
