@@ -100,9 +100,9 @@ def test_format_chart(quotecast_connected, stock_request):
         raw=False,
     )
 
-    ChartHelper.format_chart(chart=chart, copy=False)
-    chart1 = chart.series[1]
-    chart1_df = ChartHelper.serie_to_df(serie=chart1)
+    # ChartHelper.format_chart(chart=chart, copy=False)
+    # chart1 = chart.series[1]
+    # chart1_df = ChartHelper.serie_to_df(serie=chart1)
 
     assert len(chart1_df) == len(chart1.data)
 
