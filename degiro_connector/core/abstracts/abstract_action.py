@@ -1,13 +1,9 @@
-# IMPORTATION STANDARD
 import abc
 import logging
 import requests
 from inspect import ismethod
-from typing import Dict
 
-# IMPORTATION THIRD PARTY
 
-# IMPORTATION INTERNAL
 from degiro_connector.core.models.model_connection import ModelConnection
 from degiro_connector.core.models.model_session import ModelSession
 
@@ -21,7 +17,7 @@ class AbstractAction(abc.ABC):
 
     # @final
     @staticmethod
-    def build_session(headers: Dict[str, str] = None) -> requests.Session:
+    def build_session(headers: dict[str, str] | None = None) -> requests.Session:
         return ModelSession.build_session()
 
     # @final
@@ -49,7 +45,7 @@ class AbstractAction(abc.ABC):
         self,
         credentials,
         connection_storage: ModelConnection,
-        logger: logging.Logger = None,
+        logger: logging.Logger | None = None,
         session_storage: ModelSession = None,
         *args,
         **kwargs,

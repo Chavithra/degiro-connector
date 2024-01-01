@@ -1,13 +1,10 @@
-# IMPORTATION STANDARD
 import logging
 import requests
 import time
 from threading import Event
 
-# IMPORTATION THIRD PARTY
 from wrapt.decorators import synchronized
 
-# IMPORTATION INTERNAL
 
 
 class ModelConnection:

@@ -1,13 +1,11 @@
-# IMPORTATION STANDARD
 import abc
 import importlib
 import importlib.util
 from types import ModuleType
-from typing import List, Optional
+from typing import  Optional
 
 # IMPORTATION THIRDPARTY
 
-# IMPORTATION INTERNAL
 
 """
 What to load ?
@@ -124,13 +122,13 @@ class LazyLoader(abc.ABC):
     @classmethod
     def load_module_list(
         cls,
-        module_path_list: List[str],
+        module_path_list: list[str],
     ) -> Optional[object]:
         """Load the first valid module among a `module_path_list`.
 
         Args:
-            module_path_list (List[str]):
-                List of `[module_path, class_name]` pair.
+            module_path_list (list[str]):
+                list of `[module_path, class_name]` pair.
 
         Returns:
             Optional[ModuleType]:
@@ -148,14 +146,14 @@ class LazyLoader(abc.ABC):
     @classmethod
     def load_pair_list(
         cls,
-        pair_list: List[Pair],
+        pair_list: list[Pair],
         init_args: InitArgs = None,
     ) -> Optional[object]:
         """Load the first valid instance among a `pair_list`.
 
         Args:
-            pairs (List[Pair]):
-                List of Pair.
+            pairs (list[Pair]):
+                list of Pair.
 
         Returns:
             Optional[ModuleType]:

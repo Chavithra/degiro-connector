@@ -1,11 +1,8 @@
-# IMPORTATION STANDARD
 
-# IMPORTATION THIRD PARTY
 from google.protobuf import json_format
 from google.protobuf.message import Message
 from google.protobuf.struct_pb2 import Struct
 
-# IMPORTATION INTERNAL
 
 
 def message_to_dict(message: Message) -> dict:
