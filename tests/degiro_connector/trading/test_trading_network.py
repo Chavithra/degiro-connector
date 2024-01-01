@@ -13,7 +13,7 @@ from degiro_connector.trading.models.trading_pb2 import (
     CashAccountReport,
     CompanyProfile,
     CompanyRatios,
-    Favourites,
+    Favorites,
     FinancialStatements,
     LatestNews,
     NewsByCompany,
@@ -251,13 +251,13 @@ def test_get_company_ratios(trading_connected):
 
 @pytest.mark.network
 @pytest.mark.trading
-def test_get_favourites_list(trading_connected):
+def test_get_favorites_list(trading_connected):
     time.sleep(random.uniform(0, 2))
 
     # FETCH DATA
-    favourites_list = trading_connected.get_favourites_list(raw=False)
+    favorites_list = trading_connected.get_favorites_list(raw=False)
 
-    assert isinstance(favourites_list, Favourites)
+    assert isinstance(favorites_list, Favorites)
 
 
 @pytest.mark.network
