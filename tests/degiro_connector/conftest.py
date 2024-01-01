@@ -1,13 +1,10 @@
-# IMPORTATION STANDARD
 import json
 import os
-from typing import Any, Dict, Optional
+from typing import Any
 
-# IMPORTATION THIRD PARTY
 import pytest
 
-# IMPORTATION INTERNAL
-from degiro_connector.trading.models.trading_pb2 import Credentials
+from degiro_connector.trading.models.credentials import Credentials
 
 CONFIG_FILE = "config/config.json"
 
@@ -66,7 +63,7 @@ def pytest_addoption(parser):
 
 # SETUP FIXTURES
 @pytest.fixture(scope="module")
-def config() -> Optional[Dict[str, Any]]:
+def config() -> dict[str, Any] | None:
     if os.path.isfile(CONFIG_FILE):
         with open(CONFIG_FILE) as config_file:
             config_dict = json.load(config_file)

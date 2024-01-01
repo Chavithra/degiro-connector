@@ -1,14 +1,12 @@
 # IMPORTATIONS STANDARD
 import logging
 
-# IMPORTATION THIRD PARTY
 import pytest
 import requests
 from urllib3 import poolmanager
 import ssl
 import requests
 
-# IMPORTATION INTERNAL
 from degiro_connector.core.models.model_session import ModelSession
 from degiro_connector.core.constants import urls
 
@@ -62,7 +60,6 @@ class SecureAdapter(requests.adapters.HTTPAdapter):
 
 
 
-# SETUP LOGGING LEVEL
 logging.basicConfig(level=logging.FATAL)
 
 

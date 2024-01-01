@@ -1,18 +1,17 @@
-# IMPORTATIONS STANDARD
 import logging
 import random
 import time
 
-# IMPORTATION THIRD PARTY
 import pandas
 import pytest
 import urllib3
 
-# IMPORTATION INTERNAL
-import degiro_connector.core.helpers.pb_handler as pb_handler
-from degiro_connector.quotecast.actions.action_get_chart import ChartHelper
-from degiro_connector.quotecast.models.quotecast_parser import QuotecastParser
-from degiro_connector.quotecast.models.quotecast_pb2 import Quotecast
+from degiro_connector.core.models.model_connection import ModelConnection
+from degiro_connector.quotecast.tools.chart_fetcher import ChartFetcher
+from degiro_connector.quotecast.models.ticker import TickerRequest
+from degiro_connector.quotecast.tools.ticker_fetcher import TickerFetcher
+from degiro_connector.quotecast.tools.ticker_to_df import TickerToDF
+
 
 # SETUP LOGGING
 logging.basicConfig(level=logging.FATAL)
@@ -22,11 +21,16 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 # TESTS FEATURES
 @pytest.mark.network
 @pytest.mark.quotecast
-def test_chart(quotecast_connected, stock_request):
+def test_chart(stock_request, user_token):
     time.sleep(random.uniform(0, 2))
 
+    chart_fetcher = ChartFetcher(
+        user_token=user_token,
+        connection_storage=ModelConnection(timeout=600)
+    )
+
     # FETCH DATA
-    chart = quotecast_connected.get_chart(
+    chart = chart_fetcher.get_chart(
         request=stock_request,
         raw=True,
     )
@@ -110,31 +114,50 @@ def test_format_chart(quotecast_connected, stock_request):
 
 @pytest.mark.quotecast
 @pytest.mark.network
-def test_quotecast(quotecast_connected):
+def test_quotecast(user_token):
     time.sleep(random.uniform(0, 2))
 
-    request = Quotecast.Request()
-    request.subscriptions["AAPL.BATS,E"].extend(
-        [
-            "LastDate",
-            "LastTime",
-            "LastPrice",
-            "LastVolume",
-            "AskPrice",
-            "BidPrice",
-        ]
+    ticker_to_df = TickerToDF()
+    product_list = [
+        "AAPL.BATS,E",  # Apple 
+        "360017018",    # Air Liquide
+        "360114899",    # AIRBUS
+        "365019496",    # Alstom
+    ]
+    ticker_request = TickerRequest(
+        request_type="subscription",
+        request_map={
+            "360015751": [
+                "LastDate",
+                "LastTime",
+                "LastPrice",
+                "LastVolume",
+            ],
+            "AAPL.BATS,E": [
+                'LastDate',
+                'LastTime',
+                'LastPrice',
+                'LastVolume',
+            ],
+        },
     )
-    quotecast_connected.subscribe(request=request)
 
-    quotecast = quotecast_connected.fetch_data()
+    session_id = TickerFetcher.get_session_id(user_token=user_token)
 
-    quotecast_parser = QuotecastParser()
-    quotecast_parser.put_quotecast(quotecast=quotecast)
-    ticker = quotecast_parser.ticker
-    ticker_dict = pb_handler.message_to_dict(message=ticker)
-    metrics = ticker_dict["products"]["AAPL.BATS,E"]["metrics"]
+    if session_id is None:
+        raise TypeError("`session_id` is None")
 
-    assert "AAPL.BATS,E" in ticker.product_list
+    TickerFetcher.subscribe(
+        ticker_request=ticker_request,
+        session_id=session_id,
+    )
 
-    for metric in metrics:
-        assert isinstance(metrics[metric], float)
+    ticker = TickerFetcher.fetch_ticker(session_id=session_id)
+
+
+    if ticker is None:
+        raise TypeError("`ticker` is None")
+
+    df = ticker_to_df.parse(ticker=ticker)
+
+    assert isinstance(df, pl.DataFrame)

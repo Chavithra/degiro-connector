@@ -4,11 +4,9 @@ import logging
 import random
 import time
 
-# IMPORTATION THIRD PARTY
 import pytest
 import urllib3
 
-# IMPORTATION INTERNAL
 from degiro_connector.trading.models.trading_pb2 import (
     AccountOverview,
     Agenda,
@@ -27,7 +25,6 @@ from degiro_connector.trading.models.trading_pb2 import (
     Update,
 )
 
-# SETUP LOGGING LEVEL
 logging.basicConfig(level=logging.FATAL)
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 

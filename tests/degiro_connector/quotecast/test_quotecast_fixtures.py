@@ -1,11 +1,9 @@
 # IMPORTATIONS STANDARD
 import logging
 
-# IMPORTATION THIRD PARTY
 import pytest
 import urllib3
 
-# IMPORTATION INTERNAL
 from degiro_connector.quotecast.api import API as QuotecastAPI
 
 # SETUP LOGGING

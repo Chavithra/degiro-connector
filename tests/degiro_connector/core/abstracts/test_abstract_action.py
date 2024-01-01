@@ -1,14 +1,11 @@
 # IMPORTATIONS STANDARD
 import logging
 
-# IMPORTATION THIRD PARTY
 import pytest
 import requests
 
-# IMPORTATION INTERNAL
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
 
-# SETUP LOGGING LEVEL
 logging.basicConfig(level=logging.FATAL)
 
 
