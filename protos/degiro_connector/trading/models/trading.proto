@@ -234,24 +234,6 @@ message AccountOverview {
 
 
 /** For the payload from the following URL :
- * https://trader.degiro.nl/pa/secure/favourites/lists
- */
-message Favourites {
-  // MESSAGES
-  message List {
-    // PROPERTIES
-    int32 id = 1;
-    string name = 2;
-    bool is_default = 3;
-    repeated int32 product_ids = 4;
-  }
-
-  // PROPERTIES
-  repeated List values = 1;
-  google.protobuf.Timestamp response_datetime = 2;
-}
-
-/** For the payload from the following URL :
  * https://trader.degiro.nl/product_search/secure/v5/products/info
  */
 message ProductsInfo {
