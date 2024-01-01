@@ -492,58 +492,7 @@ Example - DataFrame :
     360114899  2020-11-08 12:00:27 1.022489         2020-11-06 17:39:57 70.0      100
     360015751  2020-11-08 12:00:27 1.022489         2020-11-06 17:36:17 22.99     470
 
-## 2.14. How to get chart data ?
-You can fetch an object containing the same data than in Degiro's website graph.
-
-For that you need to prepare a ChartRequest.
-
-Here is a table with the available attributes for ChartRequest.
-
-|**Parameter**|**Type**|**Description**|
-|:-|:-|:-|
-|requestid|str|It sends you back whatever string you put here, you can set it to : "1".|
-|resolution|Chart.Resolution|Resolution of the chart like : Chart.Resolution.PT1M.|
-|culture|str|Country code like : "en-US" or "fr-FR".|
-|period|Chart.Period|Period of the chart, like : Chart.Period.P1D.|
-|series|repeated string|Data to get like : ['issueid:36014897', 'price:issueid:360148977'].|
-|tz|str|Timezone like : "Europe/Paris"|
-
-Example of code :
-
-```python
-chart_fetcher = ChartFetcher(user_token=user_token)
-
-chart_request = ChartRequest(
-    culture = "fr-FR",
-    period = Interval.P1W,
-    requestid = "1",
-    resolution = Interval.P1D,
-    series=[
-        "price:vwdkey:AAPL.BATS,E",
-        "ohlc:vwdkey:AAPL.BATS,E",
-        "volume:vwdkey:AAPL.BATS,E",
-    ],
-    tz = "Europe/Paris",
-)
-
-chart = chart_fetcher.get_chart(
-    chart_request=chart_request,
-    raw=True,
-)
-```
-
-The `issueid` parameter is the `vwd_id` of the product from which you want the `Chart` data.
-
-See the section related to `vwd_id` for more information.
-
-All the options for the enumerations are available in this module :
-[chart.py](degiro_connector/quotecast/models/chart.py)
-
-For a more comprehensive examples :
- - [chart.py](examples/quotecast/chart.py)
- - [chart_format.py](examples/quotecast/chart_format.py)
-
-## 2.15. How to find a : vwd_id ?
+## 2.14. How to find a : vwd_id ?
 
 In operations related to `Quotecast`, Degiro uses the `vwd_id` to identify a product.
 
@@ -563,6 +512,134 @@ Here are some methods you can use to fetch a product's `vwd_id` :
 The method `product_search` let you use the name or other attributes of a product to fetch it's `vwd_id`.
 
 The method `get_products_info` let you use a product's `id` to fetch it's `vwd_id`.
+
+## 2.15. How to get a Chart ?
+You can fetch an object containing the same data than in Degiro's website graph.
+
+For that you need to prepare a ChartRequest.
+
+Here is a table with the available attributes for ChartRequest.
+
+|**Parameter**|**Type**|**Description**|
+|:-|:-|:-|
+|requestid|str|It sends you back whatever string you put here, you can set it to : "1".|
+|resolution|Chart.Resolution|Resolution of the chart like : Chart.Resolution.PT1M.|
+|culture|str|Country code like : "en-US" or "fr-FR".|
+|period|Chart.Period|Period of the chart, like : Chart.Period.P1D.|
+|series|repeated string|Data to get like : ['issueid:36014897', 'price:issueid:360148977'].|
+|tz|str|Timezone like : "Europe/Paris"|
+
+Example of code :
+
+```python
+chart_fetcher = ChartFetcher(user_token=user_token)
+chart_request = ChartRequest(
+    culture="fr-FR",
+    # override={
+    #     "resolution": "P1D",
+    #     "period": "P1W",
+    # },
+    period=Interval.P1D,
+    requestid="1",
+    resolution=Interval.PT60M,
+    series=[
+        "issueid:360148977",
+        "price:issueid:360148977",
+        "ohlc:issueid:360148977",
+        "volume:issueid:360148977",
+        # "vwdkey:AAPL.BATS,E",
+        # "price:vwdkey:AAPL.BATS,E",
+        # "ohlc:vwdkey:AAPL.BATS,E",
+        # "volume:vwdkey:AAPL.BATS,E",
+    ],
+    tz="Europe/Paris",
+)
+chart = chart_fetcher.get_chart(
+    chart_request=chart_request,
+    raw=False,
+)
+```
+
+The `issueid` parameter is the `vwd_id` of the product from which you want the `Chart` data.
+
+See the section related to `vwd_id` for more information.
+
+All the models are described in this module :
+[chart.py](degiro_connector/quotecast/models/chart.py)
+
+For a more comprehensive example :
+ - [chart.py](examples/quotecast/chart.py)
+
+## 2.16 How to format a chart.series?
+
+A Chart object contains a list of series.
+
+There is a SeriesFormatter to help you convertir a series into a `polars.DataFrame`.
+
+```python
+df = SeriesFormatter.format_timeseries(series=chart.series[0])
+print(df)
+```
+
+Here are the result for different series.id.
+
+- `issueid:360148977`
+
+| issueId   | companyId | name      | identifier | ... | windowPreviousClosePrice | windowEndPrice |
+|-----------|-----------|-----------|------------|-----|---------------------------|----------------|
+| i64       | i64       | str       | str        | ... | f64                       | f64            |
+| 360148977 | 9245      | Crédit    | issueid:3  | ... | 12.858                    | -0.00047       |
+
+- `price:issueid:360148977`
+
+| timestamp                  | price  |
+|----------------------------|--------|
+| datetime[μs]               | f64    |
+| 2023-12-29 09:00:00        | 12.858 |
+| 2023-12-29 10:58:58.800    | 12.85  |
+| ...                        | ...    |
+| 2023-12-29 17:28:58.800    | 12.83  |
+| 2023-12-29 17:34:58.799999 | 12.852 |
+
+
+- `volume:issueid:360148977`
+
+| timestamp                  | volume      |
+|----------------------------|------------|
+| datetime[μs]               | f64        |
+| 2023-12-29 09:58:58.800    | 61627.0    |
+| 2023-12-29 10:58:58.800    | 83854.0    |
+| 2023-12-29 11:58:58.800    | 78240.0    |
+| 2023-12-29 12:58:01.200    | 69263.0    |
+| 2023-12-29 13:58:58.800    | 59040.0    |
+| 2023-12-29 14:58:58.800    | 62831.0    |
+| 2023-12-29 15:58:01.200    | 66681.0    |
+| 2023-12-29 16:58:58.800    | 529315.0   |
+| 2023-12-29 17:34:58.799999 | 1.317919e6 |
+
+- `ohlc:issueid:360148977`
+
+| timestamp           | open   | high   | low    | close  |
+|----------------------|--------|--------|--------|--------|
+| datetime[μs]         | f64    | f64    | f64    | f64    |
+| 2023-12-29 09:00:00 | 12.858 | 12.898 | 12.858 | 12.872 |
+| 2023-12-29 10:00:00 | 12.872 | 12.876 | 12.84  | 12.85  |
+| 2023-12-29 11:00:00 | 12.85  | 12.864 | 12.842 | 12.848 |
+| 2023-12-29 12:00:00 | 12.844 | 12.884 | 12.844 | 12.87  |
+| 2023-12-29 13:00:00 | 12.868 | 12.886 | 12.86  | 12.87  |
+| 2023-12-29 14:00:00 | 12.872 | 12.902 | 12.868 | 12.886 |
+| 2023-12-29 15:00:00 | 12.884 | 12.894 | 12.874 | 12.876 |
+| 2023-12-29 16:00:00 | 12.876 | 12.882 | 12.854 | 12.858 |
+| 2023-12-29 17:00:00 | 12.856 | 12.858 | 12.83  | 12.852 |
+
+
+All the models are described in this module :
+ - [chart.py](degiro_connector/quotecast/models/chart.py)
+
+For a more comprehensive example :
+ - [chart_format.py](examples/quotecast/chart_format.py)
+
+
 
 
 # 3. Trading connection
