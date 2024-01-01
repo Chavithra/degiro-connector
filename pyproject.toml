@@ -13,7 +13,7 @@ packages = [
 ]
 readme = "README.md"
 repository = "https://github.com/chavithra/degiro-connector"
-version = "3.0.8"
+version = "3.0.9"
 
 [tool.poetry.dependencies]
 python = "^3.10"
@@ -24,6 +24,7 @@ polars = "^0.20.2"
 grpcio = "^1.51.1"
 protobuf = "^4.21.12"
 wrapt = "^1.14.1"
+orjson = "^3.9.10"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^3.9.2"
