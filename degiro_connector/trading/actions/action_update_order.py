@@ -1,5 +1,5 @@
 import logging
-from typing import Union
+
 
 import requests
 from google.protobuf import json_format
@@ -49,7 +49,7 @@ class ActionUpdateOrder(AbstractAction):
     }
 
     @classmethod
-    def order_to_api(cls, order: Order) -> dict[str, Union[float, int, str]]:
+    def order_to_api(cls, order: Order) -> dict[str, float | int | str]:
         # Build dict from message
         order_dict = json_format.MessageToDict(
             message=order,
@@ -88,7 +88,7 @@ class ActionUpdateOrder(AbstractAction):
         session: requests.Session | None = None,
         logger: logging.Logger | None = None,
         raw: bool = False,
-    ) -> Union[bool, None]:
+    ) -> bool | dict | None:
         if logger is None:
             logger = cls.build_logger()
         if session is None:
@@ -137,7 +137,7 @@ class ActionUpdateOrder(AbstractAction):
         self,
         order: Order,
         raw: bool = False,
-    ) -> Union[bool, None]:
+    ) -> bool | dict | None:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
         session = self.session_storage.session

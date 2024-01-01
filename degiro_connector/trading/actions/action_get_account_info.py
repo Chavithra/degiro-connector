@@ -2,6 +2,7 @@ import logging
 from typing import Optional
 
 import requests
+from orjson import loads
 
 from degiro_connector.core.constants import urls
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
@@ -29,20 +30,17 @@ class ActionGetAccountInfo(AbstractAction):
         prepped = session.prepare_request(request)
 
         try:
-            response_raw = session.send(prepped)
-            response_raw.raise_for_status()
-            response_dict = response_raw.json()
+            response = session.send(prepped)
+            response.raise_for_status()
+            model = loads(response.text)
+
+            return model
         except requests.HTTPError as e:
-            status_code = getattr(response_raw, "status_code", "No status_code found.")
-            text = getattr(response_raw, "text", "No text found.")
-            logger.fatal(status_code)
-            logger.fatal(text)
+            logger.fatal(e)
             return None
         except Exception as e:
             logger.fatal(e)
             return None
-
-        return response_dict
 
     def call(self) -> Optional[dict]:
         connection_storage = self.connection_storage

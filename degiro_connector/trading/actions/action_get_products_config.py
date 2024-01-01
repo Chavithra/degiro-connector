@@ -1,5 +1,5 @@
 import logging
-from typing import Union
+
 
 import requests
 from google.protobuf import json_format
@@ -33,7 +33,7 @@ class ActionGetProductsConfig(AbstractAction):
         raw: bool = False,
         session: requests.Session | None = None,
         logger: logging.Logger | None = None,
-    ) -> Union[ProductSearch.Config, dict, None]:
+    ) -> ProductSearch.Config | dict | None:
         """Fetch the product search config table.
         No credentials or logging seems to be required for this endpoint.
         Just adding the credentials and session_id because the website is
@@ -97,7 +97,7 @@ class ActionGetProductsConfig(AbstractAction):
     def call(
         self,
         raw: bool = False,
-    ) -> Union[ProductSearch.Config, dict, None]:
+    ) -> ProductSearch.Config | dict | None:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
         session = self.session_storage.session

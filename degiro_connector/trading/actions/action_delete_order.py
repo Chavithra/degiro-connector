@@ -1,5 +1,4 @@
 import logging
-from typing import Optional
 
 import requests
 
@@ -26,30 +25,24 @@ class ActionDeleteOrder(AbstractAction):
         int_account = credentials.int_account
         url = urls.ORDER_DELETE
         url = f"{url}/{order_id};jsessionid={session_id}"
-
-        params = {
-            "intAccount": int_account,
-            "sessionId": session_id,
-        }
+        params = {"intAccount": int_account, "sessionId": session_id}
 
         request = requests.Request(method="DELETE", url=url, params=params)
         prepped = session.prepare_request(request)
-        response_raw = None
 
         try:
-            response_raw = session.send(prepped)
-            response_raw.raise_for_status()
+            response = session.send(prepped)
+            response.raise_for_status()
+
+            return response.status_code == 200
         except requests.HTTPError as e:
-            status_code = getattr(response_raw, "status_code", "No status_code found.")
-            text = getattr(response_raw, "text", "No text found.")
-            logger.fatal(status_code)
-            logger.fatal(text)
+            logger.fatal(e)
+            if isinstance(e.response, requests.Response):
+                logger.fatal(e.response.text)
             return None
         except Exception as e:
             logger.fatal(e)
             return None
-
-        return response_raw.status_code == 200
 
     def call(
         self,

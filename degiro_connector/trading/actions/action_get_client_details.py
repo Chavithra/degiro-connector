@@ -1,5 +1,5 @@
 import logging
-from typing import Union
+
 
 import requests
 

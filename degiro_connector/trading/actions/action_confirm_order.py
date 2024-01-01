@@ -1,98 +1,52 @@
 import logging
-from typing import Union
+import time
+from datetime import datetime, timedelta
 
 import requests
-from google.protobuf import json_format
+from orjson import loads
 
 from degiro_connector.core.constants import urls
 from degiro_connector.trading.models.credentials import Credentials
-from degiro_connector.trading.models.trading_pb2 import (
+from degiro_connector.trading.models.order import (
+    ConfirmationResponse,
+    ConfirmationWrapper,
     Order,
+    ORDER_FIELD_MAP,
 )
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
 
 
 class ActionConfirmOrder(AbstractAction):
-    ORDER_FILTER_MATCHING = {
-        Order.OrderType.LIMIT: {
-            "buySell",
-            "orderType",
-            "price",
-            "productId",
-            "size",
-            "timeType",
-        },
-        Order.OrderType.STOP_LIMIT: {
-            "buySell",
-            "orderType",
-            "price",
-            "productId",
-            "size",
-            "stopPrice",
-            "timeType",
-        },
-        Order.OrderType.MARKET: {
-            "buySell",
-            "orderType",
-            "productId",
-            "size",
-            "timeType",
-        },
-        Order.OrderType.STOP_LOSS: {
-            "buySell",
-            "orderType",
-            "productId",
-            "size",
-            "stopPrice",
-            "timeType",
-        },
-    }
-
-    @classmethod
-    def order_to_api(cls, order: Order) -> dict[str, Union[float, int, str]]:
-        # Build dict from message
-        order_dict = json_format.MessageToDict(
-            message=order,
-            including_default_value_fields=True,
-            preserving_proto_field_name=False,
-            use_integers_for_enums=True,
-            descriptor_pool=None,
-            float_precision=None,
+    @staticmethod
+    def build_json_map(order: Order) -> dict[str, float | int | str]:
+        json_map = order.model_dump(
+            by_alias=True,
+            exclude_none=True,
+            mode="json",
         )
 
-        # Setup 'buySell'
-        if order.action == order.Action.BUY:
-            order_dict["buySell"] = "BUY"
-        else:
-            order_dict["buySell"] = "SELL"
-
-        # Filter fields
-        fields_to_keep = set()
-        if order.order_type in cls.ORDER_FILTER_MATCHING:
-            fields_to_keep = cls.ORDER_FILTER_MATCHING[order.order_type]
-        else:
+        if order.order_type not in ORDER_FIELD_MAP:
             raise AttributeError("Invalid `OrderType`.")
 
-        filtered_order_dict = dict()
-        for field in order_dict.keys() & fields_to_keep:
-            filtered_order_dict[field] = order_dict[field]
+        if order.buy_sell is None:
+            raise AttributeError("Invalid `buy_sell`.")
 
-        return filtered_order_dict
+        field_list = ORDER_FIELD_MAP[order.order_type]
+        json_map = {field: json_map[field] for field in field_list if field in json_map}
+        json_map["buySell"] = order.buy_sell.name
+
+        return json_map
 
     @staticmethod
-    def confirmation_response_to_grpc(
-        payload: dict,
-    ) -> Order.ConfirmationResponse:
-        confirmation_response = Order.ConfirmationResponse()
-        confirmation_response.response_datetime.GetCurrentTime()
-        json_format.ParseDict(
-            js_dict=payload["data"],
-            message=confirmation_response,
-            ignore_unknown_fields=False,
-            descriptor_pool=None,
-        )
+    def build_model(
+        response: requests.Response,
+        duration_ns: int,
+    ) -> ConfirmationResponse:
+        model = ConfirmationWrapper.model_validate_json(json_data=response.text).data
+        model.response_datetime = datetime.now()
+        model.request_duration = timedelta(microseconds=duration_ns // 1000)
 
-        return confirmation_response
+        return model
 
     @classmethod
     def confirm_order(
@@ -104,7 +58,7 @@ class ActionConfirmOrder(AbstractAction):
         logger: logging.Logger | None = None,
         raw: bool = False,
         session: requests.Session | None = None,
-    ) -> Union[Order.ConfirmationResponse, dict, None]:
+    ) -> ConfirmationResponse | dict | None:
         if logger is None:
             logger = cls.build_logger()
         if session is None:
@@ -113,56 +67,37 @@ class ActionConfirmOrder(AbstractAction):
         int_account = credentials.int_account
         url = urls.ORDER_CONFIRM
         url = f"{url}/{confirmation_id};jsessionid={session_id}"
-
-        params = {
-            "intAccount": int_account,
-            "sessionId": session_id,
-        }
-
-        order_dict = cls.order_to_api(order=order)
-
+        params = {"intAccount": int_account, "sessionId": session_id}
+        json_map = cls.build_json_map(order=order)
         request = requests.Request(
             method="POST",
             url=url,
-            json=order_dict,
+            json=json_map,
             params=params,
         )
         prepped = session.prepare_request(request)
-        response_raw = None
+        start_ns = time.perf_counter_ns()
 
         try:
-            response_raw = session.send(prepped)
-            response_raw.raise_for_status()
-            response_dict = response_raw.json()
-        except requests.HTTPError as e:
-            status_code = getattr(response_raw, "status_code", "No status_code found.")
-            text = getattr(response_raw, "text", "No text found.")
-            logger.fatal(status_code)
-            logger.fatal(text)
+            response = session.send(prepped)
+            duration_ns = time.perf_counter_ns() - start_ns
+            response.raise_for_status()
+
             if raw is True:
-                response_dict = response_raw.json()
-                logger.fatal(response_dict)
-                return response_dict
+                model = loads(response.text)
             else:
-                return None
+                model = cls.build_model(
+                    response=response,
+                    duration_ns=duration_ns,
+                )
+            return model
+        except requests.HTTPError as e:
+            logger.fatal(e)
+            if isinstance(e.response, requests.Response):
+                logger.fatal(e.response.text)
+            return None
         except Exception as e:
             logger.fatal(e)
-            return None
-
-        if (
-            isinstance(response_dict, dict)
-            and "data" in response_dict
-            and "orderId" in response_dict["data"]
-        ):
-            order.id = response_dict["data"]["orderId"]
-
-            if raw is True:
-                return response_dict
-            else:
-                return cls.confirmation_response_to_grpc(
-                    payload=response_dict,
-                )
-        else:
             return None
 
     def call(
@@ -170,7 +105,7 @@ class ActionConfirmOrder(AbstractAction):
         confirmation_id: str,
         order: Order,
         raw: bool = False,
-    ) -> Union[Order.ConfirmationResponse, dict, None]:
+    ) -> ConfirmationResponse | dict | None:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
         credentials = self.credentials

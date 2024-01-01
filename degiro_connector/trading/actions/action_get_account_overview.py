@@ -1,6 +1,5 @@
 import datetime
 import logging
-from typing import Union
 
 import requests
 from google.protobuf import json_format
@@ -54,7 +53,7 @@ class ActionGetAccountOverview(AbstractAction):
         raw: bool = False,
         session: requests.Session | None = None,
         logger: logging.Logger | None = None,
-    ) -> Union[AccountOverview, dict, None]:
+    ) -> AccountOverview | dict | None:
         """Retrieve information about the account.
         Args:
             request (AccountOverview.Request):
@@ -132,7 +131,7 @@ class ActionGetAccountOverview(AbstractAction):
         self,
         request: AccountOverview.Request,
         raw: bool = False,
-    ) -> Union[AccountOverview, dict, None]:
+    ) -> AccountOverview | dict | None:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
         session = self.session_storage.session

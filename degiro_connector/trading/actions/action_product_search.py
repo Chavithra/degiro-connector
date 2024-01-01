@@ -1,5 +1,5 @@
 import logging
-from typing import Union
+
 
 import requests
 from orjson import loads
@@ -55,7 +55,7 @@ class ActionProductSearch(AbstractAction):
         raw: bool = False,
         session: requests.Session | None = None,
         logger: logging.Logger | None = None,
-    ) -> Union[ProductBatch, dict, None]:
+    ) -> ProductBatch | dict | None:
         """Search products.
         Args:
             request (StockList.Request):
@@ -138,7 +138,7 @@ class ActionProductSearch(AbstractAction):
         self,
         product_request: ProductRequest,
         raw: bool = False,
-    ) -> Union[ProductBatch, dict, None]:
+    ) -> ProductBatch | dict | None:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
         session = self.session_storage.session

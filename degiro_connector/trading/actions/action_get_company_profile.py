@@ -1,29 +1,15 @@
 import logging
-from typing import Union
 
 import requests
-from google.protobuf import json_format
+from orjson import loads
 
 from degiro_connector.core.constants import urls
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
 from degiro_connector.trading.models.credentials import Credentials
-from degiro_connector.trading.models.trading_pb2 import (
-    CompanyProfile,
-)
+from degiro_connector.trading.models.company import CompanyProfile
 
 
 class ActionGetCompanyProfile(AbstractAction):
-    @staticmethod
-    def company_profile_to_grpc(payload: dict) -> CompanyProfile:
-        company_profile = CompanyProfile()
-        json_format.ParseDict(
-            js_dict={"values": payload["data"]},
-            message=company_profile,
-            ignore_unknown_fields=False,
-            descriptor_pool=None,
-        )
-        return company_profile
-
     @classmethod
     def get_company_profile(
         cls,
@@ -33,7 +19,7 @@ class ActionGetCompanyProfile(AbstractAction):
         raw: bool = False,
         session: requests.Session | None = None,
         logger: logging.Logger | None = None,
-    ) -> Union[CompanyProfile, dict, None]:
+    ) -> CompanyProfile | dict | None:
         if logger is None:
             logger = cls.build_logger()
         if session is None:
@@ -51,22 +37,24 @@ class ActionGetCompanyProfile(AbstractAction):
         prepped = session.prepare_request(request)
         prepped.headers["cookie"] = "JSESSIONID=" + session_id
 
-        response_raw = None
-
         try:
-            response_raw = session.send(prepped)
-            response_raw.raise_for_status()
-            response_dict = response_raw.json()
+            response = session.send(prepped)
+            response.raise_for_status()
 
             if raw is True:
-                return response_dict
+                response_map = loads(response.text)
             else:
-                return cls.company_profile_to_grpc(
-                    payload=response_dict,
+                response_map = CompanyProfile.model_validate_json(
+                    json_data=response.text
                 )
+
+            return response_map
+        except requests.HTTPError as e:
+            logger.fatal(e)
+            if isinstance(e.response, requests.Response):
+                logger.fatal(e.response.text)
+            return None
         except Exception as e:
-            logger.fatal("error")
-            logger.fatal(response_raw)
             logger.fatal(e)
             return None
 
@@ -74,7 +62,7 @@ class ActionGetCompanyProfile(AbstractAction):
         self,
         product_isin: str,
         raw: bool = False,
-    ) -> Union[CompanyProfile, dict, None]:
+    ) -> CompanyProfile | dict | None:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
         session = self.session_storage.session

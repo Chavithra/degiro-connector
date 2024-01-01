@@ -1,5 +1,5 @@
 import logging
-from typing import Union
+
 
 import requests
 from google.protobuf import json_format
@@ -59,7 +59,7 @@ class ActionGetAgenda(AbstractAction):
         raw: bool = False,
         session: requests.Session | None = None,
         logger: logging.Logger | None = None,
-    ) -> Union[Agenda, dict, None]:
+    ) -> Agenda | dict | None:
         if logger is None:
             logger = cls.build_logger()
         if session is None:
@@ -102,7 +102,7 @@ class ActionGetAgenda(AbstractAction):
         self,
         request: Agenda.Request,
         raw: bool = False,
-    ) -> Union[Agenda, dict, None]:
+    ) -> Agenda | dict | None:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
         session = self.session_storage.session

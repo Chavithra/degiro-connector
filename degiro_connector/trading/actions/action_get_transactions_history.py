@@ -1,6 +1,6 @@
 import datetime
 import logging
-from typing import Union
+
 
 import requests
 from google.protobuf import json_format
@@ -54,7 +54,7 @@ class ActionGetTransactionsHistory(AbstractAction):
         raw: bool = False,
         session: requests.Session | None = None,
         logger: logging.Logger | None = None,
-    ) -> Union[TransactionsHistory, dict, None]:
+    ) -> TransactionsHistory | dict | None:
         """Retrieve history about transactions.
         Args:
             request (TransactionsHistory.Request):
@@ -133,7 +133,7 @@ class ActionGetTransactionsHistory(AbstractAction):
         self,
         request: TransactionsHistory.Request,
         raw: bool = False,
-    ) -> Union[TransactionsHistory, dict, None]:
+    ) -> TransactionsHistory | dict | None:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
         session = self.session_storage.session

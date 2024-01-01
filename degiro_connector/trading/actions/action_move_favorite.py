@@ -56,7 +56,9 @@ class ActionMoveFavorite(AbstractAction):
         }
 
         json_obj = FavoritePosition(list_id=list_id, position=position).model_dump(
-            mode="python", by_alias=True, exclude_none=True
+            by_alias=True,
+            exclude_none=True,
+            mode="json",
         )
 
         request = requests.Request(

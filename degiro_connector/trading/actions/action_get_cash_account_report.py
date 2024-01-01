@@ -1,6 +1,6 @@
 import datetime
 import logging
-from typing import Union
+
 
 import requests
 
@@ -54,7 +54,7 @@ class ActionGetCashAccountReport(AbstractAction):
         raw: bool = False,
         session: requests.Session | None = None,
         logger: logging.Logger | None = None,
-    ) -> Union[CashAccountReport, str, None]:
+    ) -> CashAccountReport | str | None:
         """Retrieve information about the account in a specific format.
         Args:
             request (CashAccountReport.Request):
@@ -137,7 +137,7 @@ class ActionGetCashAccountReport(AbstractAction):
         self,
         request: CashAccountReport.Request,
         raw: bool = False,
-    ) -> Union[CashAccountReport, str, None]:
+    ) -> CashAccountReport | str | None:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
         session = self.session_storage.session

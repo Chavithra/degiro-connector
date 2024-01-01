@@ -69,7 +69,11 @@ class ActionConnect(AbstractAction):
             query_tarams={},
             one_time_password=one_time_password,
         )
-        payload = login.model_dump(mode="python", by_alias=True, exclude_none=True)
+        payload = login.model_dump(
+            by_alias=True,
+            exclude_none=True,
+            mode="json",
+        )
         request = requests.Request(
             method="POST",
             url=url,

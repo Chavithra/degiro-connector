@@ -1,6 +1,5 @@
 import requests
 import logging
-from typing import Union
 
 
 from degiro_connector.core.constants import urls
@@ -148,7 +147,7 @@ class ActionGetUpdate(AbstractAction):
         logger: logging.Logger | None = None,
         raw: bool = False,
         session: requests.Session | None = None,
-    ) -> Union[Update, dict, None]:
+    ) -> Update | dict | None:
         """Retrieve information from Degiro's Trading Update endpoint.
         Args:
             request (Update.RequestList):
@@ -242,7 +241,7 @@ class ActionGetUpdate(AbstractAction):
         self,
         request_list: Update.RequestList,
         raw: bool = False,
-    ) -> Union[Update, dict, None]:
+    ) -> Update | dict | None:
         credentials = self.credentials
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id

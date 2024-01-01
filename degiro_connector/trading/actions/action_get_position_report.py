@@ -1,6 +1,6 @@
 import datetime
 import logging
-from typing import Union
+
 
 import requests
 
@@ -49,7 +49,7 @@ class ActionGetPositionReport(AbstractAction):
         raw: bool = False,
         session: requests.Session | None = None,
         logger: logging.Logger | None = None,
-    ) -> Union[PositionReport, str, None]:
+    ) -> PositionReport | str | None:
         """Retrieve information about the account in a specific format.
         Args:
             request (PositionReport.Request):
@@ -126,7 +126,7 @@ class ActionGetPositionReport(AbstractAction):
         self,
         request: PositionReport.Request,
         raw: bool = False,
-    ) -> Union[PositionReport, str, None]:
+    ) -> PositionReport | str | None:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
         session = self.session_storage.session

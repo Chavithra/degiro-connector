@@ -1,5 +1,5 @@
 import logging
-from typing import Union
+
 
 import requests
 from google.protobuf import json_format
@@ -31,7 +31,7 @@ class ActionGetEstimatesSummaries(AbstractAction):
         raw: bool = False,
         session: requests.Session | None = None,
         logger: logging.Logger | None = None,
-    ) -> Union[EstimatesSummaries, dict, None]:
+    ) -> EstimatesSummaries | dict | None:
         if logger is None:
             logger = cls.build_logger()
         if session is None:
@@ -72,7 +72,7 @@ class ActionGetEstimatesSummaries(AbstractAction):
         self,
         product_isin: str,
         raw: bool = False,
-    ) -> Union[EstimatesSummaries, dict, None]:
+    ) -> EstimatesSummaries | dict | None:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
         session = self.session_storage.session

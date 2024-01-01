@@ -10,14 +10,6 @@ from degiro_connector.trading.models.favorite import FavoriteId, FavoriteName
 
 class ActionCreateFavorite(AbstractAction):
     @classmethod
-    def favorite_to_api(cls, name: str) -> dict[str, str]:
-        return {"name": name}
-
-    @classmethod
-    def api_to_favorite_id(cls, response_dict: dict[str, int]) -> int:
-        return response_dict["data"]
-
-    @classmethod
     def create_favorite(
         cls,
         name: str,
@@ -60,15 +52,17 @@ class ActionCreateFavorite(AbstractAction):
             "sessionId": session_id,
         }
 
-        json_obj = FavoriteName(name=name).model_dump(
-            mode="python", by_alias=True, exclude_none=True
+        json_map = FavoriteName(name=name).model_dump(
+            by_alias=True,
+            exclude_none=True,
+            mode="json",
         )
 
         request = requests.Request(
             method="POST",
             url=url,
             params=params,
-            json=json_obj,
+            json=json_map,
         )
         prepped = session.prepare_request(request)
 
@@ -76,9 +70,7 @@ class ActionCreateFavorite(AbstractAction):
         try:
             response = session.send(prepped)
             response.raise_for_status()
-            favorite_id = FavoriteId.model_validate_json(
-                json_data=response.text
-            ).data
+            favorite_id = FavoriteId.model_validate_json(json_data=response.text).data
         except requests.HTTPError as e:
             logger.fatal(e)
             if isinstance(e.response, requests.Response):

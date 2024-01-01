@@ -1,5 +1,5 @@
 import logging
-from typing import Union
+
 
 import requests
 from orjson import loads
@@ -20,7 +20,7 @@ class ActionGetNewsByCompany(AbstractAction):
         raw: bool = False,
         session: requests.Session | None = None,
         logger: logging.Logger | None = None,
-    ) -> Union[NewsBatch, dict, None]:
+    ) -> NewsBatch | dict | None:
         if logger is None:
             logger = cls.build_logger()
         if session is None:
@@ -29,7 +29,9 @@ class ActionGetNewsByCompany(AbstractAction):
         url = urls.NEWS_BY_COMPANY
 
         params = news_request.model_dump(
-            mode="python", by_alias=True, exclude_none=True
+            by_alias=True,
+            exclude_none=True,
+            mode="json",
         )
         params["intAccount"] = credentials.int_account
         params["sessionId"] = session_id
@@ -61,7 +63,7 @@ class ActionGetNewsByCompany(AbstractAction):
         self,
         news_request: NewsRequest,
         raw: bool = False,
-    ) -> Union[NewsBatch, dict, None]:
+    ) -> NewsBatch | dict | None:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
         session = self.session_storage.session

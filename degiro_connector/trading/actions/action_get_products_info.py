@@ -1,5 +1,5 @@
 import logging
-from typing import Union
+
 
 import requests
 from google.protobuf import json_format
@@ -50,7 +50,7 @@ class ActionGetProductsInfo(AbstractAction):
         raw: bool = False,
         session: requests.Session | None = None,
         logger: logging.Logger | None = None,
-    ) -> Union[ProductsInfo, dict, None]:
+    ) -> ProductsInfo | dict | None:
         """Search for products using their ids.
         Args:
             request (ProductsInfo.Request):
@@ -124,7 +124,7 @@ class ActionGetProductsInfo(AbstractAction):
         self,
         request: ProductsInfo.Request,
         raw: bool = False,
-    ) -> Union[ProductsInfo, dict, None]:
+    ) -> ProductsInfo | dict | None:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
         session = self.session_storage.session
