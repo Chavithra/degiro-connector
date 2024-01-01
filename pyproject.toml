@@ -24,7 +24,6 @@ polars = "^0.20.2"
 grpcio = "^1.51.1"
 protobuf = "^4.21.12"
 wrapt = "^1.14.1"
-pandas = "^2.1.4"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^3.9.2"
