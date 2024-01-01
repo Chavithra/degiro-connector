@@ -1,18 +1,15 @@
-# IMPORTATION STANDARD
 import logging
 from datetime import datetime
 from typing import Any
 
-# IMPORTATION THIRD PARTY
 import json
 import pandas as pd
 import requests
 from google.protobuf import json_format
 from google.protobuf.message import Message
 
-# IMPORTATION INTERNAL
 from degiro_connector.core.constants import urls
-from degiro_connector.quotecast.models.chart import Chart, ChartRequest, ChartSerie
+from degiro_connector.quotecast.models.chart import Chart, ChartRequest, Series
 from degiro_connector.core.models.model_connection import ModelConnection
 from degiro_connector.core.models.model_session import ModelSession
 
@@ -105,23 +102,23 @@ class ChartHelper:
         return interval
 
     @classmethod
-    def format_serie(cls, serie: ChartSerie, copy: bool = True) -> ChartSerie:
+    def format_serie(cls, serie: Series, copy: bool = True) -> Series:
         """By default a time serie uses the order as index.
         This method convert the indexes into `timestamp in seconds`.
         Args:
-            serie (ChartSerie):
+            serie (Series):
                 Serie to format.
             copy (bool, optional):
                 Whether or not to make a copy before the formatting.
                 Defaults to True.
 
         Returns:
-            ChartSerie: [description]
+            Series: [description]
         """
         if copy:
             serie = serie.model_copy()
 
-        if serie.type in ["time", "ohlc"]:
+        if serie.type in ["time"]:
             times = serie.times
             if times:
                 start = cls.parse_start_timestamp(times=times)
@@ -167,7 +164,7 @@ class ChartHelper:
         )
 
     @classmethod
-    def serie_to_df(cls, serie: ChartSerie) -> pd.DataFrame:
+    def serie_to_df(cls, serie: Series) -> pd.DataFrame:
         """Converts a timeserie into a DataFrame.
         Only series with the following types can be converted into DataFrame :
         - serie.type == "time"
@@ -176,7 +173,7 @@ class ChartHelper:
          - serie.type == "object"
         These are not actual timeseries and can't converted into DataFrame.
         Args:
-            serie (ChartSerie):
+            serie (Series):
                 The serie to convert.
         Raises:
             AttributeError:
@@ -237,24 +234,20 @@ class ChartFetcher:
         return self._session_storage
 
     @staticmethod
-    def build_request_map(
+    def build_params(
         chart_request: ChartRequest,
         user_token: int,
     ) -> dict[str, Any]:
-        request_map = chart_request.model_dump(
+        chart_request.user_token = chart_request.user_token or user_token
+        params = chart_request.model_dump(
+            by_alias=True,
             exclude={"override"},
+            exclude_none=True,
             mode="json",
         )
-        request_map.update(
-            {
-                "format": "json",
-                "callback": "vwd.hchart.seriesRequestManager.sync_response",
-                "userToken": user_token,
-            }
-        )
-        request_map.update(chart_request.override)
+        params.update(chart_request.override)
 
-        return request_map
+        return params
 
     def get_chart(
         self,
@@ -262,7 +255,6 @@ class ChartFetcher:
         logger: logging.Logger | None = None,
         raw: bool = False,
         session: requests.Session | None = None,
-        call_back: str = "vwd.hchart.seriesRequestManager.sync_response",
     ) -> Chart | None:
         """Fetches chart's data.
         Args:
@@ -317,19 +309,18 @@ class ChartFetcher:
             session = self.build_session()
 
         url = urls.CHART
-        params = self.build_request_map(
+        params = self.build_params(
             chart_request=chart_request,
             user_token=user_token,
         )
 
         http_request = requests.Request(method="GET", url=url, params=params)
         prepped = session.prepare_request(http_request)
-        response_raw = None
 
         try:
-            response_raw = session.send(prepped)
-            response_raw.raise_for_status()
-            response_map = json.loads(response_raw.text[len(call_back) + 1 : -1])
+            response = session.send(prepped)
+            response.raise_for_status()
+            response_map = json.loads(response.text[len(chart_request.callback) + 1 : -1])
 
             if raw is True:
                 chart = response_map
@@ -338,11 +329,9 @@ class ChartFetcher:
 
             return chart
         except requests.HTTPError as e:
-            status_code = getattr(response_raw, "status_code", "No status_code found.")
-            text = getattr(response_raw, "text", "No text found.")
             logger.fatal(e)
-            logger.fatal(status_code)
-            logger.fatal(text)
+            if isinstance(e.response, requests.Response):
+                logger.fatal(e.response.text)
             return None
         except Exception as e:
             logger.fatal(e)

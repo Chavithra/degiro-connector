@@ -201,7 +201,7 @@ class TickerFetcher:
         """Adds/removes metric from the data-stream.
         Args:
             ticker_request (TickerRequest):
-                List of subscriptions & unsubscriptions to do.
+                list of subscriptions & unsubscriptions to do.
                 Example :
                     ticker_request: TickerRequest = TickerRequest(
                         request_type="subscription",

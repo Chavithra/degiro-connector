@@ -1,12 +1,9 @@
-# IMPORTATION STANDARD
 import logging
 import pkgutil
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Callable
 
-# IMPORTATION THIRD PARTY
 
-# IMPORTATION INTERNAL
 from degiro_connector.core.constants import timeouts
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
 from degiro_connector.core.helpers.lazy_loader import InitArgs, LazyLoader, Pair
@@ -21,7 +18,7 @@ class API:
     ROOT_PATH = Path(__file__).absolute().parent.parent.parent.resolve()
 
     @classmethod
-    def build_action_list(cls) -> List[str]:
+    def build_action_list(cls) -> list[str]:
         # SETUP PATH
         path = cls.PKG_PATH
         path = str(Path(cls.ROOT_PATH, *path.split(".")).resolve())
@@ -38,7 +35,7 @@ class API:
         return action_list
 
     @property
-    def action_list(self) -> List[str]:
+    def action_list(self) -> list[str]:
         return self._action_list
 
     @property
@@ -46,7 +43,7 @@ class API:
         return self._connection_storage
 
     @property
-    def credentials(self) -> Dict[str, Any]:
+    def credentials(self) -> dict[str, Any]:
         return self._credentials
 
     @property
@@ -57,7 +54,7 @@ class API:
         self,
         action: str,
         init_args: InitArgs | None = None,
-    ) -> Optional[object]:
+    ) -> object | None:
         logger = self._logger
         action_list = self._action_list
 
@@ -127,7 +124,7 @@ class API:
         logger.debug("setup_one_action : %s", action)
         setattr(self, action, action_instance)
 
-    def __getattr__(self, item):
+    def __getattr__(self, item) -> Callable[..., Any]:
         logger = self._logger
         logger.debug("CALLING __GETATTR__, on item : %s", item)
         if item in self._action_list:
@@ -135,3 +132,5 @@ class API:
             self.setup_one_action(action=action)
 
             return getattr(self, action)
+
+        raise AttributeError(f"'{self.__class__.__name__}' object has no attribute '{item}'")
