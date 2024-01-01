@@ -18,8 +18,8 @@ Here are the features you can access through this library :
 |CompanyRatios|Retrieve a company's ratios using its ISIN code.|
 |Config|Retrieve a table containing : "clientId" and URLs which are constitutive of Degiro's API.|
 |EstimatesSummaries|Retrieve a company's estimates summaries using its ISIN code.|
-|FavouritesList|Add/Delete/Retrieve favourites lists.|
-|FavouritesListProducts|Add/Update favourites lists content.|
+|Favourites|Add/Delete/Retrieve favourites lists.|
+|FavouritesProducts|Add/Update products associated with a favourite list.|
 |FinancialStatements|Retrieve a company's financial statements using its ISIN code.|
 |LatestNews|Retrieve latest news about all the companies.|
 |LoginQuotecast|Establish a connection for quotecast operations.|
@@ -109,21 +109,22 @@ pip uninstall degiro-connector
   * [6.6. How to export the table : PositionReport ?](#66-how-to-export-the-table--positionreport-)
 - [7. Products](#7-products)
   * [7.1. How to get the table : ProductsConfig ?](#71-how-to-get-the-table--productsconfig-)
-  * [7.2. How to get my favourite products ?](#72-how-to-get-my-favourite-products-)
-  * [7.3. How to lookup products (search by name) ?](#73-how-to-lookup-products-search-by-name-)
-  * [7.4. How to search bonds ?](#74-how-to-search-bonds-)
-  * [7.5. How to search etfs ?](#75-how-to-search-etfs-)
-  * [7.6. How to search funds ?](#76-how-to-search-funds-)
-  * [7.7. How to search futures ?](#77-how-to-search-futures-)
-  * [7.8. How to search leverageds ?](#78-how-to-search-leverageds-)
-  * [7.9. How to search options ?](#79-how-to-search-options-)
-  * [7.10. How to search stocks ?](#710-how-to-search-stocks-)
-  * [7.11. How to search warrants ?](#711-how-to-search-warrants-)
-  * [7.12. How to search products from ids ?](#712-how-to-search-products-from-ids-)
+  * [7.2. How to lookup products (search by name) ?](#72-how-to-lookup-products-search-by-name-)
+  * [7.3. How to search bonds ?](#73-how-to-search-bonds-)
+  * [7.4. How to search etfs ?](#74-how-to-search-etfs-)
+  * [7.5. How to search funds ?](#75-how-to-search-funds-)
+  * [7.6. How to search futures ?](#76-how-to-search-futures-)
+  * [7.7. How to search leverageds ?](#77-how-to-search-leverageds-)
+  * [7.8. How to search options ?](#78-how-to-search-options-)
+  * [7.9. How to search stocks ?](#79-how-to-search-stocks-)
+  * [7.10. How to search warrants ?](#710-how-to-search-warrants-)
+  * [7.11. How to search products from ids ?](#711-how-to-search-products-from-ids-)
+  * [7.12. How to get my favourite products ?](#712-how-to-get-my-favourite-products-)
   * [7.13. How to create a favourite list ?](#713-how-to-create-a-favourite-list-)
   * [7.14. How to delete a favourite list ?](#714-how-to-delete-a-favourite-list-)
-  * [7.15. How to put favourite list products ?](#715-how-to-put-favourite-list-products-)
-  * [7.16. How to delete favourite list products ?](#716-how-to-delete-favourite-list-products-)
+  * [7.15. How to move a favourite list ?](#715-how-to-move-a-favourite-list-)
+  * [7.16. How to put favourite list products ?](#716-how-to-put-favourite-list-products-)
+  * [7.17. How to delete favourite list products ?](#717-how-to-delete-favourite-list-products-)
 - [8. Companies](#8-companies)
   * [8.1. How to get : CompanyProfile ?](#81-how-to-get--companyprofile-)
   * [8.2. How to get : CompanyRatios ?](#82-how-to-get--companyratios-)
@@ -581,7 +582,7 @@ Check the section related to **int_account** to understand how to get yours.
 
 Here is how to connect :
 ```python
-# SETUP CREDENTIALS
+
 credentials = Credentials(
     username = YOUR_USERNAME,
     password = YOUR_PASSWORD,
@@ -683,7 +684,7 @@ See the section about **totp_secret_key** to understand how to get yours.
 
 Here is an example of connection with the **totp_secret_key** :
 ```python
-# SETUP CREDENTIALS
+
 credentials = Credentials(
     username=YOUR_USERNAME,
     password=YOUR_PASSWORD,
@@ -707,7 +708,7 @@ Provide a new **one_time_password** at each connection.
 
 Here is an example of connection with the **one_time_password** :
 ```python
-# SETUP CREDENTIALS
+
 credentials = Credentials(
     username=YOUR_USERNAME,
     password=YOUR_PASSWORD,
@@ -1409,19 +1410,7 @@ products_config = trading_api.get_products_config()
 For a more comprehensive example :
 [products_config.py](examples/trading/products_config.py)
 
-## 7.2. How to get my favourite products ?
-
-Here is how to get this data :
-
-```python
-# FETCH DATA
-favourites_list = trading_api.get_favourites_list()
-```
-
-For a more comprehensive example :
-[favourites_list.py](examples/trading/favourites_list.py)
-
-## 7.3. How to lookup products (search by name) ?
+## 7.2. How to lookup products (search by name) ?
 
 Text research on a financial product.
 
@@ -1443,7 +1432,7 @@ products_lookup = trading_api.product_search(product_request=product_request)
 For a more comprehensive example :
 [product_lookup.py](examples/trading/product_lookup.py)
 
-## 7.4. How to search bonds ?
+## 7.3. How to search bonds ?
 
 Here is how to get this data :
 
@@ -1468,7 +1457,7 @@ bond_list = trading_api.product_search(product_request=product_request)
 For a more comprehensive example :
 [product_search.py](examples/trading/product_search.py)
 
-## 7.5. How to search etfs ?
+## 7.4. How to search etfs ?
 
 Here is how to get this data :
 
@@ -1494,7 +1483,7 @@ etf_list = trading_api.product_search(product_request=product_request)
 For a more comprehensive example :
 [product_search.py](examples/trading/product_search.py)
 
-## 7.6. How to search funds ?
+## 7.5. How to search funds ?
 
 Here is how to get this data :
 
@@ -1516,7 +1505,7 @@ fund_list = trading_api.product_search(product_request=product_request)
 For a more comprehensive example :
 [product_search.py](examples/trading/product_search.py)
 
-## 7.7. How to search futures ?
+## 7.6. How to search futures ?
 
 Here is how to get this data :
 
@@ -1541,7 +1530,7 @@ fund_list = trading_api.product_search(product_request=product_request)
 For a more comprehensive example :
 [product_search.py](examples/trading/product_search.py)
 
-## 7.8. How to search leverageds ?
+## 7.7. How to search leverageds ?
 
 Here is how to get this data :
 
@@ -1567,7 +1556,7 @@ etf_list = trading_api.product_search(product_request=product_request)
 For a more comprehensive example :
 [product_search.py](examples/trading/product_search.py)
 
-## 7.9. How to search options ?
+## 7.8. How to search options ?
 Here is how to get this data :
 
 ```python
@@ -1593,7 +1582,7 @@ option_list = trading_api.product_search(product_request=product_request)
 For a more comprehensive example :
 [product_search.py](examples/trading/product_search.py)
 
-## 7.10. How to search stocks ?
+## 7.9. How to search stocks ?
 
 It contains information about available stocks.
 
@@ -1624,7 +1613,7 @@ stock_list = trading_api.product_search(product_request=product_request)
 For a more comprehensive example :
 [product_search.py](examples/trading/product_search.py)
 
-## 7.11. How to search warrants ?
+## 7.10. How to search warrants ?
 
 Here is how to get this data :
 
@@ -1646,7 +1635,7 @@ warrant_list = trading_api.product_search(product_request=product_request)
 For a more comprehensive example :
 [product_search.py](examples/trading/product_search.py)
 
-## 7.12. How to search products from ids ?
+## 7.11. How to search products from ids ?
 
 Here is how to get this data :
 
@@ -1665,12 +1654,23 @@ products_info = trading_api.get_products_info(
 For a more comprehensive example :
 [products_info.py](examples/trading/products_info.py)
 
+## 7.12. How to get my favourite products ?
+
+Here is how to get this data :
+
+```python
+favourites_batch = trading_api.get_favourites()
+```
+
+For a more comprehensive example :
+[favourite_list_get.py](examples/trading/favourite_list_get.py)
+
 ## 7.13. How to create a favourite list ?
 
 Example :
 
 ```python
-favorite_list_id = trading_api.create_favourite_list(name="SOME_NAME")
+favourite_list_id = trading_api.create_favourite_list(name="SOME_NAME")
 ```
 
 For a more comprehensive example :
@@ -1687,7 +1687,21 @@ success = trading_api.delete_favourite_list(id=1234567)
 For a more comprehensive example :
 [favourite_list_delete.py](examples/trading/favourite_list_delete.py)
 
-## 7.15. How to put favourite list products ?
+## 7.15. How to move a favourite list ?
+
+Example :
+
+```python
+success = trading_api.move_favourite(
+    list_id=1234567,
+    position=1,
+)
+```
+
+For a more comprehensive example :
+[favourite_list_move.py](examples/trading/favourite_list_move.py)
+
+## 7.16. How to put favourite list products ?
 
 Example :
 
@@ -1701,7 +1715,7 @@ success = trading_api.put_favourite_list_product(
 For a more comprehensive example :
 [favourite_list_put_product.py](examples/trading/favourite_list_put_product.py)
 
-## 7.16. How to delete favourite list products ?
+## 7.17. How to delete favourite list products ?
 
 Example :
 
