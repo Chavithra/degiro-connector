@@ -1748,29 +1748,29 @@ favorites_batch = trading_api.get_favorites()
 ```
 
 For a more comprehensive example :
-[favorite_list_get.py](examples/trading/favorite_list_get.py)
+[favorite_get.py](examples/trading/favorite_get.py)
 
 ## 7.13. How to create a favorite list ?
 
 Example :
 
 ```python
-favorite_list_id = trading_api.create_favorite_list(name="SOME_NAME")
+favorite_id = trading_api.create_favorite(name="SOME_NAME")
 ```
 
 For a more comprehensive example :
-[favorite_list_create.py](examples/trading/favorite_list_create.py)
+[favorite_create.py](examples/trading/favorite_create.py)
 
 ## 7.14. How to delete a favorite list ?
 
 Example :
 
 ```python
-success = trading_api.delete_favorite_list(id=1234567)
+success = trading_api.delete_favorite(id=1234567)
 ```
 
 For a more comprehensive example :
-[favorite_list_delete.py](examples/trading/favorite_list_delete.py)
+[favorite_delete.py](examples/trading/favorite_delete.py)
 
 ## 7.15. How to move a favorite list ?
 
@@ -1784,35 +1784,35 @@ success = trading_api.move_favorite(
 ```
 
 For a more comprehensive example :
-[favorite_list_move.py](examples/trading/favorite_list_move.py)
+[favorite_move.py](examples/trading/favorite_move.py)
 
 ## 7.16. How to put favorite list products ?
 
 Example :
 
 ```python
-success = trading_api.put_favorite_list_product(
+success = trading_api.put_favorite_product(
     id=1234567,
     product_id=1234567,
 )
 ```
 
 For a more comprehensive example :
-[favorite_list_put_product.py](examples/trading/favorite_list_put_product.py)
+[favorite_put_product.py](examples/trading/favorite_put_product.py)
 
 ## 7.17. How to delete favorite list products ?
 
 Example :
 
 ```python
-success = trading_api.delete_favorite_list_product(
+success = trading_api.delete_favorite_product(
     id=1234567,
     product_id=1234567,
 )
 ```
 
 For a more comprehensive example :
-[favorite_list_delete product.py](examples/trading/favorite_list_delete product.py)
+[favorite_delete product.py](examples/trading/favorite_delete product.py)
 
 # 8. Companies
 
