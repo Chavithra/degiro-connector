@@ -18,7 +18,7 @@ Here are the features you can access through this library :
 |CompanyRatios|Retrieve a company's ratios using its ISIN code.|
 |Config|Retrieve a table containing : "clientId" and URLs which are constitutive of Degiro's API.|
 |EstimatesSummaries|Retrieve a company's estimates summaries using its ISIN code.|
-|Favorites|Add/Delete/Retrieve favorites lists.|
+|Favorites|Add/Delete/Prioritize/Retrieve favorites lists.|
 |FavoritesProducts|Add/Update products associated with a favorite list.|
 |FinancialStatements|Retrieve a company's financial statements using its ISIN code.|
 |LatestNews|Retrieve latest news about all the companies.|
@@ -1329,13 +1329,15 @@ It will provide a list of cash movements.
 Here is how to get this data :
 
 ```python
-# SETUP REQUEST
-from_date = AccountOverview.Request.Date(year=2020,month=11,day=15)
-to_date = AccountOverview.Request.Date(year=2020,month=10,day=15)
-request = AccountOverview.Request(from_date=from_date, to_date=to_date)
+overview_request = OverviewRequest(
+    from_date=date(year=date.today().year-1, month=1, day=1),
+    to_date=date.today(),
+)
 
-# FETCH DATA
-account_overview = trading_api.get_account_overview(request=request)
+account_overview = trading_api.get_account_overview(
+    overview_request=overview_request,
+    raw=False,
+)
 ```
 
 For a more comprehensive example :
