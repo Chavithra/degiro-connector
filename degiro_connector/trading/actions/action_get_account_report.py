@@ -9,7 +9,7 @@ from degiro_connector.trading.models.credentials import Credentials
 from degiro_connector.trading.models.account import Report, ReportRequest
 
 
-class ActionGetCashAccountReport(AbstractAction):
+class ActionGetAccountReport(AbstractAction):
     @staticmethod
     def build_model(report_request: ReportRequest, response: requests.Response) -> Report:
         model = Report(
