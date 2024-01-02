@@ -21,8 +21,6 @@ onetimepass = "^1.0.1"
 requests = "^2.31.0"
 pydantic = "^2.0.3"
 polars = "^0.20.2"
-grpcio = "^1.51.1"
-protobuf = "^4.21.12"
 wrapt = "^1.14.1"
 orjson = "^3.9.10"
 
