@@ -5,8 +5,10 @@ from pydantic.alias_generators import to_camel
 class FavoriteName(BaseModel):
     name: str
 
+
 class FavoriteId(BaseModel):
     data: int
+
 
 class FavoritePosition(BaseModel):
     model_config = ConfigDict(

@@ -1,7 +1,7 @@
-
 from datetime import date
 from pydantic import BaseModel, ConfigDict, Field
 from pydantic.alias_generators import to_camel
+
 
 class LoginSuccess(BaseModel):
     model_config = ConfigDict(
@@ -16,13 +16,14 @@ class LoginSuccess(BaseModel):
     status: int | None = Field(default=None)
     status_text: str | None = Field(default=None)
 
+
 class LoginError(BaseModel):
     model_config = ConfigDict(
         alias_generator=to_camel,
         populate_by_name=True,
     )
 
-    login_failures: int| None = Field(default=None)
+    login_failures: int | None = Field(default=None)
     error: str | None = Field(default=None)
     path: str | None = Field(default=None)
     status: int

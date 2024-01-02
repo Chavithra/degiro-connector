@@ -3,6 +3,7 @@ from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field
 from pydantic.alias_generators import to_camel
 
+
 class NewsRequest(BaseModel):
     isin: str
     limit: int = Field(default=10)
@@ -39,3 +40,34 @@ class NewsBatch(BaseModel):
 
 class BatchWrapper(BaseModel):
     data: NewsBatch
+
+
+class PreviewRequest(BaseModel):
+    limit: int = Field(default=20)
+    category: str | None = Field(default=None)
+
+
+class TopNewsPreview(BaseModel):
+    offset: int
+    items: list[dict]
+    total: int
+
+
+class PreviewWrapper(BaseModel):
+    data: TopNewsPreview
+
+
+class LatestRequest(BaseModel):
+    languages: str
+    limit: int
+    offset: int
+
+
+class LatestNews(BaseModel):
+    offset: int
+    items: list[dict]
+    total: int
+
+
+class LatestWrapper(BaseModel):
+    data: LatestNews

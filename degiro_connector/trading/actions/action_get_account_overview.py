@@ -1,53 +1,39 @@
-import datetime
 import logging
 
 import requests
-from google.protobuf import json_format
+from orjson import loads
 
 from degiro_connector.core.constants import urls
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
 from degiro_connector.trading.models.credentials import Credentials
-from degiro_connector.trading.models.trading_pb2 import (
+from degiro_connector.trading.models.account import (
     AccountOverview,
+    OverviewWrapper,
+    OverviewRequest,
 )
 
 
 class ActionGetAccountOverview(AbstractAction):
     @staticmethod
-    def account_overview_to_grpc(payload: dict) -> AccountOverview:
-        account_overview = AccountOverview()
-        account_overview.response_datetime.GetCurrentTime()
-        json_format.ParseDict(
-            js_dict={"values": payload["data"]},
-            message=account_overview,
-            ignore_unknown_fields=True,
-            descriptor_pool=None,
-        )
+    def build_model(response: requests.Response) -> AccountOverview:
+        model = OverviewWrapper.model_validate_json(json_data=response.text).data
 
-        return account_overview
+        return model
 
     @staticmethod
-    def account_overview_request_to_api(
-        request: AccountOverview.Request,
-    ) -> dict:
-        request_dict = dict()
-        request_dict["fromDate"] = datetime.datetime(
-            year=request.from_date.year,
-            month=request.from_date.month,
-            day=request.from_date.day,
-        ).strftime("%d/%m/%Y")
-        request_dict["toDate"] = datetime.datetime(
-            year=request.to_date.year,
-            month=request.to_date.month,
-            day=request.to_date.day,
-        ).strftime("%d/%m/%Y")
+    def build_params_map(overview_request: OverviewRequest) -> dict:
+        params_map = overview_request.model_dump(
+            by_alias=True,
+            exclude_none=True,
+            mode="json",
+        )
 
-        return request_dict
+        return params_map
 
     @classmethod
     def get_account_overview(
         cls,
-        request: AccountOverview.Request,
+        overview_request: OverviewRequest,
         session_id: str,
         credentials: Credentials,
         raw: bool = False,
@@ -59,19 +45,9 @@ class ActionGetAccountOverview(AbstractAction):
             request (AccountOverview.Request):
                 list of options that we want to retrieve from the endpoint.
                 Example :
-                    from_date = AccountOverview.Request.Date(
-                        year=2020,
-                        month=10,
-                        day=15,
-                    )
-                    from_date = AccountOverview.Request.Date(
-                        year=2020,
-                        month=10,
-                        day=16,
-                    )
-                    request = AccountOverview.Request(
-                        from_date=from_date,
-                        to_date=to_date,
+                    overview_request = OverviewRequest(
+                        from_date=date(year=2023, month=10, day=15),
+                        from_date=date(year=2024, month=1, day=1),
                     )
             session_id (str):
                 API's session id.
@@ -95,33 +71,27 @@ class ActionGetAccountOverview(AbstractAction):
         if session is None:
             session = cls.build_session()
 
+        int_account = credentials.int_account
         url = urls.ACCOUNT_OVERVIEW
-        params = cls.account_overview_request_to_api(
-            request=request,
-        )
-        params["intAccount"] = credentials.int_account
-        params["sessionId"] = session_id
+        params_map = cls.build_params_map(overview_request=overview_request)
+        params_map.update({"intAccount": int_account, "sessionId": session_id})
 
-        http_request = requests.Request(method="GET", url=url, params=params)
-        prepped = session.prepare_request(http_request)
-        response_raw = None
+        request = requests.Request(method="GET", url=url, params=params_map)
+        prepped = session.prepare_request(request=request)
 
         try:
-            response_raw = session.send(prepped)
-            response_raw.raise_for_status()
-            response_dict = response_raw.json()
+            response = session.send(prepped)
+            response.raise_for_status()
 
             if raw is True:
-                return response_dict
+                model = loads(response.text)
             else:
-                return cls.account_overview_to_grpc(
-                    payload=response_dict,
-                )
+                model = cls.build_model(response=response)
+            return model
         except requests.HTTPError as e:
-            status_code = getattr(response_raw, "status_code", "No status_code found.")
-            text = getattr(response_raw, "text", "No text found.")
-            logger.fatal(status_code)
-            logger.fatal(text)
+            logger.fatal(e)
+            if isinstance(e.response, requests.Response):
+                logger.fatal(e.response.text)
             return None
         except Exception as e:
             logger.fatal(e)
@@ -129,7 +99,7 @@ class ActionGetAccountOverview(AbstractAction):
 
     def call(
         self,
-        request: AccountOverview.Request,
+        overview_request: OverviewRequest,
         raw: bool = False,
     ) -> AccountOverview | dict | None:
         connection_storage = self.connection_storage
@@ -139,7 +109,7 @@ class ActionGetAccountOverview(AbstractAction):
         logger = self.logger
 
         return self.get_account_overview(
-            request=request,
+            overview_request=overview_request,
             session_id=session_id,
             credentials=credentials,
             raw=raw,

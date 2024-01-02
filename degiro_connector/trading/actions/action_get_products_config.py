@@ -2,38 +2,22 @@ import logging
 
 
 import requests
-from google.protobuf import json_format
+from orjson import loads
 
 from degiro_connector.core.constants import urls
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
 from degiro_connector.trading.models.credentials import Credentials
-from degiro_connector.trading.models.trading_pb2 import (
-    ProductSearch,
-)
 
 
 class ActionGetProductsConfig(AbstractAction):
-    @staticmethod
-    def products_config_to_grpc(payload: dict) -> ProductSearch.Config:
-        products_config = ProductSearch.Config()
-        json_format.ParseDict(
-            js_dict={"values": payload},
-            message=products_config,
-            ignore_unknown_fields=False,
-            descriptor_pool=None,
-        )
-
-        return products_config
-
     @classmethod
     def get_products_config(
         cls,
         session_id: str,
         credentials: Credentials,
-        raw: bool = False,
         session: requests.Session | None = None,
         logger: logging.Logger | None = None,
-    ) -> ProductSearch.Config | dict | None:
+    ) -> dict | None:
         """Fetch the product search config table.
         No credentials or logging seems to be required for this endpoint.
         Just adding the credentials and session_id because the website is
@@ -62,33 +46,22 @@ class ActionGetProductsConfig(AbstractAction):
             session = cls.build_session()
 
         int_account = credentials.int_account
-        url = urls.PRODUCTS_CONFIG
-
-        params = {
-            "intAccount": int_account,
-            "sessionId": session_id,
-        }
+        url = urls.PRODUCT_SEARCH_DICTIONARY
+        params = {"intAccount": int_account, "sessionId": session_id}
 
         request = requests.Request(method="GET", url=url, params=params)
         prepped = session.prepare_request(request)
-        response_raw = None
 
         try:
-            response_raw = session.send(prepped)
-            response_raw.raise_for_status()
-            response_dict = response_raw.json()
+            response = session.send(prepped)
+            response.raise_for_status()
 
-            if raw is True:
-                return response_dict
-            else:
-                return cls.products_config_to_grpc(
-                    payload=response_dict,
-                )
+            model = loads(response.text)
+            return model
         except requests.HTTPError as e:
-            status_code = getattr(response_raw, "status_code", "No status_code found.")
-            text = getattr(response_raw, "text", "No text found.")
-            logger.fatal(status_code)
-            logger.fatal(text)
+            logger.fatal(e)
+            if isinstance(e.response, requests.Response):
+                logger.fatal(e.response.text)
             return None
         except Exception as e:
             logger.fatal(e)
@@ -96,8 +69,7 @@ class ActionGetProductsConfig(AbstractAction):
 
     def call(
         self,
-        raw: bool = False,
-    ) -> ProductSearch.Config | dict | None:
+    ) -> dict | None:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
         session = self.session_storage.session
@@ -107,7 +79,6 @@ class ActionGetProductsConfig(AbstractAction):
         return self.get_products_config(
             session_id=session_id,
             credentials=credentials,
-            raw=raw,
             session=session,
             logger=logger,
         )

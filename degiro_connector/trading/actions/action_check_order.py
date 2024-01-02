@@ -19,7 +19,7 @@ from degiro_connector.core.abstracts.abstract_action import AbstractAction
 
 class ActionCheckOrder(AbstractAction):
     @staticmethod
-    def build_json_map(order: Order) -> dict[str, float | int | str]:
+    def build_json_map(order: Order) -> dict:
         json_map = order.model_dump(
             by_alias=True,
             exclude_none=True,
@@ -34,7 +34,6 @@ class ActionCheckOrder(AbstractAction):
 
         field_list = ORDER_FIELD_MAP[order.order_type]
         json_map = {field: json_map[field] for field in field_list if field in json_map}
-        json_map["buySell"] = order.buy_sell.name
 
         return json_map
 

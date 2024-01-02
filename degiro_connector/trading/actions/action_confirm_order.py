@@ -33,7 +33,6 @@ class ActionConfirmOrder(AbstractAction):
 
         field_list = ORDER_FIELD_MAP[order.order_type]
         json_map = {field: json_map[field] for field in field_list if field in json_map}
-        json_map["buySell"] = order.buy_sell.name
 
         return json_map
 

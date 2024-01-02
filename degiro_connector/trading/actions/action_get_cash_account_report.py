@@ -1,81 +1,54 @@
-import datetime
 import logging
 
-
 import requests
+from orjson import loads
 
 from degiro_connector.core.constants import urls
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
 from degiro_connector.trading.models.credentials import Credentials
-from degiro_connector.trading.models.trading_pb2 import (
-    CashAccountReport,
-)
+from degiro_connector.trading.models.account import Report, ReportRequest
 
 
 class ActionGetCashAccountReport(AbstractAction):
     @staticmethod
-    def cash_account_report_request_to_api(
-        request: CashAccountReport.Request,
-    ) -> dict:
-        request_dict = dict()
-        request_dict["country"] = request.country
-        request_dict["lang"] = request.lang
-        request_dict["fromDate"] = datetime.datetime(
-            year=request.from_date.year,
-            month=request.from_date.month,
-            day=request.from_date.day,
-        ).strftime("%d/%m/%Y")
-        request_dict["toDate"] = datetime.datetime(
-            year=request.to_date.year,
-            month=request.to_date.month,
-            day=request.to_date.day,
-        ).strftime("%d/%m/%Y")
+    def build_model(report_request: ReportRequest, response: requests.Response) -> Report:
+        model = Report(
+            content=response.text,
+            format=report_request.format,
+        )
 
-        return request_dict
+        return model
 
     @staticmethod
-    def cash_account_report_to_grpc(
-        request: CashAccountReport.Request,
-        payload: str,
-    ) -> CashAccountReport:
-        cash_account_report = CashAccountReport()
-        cash_account_report.response_datetime.GetCurrentTime()
-        cash_account_report.content = payload
-        cash_account_report.format = request.format
+    def build_params_map(report_request: ReportRequest) -> dict:
+        params_map = report_request.model_dump(
+            by_alias=True,
+            exclude={"format"},
+            exclude_none=True,
+            mode="json",
+        )
 
-        return cash_account_report
+        return params_map
+
 
     @classmethod
     def get_cash_account_report(
         cls,
-        request: CashAccountReport.Request,
+        report_request: ReportRequest,
         session_id: str,
         credentials: Credentials,
         raw: bool = False,
         session: requests.Session | None = None,
         logger: logging.Logger | None = None,
-    ) -> CashAccountReport | str | None:
+    ) -> Report | str | None:
         """Retrieve information about the account in a specific format.
         Args:
-            request (CashAccountReport.Request):
+            request (ReportRequest):
                 list of options that we want to retrieve from the endpoint.
                 Example :
-                    from_date = CashAccountReport.Request.Date(
-                        year=2020,
-                        month=10,
-                        day=15,
-                    )
-                    to_date = CashAccountReport.Request.Date(
-                        year=2020,
-                        month=10,
-                        day=16,
-                    )
-                    request = CashAccountReport.Request(
-                        format=CashAccountReport.Format.CSV,
-                        country='FR',
-                        lang='fr',
-                        from_date=from_date,
-                        to_date=to_date,
+                    report_request = OverviewRequest(
+                        from_date=date(year=2023, month=10, day=15),
+                        from_date=date(year=2024, month=1, day=1),
                     )
             session_id (str):
                 API's session id.
@@ -99,45 +72,39 @@ class ActionGetCashAccountReport(AbstractAction):
         if session is None:
             session = cls.build_session()
 
-        format = CashAccountReport.Format.Name(request.format)
-        url = f"{urls.CASH_ACCOUNT_REPORT}/{format}"
-        params = cls.cash_account_report_request_to_api(
-            request=request,
-        )
-        params["intAccount"] = credentials.int_account
-        params["sessionId"] = session_id
+        int_account = credentials.int_account
+        url = f"{urls.CASH_ACCOUNT_REPORT}/{report_request.format.value}"
+        params_map = cls.build_params_map(report_request=report_request)
+        params_map.update({"intAccount": int_account, "sessionId": session_id})
 
-        req = requests.Request(method="GET", url=url, params=params)
-        prepped = session.prepare_request(req)
-        response_raw = None
+        request = requests.Request(method="GET", url=url, params=params_map)
+        prepped = session.prepare_request(request=request)
 
         try:
-            response_raw = session.send(prepped)
-            response_raw.raise_for_status()
-            response_text = response_raw.text
+            response = session.send(prepped)
+            response.raise_for_status()
 
             if raw is True:
-                return response_text
+                model = loads(response.text)
             else:
-                return cls.cash_account_report_to_grpc(
-                    request=request,
-                    payload=response_text,
+                model = cls.build_model(
+                    report_request=report_request,
+                    response=response,
                 )
+            return model
         except requests.HTTPError as e:
-            status_code = getattr(response_raw, "status_code", "No status_code found.")
-            text = getattr(response_raw, "text", "No text found.")
-            logger.fatal(status_code)
-            logger.fatal(text)
+            logger.fatal(e)
+            if isinstance(e.response, requests.Response):
+                logger.fatal(e.response.text)
             return None
         except Exception as e:
             logger.fatal(e)
             return None
-
     def call(
         self,
-        request: CashAccountReport.Request,
+        report_request: ReportRequest,
         raw: bool = False,
-    ) -> CashAccountReport | str | None:
+    ) -> Report | str | None:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
         session = self.session_storage.session
@@ -145,7 +112,7 @@ class ActionGetCashAccountReport(AbstractAction):
         logger = self.logger
 
         return self.get_cash_account_report(
-            request=request,
+            report_request=report_request,
             session_id=session_id,
             credentials=credentials,
             raw=raw,

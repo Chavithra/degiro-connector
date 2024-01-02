@@ -1,76 +1,49 @@
-import datetime
 import logging
 
-
 import requests
-from google.protobuf import json_format
+from orjson import loads
 
 from degiro_connector.core.constants import urls
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
 from degiro_connector.trading.models.credentials import Credentials
-from degiro_connector.trading.models.trading_pb2 import (
-    OrdersHistory,
-)
+from degiro_connector.trading.models.order import HistoryRequest, History
 
 
 class ActionGetOrdersHistory(AbstractAction):
     @staticmethod
-    def orders_history_request_to_api(request: OrdersHistory.Request) -> dict:
-        request_dict = dict()
-        request_dict["fromDate"] = datetime.datetime(
-            year=request.from_date.year,
-            month=request.from_date.month,
-            day=request.from_date.day,
-        ).strftime("%d/%m/%Y")
-        request_dict["toDate"] = datetime.datetime(
-            year=request.to_date.year,
-            month=request.to_date.month,
-            day=request.to_date.day,
-        ).strftime("%d/%m/%Y")
+    def build_model(response: requests.Response) -> History:
+        model = History.model_validate_json(json_data=response.text)
 
-        return request_dict
+        return model
 
     @staticmethod
-    def orders_history_to_grpc(payload: dict) -> OrdersHistory:
-        orders_history = OrdersHistory()
-        orders_history.response_datetime.GetCurrentTime()
-        json_format.ParseDict(
-            js_dict={"values": payload["data"]},
-            message=orders_history,
-            ignore_unknown_fields=True,
-            descriptor_pool=None,
+    def build_params_map(history_request: HistoryRequest) -> dict:
+        params_map = history_request.model_dump(
+            by_alias=True,
+            exclude_none=True,
+            mode="json",
         )
 
-        return orders_history
+        return params_map
 
     @classmethod
     def get_orders_history(
         cls,
-        request: OrdersHistory.Request,
+        history_request: HistoryRequest,
         session_id: str,
         credentials: Credentials,
         raw: bool = False,
         session: requests.Session | None = None,
         logger: logging.Logger | None = None,
-    ) -> OrdersHistory | dict | None:
+    ) -> History | dict | None:
         """Retrieve history about orders.
         Args:
-            request (OrdersHistory.Request):
+            history_request (HistoryRequest):
                 list of options that we want to retrieve from the endpoint.
                 Example :
-                    from_date = OrdersHistory.Request.Date(
-                        year=2020,
-                        month=10,
-                        day=15,
-                    )
-                    from_date = OrdersHistory.Request.Date(
-                        year=2020,
-                        month=10,
-                        day=16,
-                    )
-                    request = OrdersHistory.Request(
-                        from_date=from_date,
-                        to_date=to_date,
+                    history_request = HistoryRequest(
+                        from_date=date(year=date.today().year, month=1, day=1),
+                        to_date=date.today(),
                     )
             session_id (str):
                 API's session id.
@@ -94,34 +67,27 @@ class ActionGetOrdersHistory(AbstractAction):
         if session is None:
             session = cls.build_session()
 
+        int_account = credentials.int_account
         url = urls.ORDERS_HISTORY
+        params_map = cls.build_params_map(history_request=history_request)
+        params_map.update({"intAccount": int_account, "sessionId": session_id})
 
-        params = cls.orders_history_request_to_api(
-            request=request,
-        )
-        params["intAccount"] = credentials.int_account
-        params["sessionId"] = session_id
-
-        http_request = requests.Request(method="GET", url=url, params=params)
-        prepped = session.prepare_request(http_request)
-        response_raw = None
+        request = requests.Request(method="GET", url=url, params=params_map)
+        prepped = session.prepare_request(request=request)
 
         try:
-            response_raw = session.send(prepped)
-            response_raw.raise_for_status()
-            response_dict = response_raw.json()
+            response = session.send(prepped)
+            response.raise_for_status()
 
             if raw is True:
-                return response_dict
+                model = loads(response.text)
             else:
-                return cls.orders_history_to_grpc(
-                    payload=response_dict,
-                )
+                model = cls.build_model(response=response)
+            return model
         except requests.HTTPError as e:
-            status_code = getattr(response_raw, "status_code", "No status_code found.")
-            text = getattr(response_raw, "text", "No text found.")
-            logger.fatal(status_code)
-            logger.fatal(text)
+            logger.fatal(e)
+            if isinstance(e.response, requests.Response):
+                logger.fatal(e.response.text)
             return None
         except Exception as e:
             logger.fatal(e)
@@ -129,9 +95,9 @@ class ActionGetOrdersHistory(AbstractAction):
 
     def call(
         self,
-        request: OrdersHistory.Request,
+        history_request: HistoryRequest,
         raw: bool = False,
-    ) -> OrdersHistory | dict | None:
+    ) -> History | dict | None:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
         session = self.session_storage.session
@@ -139,7 +105,7 @@ class ActionGetOrdersHistory(AbstractAction):
         logger = self.logger
 
         return self.get_orders_history(
-            request=request,
+            history_request=history_request,
             session_id=session_id,
             credentials=credentials,
             raw=raw,

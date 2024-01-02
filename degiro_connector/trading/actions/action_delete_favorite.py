@@ -45,11 +45,7 @@ class ActionDeleteFavorite(AbstractAction):
 
         int_account = credentials.int_account
         url = f"{urls.FAVOURITES_LIST}/{list_id}"
-
-        params = {
-            "intAccount": int_account,
-            "sessionId": session_id,
-        }
+        params = {"intAccount": int_account, "sessionId": session_id}
 
         request = requests.Request(method="DELETE", url=url, params=params)
         prepped = session.prepare_request(request)

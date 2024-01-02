@@ -1,5 +1,4 @@
 import logging
-from typing import Optional
 
 import requests
 from orjson import loads
@@ -17,7 +16,7 @@ class ActionGetAccountInfo(AbstractAction):
         credentials: Credentials,
         session: requests.Session | None = None,
         logger: logging.Logger | None = None,
-    ) -> Optional[dict]:
+    ) -> dict | None:
         if logger is None:
             logger = cls.build_logger()
         if session is None:
@@ -37,12 +36,14 @@ class ActionGetAccountInfo(AbstractAction):
             return model
         except requests.HTTPError as e:
             logger.fatal(e)
+            if isinstance(e.response, requests.Response):
+                logger.fatal(e.response.text)
             return None
         except Exception as e:
             logger.fatal(e)
             return None
 
-    def call(self) -> Optional[dict]:
+    def call(self) -> dict | None:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
         session = self.session_storage.session

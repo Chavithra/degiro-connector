@@ -2,45 +2,41 @@ import logging
 
 
 import requests
-from google.protobuf import json_format
+from orjson import loads
 
 from degiro_connector.core.constants import urls
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
 from degiro_connector.trading.models.credentials import Credentials
-from degiro_connector.trading.models.trading_pb2 import (
+from degiro_connector.trading.models.news import (
     LatestNews,
+    LatestRequest,
+    LatestWrapper,
 )
 
 
 class ActionGetLatestNews(AbstractAction):
     @staticmethod
-    def latest_news_request_to_api(
-        request: LatestNews.Request,
-    ) -> dict:
-        request_dict = {
-            "offset": request.offset,
-            "languages": request.languages,
-            "limit": request.limit,
-        }
+    def build_model(response: requests.Response) -> LatestNews:
+        model = LatestWrapper.model_validate_json(json_data=response.text).data
 
-        return request_dict
+        return model
 
     @staticmethod
-    def latest_news_to_grpc(payload: dict) -> LatestNews:
-        latest_news = LatestNews()
-        json_format.ParseDict(
-            js_dict=payload["data"],
-            message=latest_news,
-            ignore_unknown_fields=False,
-            descriptor_pool=None,
+    def build_params_map(
+        latest_request: LatestRequest,
+    ) -> dict:
+        params_map = latest_request.model_dump(
+            by_alias=True,
+            exclude_none=True,
+            mode="json",
         )
 
-        return latest_news
+        return params_map
 
     @classmethod
     def get_latest_news(
         cls,
-        request: LatestNews.Request,
+        latest_request: LatestRequest,
         session_id: str,
         credentials: Credentials,
         raw: bool = False,
@@ -52,40 +48,41 @@ class ActionGetLatestNews(AbstractAction):
         if session is None:
             session = cls.build_session()
 
+        int_account = credentials.int_account
         url = urls.LATEST_NEWS
 
-        params = cls.latest_news_request_to_api(
-            request=request,
-        )
-        params["intAccount"] = credentials.int_account
-        params["sessionId"] = session_id
+        params_map = cls.build_params_map(latest_request=latest_request)
+        params_map.update({"intAccount": int_account, "sessionId": session_id})
 
-        http_request = requests.Request(method="GET", url=url, params=params)
-        prepped = session.prepare_request(http_request)
+        request = requests.Request(
+            method="GET",
+            params=params_map,
+            url=url,
+        )
+        prepped = session.prepare_request(request)
         prepped.headers["cookie"] = "JSESSIONID=" + session_id
 
-        response_raw = None
-
         try:
-            response_raw = session.send(prepped)
-            response_raw.raise_for_status()
-            response_dict = response_raw.json()
+            response = session.send(prepped)
+            response.raise_for_status()
 
             if raw is True:
-                return response_dict
+                model = loads(response.text)
             else:
-                return cls.latest_news_to_grpc(
-                    payload=response_dict,
-                )
+                model = cls.build_model(response=response)
+            return model
+        except requests.HTTPError as e:
+            logger.fatal(e)
+            if isinstance(e.response, requests.Response):
+                logger.fatal(e.response.text)
+            return None
         except Exception as e:
-            logger.fatal("error")
-            logger.fatal(response_raw)
             logger.fatal(e)
             return None
 
     def call(
         self,
-        request: LatestNews.Request,
+        latest_request: LatestRequest,
         raw: bool = False,
     ) -> LatestNews | dict | None:
         connection_storage = self.connection_storage
@@ -95,7 +92,7 @@ class ActionGetLatestNews(AbstractAction):
         logger = self.logger
 
         return self.get_latest_news(
-            request=request,
+            latest_request=latest_request,
             session_id=session_id,
             credentials=credentials,
             raw=raw,
