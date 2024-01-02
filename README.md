@@ -106,7 +106,7 @@ pip uninstall degiro-connector
   * [6.2. How to retrieve the table : ClientDetails ?](#62-how-to-retrieve-the-table--clientdetails-)
   * [6.3. How to retrieve the table : AccountInfo ?](#63-how-to-retrieve-the-table--accountinfo-)
   * [6.4. How to get the table : AccountOverview ?](#64-how-to-get-the-table--accountoverview-)
-  * [6.5. How to export the table : CashAccountReport ?](#65-how-to-export-the-table--cashaccountreport-)
+  * [6.5. How to export the table : AccountReport ?](#65-how-to-export-the-table--accountreport-)
   * [6.6. How to export the table : PositionReport ?](#66-how-to-export-the-table--positionreport-)
 - [7. Products](#7-products)
   * [7.1. How to get the table : ProductsConfig ?](#71-how-to-get-the-table--productsconfig-)
@@ -936,7 +936,7 @@ Creating and updating of orders is done with an `Order` object. Here are the par
 |time_type|`Order.TimeType`|Duration of the order : `GOOD_TILL_DAY` or `GOOD_TILL_CANCELED`|
 
 The full description of an `Order` is available here :
-[trading.proto](protos/degiro_connector/trading/models/trading.proto)
+[order.py](examples/trading/order.py)
 
 ## 4.1. How to create an Order ?
 
@@ -1078,14 +1078,15 @@ succcess = trading_api.delete_order(order_id=YOUR_ORDER_ID) # `order_id` from `c
 
 This is how to get the list of Orders currently created but not yet executed or deleted :
 ```python
-request_list = Update.RequestList()
-request_list.values.extend([
-    Update.Request(option=Update.Option.ORDERS, last_updated=0),
-])
-
-update = trading_api.get_update(request_list=request_list)
-update_dict = pb_handler.message_to_dict(message=update)
-orders_df = pd.DataFrame(update_dict['orders']['values'])
+account_update = trading_api.get_update(
+    request_list=[
+        UpdateRequest(
+            option=UpdateOption.ORDERS,
+            last_updated=0,
+        ),
+    ],
+    raw=True,
+)
 ```
 
 Example : Orders
@@ -1100,14 +1101,15 @@ For a more comprehensive example :
 
 This is how to list the stocks/products currently in the portfolio :
 ```python
-request_list = Update.RequestList()
-request_list.values.extend([
-    Update.Request(option=Update.Option.PORTFOLIO, last_updated=0),
-])
-
-update = trading_api.get_update(request_list=request_list)
-update_dict = pb_handler.message_to_dict(message=update)
-portfolio_df = pd.DataFrame(update_dict['portfolio']['values'])
+account_update = trading_api.get_update(
+    request_list=[
+        UpdateRequest(
+            option=UpdateOption.PORTFOLIO,
+            last_updated=0,
+        ),
+    ],
+    raw=True,
+)
 ```
 
 For a more comprehensive example :
@@ -1119,14 +1121,15 @@ Note: In order to resolve product IDs to Human readable names, see [7.12. How to
 
 This is how to get aggregated data about the portfolio :
 ```python
-request_list = Update.RequestList()
-request_list.values.extend([
-    Update.Request(option=Update.Option.TOTALPORTFOLIO, last_updated=0),
-])
-
-update = trading_api.get_update(request_list=request_list)
-update_dict = pb_handler.message_to_dict(message=update)
-total_portfolio_df = pd.DataFrame(update_dict['total_portfolio']['values'])
+account_update = trading_api.get_update(
+    request_list=[
+        UpdateRequest(
+            option=UpdateOption.TOTALPORTFOLIO,
+            last_updated=0,
+        ),
+    ],
+    raw=True,
+)
 ```
 
 Example : DataFrame
@@ -1164,12 +1167,13 @@ Here is how to get this data :
 
 ```python
 # SETUP REQUEST
-from_date = OrdersHistory.Request.Date(year=2020,month=11,day=15)
-to_date = OrdersHistory.Request.Date(year=2020,month=10,day=15)
-request = OrdersHistory.Request(from_date=from_date, to_date=to_date)
-
-# FETCH DATA
-orders_history = trading_api.get_orders_history(request=request)
+orders_history = trading_api.get_orders_history(
+    history_request=HistoryRequest(
+        from_date=date(year=date.today().year, month=1, day=1),
+        to_date=date.today(),
+    ),
+    raw=True,
+)
 ```
 
 For a more comprehensive example :
@@ -1329,13 +1333,11 @@ It will provide a list of cash movements.
 Here is how to get this data :
 
 ```python
-overview_request = OverviewRequest(
-    from_date=date(year=date.today().year-1, month=1, day=1),
-    to_date=date.today(),
-)
-
 account_overview = trading_api.get_account_overview(
-    overview_request=overview_request,
+    overview_request=OverviewRequest(
+        from_date=date(year=date.today().year-1, month=1, day=1),
+        to_date=date.today(),
+    ),
     raw=False,
 )
 ```
@@ -1360,7 +1362,7 @@ Each cash movement contains this kind of parameters :
 |total|float|
 
 
-## 6.5. How to export the table : CashAccountReport ?
+## 6.5. How to export the table : AccountReport ?
 
 It will export a list of cash movements in a specific format.
 
@@ -1373,20 +1375,14 @@ Available formats :
 Here is how to get this content in `CSV` format :
 
 ```python
-# SETUP REQUEST
-from_date = CashAccountReport.Request.Date(year=2020,month=11,day=15)
-to_date = CashAccountReport.Request.Date(year=2020,month=10,day=15)
-request = CashAccountReport.Request(
-    format=CashAccountReport.Format.CSV,
-    country='FR',
-    lang='fr',
-    from_date=from_date,
-    to_date=to_date,
-)
-
-# FETCH DATA
-cash_account_report = trading_api.get_cash_account_report(
-    request=request,
+report = trading_api.get_account_report(
+    report_request=ReportRequest(
+        country="FR",
+        lang="fr",
+        format=Format.CSV,
+        from_date=date(year=date.today().year-1, month=1, day=1),
+        to_date=date.today(),
+    ),
     raw=False,
 )
 ```
@@ -1401,11 +1397,11 @@ Here are the available parameters for `CashAccountReport.Request` :
 |from_date|CashAccountReport.Request.Date|Events starting after this date.|
 |to_date|CashAccountReport.Request.Date|Events before this date.|
 
-Exact definitions of `CashAccountReport` and `CashAccountReport.Request` are in this file :
-[trading.proto](protos/degiro_connector/trading/models/trading.proto)
+Models definitions are available are in this module :
+[account.py](degiro_connector/trading/models/account.py)
 
 For a more comprehensive example :
-[cash_account_report.py](examples/trading/cash_account_report.py)
+[account_report.py](examples/trading/account_report.py)
 
 ## 6.6. How to export the table : PositionReport ?
 
@@ -1421,17 +1417,14 @@ Here is how to get this content in `CSV` format :
 
 ```python
 # SETUP REQUEST
-to_date = CashAccountReport.Request.Date(year=2020,month=10,day=15)
-request = CashAccountReport.Request(
-    format=CashAccountReport.Format.CSV,
-    country='FR',
-    lang='fr',
-    to_date=to_date,
-)
-
-# FETCH DATA
-position_report = trading_api.get_position_report(
-    request=request,
+report = trading_api.get_position_report(
+    report_request=ReportRequest(
+        country="FR",
+        lang="fr",
+        format=Format.XLS,
+        from_date=date(year=date.today().year-1, month=1, day=1),
+        to_date=date.today(),
+    ),
     raw=False,
 )
 ```
@@ -1445,8 +1438,8 @@ Here are the available parameters for `PositionReport.Request` :
 |lang|int|Language, like : `fr`|
 |to_date|PositionReport.Request.Date|Events before this date.|
 
-Exact definitions of `PositionReport` and `PositionReport.Request` are in this file :
-[trading.proto](protos/degiro_connector/trading/models/trading.proto)
+Models definitions are available are in this module :
+[account.py](degiro_connector/trading/models/account.py)
 
 For a more comprehensive example :
 [position_report.py](examples/trading/position_report.py)
@@ -1727,14 +1720,9 @@ For a more comprehensive example :
 Here is how to get this data :
 
 ```python
-# SETUP REQUEST
-request = ProductsInfo.Request()
-request.products.extend([96008, 1153605, 5462588])
-
-# FETCH DATA
-products_info = trading_api.get_products_info(
-    request=request,
-    raw=True,
+product_info = trading_api.get_products_info(
+    product_list=[96008, 1153605, 5462588],
+    raw=False,
 )
 ```
 
