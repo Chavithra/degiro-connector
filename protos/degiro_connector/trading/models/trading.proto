@@ -5,17 +5,6 @@ package degiro_connector.trading;
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 
-message Credentials {
-  int32 int_account = 1;
-  string username = 2;
-  string password = 3;
-  
-  oneof oneof_2fa {
-    string totp_secret_key = 4;
-    int32 one_time_password = 5;
-  }
-}
-
 /** For the payload from the following URLs :
  * https://trader.degiro.nl/trading/secure/v5/checkOrder
  * https://trader.degiro.nl/trading/secure/v5/order
@@ -163,29 +152,6 @@ message Update {
 }
 
 /** For the payload from the following URL :
- * https://trader.degiro.nl/reporting/secure/v4/order-history
- */
-message OrdersHistory {
-  // MESSAGES
-  message Request {
-    // MESSAGES
-    message Date {
-      int32 year = 1;
-      int32 month = 2;
-      int32 day = 3;
-    }
-
-    // PROPERTIES
-    Date from_date = 1;
-    Date to_date = 2;
-  }
-
-  // PROPERTIES
-  repeated google.protobuf.Struct values = 1;
-  google.protobuf.Timestamp response_datetime = 2;
-}
-
-/** For the payload from the following URL :
  * https://trader.degiro.nl/reporting/secure/v4/transactions
  */
 message TransactionsHistory {
@@ -206,29 +172,6 @@ message TransactionsHistory {
 
   // PROPERTIES
   repeated google.protobuf.Struct values = 1;
-  google.protobuf.Timestamp response_datetime = 2;
-}
-
-/** For the payload from the following URL :
- * https://trader.degiro.nl/reporting/secure/v6/accountoverview
- */
-message AccountOverview {
-  // MESSAGES
-  message Request {
-    // MESSAGES
-    message Date {
-      int32 year = 1;
-      int32 month = 2;
-      int32 day = 3;
-    }
-
-    // PROPERTIES
-    Date from_date = 1;
-    Date to_date = 2;
-  }
-
-  // PROPERTIES
-  google.protobuf.Struct values = 1;
   google.protobuf.Timestamp response_datetime = 2;
 }
 
@@ -253,51 +196,6 @@ message ProductsInfo {
 message FinancialStatements {
   // PROPERTIES
   google.protobuf.Struct values = 1;
-}
-
-/** For the payload from the following URL :
- * https://trader.degiro.nl/dgtbxdsservice/newsfeed/v2/latest-news
- */
-message LatestNews {
-  // MESSAGES
-  message Request {
-    // PROPERTIES
-    int32 offset = 1;
-    string languages = 2;
-    int32 limit = 3;
-  }
-  // PROPERTIES
-  repeated google.protobuf.Struct items = 1;
-  int32 offset = 2;
-  int32 total = 3;
-}
-
-/** For the payload from the following URL :
- * https://trader.degiro.nl/dgtbxdsservice/newsfeed/v2/top-news-preview
- */
-message TopNewsPreview {
-  // PROPERTIES
-  repeated google.protobuf.Struct items = 1;
-  int32 offset = 2;
-  int32 total = 3;
-}
-
-/** For the payload from the following URL :
- * https://trader.degiro.nl/dgtbxdsservice/newsfeed/v2/news-by-company
- */
-message NewsByCompany {
-  // MESSAGES
-  message Request {
-    // PROPERTIES
-    string isin = 1;
-    int32 limit = 2;
-    int32 offset = 3;
-    string languages = 4;
-  }
-  // PROPERTIES
-  repeated google.protobuf.Struct items = 1;
-  int32 offset = 2;
-  int32 total = 3;
 }
 
 /** For the payload from the following URL :
