@@ -961,7 +961,7 @@ On a succesfull request, a `dict` with the following parameters is returned:
 |**Parameter**|**Type**|**Description**|
 |:-|:-|:-|
 |confirmation_id|str|Id necessary to confirm the creation of the Order by the [`confirm_order()`](#412-confirm-order) function.|
-|response_datetime|[`Timestamp`](https://pythonhosted.org/gax-google-pubsub-v1/google.protobuf.timestamp_pb2.html)|A `Timestamp` represents a point in time independent of any time zone or calendar, represented as seconds (`seconds`) and fractions of seconds at nanosecond resolution (`nanos`) in UTC Epoch time. A `Timestamp` can be converted to a RFC 3339 date string by using `ToJsonString()`.<br> Note: This `Timestamp` is created by Degiro Connector on reception of the API response, not by DeGiro server.|
+|response_datetime|datetime|Datetime of the response.|
 |free_space_new|float|New free space (balance) if the Order is confirmed.|
 |transaction_fees|float|Transaction fees that will be applied to the Order.|
 |show_ex_ante_report_link|bool|?|
@@ -984,7 +984,7 @@ On a succesfull request, a `dict` with the following parameters is returned:
 |**Parameter**|**Type**|**Description**|
 |:-|:-|:-|
 |order_id|str|A unique id of the accepted order. This id is required to [update](#42-how-to-update-an-order-) or [delete](#43-how-to-delete-an-order-) the pending order.|
-|response_datetime|[`Timestamp`](https://pythonhosted.org/gax-google-pubsub-v1/google.protobuf.timestamp_pb2.html)|A `Timestamp` represents a point in time independent of any time zone or calendar, represented as seconds (`seconds`) and fractions of seconds at nanosecond resolution (`nanos`) in UTC Epoch time. A `Timestamp` can be converted to a RFC 3339 date string by using `ToJsonString()`.<br> Note: This `Timestamp` is created by Degiro Connector on reception of the API response, not by DeGiro server.|
+|response_datetime|datetime|Datetime of the response.|
 
 When the request fails, `None` is returned.
 
@@ -1923,18 +1923,15 @@ For a more comprehensive example :
 Here is how to get this data :
 
 ```python
-# SETUP REQUEST
-request = Agenda.Request()
-request.start_date.FromJsonString('2021-06-21T22:00:00Z')
-request.end_date.FromJsonString('2021-11-28T23:00:00Z')
-request.calendar_type = Agenda.CalendarType.DIVIDEND_CALENDAR
-request.offset = 0
-request.limit = 25
-
-# FETCH DATA
 agenda = trading_api.get_agenda(
-    request=request,
-    raw=False,
+    agenda_request=AgendaRequest(
+        calendar_type=CalendarType.EARNINGS_CALENDAR,
+        end_date=datetime.now(),
+        start_date=datetime.now() - timedelta(days=1),
+        offset=0,
+        limit=25,
+    ),
+    raw=True,
 )
 ```
 
@@ -1953,8 +1950,8 @@ Here are the available parameters for `Agenda.Request` :
 |classifications|str|Comma separated list of sectors like : `GovernmentSector,ExternalSector`|
 |units|str|Comma separated list of units like : `Acre,Barrel`|
 
-Exact definitions of `Agenda` and `Agenda.Request` are in this file :
-[trading.proto](protos/degiro_connector/trading/models/trading.proto)
+Exact definitions of `Agenda` and `AgendaRequest` are in this module :
+[agenda.py](degiro_connector/trading/models/agenda.py)
 
 For a more comprehensive example :
 [agenda.py](examples/trading/agenda.py)
@@ -1964,18 +1961,8 @@ For a more comprehensive example :
 Here is how to get this data :
 
 ```python
-# SETUP REQUEST
-request = Agenda.Request()
-request.start_date.FromJsonString('2021-06-21T22:00:00Z')
-request.end_date.FromJsonString('2021-11-28T23:00:00Z')
-request.calendar_type = Agenda.CalendarType.DIVIDEND_CALENDAR
-request.offset = 0
-request.limit = 25
-
-# FETCH DATA
-product_isin = "FR0000131906"
 estimates_summaries = trading_api.get_estimates_summaries(
-    product_isin=product_isin,
+    product_isin="FR0000131906",
     raw=False,
 )
 ```
@@ -1984,16 +1971,16 @@ Here are the available parameters for `Agenda.Request` :
 
 |**Parameter**|**Type**|**Description**|
 |:-|:-|:-|
-|annual|google.protobuf.Struct|Indicators by year.|
+|annual|dict|Indicators by year.|
 |currency|str|currency, example `EUR`.|
-|interim|google.protobuf.Struct|Indicators by quarter.|
+|interim|dict|Indicators by quarter.|
 |lastRetrieved|str|Last Retrieved, example : `2021-12-31T20:07:30.939Z`.|
 |lastUpdated|str|Last updated,, example : `2021-02-18T01:30:00Z`.|
 |preferredMeasure|str|Preferred measure, example : `EPS`.|
 |ric|str|Reuters Instrument Code, example : `BOUY.PA`.|
 
 Exact definition of `EstimatesSummaries` is in this file :
-[trading.proto](protos/degiro_connector/trading/models/trading.proto)
+[product.py](degiro_connector/trading/models/product.py)
 
 For a more comprehensive example :
 [estimates_summaries.py](examples/trading/estimates_summaries.py)
