@@ -16,14 +16,12 @@ trading_api = TradingAPI(credentials=credentials)
 trading_api.connect()
 
 # FETCH HISTORY
-history_request = HistoryRequest(
-    from_date=date(year=date.today().year, month=1, day=1),
-    to_date=date.today(),
-)
-
 orders_history = trading_api.get_orders_history(
-    history_request=history_request,
-    raw=True,
+    history_request=HistoryRequest(
+        from_date=date(year=date.today().year, month=1, day=1),
+        to_date=date.today(),
+    ),
+    raw=False,
 )
 
 print(orders_history)
