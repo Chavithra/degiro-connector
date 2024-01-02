@@ -19,6 +19,8 @@ preview_request = PreviewRequest(
     limit=20,
     category="FixedIncome",
 )
-top_news_preview = trading_api.get_top_news_preview(preview_request=preview_request, raw=False)
+top_news_preview = trading_api.get_top_news_preview(
+    preview_request=preview_request, raw=False
+)
 
 print(top_news_preview)

@@ -17,7 +17,7 @@ trading_api.connect()
 
 # FETCH ACCOUNT OVERVIEW
 overview_request = OverviewRequest(
-    from_date=date(year=date.today().year-1, month=1, day=1),
+    from_date=date(year=date.today().year - 1, month=1, day=1),
     to_date=date.today(),
 )
 
