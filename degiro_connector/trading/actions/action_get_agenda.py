@@ -2,58 +2,35 @@ import logging
 
 
 import requests
-from google.protobuf import json_format
+from orjson import loads
 
 from degiro_connector.core.constants import urls
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
 from degiro_connector.trading.models.credentials import Credentials
-from degiro_connector.trading.models.trading_pb2 import (
-    Agenda,
-)
+from degiro_connector.trading.models.agenda import Agenda, AgendaRequest
 
 
 class ActionGetAgenda(AbstractAction):
     @staticmethod
-    def agenda_request_to_api(
-        request: Agenda.Request,
-    ) -> dict:
-        request_dict = json_format.MessageToDict(
-            message=request,
-            including_default_value_fields=False,
-            preserving_proto_field_name=False,
-            use_integers_for_enums=True,
-            descriptor_pool=None,
-            float_precision=None,
-        )
-        request_dict["calendarType"] = (
-            Agenda.CalendarType.Name(request.calendar_type).title().replace("_", "")
-        )
-        request_dict["offset"] = request.offset
-        request_dict["orderByDesc"] = request.order_by_desc
+    def build_model(response: requests.Response) -> Agenda:
+        model = Agenda.model_validate_json(json_data=response.text)
 
-        return request_dict
+        return model
 
     @staticmethod
-    def agenda_to_grpc(
-        request: Agenda.Request,
-        payload: dict,
-    ) -> Agenda:
-        agenda = Agenda()
-        agenda.response_datetime.GetCurrentTime()
-        agenda.calendar_type = request.calendar_type
-        json_format.ParseDict(
-            js_dict=payload,
-            message=agenda,
-            ignore_unknown_fields=True,
-            descriptor_pool=None,
+    def build_params_map(agenda_request: AgendaRequest) -> dict:
+        params_map = agenda_request.model_dump(
+            by_alias=True,
+            exclude_none=True,
+            mode="json",
         )
 
-        return agenda
+        return params_map
 
     @classmethod
     def get_agenda(
         cls,
-        request: Agenda.Request,
+        agenda_request: AgendaRequest,
         session_id: str,
         credentials: Credentials,
         raw: bool = False,
@@ -65,34 +42,27 @@ class ActionGetAgenda(AbstractAction):
         if session is None:
             session = cls.build_session()
 
+        int_account = credentials.int_account
         url = urls.AGENDA
-        params = cls.agenda_request_to_api(
-            request=request,
-        )
-        params["intAccount"] = credentials.int_account
-        params["sessionId"] = session_id
+        params_map = cls.build_params_map(agenda_request=agenda_request)
+        params_map.update({"intAccount": int_account, "sessionId": session_id})
 
-        req = requests.Request(method="GET", url=url, params=params)
-        prepped = session.prepare_request(req)
-        response_raw = None
+        request = requests.Request(method="GET", url=url, params=params_map)
+        prepped = session.prepare_request(request=request)
 
         try:
-            response_raw = session.send(prepped)
-            response_raw.raise_for_status()
-            response_dict = response_raw.json()
+            response = session.send(prepped)
+            response.raise_for_status()
 
             if raw is True:
-                return response_dict
+                model = loads(response.text)
             else:
-                return cls.agenda_to_grpc(
-                    request=request,
-                    payload=response_dict,
-                )
+                model = cls.build_model(response=response)
+            return model
         except requests.HTTPError as e:
-            status_code = getattr(response_raw, "status_code", "No status_code found.")
-            text = getattr(response_raw, "text", "No text found.")
-            logger.fatal(status_code)
-            logger.fatal(text)
+            logger.fatal(e)
+            if isinstance(e.response, requests.Response):
+                logger.fatal(e.response.text)
             return None
         except Exception as e:
             logger.fatal(e)
@@ -100,7 +70,7 @@ class ActionGetAgenda(AbstractAction):
 
     def call(
         self,
-        request: Agenda.Request,
+        agenda_request: AgendaRequest,
         raw: bool = False,
     ) -> Agenda | dict | None:
         connection_storage = self.connection_storage
@@ -110,7 +80,7 @@ class ActionGetAgenda(AbstractAction):
         logger = self.logger
 
         return self.get_agenda(
-            request=request,
+            agenda_request=agenda_request,
             session_id=session_id,
             credentials=credentials,
             raw=raw,

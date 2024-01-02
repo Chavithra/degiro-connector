@@ -45,11 +45,11 @@ class OverviewWrapper(BaseModel):
     data: AccountOverview
 
 
-class Format(int, Enum):
+class Format(str, Enum):
     CSV = "csv"
     HTML = "html"
     PDF = "pdf"
-    XLS = "xml"
+    XLS = "xls"
 
 
 class ReportRequest(BaseModel):
@@ -72,3 +72,34 @@ class ReportRequest(BaseModel):
 class Report(BaseModel):
     content: str
     format: Format
+
+
+class UpdateOption(str, Enum):
+    ALERTS = "alerts"
+    CASH_FUNDS = "cashFunds"
+    HISTORICAL_ORDERS = "historicalOrders"
+    ORDERS = "orders"
+    PORTFOLIO = "portfolio"
+    TOTAL_PORTFOLIO = "totalPortfolio"
+    TRANSACTIONS = "transactions"
+
+
+class UpdateRequest(BaseModel):
+    option: UpdateOption
+    last_updated: int = Field(default=0)
+
+
+class AccountUpdate(BaseModel):
+    model_config = ConfigDict(
+        alias_generator=to_camel,
+        extra="allow",
+        populate_by_name=True,
+    )
+
+    alerts: dict | None = Field(default=None)
+    cash_funds: dict | None = Field(default=None)
+    historical_orders: dict | None = Field(default=None)
+    orders: dict | None = Field(default=None)
+    portfolio: dict | None = Field(default=None)
+    total_portfolio: dict | None = Field(default=None)
+    transactions: dict | None = Field(default=None)

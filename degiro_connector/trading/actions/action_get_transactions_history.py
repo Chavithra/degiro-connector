@@ -1,78 +1,52 @@
-import datetime
 import logging
 
-
 import requests
-from google.protobuf import json_format
+from orjson import loads
 
 from degiro_connector.core.constants import urls
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
 from degiro_connector.trading.models.credentials import Credentials
-from degiro_connector.trading.models.trading_pb2 import (
+from degiro_connector.trading.models.transaction import (
+    HistoryRequest,
     TransactionsHistory,
 )
 
 
 class ActionGetTransactionsHistory(AbstractAction):
     @staticmethod
-    def transactions_history_request_to_api(
-        request: TransactionsHistory.Request,
-    ) -> dict:
-        request_dict = dict()
-        request_dict["fromDate"] = datetime.datetime(
-            year=request.from_date.year,
-            month=request.from_date.month,
-            day=request.from_date.day,
-        ).strftime("%d/%m/%Y")
-        request_dict["toDate"] = datetime.datetime(
-            year=request.to_date.year,
-            month=request.to_date.month,
-            day=request.to_date.day,
-        ).strftime("%d/%m/%Y")
+    def build_model(response: requests.Response) -> TransactionsHistory:
+        model = TransactionsHistory.model_validate_json(json_data=response.text)
 
-        return request_dict
+        return model
 
     @staticmethod
-    def transactions_history_to_grpc(payload: dict) -> TransactionsHistory:
-        transactions_history = TransactionsHistory()
-        transactions_history.response_datetime.GetCurrentTime()
-        json_format.ParseDict(
-            js_dict={"values": payload["data"]},
-            message=transactions_history,
-            ignore_unknown_fields=True,
-            descriptor_pool=None,
+    def build_params_map(transaction_request: HistoryRequest) -> dict:
+        params_map = transaction_request.model_dump(
+            by_alias=True,
+            exclude_none=True,
+            mode="json",
         )
 
-        return transactions_history
+        return params_map
 
     @classmethod
     def get_transactions_history(
         cls,
-        request: TransactionsHistory.Request,
+        transaction_request: HistoryRequest,
         session_id: str,
         credentials: Credentials,
         raw: bool = False,
         session: requests.Session | None = None,
         logger: logging.Logger | None = None,
     ) -> TransactionsHistory | dict | None:
-        """Retrieve history about transactions.
+        """Retrieve information about the account.
         Args:
-            request (TransactionsHistory.Request):
+            request (AccountOverview.Request):
                 list of options that we want to retrieve from the endpoint.
                 Example :
-                    from_date = TransactionsHistory.Request.Date(
-                        year=2020,
-                        month=10,
-                        day=15,
-                    )
-                    from_date = TransactionsHistory.Request.Date(
-                        year=2020,
-                        month=10,
-                        day=16,
-                    )
-                    request = TransactionsHistory.Request(
-                        from_date=from_date,
-                        to_date=to_date,
+                    transaction_request = OverviewRequest(
+                        from_date=date(year=2023, month=10, day=15),
+                        to_date=date(year=2024, month=1, day=1),
                     )
             session_id (str):
                 API's session id.
@@ -88,7 +62,7 @@ class ActionGetTransactionsHistory(AbstractAction):
                 This object will be generated if None.
                 Defaults to None.
         Returns:
-            TransactionsHistory: API response.
+            AccountOverview: API response.
         """
 
         if logger is None:
@@ -96,34 +70,27 @@ class ActionGetTransactionsHistory(AbstractAction):
         if session is None:
             session = cls.build_session()
 
+        int_account = credentials.int_account
         url = urls.TRANSACTIONS_HISTORY
+        params_map = cls.build_params_map(transaction_request=transaction_request)
+        params_map.update({"intAccount": int_account, "sessionId": session_id})
 
-        params = cls.transactions_history_request_to_api(
-            request=request,
-        )
-        params["intAccount"] = credentials.int_account
-        params["sessionId"] = session_id
-
-        http_request = requests.Request(method="GET", url=url, params=params)
-        prepped = session.prepare_request(http_request)
-        response_raw = None
+        request = requests.Request(method="GET", url=url, params=params_map)
+        prepped = session.prepare_request(request=request)
 
         try:
-            response_raw = session.send(prepped)
-            response_raw.raise_for_status()
-            response_dict = response_raw.json()
+            response = session.send(prepped)
+            response.raise_for_status()
 
             if raw is True:
-                return response_dict
+                model = loads(response.text)
             else:
-                return cls.transactions_history_to_grpc(
-                    payload=response_dict,
-                )
+                model = cls.build_model(response=response)
+            return model
         except requests.HTTPError as e:
-            status_code = getattr(response_raw, "status_code", "No status_code found.")
-            text = getattr(response_raw, "text", "No text found.")
-            logger.fatal(status_code)
-            logger.fatal(text)
+            logger.fatal(e)
+            if isinstance(e.response, requests.Response):
+                logger.fatal(e.response.text)
             return None
         except Exception as e:
             logger.fatal(e)
@@ -131,7 +98,7 @@ class ActionGetTransactionsHistory(AbstractAction):
 
     def call(
         self,
-        request: TransactionsHistory.Request,
+        transaction_request: HistoryRequest,
         raw: bool = False,
     ) -> TransactionsHistory | dict | None:
         connection_storage = self.connection_storage
@@ -141,7 +108,7 @@ class ActionGetTransactionsHistory(AbstractAction):
         logger = self.logger
 
         return self.get_transactions_history(
-            request=request,
+            transaction_request=transaction_request,
             session_id=session_id,
             credentials=credentials,
             raw=raw,

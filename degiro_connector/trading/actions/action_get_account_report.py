@@ -1,7 +1,6 @@
 import logging
 
 import requests
-from orjson import loads
 
 from degiro_connector.core.constants import urls
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
@@ -11,7 +10,9 @@ from degiro_connector.trading.models.account import Report, ReportRequest
 
 class ActionGetAccountReport(AbstractAction):
     @staticmethod
-    def build_model(report_request: ReportRequest, response: requests.Response) -> Report:
+    def build_model(
+        report_request: ReportRequest, response: requests.Response
+    ) -> Report:
         model = Report(
             content=response.text,
             format=report_request.format,
@@ -30,7 +31,6 @@ class ActionGetAccountReport(AbstractAction):
 
         return params_map
 
-
     @classmethod
     def get_cash_account_report(
         cls,
@@ -48,7 +48,7 @@ class ActionGetAccountReport(AbstractAction):
                 Example :
                     report_request = OverviewRequest(
                         from_date=date(year=2023, month=10, day=15),
-                        from_date=date(year=2024, month=1, day=1),
+                        to_date=date(year=2024, month=1, day=1),
                     )
             session_id (str):
                 API's session id.
@@ -85,7 +85,7 @@ class ActionGetAccountReport(AbstractAction):
             response.raise_for_status()
 
             if raw is True:
-                model = loads(response.text)
+                model = response.text
             else:
                 model = cls.build_model(
                     report_request=report_request,
@@ -100,6 +100,7 @@ class ActionGetAccountReport(AbstractAction):
         except Exception as e:
             logger.fatal(e)
             return None
+
     def call(
         self,
         report_request: ReportRequest,

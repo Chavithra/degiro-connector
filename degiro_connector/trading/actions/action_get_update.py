@@ -1,191 +1,99 @@
-import requests
 import logging
 
+import requests
+from orjson import loads
 
 from degiro_connector.core.constants import urls
 from degiro_connector.trading.models.credentials import Credentials
-from degiro_connector.trading.models.trading_pb2 import (
-    Order,
-    Update,
-)
+from degiro_connector.trading.models.account import AccountUpdate, UpdateRequest
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
 
 
 class ActionGetUpdate(AbstractAction):
-    ACTION_MATCHING = {
-        "B": Order.Action.Value("BUY"),
-        "S": Order.Action.Value("SELL"),
-    }
-    ORDER_MATCHING = {
-        "buysell": "action",
-        "contractSize": "contract_size",
-        "contractType": "contract_type",
-        "currency": "currency",
-        "date": "hour",
-        "id": "id",
-        "isDeletable": "is_deletable",
-        "isModifiable": "is_modifiable",
-        "orderTimeTypeId": "time_type",
-        "orderTypeId": "order_type",
-        "price": "price",
-        "product": "product",
-        "productId": "product_id",
-        "quantity": "quantity",
-        "size": "size",
-        "stopPrice": "stop_price",
-        "totalOrderValue": "total_order_value",
-    }
-    UPDATE_OPTION_MATCHING = {
-        Update.Option.Value("ALERTS"): "alerts",
-        Update.Option.Value("CASHFUNDS"): "cashFunds",
-        Update.Option.Value("HISTORICALORDERS"): "historicalOrders",
-        Update.Option.Value("ORDERS"): "orders",
-        Update.Option.Value("PORTFOLIO"): "portfolio",
-        Update.Option.Value("TOTALPORTFOLIO"): "totalPortfolio",
-        Update.Option.Value("TRANSACTIONS"): "transactions",
-    }
+    # ACTION_MATCHING = {
+    #     "B": Order.Action.Value("BUY"),
+    #     "S": Order.Action.Value("SELL"),
+    # }
+    # ORDER_MATCHING = {
+    #     "buysell": "action",
+    #     "contractSize": "contract_size",
+    #     "contractType": "contract_type",
+    #     "currency": "currency",
+    #     "date": "hour",
+    #     "id": "id",
+    #     "isDeletable": "is_deletable",
+    #     "isModifiable": "is_modifiable",
+    #     "orderTimeTypeId": "time_type",
+    #     "orderTypeId": "order_type",
+    #     "price": "price",
+    #     "product": "product",
+    #     "productId": "product_id",
+    #     "quantity": "quantity",
+    #     "size": "size",
+    #     "stopPrice": "stop_price",
+    #     "totalOrderValue": "total_order_value",
+    # }
 
-    @classmethod
-    def update_request_list_to_api(cls, request_list: Update.RequestList) -> dict:
-        """Makes a payload compatible with the API.
-        Parameters:
-            update_option_list {UpdateOptionList}
-                list of option available from grpc "consume_update".
-        Returns:
-            {dict}
-                Payload that Degiro's update endpoint can understand.
-        """
+    @staticmethod
+    def build_model(response: requests.Response) -> AccountUpdate:
+        model = AccountUpdate.model_validate_json(json_data=response.text)
 
-        payload = dict()
+        return model
 
-        for request in request_list.values:
-            option = cls.UPDATE_OPTION_MATCHING[request.option]
-            payload[option] = request.last_updated
+    @staticmethod
+    def build_params_map(request_list: list[UpdateRequest]) -> dict:
+        params_map = {}
 
-        return payload
+        for update_request in request_list:
+            params_map[update_request.option.value] = update_request.last_updated
 
-    @classmethod
-    def setup_update_orders(cls, update: Update, payload: dict):
-        """Build an "Order" object using "dict" returned by the API.
-        Parameters:
-            order {dict}
-                Order dict straight from Degiro's API
-        Returns:
-            {Order}
-        """
-
-        if "orders" in payload:
-            update.orders.last_updated = payload["orders"]["lastUpdated"]
-
-            for order in payload["orders"]["value"]:
-                order_dict = dict()
-                for attribute in order["value"]:
-                    if (
-                        "name" in attribute
-                        and "value" in attribute
-                        and attribute["name"] in cls.ORDER_MATCHING
-                    ):
-                        order_dict[cls.ORDER_MATCHING[attribute["name"]]] = attribute[
-                            "value"
-                        ]
-
-                order_dict["action"] = cls.ACTION_MATCHING[order_dict["action"]]
-                update.orders.values.append(Order(**order_dict))
-
-    @classmethod
-    def setup_update_portfolio(cls, update: Update, payload: dict):
-        if "portfolio" in payload:
-            update.portfolio.last_updated = payload["portfolio"]["lastUpdated"]
-
-            for positionrow in payload["portfolio"]["value"]:
-                value = update.portfolio.values.add()
-                for attribute in positionrow["value"]:
-                    if "name" in attribute and "value" in attribute:
-                        value[attribute["name"]] = attribute["value"]
-
-    @classmethod
-    def setup_update_total_portfolio(cls, update: Update, payload: dict):
-        if "totalPortfolio" in payload:
-            update.total_portfolio.last_updated = payload["totalPortfolio"][
-                "lastUpdated"
-            ]
-
-            for attribute in payload["totalPortfolio"]["value"]:
-                if "name" in attribute and "value" in attribute:
-                    name = attribute["name"]
-                    value = attribute["value"]
-                    update.total_portfolio.values[name] = value
-
-    @classmethod
-    def update_to_grpc(cls, payload: dict) -> Update:
-        update = Update()
-        update.response_datetime.GetCurrentTime()
-
-        # ORDERS
-        cls.setup_update_orders(update=update, payload=payload)
-
-        # PORTFOLIO
-        cls.setup_update_portfolio(
-            update=update,
-            payload=payload,
-        )
-
-        # TOTALPORTFOLIO
-        cls.setup_update_total_portfolio(
-            update=update,
-            payload=payload,
-        )
-
-        return update
+        return params_map
 
     @classmethod
     def get_update(
         cls,
-        request_list: Update.RequestList,
+        request_list: list[UpdateRequest],
         session_id: str,
         credentials: Credentials,
         logger: logging.Logger | None = None,
         raw: bool = False,
         session: requests.Session | None = None,
-    ) -> Update | dict | None:
+    ) -> AccountUpdate | dict | None:
         """Retrieve information from Degiro's Trading Update endpoint.
         Args:
-            request (Update.RequestList):
+            request_list (list[UpdateRequest]):
                 list of options that we want to retrieve from the endpoint.
                 Example :
-                    request = Update.RequestList()
-                    request.list.extend(
-                        [
-                            Update.Request(
-                                option=Update.Option.ALERTS,
-                                last_updated=0,
-                            ),
-                            Update.Request(
-                                option=Update.Option.CASHFUNDS,
-                                last_updated=0,
-                            ),
-                            Update.Request(
-                                option=Update.Option.HISTORICALORDERS,
-                                last_updated=0,
-                            ),
-                            Update.Request(
-                                option=Update.Option.ORDERS,
-                                last_updated=0,
-                            ),
-                            Update.Request(
-                                option=Update.Option.PORTFOLIO,
-                                last_updated=0,
-                            ),
-                            Update.Request(
-                                option=Update.Option.TOTALPORTFOLIO,
-                                last_updated=0,
-                            ),
-                            Update.Request(
-                                option=Update.Option.TRANSACTIONS,
-                                last_updated=0,
-                            ),
-                        ]
-                    )
+                    request_list = [
+                        UpdateRequest(
+                            option=UpdateOption.ALERTS,
+                            last_updated=0,
+                        ),
+                        UpdateRequest(
+                            option=UpdateOption.CASH_FUNDS,
+                            last_updated=0,
+                        ),
+                        UpdateRequest(
+                            option=UpdateOption.HISTORICAL_ORDERS,
+                            last_updated=0,
+                        ),
+                        UpdateRequest(
+                            option=UpdateOption.ORDERS,
+                            last_updated=0,
+                        ),
+                        UpdateRequest(
+                            option=UpdateOption.PORTFOLIO,
+                            last_updated=0,
+                        ),
+                        UpdateRequest(
+                            option=UpdateOption.TOTAL_PORTFOLIO,
+                            last_updated=0,
+                        ),
+                        UpdateRequest(
+                            option=UpdateOption.TRANSACTIONS,
+                            last_updated=0,
+                        ),
+                    ]
             session_id (str):
                 API's session id.
             credentials (Credentials):
@@ -211,37 +119,39 @@ class ActionGetUpdate(AbstractAction):
         int_account = credentials.int_account
         url = urls.UPDATE
         url = f"{url}/{int_account};jsessionid={session_id}"
+        params_map = cls.build_params_map(request_list=request_list)
+        params_map.update({"intAccount": int_account, "sessionId": session_id})
 
-        params = cls.update_request_list_to_api(request_list=request_list)
-        params["intAccount"] = int_account
-        params["sessionId"] = session_id
-
-        request = requests.Request(method="GET", url=url, params=params)
+        request = requests.Request(
+            method="GET",
+            params=params_map,
+            url=url,
+        )
         prepped = session.prepare_request(request)
-        response_raw = None
 
         try:
-            response_raw = session.send(prepped)
-            response_raw.raise_for_status()
-            response_dict = response_raw.json()
+            response = session.send(prepped)
+            response.raise_for_status()
 
             if raw is True:
-                return response_dict
+                model = loads(response.text)
             else:
-                return cls.update_to_grpc(
-                    payload=response_dict,
-                )
+                model = cls.build_model(response=response)
+            return model
+        except requests.HTTPError as e:
+            logger.fatal(e)
+            if isinstance(e.response, requests.Response):
+                logger.fatal(e.response.text)
+            return None
         except Exception as e:
-            logger.fatal("error")
-            logger.fatal(response_raw)
             logger.fatal(e)
             return None
 
     def call(
         self,
-        request_list: Update.RequestList,
+        request_list: list[UpdateRequest],
         raw: bool = False,
-    ) -> Update | dict | None:
+    ) -> AccountUpdate | dict | None:
         credentials = self.credentials
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id

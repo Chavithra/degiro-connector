@@ -11,6 +11,16 @@ from degiro_connector.trading.models.news import BatchWrapper, NewsBatch, NewsRe
 
 
 class ActionGetNewsByCompany(AbstractAction):
+    @staticmethod
+    def build_params_map(news_request: NewsRequest) -> dict:
+        params_map = news_request.model_dump(
+            by_alias=True,
+            exclude_none=True,
+            mode="json",
+        )
+
+        return params_map
+
     @classmethod
     def get_news_by_company(
         cls,
@@ -26,17 +36,12 @@ class ActionGetNewsByCompany(AbstractAction):
         if session is None:
             session = cls.build_session()
 
+        int_account = credentials.int_account
         url = urls.NEWS_BY_COMPANY
+        params_map = cls.build_params_map(news_request=news_request)
+        params_map.update({"intAccount": int_account, "sessionId": session_id})
 
-        params = news_request.model_dump(
-            by_alias=True,
-            exclude_none=True,
-            mode="json",
-        )
-        params["intAccount"] = credentials.int_account
-        params["sessionId"] = session_id
-
-        http_request = requests.Request(method="GET", url=url, params=params)
+        http_request = requests.Request(method="GET", url=url, params=params_map)
         prepped = session.prepare_request(http_request)
         prepped.headers["cookie"] = "JSESSIONID=" + session_id
 

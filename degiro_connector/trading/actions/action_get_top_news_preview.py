@@ -39,7 +39,7 @@ class ActionGetTopNewsPreview(AbstractAction):
         session_id: str,
         credentials: Credentials,
         preview_request: PreviewRequest | None = None,
-        product_list: list[str] | None = None,
+        product_list: list[int] | None = None,
         raw: bool = False,
         session: requests.Session | None = None,
         logger: logging.Logger | None = None,
@@ -51,7 +51,6 @@ class ActionGetTopNewsPreview(AbstractAction):
 
         int_account = credentials.int_account
         url = urls.TOP_NEWS_PREVIEW
-
         params_map = cls.build_params_map(preview_request=preview_request)
         params_map.update({"intAccount": int_account, "sessionId": session_id})
 
@@ -85,7 +84,7 @@ class ActionGetTopNewsPreview(AbstractAction):
     def call(
         self,
         preview_request: PreviewRequest | None = None,
-        product_list: list[str] | None = None,
+        product_list: list[int] | None = None,
         raw: bool = False,
     ) -> TopNewsPreview | dict | None:
         connection_storage = self.connection_storage

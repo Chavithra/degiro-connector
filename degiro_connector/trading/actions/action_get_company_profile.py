@@ -27,11 +27,7 @@ class ActionGetCompanyProfile(AbstractAction):
 
         int_account = credentials.int_account
         url = f"{urls.COMPANY_PROFILE}/{product_isin}"
-
-        params = {
-            "intAccount": int_account,
-            "sessionId": session_id,
-        }
+        params = {"intAccount": int_account, "sessionId": session_id}
 
         request = requests.Request(method="GET", url=url, params=params)
         prepped = session.prepare_request(request)

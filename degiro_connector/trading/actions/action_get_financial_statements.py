@@ -1,26 +1,23 @@
 import logging
 
-
 import requests
-from google.protobuf import json_format
+from orjson import loads
 
 from degiro_connector.core.constants import urls
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
 from degiro_connector.trading.models.credentials import Credentials
-from degiro_connector.trading.models.trading_pb2 import FinancialStatements
+from degiro_connector.trading.models.product import (
+    FinancialStatements,
+    StatementsWrapper,
+)
 
 
 class ActionGetFinancialStatements(AbstractAction):
     @staticmethod
-    def financial_statements_to_grpc(payload: dict) -> FinancialStatements:
-        financial_statements = FinancialStatements()
-        json_format.ParseDict(
-            js_dict={"values": payload["data"]},
-            message=financial_statements,
-            ignore_unknown_fields=False,
-            descriptor_pool=None,
-        )
-        return financial_statements
+    def build_model(response: requests.Response) -> FinancialStatements:
+        model = StatementsWrapper.model_validate_json(json_data=response.text).data
+
+        return model
 
     @classmethod
     def get_financial_statements(
@@ -39,32 +36,31 @@ class ActionGetFinancialStatements(AbstractAction):
 
         int_account = credentials.int_account
         url = f"{urls.FINANCIAL_STATEMENTS}/{product_isin}"
+        params_map = {"intAccount": int_account, "sessionId": session_id}
 
-        params = {
-            "intAccount": int_account,
-            "sessionId": session_id,
-        }
-
-        request = requests.Request(method="GET", url=url, params=params)
+        request = requests.Request(
+            method="GET",
+            params=params_map,
+            url=url,
+        )
         prepped = session.prepare_request(request)
         prepped.headers["cookie"] = "JSESSIONID=" + session_id
 
-        response_raw = None
-
         try:
-            response_raw = session.send(prepped)
-            response_raw.raise_for_status()
-            response_dict = response_raw.json()
+            response = session.send(prepped)
+            response.raise_for_status()
 
             if raw is True:
-                return response_dict
+                model = loads(response.text)
             else:
-                return cls.financial_statements_to_grpc(
-                    payload=response_dict,
-                )
+                model = cls.build_model(response=response)
+            return model
+        except requests.HTTPError as e:
+            logger.fatal(e)
+            if isinstance(e.response, requests.Response):
+                logger.fatal(e.response.text)
+            return None
         except Exception as e:
-            logger.fatal("error")
-            logger.fatal(response_raw)
             logger.fatal(e)
             return None
 

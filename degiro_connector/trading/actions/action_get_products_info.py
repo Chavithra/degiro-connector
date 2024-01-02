@@ -1,63 +1,40 @@
 import logging
 
-
 import requests
-from google.protobuf import json_format
+from orjson import loads
 
 from degiro_connector.core.constants import urls
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
 from degiro_connector.trading.models.credentials import Credentials
-from degiro_connector.trading.models.trading_pb2 import (
-    ProductsInfo,
-)
+from degiro_connector.trading.models.product import ProductInfo
 
 
 class ActionGetProductsInfo(AbstractAction):
     @staticmethod
-    def products_info_to_api(
-        request: ProductsInfo.Request,
-    ) -> list[str]:
-        request_dict = json_format.MessageToDict(
-            message=request,
-            including_default_value_fields=True,
-            preserving_proto_field_name=False,
-            use_integers_for_enums=True,
-            descriptor_pool=None,
-            float_precision=None,
-        )
-        payload = request_dict["products"]
-        payload = list(map(str, payload))
+    def build_model(response: requests.Response) -> ProductInfo:
+        model = ProductInfo.model_validate_json(json_data=response.text)
 
-        return payload
-
-    @staticmethod
-    def products_info_to_grpc(payload: dict) -> ProductsInfo:
-        products_info = ProductsInfo()
-        json_format.ParseDict(
-            js_dict={"values": payload["data"]},
-            message=products_info,
-            ignore_unknown_fields=False,
-            descriptor_pool=None,
-        )
-        return products_info
+        return model
 
     @classmethod
     def get_products_info(
         cls,
-        request: ProductsInfo.Request,
+        product_list: list[int],
         session_id: str,
         credentials: Credentials,
         raw: bool = False,
         session: requests.Session | None = None,
         logger: logging.Logger | None = None,
-    ) -> ProductsInfo | dict | None:
-        """Search for products using their ids.
+    ) -> ProductInfo | dict | None:
+        """Retrieve information about the account.
         Args:
-            request (ProductsInfo.Request):
-                list of products ids.
+            request (AccountOverview.Request):
+                list of options that we want to retrieve from the endpoint.
                 Example :
-                    request = ProductsInfo.Request()
-                    request.products.extend([96008, 1153605, 5462588])
+                    overview_request = OverviewRequest(
+                        from_date=date(year=2023, month=10, day=15),
+                        to_date=date(year=2024, month=1, day=1),
+                    )
             session_id (str):
                 API's session id.
             credentials (Credentials):
@@ -72,7 +49,7 @@ class ActionGetProductsInfo(AbstractAction):
                 This object will be generated if None.
                 Defaults to None.
         Returns:
-            ProductsInfo: API response.
+            AccountOverview: API response.
         """
 
         if logger is None:
@@ -82,39 +59,29 @@ class ActionGetProductsInfo(AbstractAction):
 
         int_account = credentials.int_account
         url = urls.PRODUCTS_INFO
+        params_map = {"intAccount": int_account, "sessionId": session_id}
 
-        params = {
-            "intAccount": int_account,
-            "sessionId": session_id,
-        }
-
-        payload = cls.products_info_to_api(request=request)
-
-        http_request = requests.Request(
+        request = requests.Request(
+            json=product_list,
             method="POST",
+            params=params_map,
             url=url,
-            json=payload,
-            params=params,
         )
-        prepped = session.prepare_request(http_request)
-        response_raw = None
+        prepped = session.prepare_request(request=request)
 
         try:
-            response_raw = session.send(prepped)
-            response_raw.raise_for_status()
-            response_dict = response_raw.json()
+            response = session.send(prepped)
+            response.raise_for_status()
 
             if raw is True:
-                return response_dict
+                model = loads(response.text)
             else:
-                return cls.products_info_to_grpc(
-                    payload=response_dict,
-                )
+                model = cls.build_model(response=response)
+            return model
         except requests.HTTPError as e:
-            status_code = getattr(response_raw, "status_code", "No status_code found.")
-            text = getattr(response_raw, "text", "No text found.")
-            logger.fatal(status_code)
-            logger.fatal(text)
+            logger.fatal(e)
+            if isinstance(e.response, requests.Response):
+                logger.fatal(e.response.text)
             return None
         except Exception as e:
             logger.fatal(e)
@@ -122,9 +89,9 @@ class ActionGetProductsInfo(AbstractAction):
 
     def call(
         self,
-        request: ProductsInfo.Request,
+        product_list: list[int],
         raw: bool = False,
-    ) -> ProductsInfo | dict | None:
+    ) -> ProductInfo | dict | None:
         connection_storage = self.connection_storage
         session_id = connection_storage.session_id
         session = self.session_storage.session
@@ -132,7 +99,7 @@ class ActionGetProductsInfo(AbstractAction):
         logger = self.logger
 
         return self.get_products_info(
-            request=request,
+            product_list=product_list,
             session_id=session_id,
             credentials=credentials,
             raw=raw,

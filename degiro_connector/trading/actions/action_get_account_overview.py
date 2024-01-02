@@ -47,7 +47,7 @@ class ActionGetAccountOverview(AbstractAction):
                 Example :
                     overview_request = OverviewRequest(
                         from_date=date(year=2023, month=10, day=15),
-                        from_date=date(year=2024, month=1, day=1),
+                        to_date=date(year=2024, month=1, day=1),
                     )
             session_id (str):
                 API's session id.
@@ -72,7 +72,7 @@ class ActionGetAccountOverview(AbstractAction):
             session = cls.build_session()
 
         int_account = credentials.int_account
-        url = urls.ACCOUNT_OVERVIEW
+        url = urls.TRANSACTIONS_HISTORY
         params_map = cls.build_params_map(overview_request=overview_request)
         params_map.update({"intAccount": int_account, "sessionId": session_id})
 
