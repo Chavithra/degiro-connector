@@ -1,8 +1,6 @@
-
 from google.protobuf import json_format
 from google.protobuf.message import Message
 from google.protobuf.struct_pb2 import Struct
-
 
 
 def message_to_dict(message: Message) -> dict:

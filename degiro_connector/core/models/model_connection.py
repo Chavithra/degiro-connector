@@ -6,7 +6,6 @@ from threading import Event
 from wrapt.decorators import synchronized
 
 
-
 class ModelConnection:
     @property
     def connected(self) -> Event:
