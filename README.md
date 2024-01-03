@@ -991,25 +991,17 @@ When the request fails, `None` is returned.
 ## 4.1.3 Example of combining these functions
 
 ```python
-# SETUP ORDER
 order = Order(
-    action=Order.Action.BUY,
-    order_type=Order.OrderType.LIMIT,
-    price=10,
-    product_id=71981,
+    buy_sell=Action.BUY,
+    order_type=OrderType.LIMIT,
+    price=12.1,
+    product_id=72160,
     size=1,
-    time_type=Order.TimeType.GOOD_TILL_DAY,
+    time_type=TimeType.GOOD_TILL_DAY,
 )
-
-# FETCH CHECKING_RESPONSE
 checking_response = trading_api.check_order(order=order)
-
-# EXTRACT CONFIRMATION_ID
-confirmation_id = checking_response.confirmation_id
-
-# SEND CONFIRMATION
 confirmation_response = trading_api.confirm_order(
-    confirmation_id=confirmation_id,
+    confirmation_id=checking_response.confirmation_id,
     order=order,
 )
 ```
