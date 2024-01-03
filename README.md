@@ -395,6 +395,7 @@ polars_df = ticker_to_df.parse(ticker=ticker)
 python_list = polars_df.to_dicts()
 
 # BUILD PANDAS.DATAFRAME
+# YOU NEED PANDAS AND PYARROW INSTALLED
 pandas_df = df.to_pandas()
 ```
 
