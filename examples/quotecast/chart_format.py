@@ -1,8 +1,6 @@
 import json
 import logging
 
-import polars as pl
-
 from degiro_connector.quotecast.tools.chart_fetcher import ChartFetcher, SeriesFormatter
 from degiro_connector.quotecast.models.chart import ChartRequest, Interval
 
