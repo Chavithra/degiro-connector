@@ -71,8 +71,8 @@ class LeveragedsRequest(ProductRequest):
 
 class LookupRequest(ProductRequest):
     search_text: str
-    limit: int
-    offset: int
+    limit: int = Field(default=5)
+    offset: int = Field(default=0)
     product_type_id: int
 
 
