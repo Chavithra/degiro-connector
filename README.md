@@ -1497,15 +1497,12 @@ Text research on a financial product.
 Here is how to get this data :
 
 ```python
-# SETUP REQUEST
 product_request = LookupRequest(
     search_text='APPLE',
     limit=10,
     offset=0,
     product_type_id=1,
 )
-
-# FETCH DATA
 products_lookup = trading_api.product_search(product_request=product_request)
 ```
 
