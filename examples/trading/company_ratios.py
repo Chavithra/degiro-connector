@@ -14,9 +14,8 @@ trading_api = TradingAPI(credentials=credentials)
 trading_api.connect()
 
 # FETCH DATA
-product_isin = "FR0000131906"
 company_ratios = trading_api.get_company_ratios(
-    product_isin=product_isin,
+    product_isin="FR0000131906",
     raw=True,
 )
 
