@@ -5,6 +5,7 @@ from pydantic.alias_generators import to_camel
 
 class ProductRequest(BaseModel):
     model_config = ConfigDict(
+        extra="allow",
         alias_generator=to_camel,
         populate_by_name=True,
     )
@@ -67,8 +68,8 @@ class LeveragedsRequest(ProductRequest):
     require_total: bool
     sort_columns: str
     sort_types: str
-    underlying_product_id: int = None
-    shortlong: str = ''
+    underlying_product_id: int | None = Field(default=None)
+    shortlong: str | None = Field(default=None)
 
 
 class LookupRequest(ProductRequest):
