@@ -67,6 +67,8 @@ class LeveragedsRequest(ProductRequest):
     require_total: bool
     sort_columns: str
     sort_types: str
+    underlying_product_id: int = None
+    shortlong: str = ''
 
 
 class LookupRequest(ProductRequest):
