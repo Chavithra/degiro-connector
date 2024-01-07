@@ -36,7 +36,7 @@ Here are the features you can access through this library :
 |TopNewsPreview|Retrieve some news preview about all the companies.|
 |TotalPorfolio|Retrieve aggregated information about your assets.|
 |TransactionsHistory|Retrieve all Transactions created between two dates.|
-|Underlyings|Underlyings for Futures and Options.|
+|Underlyings|List underlyings for Futures and Options.|
 
 ## 1.2. How to install ?
 
