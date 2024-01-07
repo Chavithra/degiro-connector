@@ -126,6 +126,7 @@ pip uninstall degiro-connector
   * [7.15. How to move a favorite list ?](#715-how-to-move-a-favorite-list-)
   * [7.16. How to put favorite list products ?](#716-how-to-put-favorite-list-products-)
   * [7.17. How to delete favorite list products ?](#717-how-to-delete-favorite-list-products-)
+  * [7.18. How to get futures/options underlyings ?](#718-how-to-get-futuresoptions-underlyings-)
 - [8. Companies](#8-companies)
   * [8.1. How to get : CompanyProfile ?](#81-how-to-get--companyprofile-)
   * [8.2. How to get : CompanyRatios ?](#82-how-to-get--companyratios-)
@@ -1793,6 +1794,24 @@ success = trading_api.delete_favorite_product(
 
 For a more comprehensive example :
 [favorite_delete product.py](examples/trading/favorite_delete product.py)
+
+
+## 7.18. How to get futures/options underlyings ?
+
+Example :
+
+```python
+underlying_list = trading_api.get_underlyings(
+    underlyings_request= UnderlyingsRequest(
+        future_exchange_id=1,
+        # option_exchange_id=3,
+    ),
+    raw=False,
+)
+```
+
+For a more comprehensive example :
+[favorite_get_underlyings.py](examples/trading/favorite_get_underlyings.py)
 
 # 8. Companies
 
