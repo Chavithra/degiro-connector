@@ -12,6 +12,7 @@ from degiro_connector.core.models.model_session import ModelSession
 
 
 class API:
+    QUOTECAST_TIMEOUT = 15
     PKG_PATH = "degiro_connector.quotecast.actions"
     CLS_PREFIX = "Action"
     MOD_PREFIX = "action_"
@@ -89,7 +90,7 @@ class API:
     ):
         self._credentials = {"user_token": user_token}
         self._connection_storage = connection_storage or ModelConnection(
-            timeout=timeouts.QUOTECAST_TIMEOUT,
+            timeout=self.QUOTECAST_TIMEOUT,
         )
         self._logger = logger or logging.getLogger(self.__module__)
         self._session_storage = session_storage or ModelSession(

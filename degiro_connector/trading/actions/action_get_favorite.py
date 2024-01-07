@@ -59,8 +59,6 @@ class ActionGetFavorite(AbstractAction):
             response = session.send(prepped)
             response.raise_for_status()
 
-            print(response.text)
-
             if raw is True:
                 favorite_batch = loads(response.text)
             else:

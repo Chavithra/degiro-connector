@@ -12,6 +12,7 @@ from degiro_connector.trading.models.credentials import Credentials
 
 
 class API:
+    TRADING_TIMEOUT = 1800
     PKG_PATH = "degiro_connector.trading.actions"
     CLS_PREFIX = "Action"
     MOD_PREFIX = "action_"
@@ -89,7 +90,7 @@ class API:
     ):
         self._credentials = credentials
         self._connection_storage = connection_storage or ModelConnection(
-            timeout=timeouts.TRADING_TIMEOUT,
+            timeout=self.TRADING_TIMEOUT,
         )
         self._logger = logger or logging.getLogger(self.__module__)
         self._session_storage = session_storage or ModelSession(
