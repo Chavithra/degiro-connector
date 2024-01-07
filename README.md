@@ -63,13 +63,13 @@ pip uninstall degiro-connector
   * [1.4. How to uninstall ?](#14-how-to-uninstall-)
   * [1.5. Table of contents](#15-table-of-contents)
 - [2. Real-time data](#2-real-time-data)
-  * [2.1. How to login ?](#21-how-to-login-)
-  * [2.2. How to get a Chart ?](#22-how-to-get-a-chart-)
-  * [2.3. How to format a chart.series ?](#23-how-to-format-a-chartseries-)
-  * [2.4. How to find a : vwd_id ?](#24-how-to-find-a--vwd_id-)
-  * [2.5. What are the workflows ?](#25-what-are-the-workflows-)
+  * [2.1. What are the workflows ?](#21-what-are-the-workflows-)
+  * [2.2. How to find your `user_token` ?](#22-how-to-find-your-user_token-)
+  * [2.3. How to get a Chart ?](#23-how-to-get-a-chart-)
+  * [2.4. How to format a chart.series ?](#24-how-to-format-a-chartseries-)
+  * [2.5. How to find a product `vwd_id` ?](#25-how-to-find-a-product-vwd_id-)
   * [2.6. What are the credentials ?](#26-what-are-the-credentials-)
-  * [2.7. How to find your : user_token ?](#27-how-to-find-your--user_token-)
+  * [2.7. How to connect ?](#27-how-to-connect-)
   * [2.8. Is there a timeout ?](#28-is-there-a-timeout-)
   * [2.9. How to subscribe to a data-stream ?](#29-how-to-subscribe-to-a-data-stream-)
   * [2.10. How to unsubscribe to a data-stream ?](#210-how-to-unsubscribe-to-a-data-stream-)
@@ -147,31 +147,32 @@ It is possible to fetch the following data from Degiro's API:
 
 ## 2.1. What are the workflows ?
 
-This is the workflow for consuming real-time data-stream :
+**CHARTS**
 
-    A. Find your "user_token".
-    B. Setup the API object with your "user_token".
-    C. Connect.
-    D. Subscribe to data-stream.
-    E. Fetch data-stream.
+To consume charts series :
 
-This is the worflow for consuming charts :
+    A. Fetch charts : directly with your "user_token".
+    B. Convert to a DataFrame.
 
-    A. Find your "user_token".
-    B. Setup the API object with your "user_token".
-    C. Fetch charts.
+**REAL-TIME**
+
+To consume real-time data-stream :
+
+    A. Connect : with your "user_token".
+    B. Subscribe to metrics.
+    C. Fetch these metrics.
+    D. Convert to a DataFrame.
+
 
 All the details of these steps are explained in the rest of this section.
 
-## 2.2. How to login ?
+## 2.2. How to find your `user_token` ?
+You can find your "user_token" inside one of these tables :
+* "Config" : attribute "clientId"
+* "ClientDetails" : attribute "id"
 
-In order to fetch data you need to establish a connection.
+See sections related to ["Config"](#61-how-to-retrieve-the-table--config-) and ["ClientDetails"](#62-how-to-retrieve-the-table--clientdetails-) tables.
 
-You can use the following code to connect :
-
-```python
-session_id = TickerFetcher.get_session_id(user_token=YOUR_USER_TOKEN)
-```
 
 ## 2.3. How to get a Chart ?
 You can fetch an object containing the same data than in Degiro's website graph.
@@ -299,7 +300,7 @@ All the models are described in this module :
 For a more comprehensive example :
  - [chart_format.py](examples/quotecast/chart_format.py)
 
-## 2.4. How to find a : vwd_id ?
+## 2.5. How to find a product `vwd_id` ?
 
 In operations related to `Quotecast`, Degiro uses the `vwd_id` to identify a product.
 
@@ -320,7 +321,7 @@ The method `product_search` let you use the name or other attributes of a produc
 
 The method `get_products_info` let you use a product's `id` to fetch it's `vwd_id`.
 
-## 2.2. What are the credentials ?
+## 2.6. What are the credentials ?
 
 The only credential you need in order to fetch real-time data and charts is the :
 * user_token
@@ -329,15 +330,29 @@ Beware, these two identifiers are not the same thing :
 * user_token : used to fetch real-time data and charts.
 * int_account : used for some trading operations.
 
-## 2.3. How to find your : user_token ?
-You can find your "user_token" inside one of these tables :
-* "Config" : attribute "clientId"
-* "ClientDetails" : attribute "id"
+## 2.7. How to connect ?
 
-See sections related to ["Config"](#61-how-to-retrieve-the-table--config-) and ["ClientDetails"](#62-how-to-retrieve-the-table--clientdetails-) tables.
+In order to fetch data you need to establish a connection.
 
+You can use the following code to connect :
 
-## 2.6. How to subscribe to a data-stream ?
+```python
+session_id = TickerFetcher.get_session_id(user_token=YOUR_USER_TOKEN)
+```
+
+## 2.8. Is there a timeout ?
+
+Connection timeout is around 15 seconds.
+
+Which means a connection will cease to work after this timeout.
+
+This timeout is reset each time you use this connection to :
+* Subscribe to a metric (for instance a stock Price)
+* Fetch the data-stream
+
+So if you use it nonstop (in a loop) you won't need to reconnect.
+
+## 2.9. How to subscribe to a data-stream ?
 
 If one needs the following data from the "AAPL" stock :
 * LastDate
@@ -414,7 +429,7 @@ For more comprehensive examples :
 [realtime_poller.py](examples/quotecast/realtime_poller.py) /
 [realtime_one_shot.py](examples/quotecast/realtime_one_shot.py)
 
-## 2.7. How to unsubscribe to a data-stream ?
+## 2.10. How to unsubscribe to a data-stream ?
 
 To remove metrics from the data-stream you need to setup a TickerRequest.
 
@@ -468,7 +483,7 @@ For more comprehensive examples :
 [realtime_poller.py](examples/quotecast/realtime_poller.py) /
 [realtime_one_shot.py](examples/quotecast/realtime_one_shot.py)
 
-## 2.8. How to fetch the data ?
+## 2.11. How to fetch the data ?
 
 You can use the following code :
 ```python
@@ -485,19 +500,8 @@ ticker = TickerFetcher.fetch_ticker(
 For a more comprehensive example :
 [realtime_poller.py](examples/quotecast/realtime_poller.py)
 
-## 2.5. Is there a timeout ?
 
-Connection timeout is around 15 seconds.
-
-Which means a connection will cease to work after this timeout.
-
-This timeout is reset each time you use this connection to :
-* Subscribe to a metric (for instance a stock Price)
-* Fetch the data-stream
-
-So if you use it nonstop (in a loop) you won't need to reconnect.
-
-## 2.9. How to use this data ?
+## 2.12. How to use this data ?
 
 Received data is a `Quotecast` object with the following properties :
 
@@ -516,7 +520,7 @@ Notes:
 * The API sometimes might return an empty Quotecast message.
 * The API often returns a subset of the requested metrics, e.g. only `'LastPrice'`. This should be considered when appending consecutive data responses.
 
-## 2.10. Which are the available data types ?
+## 2.13. Which are the available data types ?
 
 This library provides the tools to convert Degiro's JSON data into something more programmer-friendly.
 
@@ -548,7 +552,7 @@ python_list = polars_df.to_dicts()
 pandas_df = df.to_pandas()
 ```
 
-## 2.11. What is a Ticker ?
+## 2.14. What is a Ticker ?
 
 The generated Ticker contains :
 
@@ -573,7 +577,7 @@ ticker_json = Ticker.model_dump_json()
 ticker_json = Ticker.model_validate_json(json_data=ticker_json)
 ```
 
-## 2.12. What is inside the `list[Metric]` ?
+## 2.15. What is inside the `list[Metric]` ?
 
 The `list[Metric]` is the parsed version of the `json` message received from Degiro's API.
 
@@ -632,7 +636,7 @@ metric_list = [
 }
 ```
 
-## 2.13. What is inside the DataFrame ?
+## 2.16. What is inside the DataFrame ?
 
 In addition to whatever metrics you have chosen to subscribe to (see the example in [section 2.6](#26-how-to-subscribe-to-a-data-stream-)), the DataFrame will contain the following columns :
 |**Column**|**Description**|
