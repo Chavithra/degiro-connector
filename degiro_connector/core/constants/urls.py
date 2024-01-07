@@ -40,6 +40,8 @@ PRODUCT_SEARCH_STOCKS = "https://trader.degiro.nl/product_search/secure/v5/stock
 PRODUCT_SEARCH_WARRANTS = "https://trader.degiro.nl/product_search/secure/v5/warrants"
 PRODUCTS_INFO = "https://trader.degiro.nl/product_search/secure/v5/products/info"
 PRODUCT_SEARCH_DICTIONARY = "https://trader.degiro.nl/product_search/config/dictionary"
+FUTURES_UNDERLYINGS = "https://trader.degiro.nl/product_search/secure/v5/futures/underlyings"
+OPTIONS_UNDERLYINGS = "https://trader.degiro.nl/product_search/secure/v5/options/underlyings"
 TOP_NEWS_PREVIEW = (
     "https://trader.degiro.nl/dgtbxdsservice/newsfeed/v2/top-news-preview"
 )

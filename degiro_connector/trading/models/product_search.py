@@ -1,9 +1,11 @@
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, Field
+from typing import Any
+
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 from pydantic.alias_generators import to_camel
 
 
-class ProductRequest(BaseModel):
+class ProductInfo(BaseModel):
     model_config = ConfigDict(
         extra="allow",
         alias_generator=to_camel,
@@ -11,11 +13,11 @@ class ProductRequest(BaseModel):
     )
 
 
-class ProductsConfig(ProductRequest):
+class ProductsConfig(ProductInfo):
     values: dict
 
 
-class BondsRequest(ProductRequest):
+class BondsRequest(ProductInfo):
     bond_issuer_type_id: int
     bond_exchange_id: int
     search_text: str
@@ -26,7 +28,7 @@ class BondsRequest(ProductRequest):
     sort_types: str
 
 
-class ETFsRequest(ProductRequest):
+class ETFsRequest(ProductInfo):
     popular_only: bool
     input_aggregate_types: str
     input_aggregate_values: str
@@ -38,7 +40,7 @@ class ETFsRequest(ProductRequest):
     sort_types: str
 
 
-class FundsRequest(ProductRequest):
+class FundsRequest(ProductInfo):
     search_text: str
     offset: int
     limit: int
@@ -47,7 +49,7 @@ class FundsRequest(ProductRequest):
     sort_types: str
 
 
-class FuturesRequest(ProductRequest):
+class FuturesRequest(ProductInfo):
     future_exchange_id: int
     underlying_isin: str
     search_text: str
@@ -58,7 +60,7 @@ class FuturesRequest(ProductRequest):
     sort_types: str
 
 
-class LeveragedsRequest(ProductRequest):
+class LeveragedsRequest(ProductInfo):
     popular_only: bool
     input_aggregate_types: str
     input_aggregate_values: str
@@ -72,14 +74,14 @@ class LeveragedsRequest(ProductRequest):
     shortlong: str | None = Field(default=None)
 
 
-class LookupRequest(ProductRequest):
+class LookupRequest(ProductInfo):
     search_text: str
     limit: int = Field(default=5)
     offset: int = Field(default=0)
     product_type_id: int
 
 
-class OptionsRequest(ProductRequest):
+class OptionsRequest(ProductInfo):
     input_aggregate_types: str
     input_aggregate_values: str
     option_exchange_id: int
@@ -92,7 +94,7 @@ class OptionsRequest(ProductRequest):
     sort_types: str
 
 
-class StocksRequest(ProductRequest):
+class StocksRequest(ProductInfo):
     exchange_id: int | None = Field(default=None)
     is_in_us_green_list: bool | None = Field(default=None, alias="isInUSGreenList")
     index_id: int | None = Field(default=None)
@@ -105,7 +107,7 @@ class StocksRequest(ProductRequest):
     stock_country_id: int
 
 
-class WarrantsRequest(ProductRequest):
+class WarrantsRequest(ProductInfo):
     search_text: str
     offset: int
     limit: int
@@ -119,3 +121,35 @@ class ProductBatch(BaseModel):
     products: list[dict]
     response_datetime: datetime = Field(default_factory=datetime.now)
     total: int = Field(default=0)
+
+
+class UnderlyingsRequest(ProductInfo):
+    future_exchange_id: int | None = Field(default=None)
+    option_exchange_id: int | None = Field(default=None)
+
+    int_account: int | None = Field(default=None)
+    session_id: str | None = Field(default=None)
+
+    @model_validator(mode="before")
+    @classmethod
+    def one_of(cls, data: Any):
+        if isinstance(data, dict):
+            if "future_exchange_id" in data and "option_exchange_id" in data:
+                raise ValueError(
+                    "Can't set both: `future_exchange_id` and `option_exchange_id`."
+                )
+            if "future_exchange_id" not in data and "option_exchange_id" not in data:
+                raise ValueError(
+                    "One of these parameters should be set: `future_exchange_id` or `option_exchange_id`."
+                )
+
+        return data
+
+
+class Underlying(ProductInfo):
+    contract_type: int | None = Field(default=None)
+    isin: str | None = Field(default=None)
+    name: str | None = Field(default=None)
+    symbol: str | None = Field(default=None)
+    underlying_name: str | None = Field(default=None)
+    underlying_product_id: int | None = Field(default=None)

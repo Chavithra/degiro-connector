@@ -57,26 +57,26 @@ class ActionProductSearch(AbstractAction):
         logger: logging.Logger | None = None,
     ) -> ProductBatch | dict | None:
         """Search products.
+        Example 1:
+            request = ProductBatch.LookupRequest(
+                search_text='APPLE',
+                limit=10,
+                offset=0,
+            )
+        Example 2:
+            request = ProductBatch.StocksRequest(
+                index_id=5,
+                is_in_us_green_list=False,
+                stock_country_id=886,
+                offset=0,
+                limit=100,
+                require_total=True,
+                sort_columns='name',
+                sort_types='asc',
+            )
         Args:
-            request (StockList.Request):
-                list of options that we want to retrieve from the endpoint.
-                Example 1:
-                    request = ProductBatch.LookupRequest(
-                        search_text='APPLE',
-                        limit=10,
-                        offset=0,
-                    )
-                Example 2:
-                    request = ProductBatch.StocksRequest(
-                        index_id=5,
-                        is_in_us_green_list=False,
-                        stock_country_id=886,
-                        offset=0,
-                        limit=100,
-                        require_total=True,
-                        sort_columns='name',
-                        sort_types='asc',
-                    )
+            product_request (ProductRequest):
+                Details of the products to search for.
             session_id (str):
                 API's session id.
             credentials (Credentials):
@@ -102,7 +102,9 @@ class ActionProductSearch(AbstractAction):
         url = cls.URL_MATCHING[type(product_request)]
 
         params = product_request.model_dump(
-            mode="json", by_alias=True, exclude_none=True
+            by_alias=True,
+            exclude_none=True,
+            mode="json",
         )
 
         if credentials.int_account is not None:
