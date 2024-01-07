@@ -63,22 +63,22 @@ pip uninstall degiro-connector
   * [1.4. How to uninstall ?](#14-how-to-uninstall-)
   * [1.5. Table of contents](#15-table-of-contents)
 - [2. Real-time data](#2-real-time-data)
-  * [2.1. What are the workflows ?](#21-what-are-the-workflows-)
-  * [2.2. What are the credentials ?](#22-what-are-the-credentials-)
-  * [2.3. How to find your : user_token ?](#23-how-to-find-your--user_token-)
-  * [2.4. How to login ?](#24-how-to-login-)
-  * [2.5. Is there a timeout ?](#25-is-there-a-timeout-)
-  * [2.6. How to subscribe to a data-stream ?](#26-how-to-subscribe-to-a-data-stream-)
-  * [2.7. How to unsubscribe to a data-stream ?](#27-how-to-unsubscribe-to-a-data-stream-)
-  * [2.8. How to fetch the data ?](#28-how-to-fetch-the-data-)
-  * [2.9. How to use this data ?](#29-how-to-use-this-data-)
-  * [2.10. Which are the available data types ?](#210-which-are-the-available-data-types-)
-  * [2.11. What is a Ticker ?](#211-what-is-a-ticker-)
-  * [2.12. What is inside the list[Metric] ?](#212-what-is-inside-the-listmetric-)
-  * [2.13. What is inside the DataFrame ?](#213-what-is-inside-the-dataframe-)
-  * [2.14. How to find a : vwd_id ?](#214-how-to-find-a--vwd_id-)
-  * [2.15. How to get a Chart ?](#215-how-to-get-a-chart-)
-  * [2.16 How to format a chart.series?](#216-how-to-format-a-chartseries)
+  * [2.1. How to login ?](#21-how-to-login-)
+  * [2.2. How to get a Chart ?](#22-how-to-get-a-chart-)
+  * [2.3. How to format a chart.series ?](#23-how-to-format-a-chartseries-)
+  * [2.4. How to find a : vwd_id ?](#24-how-to-find-a--vwd_id-)
+  * [2.5. What are the workflows ?](#25-what-are-the-workflows-)
+  * [2.6. What are the credentials ?](#26-what-are-the-credentials-)
+  * [2.7. How to find your : user_token ?](#27-how-to-find-your--user_token-)
+  * [2.8. Is there a timeout ?](#28-is-there-a-timeout-)
+  * [2.9. How to subscribe to a data-stream ?](#29-how-to-subscribe-to-a-data-stream-)
+  * [2.10. How to unsubscribe to a data-stream ?](#210-how-to-unsubscribe-to-a-data-stream-)
+  * [2.11. How to fetch the data ?](#211-how-to-fetch-the-data-)
+  * [2.12. How to use this data ?](#212-how-to-use-this-data-)
+  * [2.13. Which are the available data types ?](#213-which-are-the-available-data-types-)
+  * [2.14. What is a Ticker ?](#214-what-is-a-ticker-)
+  * [2.15. What is inside the list[Metric] ?](#215-what-is-inside-the-listmetric-)
+  * [2.16. What is inside the DataFrame ?](#216-what-is-inside-the-dataframe-)
 - [3. Trading connection](#3-trading-connection)
   * [3.1. How to login ?](#31-how-to-login-)
   * [3.2. How to logout ?](#32-how-to-logout-)
@@ -141,24 +141,9 @@ pip uninstall degiro-connector
 
 # 2. Real-time data
 
-It is possible to fetch a stream of data in real-time from Degiro's API.
-
-For instance if one needs the following data from the "AAPL" stock :
-* LastDate
-* LastTime
-* LastPrice
-* LastVolume
-
-You can use this library to retrieve updates like this :
-
-| product_id    | LastPrice | LastVolume | LastDatetimeUTC         | request_duration_s | response_datetime_utc          |
-|---------------|-----------|------------|-------------------------|---------------------|---------------------------------|
-| str           | f64       | i64        | datetime[μs]            | f64                 | datetime[μs]                    |
-| 360015751     | 34.6      | 1          | 2023-12-29 16:35:23     | 1.021337            | 2024-01-01 17:31:22.482618     |
-| AAPL.BATS,E   | 192.55    | null       | 2023-12-29 20:59:59     | 1.021337            | 2024-01-01 17:31:22.482618     |
-
-
-For a list of available metrics, see the example in [section 2.6](#26-how-to-subscribe-to-a-data-stream-).
+It is possible to fetch the following data from Degiro's API:
+- Charts series data
+- Streams of data in real-time
 
 ## 2.1. What are the workflows ?
 
@@ -178,6 +163,163 @@ This is the worflow for consuming charts :
 
 All the details of these steps are explained in the rest of this section.
 
+## 2.2. How to login ?
+
+In order to fetch data you need to establish a connection.
+
+You can use the following code to connect :
+
+```python
+session_id = TickerFetcher.get_session_id(user_token=YOUR_USER_TOKEN)
+```
+
+## 2.3. How to get a Chart ?
+You can fetch an object containing the same data than in Degiro's website graph.
+
+For that you need to prepare a ChartRequest.
+
+Here is a table with the available attributes for ChartRequest.
+
+|**Parameter**|**Type**|**Description**|
+|:-|:-|:-|
+|requestid|str|It sends you back whatever string you put here, you can set it to : "1".|
+|resolution|Chart.Resolution|Resolution of the chart like : Chart.Resolution.PT1M.|
+|culture|str|Country code like : "en-US" or "fr-FR".|
+|period|Chart.Period|Period of the chart, like : Chart.Period.P1D.|
+|series|repeated string|Data to get like : ['issueid:36014897', 'price:issueid:360148977'].|
+|tz|str|Timezone like : "Europe/Paris"|
+
+Example of code :
+
+```python
+chart_fetcher = ChartFetcher(user_token=user_token)
+chart_request = ChartRequest(
+    culture="fr-FR",
+    # override={
+    #     "resolution": "P1D",
+    #     "period": "P1W",
+    # },
+    period=Interval.P1D,
+    requestid="1",
+    resolution=Interval.PT60M,
+    series=[
+        "issueid:360148977",
+        "price:issueid:360148977",
+        "ohlc:issueid:360148977",
+        "volume:issueid:360148977",
+        # "vwdkey:AAPL.BATS,E",
+        # "price:vwdkey:AAPL.BATS,E",
+        # "ohlc:vwdkey:AAPL.BATS,E",
+        # "volume:vwdkey:AAPL.BATS,E",
+    ],
+    tz="Europe/Paris",
+)
+chart = chart_fetcher.get_chart(
+    chart_request=chart_request,
+    raw=False,
+)
+```
+
+The `issueid` parameter is the `vwd_id` of the product from which you want the `Chart` data.
+
+See the section related to `vwd_id` for more information.
+
+All the models are described in this module :
+[chart.py](degiro_connector/quotecast/models/chart.py)
+
+For a more comprehensive example :
+ - [chart.py](examples/quotecast/chart.py)
+
+## 2.4. How to format a chart.series ?
+
+A Chart object contains a list of series.
+
+There is a SeriesFormatter to help you convertir a series into a `polars.DataFrame`.
+
+```python
+df = SeriesFormatter.format_timeseries(series=chart.series[0])
+print(df)
+```
+
+Here are the result for different series.id.
+
+- `issueid:360148977`
+
+| issueId   | companyId | name      | identifier | ... | windowPreviousClosePrice | windowEndPrice |
+|-----------|-----------|-----------|------------|-----|---------------------------|----------------|
+| i64       | i64       | str       | str        | ... | f64                       | f64            |
+| 360148977 | 9245      | Crédit    | issueid:3  | ... | 12.858                    | -0.00047       |
+
+- `price:issueid:360148977`
+
+| timestamp                  | price  |
+|----------------------------|--------|
+| datetime[μs]               | f64    |
+| 2023-12-29 09:00:00        | 12.858 |
+| 2023-12-29 10:58:58.800    | 12.85  |
+| ...                        | ...    |
+| 2023-12-29 17:28:58.800    | 12.83  |
+| 2023-12-29 17:34:58.799999 | 12.852 |
+
+
+- `volume:issueid:360148977`
+
+| timestamp                  | volume      |
+|----------------------------|------------|
+| datetime[μs]               | f64        |
+| 2023-12-29 09:58:58.800    | 61627.0    |
+| 2023-12-29 10:58:58.800    | 83854.0    |
+| 2023-12-29 11:58:58.800    | 78240.0    |
+| 2023-12-29 12:58:01.200    | 69263.0    |
+| 2023-12-29 13:58:58.800    | 59040.0    |
+| 2023-12-29 14:58:58.800    | 62831.0    |
+| 2023-12-29 15:58:01.200    | 66681.0    |
+| 2023-12-29 16:58:58.800    | 529315.0   |
+| 2023-12-29 17:34:58.799999 | 1.317919e6 |
+
+- `ohlc:issueid:360148977`
+
+| timestamp           | open   | high   | low    | close  |
+|----------------------|--------|--------|--------|--------|
+| datetime[μs]         | f64    | f64    | f64    | f64    |
+| 2023-12-29 09:00:00 | 12.858 | 12.898 | 12.858 | 12.872 |
+| 2023-12-29 10:00:00 | 12.872 | 12.876 | 12.84  | 12.85  |
+| 2023-12-29 11:00:00 | 12.85  | 12.864 | 12.842 | 12.848 |
+| 2023-12-29 12:00:00 | 12.844 | 12.884 | 12.844 | 12.87  |
+| 2023-12-29 13:00:00 | 12.868 | 12.886 | 12.86  | 12.87  |
+| 2023-12-29 14:00:00 | 12.872 | 12.902 | 12.868 | 12.886 |
+| 2023-12-29 15:00:00 | 12.884 | 12.894 | 12.874 | 12.876 |
+| 2023-12-29 16:00:00 | 12.876 | 12.882 | 12.854 | 12.858 |
+| 2023-12-29 17:00:00 | 12.856 | 12.858 | 12.83  | 12.852 |
+
+
+All the models are described in this module :
+ - [chart.py](degiro_connector/quotecast/models/chart.py)
+
+For a more comprehensive example :
+ - [chart_format.py](examples/quotecast/chart_format.py)
+
+## 2.4. How to find a : vwd_id ?
+
+In operations related to `Quotecast`, Degiro uses the `vwd_id` to identify a product.
+
+Which means that if you want a `Chart` or `Real-time data` for a specific product : you first need to find this product's `vwd_id`.
+
+This two identifiers are not the same :
+
+|**Identifier**|**API name(s)**|**Description**|
+|:-|:-|:-|
+|id|str|Id used identify a product in `Trading` related endpoints.|
+|vwd_id|issueid <br /> vwdId <br /> vwdIdSecondary <br />|Id used identify a product in `Quotecast` (`Chart` and `Real-time data`) related endpoint.|
+
+Here are some methods you can use to fetch a product's `vwd_id` :
+- `product_search`
+- `get_products_info`
+
+The method `product_search` let you use the name or other attributes of a product to fetch it's `vwd_id`.
+
+The method `get_products_info` let you use a product's `id` to fetch it's `vwd_id`.
+
 ## 2.2. What are the credentials ?
 
 The only credential you need in order to fetch real-time data and charts is the :
@@ -194,29 +336,23 @@ You can find your "user_token" inside one of these tables :
 
 See sections related to ["Config"](#61-how-to-retrieve-the-table--config-) and ["ClientDetails"](#62-how-to-retrieve-the-table--clientdetails-) tables.
 
-## 2.4. How to login ?
-
-In order to fetch data you need to establish a connection.
-
-You can use the following code to connect :
-
-```python
-session_id = TickerFetcher.get_session_id(user_token=YOUR_USER_TOKEN)
-```
-
-## 2.5. Is there a timeout ?
-
-Connection timeout is around 15 seconds.
-
-Which means a connection will cease to work after this timeout.
-
-This timeout is reset each time you use this connection to :
-* Subscribe to a metric (for instance a stock Price)
-* Fetch the data-stream
-
-So if you use it nonstop (in a loop) you won't need to reconnect.
 
 ## 2.6. How to subscribe to a data-stream ?
+
+If one needs the following data from the "AAPL" stock :
+* LastDate
+* LastTime
+* LastPrice
+* LastVolume
+
+You can use this library to retrieve updates like this :
+
+| product_id    | LastPrice | LastVolume | LastDatetimeUTC         | request_duration_s | response_datetime_utc          |
+|---------------|-----------|------------|-------------------------|---------------------|---------------------------------|
+| str           | f64       | i64        | datetime[μs]            | f64                 | datetime[μs]                    |
+| 360015751     | 34.6      | 1          | 2023-12-29 16:35:23     | 1.021337            | 2024-01-01 17:31:22.482618     |
+| AAPL.BATS,E   | 192.55    | null       | 2023-12-29 20:59:59     | 1.021337            | 2024-01-01 17:31:22.482618     |
+
 
 To subscribe to a data-stream you need to setup a TickerRequest.
 
@@ -348,6 +484,18 @@ ticker = TickerFetcher.fetch_ticker(
 
 For a more comprehensive example :
 [realtime_poller.py](examples/quotecast/realtime_poller.py)
+
+## 2.5. Is there a timeout ?
+
+Connection timeout is around 15 seconds.
+
+Which means a connection will cease to work after this timeout.
+
+This timeout is reset each time you use this connection to :
+* Subscribe to a metric (for instance a stock Price)
+* Fetch the data-stream
+
+So if you use it nonstop (in a loop) you won't need to reconnect.
 
 ## 2.9. How to use this data ?
 
@@ -501,156 +649,6 @@ Example - DataFrame :
 | str           | f64       | i64        | datetime[μs]            | f64                 | datetime[μs]                    |
 | 360015751     | 34.6      | 1          | 2023-12-29 16:35:23     | 1.021337            | 2024-01-01 17:31:22.482618     |
 | AAPL.BATS,E   | 192.55    | null       | 2023-12-29 20:59:59     | 1.021337            | 2024-01-01 17:31:22.482618     |
-
-## 2.14. How to find a : vwd_id ?
-
-In operations related to `Quotecast`, Degiro uses the `vwd_id` to identify a product.
-
-Which means that if you want a `Chart` or `Real-time data` for a specific product : you first need to find this product's `vwd_id`.
-
-This two identifiers are not the same :
-
-|**Identifier**|**API name(s)**|**Description**|
-|:-|:-|:-|
-|id|str|Id used identify a product in `Trading` related endpoints.|
-|vwd_id|issueid <br /> vwdId <br /> vwdIdSecondary <br />|Id used identify a product in `Quotecast` (`Chart` and `Real-time data`) related endpoint.|
-
-Here are some methods you can use to fetch a product's `vwd_id` :
-- `product_search`
-- `get_products_info`
-
-The method `product_search` let you use the name or other attributes of a product to fetch it's `vwd_id`.
-
-The method `get_products_info` let you use a product's `id` to fetch it's `vwd_id`.
-
-## 2.15. How to get a Chart ?
-You can fetch an object containing the same data than in Degiro's website graph.
-
-For that you need to prepare a ChartRequest.
-
-Here is a table with the available attributes for ChartRequest.
-
-|**Parameter**|**Type**|**Description**|
-|:-|:-|:-|
-|requestid|str|It sends you back whatever string you put here, you can set it to : "1".|
-|resolution|Chart.Resolution|Resolution of the chart like : Chart.Resolution.PT1M.|
-|culture|str|Country code like : "en-US" or "fr-FR".|
-|period|Chart.Period|Period of the chart, like : Chart.Period.P1D.|
-|series|repeated string|Data to get like : ['issueid:36014897', 'price:issueid:360148977'].|
-|tz|str|Timezone like : "Europe/Paris"|
-
-Example of code :
-
-```python
-chart_fetcher = ChartFetcher(user_token=user_token)
-chart_request = ChartRequest(
-    culture="fr-FR",
-    # override={
-    #     "resolution": "P1D",
-    #     "period": "P1W",
-    # },
-    period=Interval.P1D,
-    requestid="1",
-    resolution=Interval.PT60M,
-    series=[
-        "issueid:360148977",
-        "price:issueid:360148977",
-        "ohlc:issueid:360148977",
-        "volume:issueid:360148977",
-        # "vwdkey:AAPL.BATS,E",
-        # "price:vwdkey:AAPL.BATS,E",
-        # "ohlc:vwdkey:AAPL.BATS,E",
-        # "volume:vwdkey:AAPL.BATS,E",
-    ],
-    tz="Europe/Paris",
-)
-chart = chart_fetcher.get_chart(
-    chart_request=chart_request,
-    raw=False,
-)
-```
-
-The `issueid` parameter is the `vwd_id` of the product from which you want the `Chart` data.
-
-See the section related to `vwd_id` for more information.
-
-All the models are described in this module :
-[chart.py](degiro_connector/quotecast/models/chart.py)
-
-For a more comprehensive example :
- - [chart.py](examples/quotecast/chart.py)
-
-## 2.16 How to format a chart.series?
-
-A Chart object contains a list of series.
-
-There is a SeriesFormatter to help you convertir a series into a `polars.DataFrame`.
-
-```python
-df = SeriesFormatter.format_timeseries(series=chart.series[0])
-print(df)
-```
-
-Here are the result for different series.id.
-
-- `issueid:360148977`
-
-| issueId   | companyId | name      | identifier | ... | windowPreviousClosePrice | windowEndPrice |
-|-----------|-----------|-----------|------------|-----|---------------------------|----------------|
-| i64       | i64       | str       | str        | ... | f64                       | f64            |
-| 360148977 | 9245      | Crédit    | issueid:3  | ... | 12.858                    | -0.00047       |
-
-- `price:issueid:360148977`
-
-| timestamp                  | price  |
-|----------------------------|--------|
-| datetime[μs]               | f64    |
-| 2023-12-29 09:00:00        | 12.858 |
-| 2023-12-29 10:58:58.800    | 12.85  |
-| ...                        | ...    |
-| 2023-12-29 17:28:58.800    | 12.83  |
-| 2023-12-29 17:34:58.799999 | 12.852 |
-
-
-- `volume:issueid:360148977`
-
-| timestamp                  | volume      |
-|----------------------------|------------|
-| datetime[μs]               | f64        |
-| 2023-12-29 09:58:58.800    | 61627.0    |
-| 2023-12-29 10:58:58.800    | 83854.0    |
-| 2023-12-29 11:58:58.800    | 78240.0    |
-| 2023-12-29 12:58:01.200    | 69263.0    |
-| 2023-12-29 13:58:58.800    | 59040.0    |
-| 2023-12-29 14:58:58.800    | 62831.0    |
-| 2023-12-29 15:58:01.200    | 66681.0    |
-| 2023-12-29 16:58:58.800    | 529315.0   |
-| 2023-12-29 17:34:58.799999 | 1.317919e6 |
-
-- `ohlc:issueid:360148977`
-
-| timestamp           | open   | high   | low    | close  |
-|----------------------|--------|--------|--------|--------|
-| datetime[μs]         | f64    | f64    | f64    | f64    |
-| 2023-12-29 09:00:00 | 12.858 | 12.898 | 12.858 | 12.872 |
-| 2023-12-29 10:00:00 | 12.872 | 12.876 | 12.84  | 12.85  |
-| 2023-12-29 11:00:00 | 12.85  | 12.864 | 12.842 | 12.848 |
-| 2023-12-29 12:00:00 | 12.844 | 12.884 | 12.844 | 12.87  |
-| 2023-12-29 13:00:00 | 12.868 | 12.886 | 12.86  | 12.87  |
-| 2023-12-29 14:00:00 | 12.872 | 12.902 | 12.868 | 12.886 |
-| 2023-12-29 15:00:00 | 12.884 | 12.894 | 12.874 | 12.876 |
-| 2023-12-29 16:00:00 | 12.876 | 12.882 | 12.854 | 12.858 |
-| 2023-12-29 17:00:00 | 12.856 | 12.858 | 12.83  | 12.852 |
-
-
-All the models are described in this module :
- - [chart.py](degiro_connector/quotecast/models/chart.py)
-
-For a more comprehensive example :
- - [chart_format.py](examples/quotecast/chart_format.py)
-
-
-
 
 # 3. Trading connection
 
