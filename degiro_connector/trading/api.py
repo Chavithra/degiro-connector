@@ -3,7 +3,6 @@ import pkgutil
 from pathlib import Path
 from typing import Any, Callable
 
-import degiro_connector.core.constants.timeouts as timeouts
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
 from degiro_connector.core.helpers.lazy_loader import InitArgs, LazyLoader, Pair
 from degiro_connector.core.models.model_connection import ModelConnection

@@ -4,7 +4,6 @@ from pathlib import Path
 from typing import Any, Callable
 
 
-from degiro_connector.core.constants import timeouts
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
 from degiro_connector.core.helpers.lazy_loader import InitArgs, LazyLoader, Pair
 from degiro_connector.core.models.model_connection import ModelConnection
