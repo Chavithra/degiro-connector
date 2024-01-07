@@ -3,6 +3,7 @@ import logging
 
 from degiro_connector.trading.api import API as TradingAPI
 from degiro_connector.trading.models.credentials import Credentials
+from degiro_connector.trading.models.product_search import UnderlyingsRequest
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -13,12 +14,13 @@ credentials = Credentials.model_validate(obj=config_dict)
 trading_api = TradingAPI(credentials=credentials)
 trading_api.connect()
 
-# PUT A PRODUCT IN AN EXISTING FAVORITE LIST
-product_id = 65009
-list_id = 2608650
-success = trading_api.put_favorite_product(list_id=list_id, product_id=product_id)
+# FETCH UNDERLYINGS
+underlying_list = trading_api.get_underlyings(
+    underlyings_request= UnderlyingsRequest(
+        future_exchange_id=1,
+        # option_exchange_id=3,
+    ),
+    raw=False,
+)
 
-if success:
-    print(f"The following product was added : {product_id} => {list_id}")
-else:
-    print(f"Can't add the following product : {product_id} => {list_id}")
+print(underlying_list)
