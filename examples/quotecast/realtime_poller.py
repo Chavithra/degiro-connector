@@ -5,7 +5,7 @@ from degiro_connector.quotecast.models.ticker import TickerRequest
 from degiro_connector.quotecast.tools.ticker_fetcher import TickerFetcher
 from degiro_connector.quotecast.tools.ticker_to_df import TickerToDF
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.DEBUG)
 
 with open("config/config.json") as config_file:
     config_dict = json.load(config_file)
@@ -15,16 +15,10 @@ user_token = config_dict.get("user_token")  # HERE GOES YOUR USER_TOKEN
 logger = TickerFetcher.build_logger()
 session = TickerFetcher.build_session()
 ticker_to_df = TickerToDF()
-product_list = [
-    "AAPL.BATS,E",  # Apple
-    "360017018",  # Air Liquide
-    "360114899",  # AIRBUS
-    "365019496",  # Alstom
-]
 ticker_request = TickerRequest(
     request_type="subscription",
     request_map={
-        "360015751": [
+        "61316189": [
             "LastDate",
             "LastTime",
             "LastPrice",

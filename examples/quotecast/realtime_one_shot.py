@@ -15,12 +15,6 @@ user_token = config_dict.get("user_token")  # HERE GOES YOUR USER_TOKEN
 logger = TickerFetcher.build_logger()
 session = TickerFetcher.build_session()
 ticker_to_df = TickerToDF()
-product_list = [
-    "AAPL.BATS,E",  # Apple
-    "360017018",  # Air Liquide
-    "360114899",  # AIRBUS
-    "365019496",  # Alstom
-]
 ticker_request = TickerRequest(
     request_type="subscription",
     request_map={
