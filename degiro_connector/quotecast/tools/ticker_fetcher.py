@@ -160,6 +160,11 @@ class TickerFetcher:
                 response_datetime=datetime.now(),
                 request_duration=timedelta(microseconds=duration_ns // 1000),
             )
+        except requests.HTTPError as e:
+            logger.fatal(e)
+            if isinstance(e.response, requests.Response):
+                logger.fatal(e.response.text)
+            return None
         except Exception as e:
             logger.fatal(e)
             return None
@@ -240,16 +245,21 @@ class TickerFetcher:
 
         session_request = requests.Request(method="POST", url=url, data=data)
         prepped = session.prepare_request(request=session_request)
-        response_raw = None
+        response = None
 
         try:
-            response_raw = session.send(request=prepped)
-            response_raw.raise_for_status()
+            response = session.send(request=prepped)
+            response.raise_for_status()
 
-            if response_raw.text == '[{"m":"sr"}]':
+            if response.text == '[{"m":"sr"}]':
                 raise BrokenPipeError('A new "session_id" is required.')
 
             return True
+        except requests.HTTPError as e:
+            logger.fatal(e)
+            if isinstance(e.response, requests.Response):
+                logger.fatal(e.response.text)
+            return None
         except Exception as e:
             logger.fatal(e)
             return None

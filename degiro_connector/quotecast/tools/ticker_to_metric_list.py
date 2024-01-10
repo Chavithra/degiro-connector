@@ -191,7 +191,9 @@ class TickerToMetricList:
             elif message_raw["m"] == "ue":
                 pass
             elif message_raw["m"] == "d":
-                raise AttributeError(f"Subscription rejected : {message_raw}")
+                raise AttributeError(
+                    f"Subscription rejected, the `vwd_id` or `metric` might not exist. - {message_raw}"
+                )
             else:
                 raise AttributeError(f"Unknown metric : {message_raw}")
 
