@@ -102,9 +102,9 @@ class StocksRequest(ProductInfo):
     limit: int = Field(default=0)
     require_total: bool = Field(default=False)
     search_text: str | None = Field(default=None)
-    sort_columns: str
-    sort_types: str
-    stock_country_id: int
+    sort_columns: str = Field(default="name")
+    sort_types: str = Field(default="asc")
+    stock_country_id: int | None = Field(default=None)
 
 
 class WarrantsRequest(ProductInfo):
@@ -118,7 +118,7 @@ class WarrantsRequest(ProductInfo):
 
 class ProductBatch(BaseModel):
     offset: int
-    products: list[dict]
+    products: list[dict] | None = Field(default=None)
     response_datetime: datetime = Field(default_factory=datetime.now)
     total: int = Field(default=0)
 
