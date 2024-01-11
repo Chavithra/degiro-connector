@@ -2,7 +2,17 @@
 
 This is yet another library to access Degiro's API.
 
-## 1.1. Which features ?
+# 1.1. Contributing
+
+⭐️ Hopefully you have starred the project ⭐️
+
+You can contribute to the project in two ways:
+
+**Code and documentation** : pull requests are welcome !
+
+**Feedback**: feel free to open an issue or send me a message if you have a feedback or question.
+
+## 1.2. Which features ?
 Here are the features you can access through this library :
 
 |**Endpoint**|**Feature(s)**|
@@ -38,31 +48,32 @@ Here are the features you can access through this library :
 |TransactionsHistory|Retrieve all Transactions created between two dates.|
 |Underlyings|List Underlyings for Futures and Options.|
 
-## 1.2. How to install ?
+## 1.3. How to install ?
 
 ```bash
 pip install degiro-connector
 ```
 
-## 1.3. How to upgrade ?
+## 1.4. How to upgrade ?
 
 ```bash
 pip install --no-cache-dir --upgrade degiro-connector
 ```
 
-## 1.4. How to uninstall ?
+## 1.5. How to uninstall ?
 
 ```bash
 pip uninstall degiro-connector
 ```
 
-## 1.5. Table of contents
+## 1.6. Table of contents
 - [1. **Degiro Connector**](#1-degiro-connector)
-  * [1.1. Which features ?](#11-which-features-)
-  * [1.2. How to install ?](#12-how-to-install-)
-  * [1.3. How to upgrade ?](#13-how-to-upgrade-)
-  * [1.4. How to uninstall ?](#14-how-to-uninstall-)
-  * [1.5. Table of contents](#15-table-of-contents)
+  * [1.1. Contributing](#11-contributing)
+  * [1.2. Which features ?](#12-which-features-)
+  * [1.3. How to install ?](#13-how-to-install-)
+  * [1.4. How to upgrade ?](#14-how-to-upgrade-)
+  * [1.5. How to uninstall ?](514-how-to-uninstall-)
+  * [1.6. Table of contents](#65-table-of-contents)
 - [2. Real-time data](#2-real-time-data)
   * [2.1. What are the workflows ?](#21-what-are-the-workflows-)
   * [2.2. How to find your `user_token` ?](#22-how-to-find-your-user_token-)
@@ -1997,10 +2008,5 @@ Exact definition of `EstimatesSummaries` is in this file :
 For a more comprehensive example :
 [estimates_summaries.py](examples/trading/estimates_summaries.py)
 
-# 9. Contributing
-Pull requests are welcome.
-
-Feel free to open an issue or send me a message if you have a question.
-
-# 10. License
+# 9. License
 [BSD-3-Clause License](https://raw.githubusercontent.com/Chavithra/degiro-connector/main/LICENSE)
