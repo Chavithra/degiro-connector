@@ -2,7 +2,7 @@
 
 This is yet another library to access Degiro's API.
 
-# 1.1. Contributing
+## 1.1. Contributing
 
 ⭐️ Hopefully you have starred the project ⭐️
 
