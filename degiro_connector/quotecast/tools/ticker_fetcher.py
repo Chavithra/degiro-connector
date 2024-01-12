@@ -5,8 +5,8 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any
 
-import orjson as json
 import requests
+from orjson import loads
 
 from degiro_connector.core.constants.urls import (
     QUOTECAST,
@@ -25,7 +25,7 @@ class TickerFetcher:
     @staticmethod
     def build_credentials(location: Path) -> dict[str, Any]:
         content = os.environ.get("DEGIRO_ACCOUNT") or location.read_text()
-        config_dict = json.loads(content)  # pylint: disable=maybe-no-member
+        config_dict = loads(content)
 
         return config_dict
 
@@ -96,7 +96,7 @@ class TickerFetcher:
 
         try:
             response = session.send(request=prepped)
-            response_dict = json.loads(response.text)  # pylint: disable=maybe-no-member
+            response_dict = loads(response.text)
         except Exception as e:
             logger.fatal(e)
             return None
