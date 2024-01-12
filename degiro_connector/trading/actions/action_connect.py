@@ -90,6 +90,10 @@ class ActionConnect(AbstractAction):
                 login_sucess = LoginSuccess.model_validate_json(json_data=response.text)
             else:
                 login_error = LoginError.model_validate_json(json_data=response.text)
+        except requests.HTTPError as e:
+            logger.fatal(e)
+            if isinstance(e.response, requests.Response):
+                logger.fatal(e.response.text)
         except Exception as e:
             logger.fatal(e)
 
