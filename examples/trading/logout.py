@@ -1,28 +1,22 @@
-import json
 import logging
 import random
 import time
 
 from degiro_connector.trading.api import API as TradingAPI
-from degiro_connector.trading.models.credentials import Credentials
+from degiro_connector.trading.models.credentials import build_credentials
 
 logging.basicConfig(level=logging.DEBUG)
 
-with open("config/config.json") as config_file:
-    config_dict = json.load(config_file)
-
-credentials = Credentials(
-    int_account=None,
-    username=username,
-    password=password,
-    totp_secret_key=totp_secret_key,
-    one_time_password=one_time_password,
+credentials = build_credentials(
+    location="config/config.json",
+    # override={
+    #     "username": "TEXT_PLACEHOLDER",
+    #     "password": "TEXT_PLACEHOLDER",
+    #     "int_account": NUMBER_PLACEHOLDER,  # From `get_client_details`
+    #     # "totp_secret_key": "TEXT_PLACEHOLDER",  # For 2FA
+    # },
 )
-
-# SETUP TRADING API
 trading_api = TradingAPI(credentials=credentials)
-
-# CONNECT
 trading_api.connect()
 
 # ACCESS SESSION_ID
