@@ -52,7 +52,7 @@ class SeriesFormatter:
         return df
 
     @classmethod
-    def format_timeseries(
+    def format(
         cls,
         series: Series,
         columns: list[str] | None = None,
