@@ -250,7 +250,7 @@ A Chart object contains a list of series.
 There is a SeriesFormatter to help you convertir a series into a `polars.DataFrame`.
 
 ```python
-df = SeriesFormatter.format_timeseries(series=chart.series[0])
+df = SeriesFormatter.format_timeseries(series=chart.series)
 print(df)
 ```
 
