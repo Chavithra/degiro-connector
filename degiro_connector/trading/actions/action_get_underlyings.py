@@ -71,7 +71,7 @@ class ActionGetUnderlyings(AbstractAction):
                 This object will be generated if None.
                 Defaults to None.
         Returns:
-            AccountOverview: API response.
+            list[Underlying]: API response.
         """
 
         if logger is None:

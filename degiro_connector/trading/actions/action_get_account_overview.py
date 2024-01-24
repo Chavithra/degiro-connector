@@ -72,7 +72,7 @@ class ActionGetAccountOverview(AbstractAction):
             session = cls.build_session()
 
         int_account = credentials.int_account
-        url = urls.TRANSACTIONS_HISTORY
+        url = urls.ACCOUNT_OVERVIEW
         params_map = cls.build_params_map(overview_request=overview_request)
         params_map.update({"intAccount": int_account, "sessionId": session_id})
 

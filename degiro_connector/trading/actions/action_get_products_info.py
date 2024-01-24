@@ -28,7 +28,7 @@ class ActionGetProductsInfo(AbstractAction):
     ) -> ProductInfo | dict | None:
         """Retrieve information about the account.
         Args:
-            request (AccountOverview.Request):
+            product_list (list[int]):
                 list of options that we want to retrieve from the endpoint.
                 Example :
                     overview_request = OverviewRequest(
@@ -49,7 +49,7 @@ class ActionGetProductsInfo(AbstractAction):
                 This object will be generated if None.
                 Defaults to None.
         Returns:
-            AccountOverview: API response.
+            ProductInfo: API response.
         """
 
         if logger is None:
