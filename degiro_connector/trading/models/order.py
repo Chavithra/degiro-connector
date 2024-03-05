@@ -76,7 +76,7 @@ class CheckingResponse(BaseModel):
 
     auto_fx_conversion_rate: float | None = Field(default=None)
     confirmation_id: str
-    free_space_new: float
+    free_space_new: float | None = Field(default=None)
     response_datetime: datetime | None = Field(default=None)
     request_duration: timedelta | None = Field(default=None)
     transaction_auto_fx_opposite_surcharges: list[dict] | None = Field(default=None)
