@@ -96,7 +96,11 @@ class ActionCheckOrder(AbstractAction):
             logger.fatal(e)
             if isinstance(e.response, requests.Response):
                 logger.fatal(e.response.text)
-            return None
+            if raw is True:
+                model = loads(response.text)
+                return model
+            else:
+                return None
         except Exception as e:
             logger.fatal(e)
             return None
