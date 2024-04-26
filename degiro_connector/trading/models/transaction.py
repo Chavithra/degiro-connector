@@ -26,28 +26,28 @@ class HistoryItem(BaseModel):
         populate_by_name=True,
     )
 
-    auto_fx_fee_in_base_currency: float | None
-    buysell: str | None
-    counter_party: str | None
-    date: datetime | None
-    executing_entity_id: str | None
-    fee_in_base_currency: float | None
-    fx_rate: float | None
-    gross_fx_rate: float | None
-    id: int | None
-    nett_fx_rate: float | None
-    order_type_id: int | None
-    price: float | None
-    product_id: int | None
-    quantity: int | None
-    total: float | None
-    total_fees_in_base_currency: float | None
-    total_in_base_currency: float | None
-    total_plus_all_fees_in_base_currency: float | None
-    total_plus_fee_in_base_currency: float | None
-    transfered: bool | None
-    trading_venue: str | None
-    transaction_type_id: int | None
+    auto_fx_fee_in_base_currency: float | None = Field(default=None)
+    buysell: str | None = Field(default=None)
+    counter_party: str | None = Field(default=None)
+    date: datetime | None = Field(default=None)
+    executing_entity_id: str | None = Field(default=None)
+    fee_in_base_currency: float | None = Field(default=None)
+    fx_rate: float | None = Field(default=None)
+    gross_fx_rate: float | None = Field(default=None)
+    id: int | None = Field(default=None)
+    nett_fx_rate: float | None = Field(default=None)
+    order_type_id: int | None = Field(default=None)
+    price: float | None = Field(default=None)
+    product_id: int | None = Field(default=None)
+    quantity: int | None = Field(default=None)
+    total: float | None = Field(default=None)
+    total_fees_in_base_currency: float | None = Field(default=None)
+    total_in_base_currency: float | None = Field(default=None)
+    total_plus_all_fees_in_base_currency: float | None = Field(default=None)
+    total_plus_fee_in_base_currency: float | None = Field(default=None)
+    transfered: bool | None = Field(default=None)
+    trading_venue: str | None = Field(default=None)
+    transaction_type_id: int | None = Field(default=None)
 
 
 class TransactionsHistory(BaseModel):
