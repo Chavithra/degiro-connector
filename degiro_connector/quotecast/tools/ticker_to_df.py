@@ -104,7 +104,7 @@ class TickerToDF:
     def ticker_to_metric_list(self) -> TickerToMetricList:
         return self.__ticker_to_metric_list
 
-        def add_request_duration_column(
+    def add_request_duration_column(
         self,
         df: pl.DataFrame,
         last_metric_list: list[Metric],
@@ -155,6 +155,7 @@ class TickerToDF:
         df = df.drop("response_datetime")
 
         return df
+    
     def parse(self, ticker: Ticker) -> pl.DataFrame | None:
         stored_metric_list = self.__stored_metric_list
         ticker_to_metric_list = self.__ticker_to_metric_list
