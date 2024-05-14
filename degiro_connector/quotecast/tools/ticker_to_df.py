@@ -155,7 +155,7 @@ class TickerToDF:
         df = df.drop("response_datetime")
 
         return df
-    
+
     def parse(self, ticker: Ticker) -> pl.DataFrame | None:
         stored_metric_list = self.__stored_metric_list
         ticker_to_metric_list = self.__ticker_to_metric_list
