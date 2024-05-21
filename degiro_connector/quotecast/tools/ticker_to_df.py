@@ -118,8 +118,9 @@ class TickerToDF:
 
         df = df.with_columns(
             request_duration_s=pl.col("product_id")
-            .map_elements(lambda x: self.__stored_request_duration_map.get(x, None))
-            .cast(pl.Float64)
+            .map_elements(lambda x: self.__stored_request_duration_map.get(x, None),
+                          return_dtype=pl.Int64)
+            .cast(pl.Int64)
         )
 
         return df
@@ -137,7 +138,8 @@ class TickerToDF:
 
         df = df.with_columns(
             response_datetime=pl.col("product_id").map_elements(
-                lambda x: self.__stored_response_datetime_map.get(x, None)
+                lambda x: self.__stored_response_datetime_map.get(x, None),
+                return_dtype=pl.Datetime
             )
         )
         df = df.with_columns(
