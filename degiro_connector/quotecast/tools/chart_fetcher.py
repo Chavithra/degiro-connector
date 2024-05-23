@@ -97,7 +97,7 @@ class SeriesFormatter:
         columns: list[str] | None = None,
     ) -> pl.DataFrame:
         if cls.is_timeseries(series=series):
-            df = cls.format_timeseries(
+            df = cls.format(
                 series=series,
                 columns=columns,
             )

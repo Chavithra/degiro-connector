@@ -41,5 +41,5 @@ chart = chart_fetcher.get_chart(
 
 if chart:
     for series in chart.series:
-        df = SeriesFormatter.format(series=series)
+        df = SeriesFormatter.format_series(series=series)
         print(df)
