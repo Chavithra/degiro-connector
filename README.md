@@ -63,9 +63,9 @@ Here are the features you can access through this library :
 
 ## 1.4. Table of contents
 - [1. **Degiro Connector**](#1-degiro-connector)
-  * [1.1. Contribution](#11-contributing)
-  * [1.2. Installation ?](#13-how-to-install-upgrade-uninstall-)
-  * [1.3. Features ?](#12-which-features-)
+  * [1.1. Contribution](#11-contribution)
+  * [1.2. Installation](#13-installation)
+  * [1.3. Features](#12-Features)
   * [1.4. Table of contents](#16-table-of-contents)
 - [2. Real-time data](#2-real-time-data)
   * [2.1. What are the workflows ?](#21-what-are-the-workflows-)
