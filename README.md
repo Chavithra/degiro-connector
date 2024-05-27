@@ -12,7 +12,20 @@ You can contribute to the project in two ways:
 
 **Feedback**: feel free to open an issue or send me a message if you have a feedback or question.
 
-## 1.2. Which features ?
+## 1.2. How to install/upgrade/uninstall ?
+
+```bash
+# INSTALL
+pip install bingx-api
+
+# UPGRADE
+pip install --no-cache-dir --upgrade bingx-api
+
+# UNINSTALL
+pip uninstall bingx-api
+```
+
+## 1.3. Which features ?
 Here are the features you can access through this library :
 
 |**Endpoint**|**Feature(s)**|
@@ -48,32 +61,12 @@ Here are the features you can access through this library :
 |TransactionsHistory|Retrieve all Transactions created between two dates.|
 |Underlyings|List Underlyings for Futures and Options.|
 
-## 1.3. How to install ?
-
-```bash
-pip install degiro-connector
-```
-
-## 1.4. How to upgrade ?
-
-```bash
-pip install --no-cache-dir --upgrade degiro-connector
-```
-
-## 1.5. How to uninstall ?
-
-```bash
-pip uninstall degiro-connector
-```
-
-## 1.6. Table of contents
+## 1.4. Table of contents
 - [1. **Degiro Connector**](#1-degiro-connector)
   * [1.1. Contributing](#11-contributing)
-  * [1.2. Which features ?](#12-which-features-)
-  * [1.3. How to install ?](#13-how-to-install-)
-  * [1.4. How to upgrade ?](#14-how-to-upgrade-)
-  * [1.5. How to uninstall ?](#15-how-to-uninstall-)
-  * [1.6. Table of contents](#16-table-of-contents)
+  * [1.2. How to install/upgrade/uninstall ?](#13-how-to-install-upgrade-uninstall-)
+  * [1.3. Which features ?](#12-which-features-)
+  * [1.4. Table of contents](#16-table-of-contents)
 - [2. Real-time data](#2-real-time-data)
   * [2.1. What are the workflows ?](#21-what-are-the-workflows-)
   * [2.2. How to find your `user_token` ?](#22-how-to-find-your-user_token-)
