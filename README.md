@@ -6,11 +6,11 @@ This is yet another library to access Degiro's API.
 
 ⭐️ Hopefully you have starred the project ⭐️
 
-You can contribute to the project in two ways:
+You can contribute to the project in two ways :
 
 **Code and documentation** : pull requests are welcome !
 
-**Feedback**: feel free to open an issue or send me a message if you have a feedback or question.
+**Feedback** : feel free to open an issue or send me a message if you have a feedback or question.
 
 ## 1.2. Installation
 
