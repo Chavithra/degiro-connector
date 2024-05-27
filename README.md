@@ -2,7 +2,7 @@
 
 This is yet another library to access Degiro's API.
 
-## 1.1. Contributing
+## 1.1. Contribution
 
 ⭐️ Hopefully you have starred the project ⭐️
 
@@ -12,7 +12,7 @@ You can contribute to the project in two ways:
 
 **Feedback**: feel free to open an issue or send me a message if you have a feedback or question.
 
-## 1.2. How to install/upgrade/uninstall ?
+## 1.2. Installation
 
 ```bash
 # INSTALL
@@ -25,7 +25,7 @@ pip install --no-cache-dir --upgrade bingx-api
 pip uninstall bingx-api
 ```
 
-## 1.3. Which features ?
+## 1.3. Features
 Here are the features you can access through this library :
 
 |**Endpoint**|**Feature(s)**|
