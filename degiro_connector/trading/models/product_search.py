@@ -13,117 +13,78 @@ class ProductInfo(BaseModel):
     )
 
 
-class ProductsConfig(ProductInfo):
-    values: dict
-
-
-class BondsRequest(ProductInfo):
-    bond_issuer_type_id: int
-    bond_exchange_id: int
-    search_text: str
-    offset: int
-    limit: int
-    require_total: bool
-    sort_columns: str
-    sort_types: str
-
-
-class ETFsRequest(ProductInfo):
-    popular_only: bool
-    input_aggregate_types: str
-    input_aggregate_values: str
-    search_text: str
-    offset: int
-    limit: int
-    require_total: bool
-    sort_columns: str
-    sort_types: str
-
-
-class FundsRequest(ProductInfo):
-    search_text: str
-    offset: int
-    limit: int
-    require_total: bool
-    sort_columns: str
-    sort_types: str
-
-
-class FuturesRequest(ProductInfo):
-    future_exchange_id: int
-    underlying_isin: str
-    search_text: str
-    offset: int
-    limit: int
-    require_total: bool
-    sort_columns: str
-    sort_types: str
-
-
-class LeveragedsRequest(ProductInfo):
-    popular_only: bool
-    input_aggregate_types: str
-    input_aggregate_values: str
-    search_text: str
-    offset: int
-    limit: int
-    require_total: bool
-    sort_columns: str
-    sort_types: str
-    underlying_product_id: int | None = Field(default=None)
-    shortlong: str | None = Field(default=None)
-
-
-class LookupRequest(ProductInfo):
-    search_text: str
-    limit: int = Field(default=5)
-    offset: int = Field(default=0)
-    product_type_id: int
-
-
-class OptionsRequest(ProductInfo):
-    input_aggregate_types: str
-    input_aggregate_values: str
-    option_exchange_id: int
-    underlying_isin: str
-    search_text: str
-    offset: int
-    limit: int
-    require_total: bool
-    sort_columns: str
-    sort_types: str
-
-
-class StocksRequest(ProductInfo):
-    exchange_id: int | None = Field(default=None)
-    is_in_us_green_list: bool | None = Field(default=None, alias="isInUSGreenList")
-    index_id: int | None = Field(default=None)
-    offset: int = Field(default=10)
-    limit: int = Field(default=0)
-    require_total: bool = Field(default=False)
-    search_text: str | None = Field(default=None)
-    sort_columns: str = Field(default="name")
-    sort_types: str = Field(default="asc")
-    stock_country_id: int | None = Field(default=None)
-
-
-class WarrantsRequest(ProductInfo):
-    search_text: str
-    offset: int
-    limit: int
-    require_total: bool
-    sort_columns: str
-    sort_types: str
-
-
 class ProductBatch(BaseModel):
-    offset: int
+    offset: int = Field(default=10)
     products: list[dict] | None = Field(default=None)
     response_datetime: datetime = Field(default_factory=datetime.now)
     total: int = Field(default=0)
 
 
-class UnderlyingsRequest(ProductInfo):
+class ProductsConfig(ProductInfo):
+    values: dict
+
+
+class CommonRequest:
+  search_text: str | None = Field(default=None)
+  offset: int = Field(default=5)
+  limit: int = Field(default=100)
+  require_total: bool = Field(default=False)
+  sort_columns: str = Field(default="name")
+  sort_types: str = Field(default="asc")
+
+
+class WarrantsRequest(ProductInfo,CommonRequest):
+    #print("WarrantsRequest")
+    pass
+
+
+
+class FundsRequest(ProductInfo,CommonRequest):
+    #print("FundsRequest")
+    pass
+    # shouldn't this also have an inheritance from ETFsLeveragedsOptionsRequest class?
+
+
+class LookupRequest(ProductInfo,CommonRequest):
+    product_type_id: int
+
+
+class BondsRequest(ProductInfo,CommonRequest):
+    bond_issuer_type_id: int
+    bond_exchange_id: int
+
+class FuturesRequest(ProductInfo,CommonRequest):
+    future_exchange_id: int
+    underlying_isin: str
+
+
+class StocksRequest(ProductInfo,CommonRequest):
+    exchange_id: int | None = Field(default=None)
+    is_in_us_green_list: bool | None = Field(default=None, alias="isInUSGreenList")
+    index_id: int | None = Field(default=None)
+    stock_country_id: int | None = Field(default=None)
+
+
+class ETFsLeveragedsOptionsRequest:
+    input_aggregate_types: str
+    input_aggregate_values: str
+
+class ETFsRequest(ProductInfo,CommonRequest,ETFsLeveragedsOptionsRequest):
+    popular_only: bool
+
+
+class LeveragedsRequest(ProductInfo,CommonRequest,ETFsLeveragedsOptionsRequest):
+    popular_only: bool
+    underlying_product_id: int | None = Field(default=None)
+    shortlong: str | None = Field(default=None)
+
+
+class OptionsRequest(ProductInfo,CommonRequest,ETFsLeveragedsOptionsRequest):
+    option_exchange_id: int
+    underlying_isin: str
+
+
+class UnderlyingsRequest(ProductInfo): #This class, although a Request, seems to be good w/o the common items
     future_exchange_id: int | None = Field(default=None)
     option_exchange_id: int | None = Field(default=None)
 
