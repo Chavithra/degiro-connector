@@ -151,7 +151,7 @@ class HistoryItem(BaseModel):
     buysell: Literal["B", "S"]
     created: datetime
     current_traded_size: int
-    is_active: bool
+    active: bool
     last: datetime
     order_id: str | None = Field(default=None)
     order_time_type_id: TimeType

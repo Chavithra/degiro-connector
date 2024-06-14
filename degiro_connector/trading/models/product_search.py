@@ -49,6 +49,7 @@ class LookupRequest(ProductInfo,CommonRequest):
     product_type_id: int
 
 
+
 class BondsRequest(ProductInfo,CommonRequest):
     bond_issuer_type_id: int
     bond_exchange_id: int
