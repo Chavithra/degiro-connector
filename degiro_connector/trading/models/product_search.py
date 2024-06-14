@@ -78,7 +78,7 @@ class LookupRequest(ProductInfo):
     search_text: str
     limit: int = Field(default=5)
     offset: int = Field(default=0)
-    product_type_id: int
+    product_type_id: int | None = Field(default=None)
 
 
 class OptionsRequest(ProductInfo):
