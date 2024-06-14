@@ -120,6 +120,7 @@ class ProductBatch(BaseModel):
     products: list[dict] | None = Field(default=None)
     response_datetime: datetime = Field(default_factory=datetime.now)
     total: int = Field(default=0)
+    product_type_id: int | None = Field(default=None)
 
 
 class UnderlyingsRequest(ProductInfo):
