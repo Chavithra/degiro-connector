@@ -49,5 +49,5 @@ OPTIONS_UNDERLYINGS = (
 TOP_NEWS_PREVIEW = (
     "https://trader.degiro.nl/dgtbxdsservice/newsfeed/v2/top-news-preview"
 )
-TRANSACTIONS_HISTORY = "https://trader.degiro.nl/reporting/secure/v4/transactions"
+TRANSACTIONS_HISTORY = "https://trader.degiro.nl/portfolio-reports/secure/v4/transactions"
 UPDATE = "https://trader.degiro.nl/trading/secure/v5/update"
