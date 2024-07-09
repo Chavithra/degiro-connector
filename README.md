@@ -16,13 +16,13 @@ You can contribute to the project in two ways :
 
 ```bash
 # INSTALL
-pip install bingx-api
+pip install degiro-connector
 
 # UPGRADE
-pip install --no-cache-dir --upgrade bingx-api
+pip install --no-cache-dir --upgrade degiro-connector
 
 # UNINSTALL
-pip uninstall bingx-api
+pip uninstall degiro-connector
 ```
 
 ## 1.3. Features
