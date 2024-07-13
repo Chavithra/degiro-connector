@@ -26,10 +26,11 @@ class FavoriteItem(BaseModel):
         populate_by_name=True,
     )
 
-    default: int | None = Field(default=None)
+    default: bool | None = Field(default=None)
     id: int
     is_default: bool | None = Field(default=None)
     name: str | None = Field(default=None)
+    product_ids: list[int] = Field(default_factory=list)
 
 
 class FavoriteBatch(BaseModel):
