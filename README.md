@@ -16,13 +16,13 @@ You can contribute to the project in two ways :
 
 ```bash
 # INSTALL
-pip install bingx-api
+pip install degiro-connector
 
 # UPGRADE
-pip install --no-cache-dir --upgrade bingx-api
+pip install --no-cache-dir --upgrade degiro-connector
 
 # UNINSTALL
-pip uninstall bingx-api
+pip uninstall degiro-connector
 ```
 
 ## 1.3. Features
@@ -1732,7 +1732,7 @@ For a more comprehensive example :
 Here is how to get this data :
 
 ```python
-favorites_batch = trading_api.get_favorites()
+favorites_batch = trading_api.get_favorite()
 ```
 
 For a more comprehensive example :
