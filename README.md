@@ -1732,7 +1732,7 @@ For a more comprehensive example :
 Here is how to get this data :
 
 ```python
-favorites_batch = trading_api.get_favorites()
+favorites_batch = trading_api.get_favorite()
 ```
 
 For a more comprehensive example :
