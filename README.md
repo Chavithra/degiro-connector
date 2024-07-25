@@ -141,8 +141,7 @@ Here are the features you can access through this library :
   * [8.6. How to get : NewsByCompany ?](#86-how-to-get--newsbycompany-)
   * [8.7. How to get : Agenda ?](#87-how-to-get--agenda-)
   * [8.8. How to get : EstimatesSummaries ?](#88-how-to-get--estimatessummaries-)
-- [9. Contributing](#9-contributing)
-- [10. License](#10-license)
+- [9. License](#9-license)
 
 # 2. Real-time data
 
