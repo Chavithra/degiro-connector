@@ -103,3 +103,18 @@ class AccountUpdate(BaseModel):
     portfolio: dict | None = Field(default=None)
     total_portfolio: dict | None = Field(default=None)
     transactions: dict | None = Field(default=None)
+
+class UpcomingPayments(BaseModel):
+    model_config = ConfigDict(
+        alias_generator=to_camel,
+        extra="allow",
+        populate_by_name=True,
+    )
+
+    ca_id: str
+    product: str
+    description: str
+    currency: str
+    amount: str
+    amount_in_base_curr: str
+    pay_date: str

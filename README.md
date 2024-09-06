@@ -106,6 +106,7 @@ Here are the features you can access through this library :
   * [5.3. How to get the TotalPortfolio ?](#53-how-to-get-the-totalportfolio-)
   * [5.4. How to retrieve the OrdersHistory ?](#54-how-to-retrieve-the-ordershistory-)
   * [5.5. How to retrieve the TransactionsHistory ?](#55-how-to-retrieve-the-transactionshistory-)
+  * [5.6. How to retrieve Upcoming Payments ?](#55-how-to-retrieve-the-upcoming-payments-)
 - [6. Account](#6-account)
   * [6.1. How to retrieve the table : Config ?](#61-how-to-retrieve-the-table--config-)
   * [6.2. How to retrieve the table : ClientDetails ?](#62-how-to-retrieve-the-table--clientdetails-)
@@ -1195,6 +1196,19 @@ transactions_history = trading_api.get_transactions_history(request=request)
 
 For a more comprehensive example :
 [transactions_history.py](examples/trading/transactions_history.py)
+
+## 5.6 How to retrieve Upcoming Payments ?
+
+Here is how to get this data :
+
+
+```python
+# FETCH DATA
+upcoming_payments = trading_api.get_upcoming_payments()
+```
+
+For a more comprehensive example :
+[upcoming_payments.py](examples/trading/upcoming_payments.py)
 
 # 6. Account
 
