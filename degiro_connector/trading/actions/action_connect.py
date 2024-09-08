@@ -1,5 +1,6 @@
 import logging
 
+from degiro_connector.core.exceptions import DeGiroConnectionError
 import onetimepass as otp
 import requests
 
@@ -104,10 +105,10 @@ class ActionConnect(AbstractAction):
             )
 
         if login_error and login_error.status == 6:
-            raise ConnectionError('2FA is enabled, please provide the "totp_secret".')
+            raise DeGiroConnectionError('2FA is enabled, please provide the "totp_secret".', login_error)
 
         if login_sucess is None:
-            raise ConnectionError("No session id returned.")
+            raise DeGiroConnectionError("No session id returned.", login_error)
 
         logger.info(
             "login_sucess: %s",

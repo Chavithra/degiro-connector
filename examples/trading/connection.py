@@ -1,5 +1,6 @@
 import logging
 
+from degiro_connector.core.exceptions import DeGiroConnectionError
 from degiro_connector.trading.api import API as TradingAPI
 from degiro_connector.trading.models.credentials import build_credentials
 
@@ -15,9 +16,16 @@ credentials = build_credentials(
     # },
 )
 trading_api = TradingAPI(credentials=credentials)
-trading_api.connect()
+try:
+    trading_api.connect()
+except DeGiroConnectionError as degiro_error:
+    print(f"Error loging to Degiro: {degiro_error}")
+    if degiro_error.error_details:
+        print(degiro_error.error_details)
+except ConnectionError as connection_error:
+    print(f"ConnectionError: {connection_error}")
+else:
+    # ACCESS SESSION_ID
+    session_id = trading_api.connection_storage.session_id
 
-# ACCESS SESSION_ID
-session_id = trading_api.connection_storage.session_id
-
-print("You are now connected, with the session id :", session_id)
+    print("You are now connected, with the session id :", session_id)
