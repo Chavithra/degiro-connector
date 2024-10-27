@@ -48,6 +48,9 @@ class TickerToDF:
             filter(lambda column: column.endswith("Orders"), df.columns)
         )
 
+        if "LastTime" not in df.columns:
+            df = df.with_columns((pl.lit("00:00:00")).alias("LastTime"))
+
         df = df.with_columns(
             (pl.col("LastDate") + " " + pl.col("LastTime")).alias("LastDatetime")
         )
