@@ -66,6 +66,18 @@ class SeriesFormatter:
         if series.times is None or series.type not in ["time", "ohlc"]:
             raise AttributeError("The attributes `times` is empty.")
 
+        # the assumption is that there is a number of rows to use.
+        # maybe is a necessary test
+        rows_of_series_data = len(series.data)
+
+        if rows_of_series_data == 0:
+            logging.error("no or negative data, what now?")
+            return pl.DataFrame() #returning an empty dataframe - we'll see
+        elif rows_of_series_data == 1:
+            logging.warning("only a single point in the data,"
+                          +"difficult to predict how \n"
+                          +"Will continue and see what happens")
+
         if columns:
             pass
         elif series.id.startswith("price"):
