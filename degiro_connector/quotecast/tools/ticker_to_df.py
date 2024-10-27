@@ -1,7 +1,6 @@
 from copy import deepcopy
 
 import polars as pl
-from datetime import time
 
 from degiro_connector.quotecast.models.metric import Metric
 from degiro_connector.quotecast.models.ticker import Ticker
@@ -49,12 +48,8 @@ class TickerToDF:
             filter(lambda column: column.endswith("Orders"), df.columns)
         )
 
-        # Some stock symbols provide a LastDate but no LastTime
         if "LastTime" not in df.columns:
-            # Create midnight time value (00:00:00)
-            midnight_time = time(0, 0, 0)  # midnight time
-            # Add 'LastTime' column with midnight UTC as the default value
-            df = df.with_columns((pl.lit(midnight_time)).alias("LastTime"))
+            df = df.with_columns((pl.lit("00:00:00")).alias("LastTime"))
 
         df = df.with_columns(
             (pl.col("LastDate") + " " + pl.col("LastTime")).alias("LastDatetime")
