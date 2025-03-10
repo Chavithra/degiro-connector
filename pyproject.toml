@@ -13,7 +13,7 @@ packages = [
 ]
 readme = "README.md"
 repository = "https://github.com/chavithra/degiro-connector"
-version = "3.0.23"
+version = "3.0.24"
 
 [tool.poetry.dependencies]
 python = "^3.10"
