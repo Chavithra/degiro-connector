@@ -6,7 +6,7 @@ QUOTECAST_VERSION = "1.0.20201211"
 # TRADING RELATED
 ACCOUNT_INFO = "https://trader.degiro.nl/trading/secure/v5/account/info"
 ACCOUNT_OVERVIEW = "https://trader.degiro.nl/portfolio-reports/secure/v6/accountoverview"
-AGENDA = "https://trader.degiro.nl/dgtbxdsservice/agenda/v2"
+AGENDA = "https://trader.degiro.nl/dgtbxdsservice/secure/agenda/v2"
 CASH_ACCOUNT_REPORT = "https://trader.degiro.nl/portfolio-reports/secure/v3/cashAccountReport"
 CLIENT_DETAILS = "https://trader.degiro.nl/pa/secure/client"
 COMPANY_PROFILE = "https://trader.degiro.nl/dgtbxdsservice/secure/company-profile/v2"
