@@ -38,50 +38,58 @@ class TickerToDF:
 
         df = df.pivot(index="product_id", columns="metric_type", values="value")
 
+        # PRICE
         price_column_list = list(
             filter(lambda column: column.endswith("Price"), df.columns)
-        )
-        volume_column_list = list(
-            filter(lambda column: column.endswith("Volume"), df.columns)
-        )
-        order_column_list = list(
-            filter(lambda column: column.endswith("Orders"), df.columns)
-        )
-
-        if "LastTime" not in df.columns:
-            df = df.with_columns((pl.lit("00:00:00")).alias("LastTime"))
-
-        df = df.with_columns(
-            (pl.col("LastDate") + " " + pl.col("LastTime")).alias("LastDatetime")
-        )
-        df = df.drop(["LastDate", "LastTime"])
-        df = df.with_columns(
-            pl.col("LastDatetime")
-            .str.strptime(pl.Datetime, format="%Y-%m-%d %H:%M:%S")
-            .alias("LastDatetime")
-        )
-        df = df.with_columns(
-            pl.col("LastDatetime").dt.replace_time_zone("Europe/Paris")
         )
         df = df.with_columns(
             pl.col(column).cast(pl.Float64) for column in price_column_list
         )
+
+        # VOLUME
+        volume_column_list = list(
+            filter(lambda column: column.endswith("Volume"), df.columns)
+        )
         df = df.with_columns(
             pl.col(column).cast(pl.Int64) for column in volume_column_list
+        )
+
+        # ORDERS
+        order_column_list = list(
+            filter(lambda column: column.endswith("Orders"), df.columns)
         )
         df = df.with_columns(
             pl.col(column).cast(pl.Int64) for column in order_column_list
         )
 
-        df_utc = df.with_columns(
-            pl.col("LastDatetime").dt.convert_time_zone("UTC").alias("LastDatetimeUTC")
-        )
-        df_utc = df_utc.with_columns(
-            pl.col("LastDatetimeUTC").dt.replace_time_zone(None)
-        )
-        df_utc = df_utc.drop("LastDatetime")
+        # LASTDATETIMEUTC
+        if "LastDate" in df.columns:
+            if "LastTime" not in df.columns:
+                df = df.with_columns((pl.lit("00:00:00")).alias("LastTime"))
 
-        return df_utc
+            df = df.with_columns(
+                (pl.col("LastDate") + " " + pl.col("LastTime")).alias("LastDatetime")
+            )
+            df = df.drop(["LastDate", "LastTime"])
+            df = df.with_columns(
+                pl.col("LastDatetime")
+                .str.strptime(pl.Datetime, format="%Y-%m-%d %H:%M:%S")
+                .alias("LastDatetime")
+            )
+            df = df.with_columns(
+                pl.col("LastDatetime").dt.replace_time_zone("Europe/Paris")
+            )
+
+            df_utc = df.with_columns(
+                pl.col("LastDatetime").dt.convert_time_zone("UTC").alias("LastDatetimeUTC")
+            )
+            df_utc = df_utc.with_columns(
+                pl.col("LastDatetimeUTC").dt.replace_time_zone(None)
+            )
+            df_utc = df_utc.drop("LastDatetime")
+            df = df_utc
+
+        return df
 
     def __init__(self) -> None:
         self.__last_df = None
