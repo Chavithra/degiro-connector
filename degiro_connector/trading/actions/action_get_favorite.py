@@ -19,7 +19,7 @@ class ActionGetFavorite(AbstractAction):
         session: requests.Session | None = None,
         logger: logging.Logger | None = None,
     ) -> FavoriteBatch | None:
-        """Move a favorite list.
+        """Retrieve a favorite list.
         Args:.
             session_id (str):
                 API's session id.
