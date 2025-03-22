@@ -63,85 +63,98 @@ Here are the features you can access through this library :
 
 ## 1.4. Table of contents
 - [1. **Degiro Connector**](#1-degiro-connector)
-  * [1.1. Contribution](#11-contribution)
-  * [1.2. Installation](#13-installation)
-  * [1.3. Features](#12-Features)
-  * [1.4. Table of contents](#16-table-of-contents)
+  - [1.1. Contribution](#11-contribution)
+  - [1.2. Installation](#12-installation)
+  - [1.3. Features](#13-features)
+  - [1.4. Table of contents](#14-table-of-contents)
 - [2. Real-time data](#2-real-time-data)
-  * [2.1. What are the workflows ?](#21-what-are-the-workflows-)
-  * [2.2. How to find your `user_token` ?](#22-how-to-find-your-user_token-)
-  * [2.3. How to get a Chart ?](#23-how-to-get-a-chart-)
-  * [2.4. How to format a chart.series ?](#24-how-to-format-a-chartseries-)
-  * [2.5. How to find a product `vwd_id` ?](#25-how-to-find-a-product-vwd_id-)
-  * [2.6. What are the credentials ?](#26-what-are-the-credentials-)
-  * [2.7. How to connect ?](#27-how-to-connect-)
-  * [2.8. Is there a timeout ?](#28-is-there-a-timeout-)
-  * [2.9. How to subscribe to a data-stream ?](#29-how-to-subscribe-to-a-data-stream-)
-  * [2.10. How to unsubscribe to a data-stream ?](#210-how-to-unsubscribe-to-a-data-stream-)
-  * [2.11. How to fetch the data ?](#211-how-to-fetch-the-data-)
-  * [2.12. How to use this data ?](#212-how-to-use-this-data-)
-  * [2.13. Which are the available data types ?](#213-which-are-the-available-data-types-)
-  * [2.14. What is a Ticker ?](#214-what-is-a-ticker-)
-  * [2.15. What is inside the list[Metric] ?](#215-what-is-inside-the-listmetric-)
-  * [2.16. What is inside the DataFrame ?](#216-what-is-inside-the-dataframe-)
+  - [2.1. What are the workflows ?](#21-what-are-the-workflows-)
+  - [2.2. How to find your `user_token` ?](#22-how-to-find-your-user_token-)
+  - [2.3. How to get a Chart ?](#23-how-to-get-a-chart-)
+  - [2.4. How to format a chart.series ?](#24-how-to-format-a-chartseries-)
+  - [2.5. How to find a product `vwd_id` ?](#25-how-to-find-a-product-vwd_id-)
+  - [2.6. What are the credentials ?](#26-what-are-the-credentials-)
+  - [2.7. How to connect ?](#27-how-to-connect-)
+  - [2.8. Is there a timeout ?](#28-is-there-a-timeout-)
+  - [2.9. How to subscribe to a data-stream ?](#29-how-to-subscribe-to-a-data-stream-)
+  - [2.10. How to unsubscribe to a data-stream ?](#210-how-to-unsubscribe-to-a-data-stream-)
+  - [2.11. How to fetch the data ?](#211-how-to-fetch-the-data-)
+  - [2.12. How to use this data ?](#212-how-to-use-this-data-)
+  - [2.13. Which are the available data types ?](#213-which-are-the-available-data-types-)
+  - [2.14. What is a Ticker ?](#214-what-is-a-ticker-)
+  - [2.15. What is inside the `list[Metric]` ?](#215-what-is-inside-the-listmetric-)
+  - [2.16. What is inside the DataFrame ?](#216-what-is-inside-the-dataframe-)
 - [3. Trading connection](#3-trading-connection)
-  * [3.1. How to login ?](#31-how-to-login-)
-  * [3.2. How to logout ?](#32-how-to-logout-)
-  * [3.3. What are the credentials ?](#33-what-are-the-credentials-)
-  * [3.4. How to find your : int_account ?](#34-how-to-find-your--int_account-)
-  * [3.5. How to use 2FA ?](#35-how-to-use-2fa-)
-  * [3.6. How to find your : totp_secret_key ?](#36-how-to-find-your--totp_secret_key-)
-  * [3.7. How to find your : one_time_password ?](#37-how-to-find-your--one_time_password-)
-  * [3.8. Is there a timeout ?](#38-is-there-a-timeout-)
-  * [3.9. How to manage : TimeoutError ?](#39-how-to-manage--TimeoutError-)
+  - [3.1. How to login ?](#31-how-to-login-)
+  - [3.2. How to logout ?](#32-how-to-logout-)
+  - [3.3. What are the credentials ?](#33-what-are-the-credentials-)
+  - [3.4. How to find your : int\_account ?](#34-how-to-find-your--int_account-)
+  - [3.5. How to use 2FA ?](#35-how-to-use-2fa-)
+  - [3.6. How to find your : totp\_secret\_key ?](#36-how-to-find-your--totp_secret_key-)
+  - [3.7. How to find your : one\_time\_password ?](#37-how-to-find-your--one_time_password-)
+  - [3.8. Is there a timeout ?](#38-is-there-a-timeout-)
+  - [3.9. How to manage : TimeoutError ?](#39-how-to-manage--timeouterror-)
 - [4. Order](#4-order)
-  * [4.1. How to create an Order ?](#41-how-to-create-an-order-)
-  * [4.1.1. Check Order](#411-check-order)
-  * [4.1.2. Confirm Order](#412-confirm-order)
-  * [4.2. How to update an Order ?](#42-how-to-update-an-order-)
-  * [4.3. How to delete an Order ?](#43-how-to-delete-an-order-)
+  - [4.1. How to create an Order ?](#41-how-to-create-an-order-)
+  - [4.1.1 Check order](#411-check-order)
+    - [**Request parameters**](#request-parameters)
+    - [**Response parameters**](#response-parameters)
+  - [4.1.2 Confirm order](#412-confirm-order)
+    - [**Request parameters**](#request-parameters-1)
+    - [**Response parameters**](#response-parameters-1)
+  - [4.1.3 Example of combining these functions](#413-example-of-combining-these-functions)
+  - [4.2. How to update an Order ?](#42-how-to-update-an-order-)
+    - [**Request parameters**](#request-parameters-2)
+    - [**Response parameters**](#response-parameters-2)
+  - [4.3. How to delete an Order ?](#43-how-to-delete-an-order-)
+    - [**Request parameters**](#request-parameters-3)
+    - [**Response parameters**](#response-parameters-3)
 - [5. Portfolio](#5-portfolio)
-  * [5.1. How to retrieve pending Orders ?](#51-how-to-retrieve-pending-orders-)
-  * [5.2. How to get the Portfolio ?](#52-how-to-get-the-portfolio-)
-  * [5.3. How to get the TotalPortfolio ?](#53-how-to-get-the-totalportfolio-)
-  * [5.4. How to retrieve the OrdersHistory ?](#54-how-to-retrieve-the-ordershistory-)
-  * [5.5. How to retrieve the TransactionsHistory ?](#55-how-to-retrieve-the-transactionshistory-)
-  * [5.6. How to retrieve Upcoming Payments ?](#55-how-to-retrieve-the-upcoming-payments-)
+  - [5.1. How to retrieve pending Orders ?](#51-how-to-retrieve-pending-orders-)
+  - [5.2. How to get the Portfolio ?](#52-how-to-get-the-portfolio-)
+  - [5.3. How to get the TotalPortfolio ?](#53-how-to-get-the-totalportfolio-)
+  - [5.4. How to retrieve the OrdersHistory ?](#54-how-to-retrieve-the-ordershistory-)
+  - [5.5. How to retrieve the TransactionsHistory ?](#55-how-to-retrieve-the-transactionshistory-)
+  - [5.6 How to retrieve Upcoming Payments ?](#56-how-to-retrieve-upcoming-payments-)
 - [6. Account](#6-account)
-  * [6.1. How to retrieve the table : Config ?](#61-how-to-retrieve-the-table--config-)
-  * [6.2. How to retrieve the table : ClientDetails ?](#62-how-to-retrieve-the-table--clientdetails-)
-  * [6.3. How to retrieve the table : AccountInfo ?](#63-how-to-retrieve-the-table--accountinfo-)
-  * [6.4. How to get the table : AccountOverview ?](#64-how-to-get-the-table--accountoverview-)
-  * [6.5. How to export the table : AccountReport ?](#65-how-to-export-the-table--accountreport-)
-  * [6.6. How to export the table : PositionReport ?](#66-how-to-export-the-table--positionreport-)
+  - [6.1. How to retrieve the table : Config ?](#61-how-to-retrieve-the-table--config-)
+  - [6.2. How to retrieve the table : ClientDetails ?](#62-how-to-retrieve-the-table--clientdetails-)
+  - [6.3. How to retrieve the table : AccountInfo ?](#63-how-to-retrieve-the-table--accountinfo-)
+  - [6.4. How to get the table : AccountOverview ?](#64-how-to-get-the-table--accountoverview-)
+  - [6.5. How to export the table : AccountReport ?](#65-how-to-export-the-table--accountreport-)
+  - [6.6. How to export the table : PositionReport ?](#66-how-to-export-the-table--positionreport-)
 - [7. Products](#7-products)
-  * [7.1. How to get the table : ProductsConfig ?](#71-how-to-get-the-table--productsconfig-)
-  * [7.2. How to lookup products (search by name) ?](#72-how-to-lookup-products-search-by-name-)
-  * [7.3. How to search bonds ?](#73-how-to-search-bonds-)
-  * [7.4. How to search etfs ?](#74-how-to-search-etfs-)
-  * [7.5. How to search funds ?](#75-how-to-search-funds-)
-  * [7.6. How to search futures ?](#76-how-to-search-futures-)
-  * [7.7. How to search leverageds ?](#77-how-to-search-leverageds-)
-  * [7.8. How to search options ?](#78-how-to-search-options-)
-  * [7.9. How to search stocks ?](#79-how-to-search-stocks-)
-  * [7.10. How to search warrants ?](#710-how-to-search-warrants-)
-  * [7.11. How to search products from ids ?](#711-how-to-search-products-from-ids-)
-  * [7.12. How to get my favorite products ?](#712-how-to-get-my-favorite-products-)
-  * [7.13. How to create a favorite list ?](#713-how-to-create-a-favorite-list-)
-  * [7.14. How to delete a favorite list ?](#714-how-to-delete-a-favorite-list-)
-  * [7.15. How to move a favorite list ?](#715-how-to-move-a-favorite-list-)
-  * [7.16. How to put favorite list products ?](#716-how-to-put-favorite-list-products-)
-  * [7.17. How to delete favorite list products ?](#717-how-to-delete-favorite-list-products-)
-  * [7.18. How to get futures/options underlyings ?](#718-how-to-get-futuresoptions-underlyings-)
+  - [7.1. How to get the table : ProductsConfig ?](#71-how-to-get-the-table--productsconfig-)
+  - [7.2. How to lookup products (search by name) ?](#72-how-to-lookup-products-search-by-name-)
+  - [7.3. How to search bonds ?](#73-how-to-search-bonds-)
+  - [7.4. How to search etfs ?](#74-how-to-search-etfs-)
+  - [7.5. How to search funds ?](#75-how-to-search-funds-)
+  - [7.6. How to search futures ?](#76-how-to-search-futures-)
+  - [7.7. How to search leverageds ?](#77-how-to-search-leverageds-)
+  - [7.8. How to search options ?](#78-how-to-search-options-)
+  - [7.9. How to search stocks ?](#79-how-to-search-stocks-)
+  - [7.10. How to search warrants ?](#710-how-to-search-warrants-)
+  - [7.11. How to search products from ids ?](#711-how-to-search-products-from-ids-)
+  - [7.12. How to get my favorite products ?](#712-how-to-get-my-favorite-products-)
+  - [7.13. How to create a favorite list ?](#713-how-to-create-a-favorite-list-)
+  - [7.14. How to delete a favorite list ?](#714-how-to-delete-a-favorite-list-)
+  - [7.15. How to move a favorite list ?](#715-how-to-move-a-favorite-list-)
+  - [7.16. How to put favorite list products ?](#716-how-to-put-favorite-list-products-)
+  - [7.17. How to delete favorite list products ?](#717-how-to-delete-favorite-list-products-)
+  - [7.18. How to get futures/options underlyings ?](#718-how-to-get-futuresoptions-underlyings-)
+  - [7.19. How to get product related notes ?](#719-how-to-get-product-related-notes-)
+  - [7.20. How to create a product related note ?](#720-how-to-create-a-product-related-note-)
+  - [7.21. How to delete a product related note ?](#721-how-to-delete-a-product-related-note-)
+  - [7.22. How to edit a product related note ?](#722-how-to-edit-a-product-related-note-)
 - [8. Companies](#8-companies)
-  * [8.1. How to get : CompanyProfile ?](#81-how-to-get--companyprofile-)
-  * [8.2. How to get : CompanyRatios ?](#82-how-to-get--companyratios-)
-  * [8.3. How to get : FinancialStatements ?](#83-how-to-get--financialstatements-)
-  * [8.4. How to get : LatestNews ?](#84-how-to-get--latestnews-)
-  * [8.5. How to get : TopNewsPreview ?](#85-how-to-get--topnewspreview-)
-  * [8.6. How to get : NewsByCompany ?](#86-how-to-get--newsbycompany-)
-  * [8.7. How to get : Agenda ?](#87-how-to-get--agenda-)
-  * [8.8. How to get : EstimatesSummaries ?](#88-how-to-get--estimatessummaries-)
+  - [8.1. How to get : CompanyProfile ?](#81-how-to-get--companyprofile-)
+  - [8.2. How to get : CompanyRatios ?](#82-how-to-get--companyratios-)
+  - [8.3. How to get : FinancialStatements ?](#83-how-to-get--financialstatements-)
+  - [8.4. How to get : LatestNews ?](#84-how-to-get--latestnews-)
+  - [8.5. How to get : TopNewsPreview ?](#85-how-to-get--topnewspreview-)
+  - [8.6. How to get : NewsByCompany ?](#86-how-to-get--newsbycompany-)
+  - [8.7. How to get : Agenda ?](#87-how-to-get--agenda-)
+  - [8.8. How to get : EstimatesSummaries ?](#88-how-to-get--estimatessummaries-)
 - [9. License](#9-license)
 
 # 2. Real-time data
@@ -1832,6 +1845,61 @@ underlying_list = trading_api.get_underlyings(
 
 For a more comprehensive example :
 [favorite_get_underlyings.py](examples/trading/favorite_get_underlyings.py)
+
+## 7.19. How to get product related notes ?
+
+Here is how to get this data :
+
+```python
+note_batch = trading_api.get_notes(
+    product_id=1234567,
+    raw=False,
+)
+```
+
+For a more comprehensive example :
+[note_get.py](examples/trading/note_get.py)
+
+## 7.20. How to create a product related note ?
+
+Example :
+
+```python
+note = NoteAddRequest(
+    product_id=1234567,
+    text="Note",
+)
+note = trading_api.create_note(note=note)
+```
+
+For a more comprehensive example :
+[note_create.py](examples/trading/note_create.py)
+
+## 7.21. How to delete a product related note ?
+
+Example :
+
+```python
+success = trading_api.delete_note(id=1234567)
+```
+
+For a more comprehensive example :
+[note_delete.py](examples/trading/note_delete.py)
+
+## 7.22. How to edit a product related note ?
+
+Example :
+
+```python
+note = NoteEditRequest(
+    note_id=1234567,
+    text="Note123",
+)
+note = trading_api.edit_note(note=note)
+```
+
+For a more comprehensive example :
+[note_edit.py](examples/trading/note_edit.py)
 
 # 8. Companies
 
