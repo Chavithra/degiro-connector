@@ -49,6 +49,7 @@ Here are the features you can access through this library :
 |LoginTrading|Establish a connection for trading operations.|
 |LogoutTrading|Destroy previously established connection for trading operations.|
 |NewsByCompany|Retrieve news related to a specific company.|
+|Notes|Add/Delete/Edit/Retrieve notes related to a product.|
 |Order|Create, update, delete an Order.|
 |OrderHistory|Retrieve all Orders created between two dates.|
 |Orders|List pending Orders.|
