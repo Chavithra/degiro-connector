@@ -45,9 +45,6 @@ Here are the features you can access through this library :
 |FavoritesProducts|Add/Update products associated with a favorite list.|
 |FinancialStatements|Retrieve a company's financial statements using its ISIN code.|
 |LatestNews|Retrieve latest news about all the companies.|
-|LoginQuotecast|Establish a connection for quotecast operations.|
-|LoginTrading|Establish a connection for trading operations.|
-|LogoutTrading|Destroy previously established connection for trading operations.|
 |NewsByCompany|Retrieve news related to a specific company.|
 |Notes|Add/Delete/Edit/Retrieve notes related to a product.|
 |Order|Create, update, delete an Order.|
@@ -57,10 +54,13 @@ Here are the features you can access through this library :
 |ProductsConfig|Retrieve a table containing : useful parameters to filter products.|
 |ProductsInfo|Search for products using their ids.|
 |Quotecasts|Fetch real-time data on financial products. <br> For instance the real-time stock Price.|
+|QuotecastConnection|Establish a connection for quotecast operations.|
 |TopNewsPreview|Retrieve some news preview about all the companies.|
 |TotalPorfolio|Retrieve aggregated information about your assets.|
+|TradingConnection|Establish or destroy connection for trading operations.|
 |TransactionsHistory|Retrieve all Transactions created between two dates.|
 |Underlyings|List Underlyings for Futures and Options.|
+|UpcomingPayments|Retrieve upcoming payments.|
 
 ## 1.4. Table of contents
 - [1. **Degiro Connector**](#1-degiro-connector)
