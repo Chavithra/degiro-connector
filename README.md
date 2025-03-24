@@ -97,10 +97,10 @@ Here are the features you can access through this library :
   - [3.9. How to manage : TimeoutError ?](#39-how-to-manage--timeouterror-)
 - [4. Order](#4-order)
   - [4.1. How to create an Order ?](#41-how-to-create-an-order-)
-  - [4.1.1 Check order](#411-check-order)
+  - [4.1.1. Check order](#411-check-order)
     - [**Request parameters**](#request-parameters)
     - [**Response parameters**](#response-parameters)
-  - [4.1.2 Confirm order](#412-confirm-order)
+  - [4.1.2. Confirm order](#412-confirm-order)
     - [**Request parameters**](#request-parameters-1)
     - [**Response parameters**](#response-parameters-1)
   - [4.1.3 Example of combining these functions](#413-example-of-combining-these-functions)
@@ -969,7 +969,7 @@ The order creation is done in two steps :
 
 Keeping these two steps (instead of reducing to one single "create" function) provides more options.
 
-## 4.1.1 Check order
+## 4.1.1. Check order
 Use the `check_order()` function of the Trading API:
 
 ### **Request parameters**
@@ -991,7 +991,7 @@ On a succesfull request, a `dict` with the following parameters is returned:
 
 When the request fails, `None` is returned.
 
-## 4.1.2 Confirm order
+## 4.1.2. Confirm order
 Use the `confirm_order()` function of the Trading API:
 
 ### **Request parameters**
