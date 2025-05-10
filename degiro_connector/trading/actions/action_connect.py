@@ -1,6 +1,7 @@
 import logging
 
 from degiro_connector.core.exceptions import DeGiroConnectionError
+from html.parser import HTMLParser
 import onetimepass as otp
 import requests
 
@@ -89,6 +90,8 @@ class ActionConnect(AbstractAction):
 
             if response.status_code == 200:
                 login_sucess = LoginSuccess.model_validate_json(json_data=response.text)
+            elif response.status_code == 405:
+                login_error = cls.__get_maintenance_message()
             else:
                 login_error = LoginError.model_validate_json(json_data=response.text)
         except requests.HTTPError as e:
@@ -106,6 +109,9 @@ class ActionConnect(AbstractAction):
 
         if login_error and login_error.status == 6:
             raise DeGiroConnectionError('2FA is enabled, please provide the "totp_secret".', login_error)
+
+        if login_error and login_error.status == 405:
+            raise DeGiroConnectionError('Scheduled Maintenance.', login_error)
 
         if login_sucess is None:
             raise DeGiroConnectionError("No session id returned.", login_error)
@@ -130,3 +136,42 @@ class ActionConnect(AbstractAction):
         )
 
         return connection_storage.session_id
+
+    @classmethod
+    def __get_maintenance_message(cls) -> LoginError:
+        response = requests.get(
+            "https://trader.degiro.nl/login",
+            headers={
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+            }
+        )
+        parser = UnderConstContentParser()
+        parser.feed(response.text)
+        text_content = " ".join(parser.content)
+        return LoginError(error=text_content, status=405, status_text="Scheduled maintenance")
+
+class UnderConstContentParser(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.recording = False
+        self.content = []
+        self.capture = False
+
+    def handle_starttag(self, tag, attrs):
+        attrs_dict = dict(attrs)
+        if tag == "div" and attrs_dict.get("id") == "under-const-content":
+            self.recording = True
+        elif self.recording:
+            self.capture = True
+
+    def handle_endtag(self, tag):
+        if self.recording and tag == "div":
+            self.recording = False
+        self.capture = False
+
+    def handle_data(self, data):
+        if self.recording and self.capture:
+            cleaned = data.strip()
+            if cleaned:
+                self.content.append(cleaned)
