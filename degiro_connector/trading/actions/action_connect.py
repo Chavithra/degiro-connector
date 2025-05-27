@@ -1,6 +1,6 @@
 import logging
 
-from degiro_connector.core.exceptions import DeGiroConnectionError
+from degiro_connector.core.exceptions import DeGiroConnectionError, MaintenanceError
 from html.parser import HTMLParser
 import onetimepass as otp
 import requests
@@ -111,7 +111,7 @@ class ActionConnect(AbstractAction):
             raise DeGiroConnectionError('2FA is enabled, please provide the "totp_secret".', login_error)
 
         if login_error and login_error.status == 405:
-            raise DeGiroConnectionError('Scheduled Maintenance.', login_error)
+            raise MaintenanceError('Scheduled Maintenance.', login_error)
 
         if login_sucess is None:
             raise DeGiroConnectionError("No session id returned.", login_error)
