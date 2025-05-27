@@ -30,11 +30,6 @@ class ActionGetProductsInfo(AbstractAction):
         Args:
             product_list (list[int]):
                 list of options that we want to retrieve from the endpoint.
-                Example :
-                    overview_request = OverviewRequest(
-                        from_date=date(year=2023, month=10, day=15),
-                        to_date=date(year=2024, month=1, day=1),
-                    )
             session_id (str):
                 API's session id.
             credentials (Credentials):

@@ -1827,7 +1827,7 @@ success = trading_api.delete_favorite_product(
 ```
 
 For a more comprehensive example :
-[favorite_delete product.py](examples/trading/favorite_delete product.py)
+[favorite_delete product.py](examples/trading/favorite_delete_product.py)
 
 
 ## 7.18. How to get futures/options underlyings ?
