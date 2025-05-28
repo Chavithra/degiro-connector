@@ -2,7 +2,7 @@ import logging
 
 from degiro_connector.core.exceptions import DeGiroConnectionError
 from html.parser import HTMLParser
-import onetimepass as otp
+import pyotp
 import requests
 
 from degiro_connector.core.constants import urls
@@ -58,7 +58,7 @@ class ActionConnect(AbstractAction):
                 one_time_password = str(credentials.one_time_password)
             else:
                 totp_secret_key = credentials.totp_secret_key
-                one_time_password = str(otp.get_totp(totp_secret_key))
+                one_time_password = str(pyotp.TOTP(totp_secret_key).now())
         else:
             url = urls.LOGIN
             one_time_password = None
