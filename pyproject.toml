@@ -17,7 +17,7 @@ version = "3.0.28"
 
 [tool.poetry.dependencies]
 python = "^3.10"
-onetimepass = "^1.0.1"
+pyotp = "^2.9.0"
 requests = "^2.31.0"
 pydantic = "^2.0.3"
 polars = "^0.20.2"
