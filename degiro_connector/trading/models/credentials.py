@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 
 from orjson import loads
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, ValidationInfo, field_validator
 
 
 class Credentials(BaseModel):
@@ -12,11 +12,10 @@ class Credentials(BaseModel):
     totp_secret_key: str | None = Field(default=None)
     one_time_password: int | None = Field(default=None)
 
-    @validator("totp_secret_key")
+    @field_validator("totp_secret_key")
     @classmethod
-    def one_of(cls, v, values, **kwargs):
-        _ = kwargs
-        if "one_time_password" in values and values["one_time_password"] is not None:
+    def one_of(cls, v: int, info: ValidationInfo):
+        if "one_time_password" in info.data and info.data["one_time_password"] is not None:
             raise ValueError(
                 "You can't set both `one_time_password` and `totp_secret_key`."
             )
