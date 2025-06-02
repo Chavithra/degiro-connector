@@ -2,7 +2,7 @@ from datetime import date, datetime, timedelta
 from enum import Enum
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, field_serializer
 from pydantic.alias_generators import to_camel
 
 
@@ -178,7 +178,6 @@ class HistoryRequest(BaseModel):
     model_config = ConfigDict(
         alias_generator=to_camel,
         populate_by_name=True,
-        json_encoders={date: lambda v: v.strftime("%d/%m/%Y") if v else None},
     )
 
     from_date: date
@@ -186,3 +185,7 @@ class HistoryRequest(BaseModel):
 
     int_account: int | None = Field(default=None)
     session_id: str | None = Field(default=None)
+
+    @field_serializer("from_date", "to_date")
+    def serialize_date(self, v: date | None) -> str | None:
+        return v.strftime("%d/%m/%Y") if v else None
