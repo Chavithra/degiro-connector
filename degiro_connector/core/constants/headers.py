@@ -7,7 +7,7 @@ HEADERS = {
     # "Content-Length": "39",
     "Content-Type": "application/json;charset=UTF-8",
     "Origin": "https://trader.degiro.nl",
-    "Referer": "https://trader.degiro.nl/login/fr",
+    "Referer": "https://trader.degiro.nl/trader",
     "Sec-CH-UA": '" Not A;Brand";v="99", "Chromium";v="102", "Google Chrome";v="102"',
     "Sec-CH-UA-Mobile": "?0",
     "Sec-CH-UA-Platform": "Windows",
