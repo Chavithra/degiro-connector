@@ -21,5 +21,4 @@ class MaintenanceError(DeGiroConnectionError):
             message (str): The error message.
             error_details (LoginError): The login error details
         """
-        super().__init__(message)
-        self.error_details = error_details
+        super().__init__(message, error_details)
