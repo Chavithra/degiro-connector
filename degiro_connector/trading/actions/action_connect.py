@@ -1,6 +1,6 @@
 import logging
 
-from degiro_connector.core.exceptions import DeGiroConnectionError, MaintenanceError
+from degiro_connector.core.exceptions import CaptchaRequiredError, DeGiroConnectionError, MaintenanceError
 from html.parser import HTMLParser
 import pyotp
 import requests
@@ -117,14 +117,21 @@ class ActionConnect(AbstractAction):
                 login_error.model_dump(mode="python", by_alias=True, exclude_none=True),
             )
 
-        if login_error and login_error.status == 6:
-            raise DeGiroConnectionError('2FA is enabled, please provide the "totp_secret".', login_error)
+        if login_error:
+            if login_error.captcha_required:
+                raise CaptchaRequiredError(
+                    "Captcha required. Login to DEGIRO via the browser and solve the captcha.",
+                    login_error,
+                )
 
-        if login_error and login_error.status == 12:
-            raise DeGiroConnectionError('Open the DEGIRO app. To verify your login attempt, open the DEGIRO app and tap \'Yes\' to approve it".', login_error)
+            if login_error.status == 6:
+                raise DeGiroConnectionError('2FA is enabled, please provide the "totp_secret".', login_error)
 
-        if login_error and login_error.status == 405:
-            raise MaintenanceError('Scheduled Maintenance.', login_error)
+            if login_error.status == 12:
+                raise DeGiroConnectionError('Open the DEGIRO app. To verify your login attempt, open the DEGIRO app and tap \'Yes\' to approve it".', login_error)
+
+            if login_error.status == 405:
+                raise MaintenanceError('Scheduled Maintenance.', login_error)
 
         if login_sucess is None:
             raise DeGiroConnectionError("No session id returned.", login_error)
