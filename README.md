@@ -834,13 +834,29 @@ trading_api.connect()
 A complete example here :
 [connection_otp.py](examples/trading/connection_otp.py)
 
+**SOLUTION 3**
+
+Use the **In App** validation method. If no '2FA' is enabled, DEGIRO provides an 'In App' authentication on your Degiro 
+account, you can use the `in_app_token` parameter in your credentials. This method allows you to approve the login 
+directly from the Degiro mobile app, providing a seamless and secure authentication experience.
+
+The `in_app_token` is provided by Degiro when you login properly with your username/password. This authentication
+method is a two-steps. 
+
+A complete example here: 
+[connection.py](examples/trading/connection.py)
+
 ## 3.6. How to find your : totp_secret_key ?
 
 The parameter **totp_secret_key** is only required if you have enabled `2FA` on Degiro's website.
 
-When you try to activate `2FA` on Degiro's website, it displays a `QRCode`.
+When you try to activate `2FA` on Degiro's website, it displays a `QRCode` and a 32 characters setup key.
 
-This `QRCode` changes at each activation.
+These two elements contain the same information and change at each activation.
+
+You can directly copy the setup key.
+
+### Alternative method
 
 A `QRCode` is a picture which can be converted into a text.
 

@@ -11,6 +11,7 @@ class Credentials(BaseModel):
     password: str
     totp_secret_key: str | None = Field(default=None)
     one_time_password: int | None = Field(default=None)
+    in_app_token: str | None = Field(default=None)
 
     @field_validator("totp_secret_key")
     @classmethod
