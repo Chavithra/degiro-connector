@@ -29,6 +29,7 @@ class LoginError(BaseModel):
     status: int
     status_text: str | None = Field(default=None)
     timestamp: date | None = Field(default=None)
+    captcha_required: bool | None = Field(default=None)
 
 
 class Login(BaseModel):
