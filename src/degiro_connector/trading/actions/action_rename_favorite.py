@@ -16,7 +16,7 @@ class ActionRenameFavorite(AbstractAction):
     @classmethod
     def rename_favorite(
         cls,
-        list_id: int,
+        id: int,
         name: str,
         session_id: str,
         credentials: Credentials,
@@ -52,7 +52,7 @@ class ActionRenameFavorite(AbstractAction):
             session = cls.build_session()
 
         int_account = credentials.int_account
-        url = f"{urls.FAVOURITES_LIST}/{list_id}"
+        url = f"{urls.FAVOURITES_LIST}/{id}"
 
         params = {
             "intAccount": int_account,
@@ -86,7 +86,7 @@ class ActionRenameFavorite(AbstractAction):
 
     def call(
         self,
-        list_id: int,
+        id: int,
         name: str,
     ) -> Optional[int]:
         connection_storage = self.connection_storage
@@ -96,7 +96,7 @@ class ActionRenameFavorite(AbstractAction):
         logger = self.logger
 
         return self.rename_favorite(
-            list_id=list_id,
+            id=id,
             name=name,
             session_id=session_id,
             credentials=credentials,
