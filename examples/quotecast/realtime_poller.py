@@ -18,7 +18,7 @@ ticker_to_df = TickerToDF()
 ticker_request = TickerRequest(
     request_type="subscription",
     request_map={
-        "61316189": [
+        "360015751": [
             "LastDate",
             "LastTime",
             "LastPrice",
