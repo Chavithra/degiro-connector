@@ -19,7 +19,7 @@ You can contribute to the project in two ways :
 pip install degiro-connector[quotecast,qrcode]
 
 # UPGRADE
-pip install --no-cache-dir --upgrade degiro-connector
+pip install --no-cache-dir --upgrade degiro-connector[quotecast,qrcode]
 
 # UNINSTALL
 pip uninstall degiro-connector
