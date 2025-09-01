@@ -16,10 +16,10 @@ You can contribute to the project in two ways :
 
 ```bash
 # INSTALL
-pip install degiro-connector[qrcode, quotecast]
+pip install degiro-connector[qrcode,quotecast]
 
 # UPGRADE
-pip install --no-cache-dir --upgrade degiro-connector[qrcode, quotecast]
+pip install --no-cache-dir --upgrade degiro-connector[qrcode,quotecast]
 
 # UNINSTALL
 pip uninstall degiro-connector
