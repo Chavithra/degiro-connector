@@ -34,6 +34,9 @@ dev = [
     "pytest-mock>=3.14.1",
     "types-requests>=2.32.4.20250809",
 ]
+qrcode = [
+    "opencv-python>=4.12.0.88",
+]
 quotecast = [
     "polars==0.20.2",
 ]
