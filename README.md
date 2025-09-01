@@ -16,7 +16,7 @@ You can contribute to the project in two ways :
 
 ```bash
 # INSTALL
-pip install degiro-connector
+pip install degiro-connector[quotecast,qrcode]
 
 # UPGRADE
 pip install --no-cache-dir --upgrade degiro-connector
