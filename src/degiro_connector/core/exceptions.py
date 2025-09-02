@@ -22,3 +22,15 @@ class MaintenanceError(DeGiroConnectionError):
             error_details (LoginError): The login error details
         """
         super().__init__(message, error_details)
+
+class CaptchaRequiredError(DeGiroConnectionError):
+    """Exception raised when DeGiro requires a captcha."""
+    def __init__(self, message, error_details):
+        """
+        Initializes the exception with a message and a structure of error details.
+
+        Args:
+            message (str): The error message.
+            error_details (LoginError): The login error details
+        """
+        super().__init__(message, error_details)
