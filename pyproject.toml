@@ -10,7 +10,7 @@ classifiers = [
 ]
 dependencies = [
     "isodate==0.6.1",
-    "orjson==3.9.10",
+    "orjson==3.9.15",
     "pydantic==2.0.3",
     "pyotp>=2.9.0",
     "requests>=2.32.5",
