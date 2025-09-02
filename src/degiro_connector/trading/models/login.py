@@ -29,6 +29,7 @@ class LoginError(BaseModel):
     status: int
     status_text: str | None = Field(default=None)
     timestamp: date | None = Field(default=None)
+    in_app_token: str | None = Field(default=None)
     captcha_required: bool | None = Field(default=None)
 
 
@@ -44,3 +45,4 @@ class Login(BaseModel):
     is_redirect_to_mobile: bool = Field(default=False)
     query_tarams: dict = Field(default_factory=dict)
     one_time_password: str | None = Field(default=None)
+    in_app_token: str | None = Field(default=None)
