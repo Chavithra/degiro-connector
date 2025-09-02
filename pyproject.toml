@@ -1,38 +1,49 @@
-[tool.poetry]
-authors = ["Chavithra PARANA <chavithra@gmail.com>"]
+[project]
+authors = [
+    {email = "chavithra@gmail.com", name = "Chavithra PARANA"},
+]
+name = "degiro-connector"
+
 classifiers = [
     "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: BSD License",
     "Operating System :: OS Independent",
+]
+dependencies = [
+    "isodate==0.6.1",
+    "orjson==3.9.10",
+    "pydantic==2.0.3",
+    "pyotp>=2.9.0",
+    "requests>=2.32.5",
+    "wrapt==1.14.1",
 ]
 description = "This is yet another library to access Degiro's API."
 license = "BSD-3-Clause"
-name = "degiro-connector"
-packages = [
-    { include = "degiro_connector" },
-]
 readme = "README.md"
+requires-python = ">=3.10"
+version = "3.0.31"
+
+[project.urls]
 repository = "https://github.com/chavithra/degiro-connector"
-version = "3.0.29"
 
-[tool.poetry.dependencies]
-python = "^3.10"
-pyotp = "^2.9.0"
-requests = "^2.31.0"
-pydantic = "^2.0.3"
-polars = "^0.20.2"
-wrapt = "^1.14.1"
-orjson = "^3.9.10"
-isodate = "^0.6.1"
-
-[tool.poetry.dev-dependencies]
-flake8 = "^3.9.2"
-pytest = "^7.2.0"
-black = "^24.3.0"
-mypy = "^0.991"
-types-requests = "^2.28.11"
-pytest-mock = "^3.10.0"
+[project.optional-dependencies]
+dev = [
+    "black>=25.1.0",
+    "flake8>=7.3.0",
+    "mypy>=1.17.1",
+    "pytest>=8.4.1",
+    "pytest-mock>=3.14.1",
+    "types-requests>=2.32.4.20250809",
+]
+qrcode = [
+    "opencv-python>=4.12.0.88",
+]
+quotecast = [
+    "polars==0.20.2",
+]
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
