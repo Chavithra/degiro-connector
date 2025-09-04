@@ -36,7 +36,7 @@ class TickerToDF:
             },
         )
 
-        df = df.pivot(index="product_id", columns="metric_type", values="value")
+        df = df.pivot(on="metric_type", index="product_id", values="value")
 
         # PRICE
         price_column_list = list(
@@ -127,12 +127,12 @@ class TickerToDF:
         }
         self.__stored_request_duration_map.update(request_duration_map)
 
-        df = df.with_columns(
-            request_duration_s=pl.col("product_id")
-            .map_elements(lambda x: self.__stored_request_duration_map.get(x, None),
-                          return_dtype=pl.Int64)
-            .cast(pl.Int64)
-        )
+        request_duration_s_df = pl.DataFrame({
+            "product_id": list(self.__stored_request_duration_map.keys()),
+            "request_duration_s": list(self.__stored_request_duration_map.values())
+        })
+
+        df = df.join(request_duration_s_df, on="product_id", how="left")
 
         return df
 
@@ -147,12 +147,13 @@ class TickerToDF:
         }
         self.__stored_response_datetime_map.update(response_datetime)
 
-        df = df.with_columns(
-            response_datetime=pl.col("product_id").map_elements(
-                lambda x: self.__stored_response_datetime_map.get(x, None),
-                return_dtype=pl.Datetime
-            )
-        )
+        response_datetime_df = pl.DataFrame({
+            "product_id": list(self.__stored_response_datetime_map.keys()),
+            "response_datetime": list(self.__stored_response_datetime_map.values())
+        })
+
+        df = df.join(response_datetime_df, on="product_id", how="left")
+
         df = df.with_columns(
             pl.col("response_datetime").dt.replace_time_zone("Europe/Paris")
         )

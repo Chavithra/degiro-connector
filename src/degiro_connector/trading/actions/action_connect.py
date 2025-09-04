@@ -1,6 +1,6 @@
 import logging
 
-from degiro_connector.core.exceptions import DeGiroConnectionError, MaintenanceError
+from degiro_connector.core.exceptions import CaptchaRequiredError, DeGiroConnectionError, MaintenanceError
 from html.parser import HTMLParser
 import pyotp
 import requests
@@ -34,6 +34,9 @@ class ActionConnect(AbstractAction):
                 credentials.totp_secret is optional.
                     Secret code for Two-factor Authentication (2FA).
                     It is optional.
+                credentials.in_app_token is optional.
+                    Token for in-app TOTP confirmation.
+                    It is optional.
             session (requests.Session, optional):
                 If you one wants to reuse existing "Session" object.
                 Defaults to None.
@@ -43,13 +46,16 @@ class ActionConnect(AbstractAction):
         Raises:
             ConnectionError: Connection failed.
         Returns:
-            str: Session id
+            str: Session id if successful
         """
 
         if logger is None:
             logger = cls.build_logger()
         if session is None:
             session = cls.build_session()
+
+        one_time_password = None
+        in_app_token = None
 
         if credentials.one_time_password or credentials.totp_secret_key:
             url = urls.LOGIN + "/totp"
@@ -59,9 +65,12 @@ class ActionConnect(AbstractAction):
             else:
                 totp_secret_key = credentials.totp_secret_key
                 one_time_password = str(pyotp.TOTP(totp_secret_key).now())
+        elif credentials.in_app_token:
+            url = urls.LOGIN + "/in-app"
+            if credentials.in_app_token:
+                in_app_token = credentials.in_app_token
         else:
             url = urls.LOGIN
-            one_time_password = None
 
         login = Login(
             username=credentials.username,
@@ -70,6 +79,7 @@ class ActionConnect(AbstractAction):
             is_redirect_to_mobile=False,
             query_tarams={},
             one_time_password=one_time_password,
+            in_app_token=in_app_token,
         )
         payload = login.model_dump(
             by_alias=True,
@@ -107,11 +117,21 @@ class ActionConnect(AbstractAction):
                 login_error.model_dump(mode="python", by_alias=True, exclude_none=True),
             )
 
-        if login_error and login_error.status == 6:
-            raise DeGiroConnectionError('2FA is enabled, please provide the "totp_secret".', login_error)
+        if login_error:
+            if login_error.captcha_required:
+                raise CaptchaRequiredError(
+                    "Captcha required. Login to DEGIRO via the browser and solve the captcha.",
+                    login_error,
+                )
 
-        if login_error and login_error.status == 405:
-            raise MaintenanceError('Scheduled Maintenance.', login_error)
+            if login_error.status == 6:
+                raise DeGiroConnectionError('2FA is enabled, please provide the "totp_secret".', login_error)
+
+            if login_error.status == 12:
+                raise DeGiroConnectionError('Open the DEGIRO app. To verify your login attempt, open the DEGIRO app and tap \'Yes\' to approve it".', login_error)
+
+            if login_error.status == 405:
+                raise MaintenanceError('Scheduled Maintenance.', login_error)
 
         if login_sucess is None:
             raise DeGiroConnectionError("No session id returned.", login_error)
