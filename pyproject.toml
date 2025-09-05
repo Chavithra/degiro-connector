@@ -9,9 +9,9 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dependencies = [
-    "isodate==0.6.1",
+    "isodate>=0.6.1",
     "orjson>=3.11.3",
-    "pydantic==2.0.3",
+    "pydantic>=2.11.7",
     "pyotp>=2.9.0",
     "requests>=2.32.5",
     "wrapt==1.14.1",
