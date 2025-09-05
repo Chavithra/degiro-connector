@@ -3,7 +3,6 @@ authors = [
     {email = "chavithra@gmail.com", name = "Chavithra PARANA"},
 ]
 name = "degiro-connector"
-
 classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
@@ -20,7 +19,7 @@ description = "This is yet another library to access Degiro's API."
 license = "BSD-3-Clause"
 readme = "README.md"
 requires-python = ">=3.10"
-version = "3.0.32"
+version = "3.0.33"
 
 [project.urls]
 repository = "https://github.com/chavithra/degiro-connector"
