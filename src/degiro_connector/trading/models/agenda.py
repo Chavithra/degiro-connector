@@ -18,7 +18,7 @@ class AgendaRequest(BaseModel):
     model_config = ConfigDict(
         alias_generator=to_camel,
         extra="allow",
-        populate_by_name=True,
+        validate_by_name=True,
     )
 
     calendar_type: CalendarType

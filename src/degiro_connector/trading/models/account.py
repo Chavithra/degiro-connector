@@ -8,7 +8,7 @@ from pydantic.alias_generators import to_camel
 class OverviewRequest(BaseModel):
     model_config = ConfigDict(
         alias_generator=to_camel,
-        populate_by_name=True,
+        validate_by_name=True,
     )
 
     from_date: date
@@ -22,7 +22,7 @@ class OverviewRequest(BaseModel):
 class CashMovements(BaseModel):
     model_config = ConfigDict(
         alias_generator=to_camel,
-        populate_by_name=True,
+        validate_by_name=True,
     )
 
     balance: dict | None = Field(default=None)
@@ -39,7 +39,7 @@ class CashMovements(BaseModel):
 class AccountOverview(BaseModel):
     model_config = ConfigDict(
         alias_generator=to_camel,
-        populate_by_name=True,
+        validate_by_name=True,
     )
     cash_movements: list[CashMovements] | None = Field(default=None)
 
@@ -58,7 +58,7 @@ class Format(str, Enum):
 class ReportRequest(BaseModel):
     model_config = ConfigDict(
         alias_generator=to_camel,
-        populate_by_name=True,
+        validate_by_name=True,
     )
 
     country: str
@@ -99,7 +99,7 @@ class AccountUpdate(BaseModel):
     model_config = ConfigDict(
         alias_generator=to_camel,
         extra="allow",
-        populate_by_name=True,
+        validate_by_name=True,
     )
 
     alerts: dict | None = Field(default=None)
@@ -114,7 +114,7 @@ class UpcomingPayments(BaseModel):
     model_config = ConfigDict(
         alias_generator=to_camel,
         extra="allow",
-        populate_by_name=True,
+        validate_by_name=True,
     )
 
     ca_id: str

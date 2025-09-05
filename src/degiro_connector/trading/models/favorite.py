@@ -13,7 +13,7 @@ class FavoriteId(BaseModel):
 class FavoritePosition(BaseModel):
     model_config = ConfigDict(
         alias_generator=to_camel,
-        populate_by_name=True,
+        validate_by_name=True,
     )
 
     position: int
@@ -23,7 +23,7 @@ class FavoritePosition(BaseModel):
 class FavoriteItem(BaseModel):
     model_config = ConfigDict(
         alias_generator=to_camel,
-        populate_by_name=True,
+        validate_by_name=True,
     )
 
     default: bool | None = Field(default=None)

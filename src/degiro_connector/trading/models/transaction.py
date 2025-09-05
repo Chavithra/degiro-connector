@@ -7,7 +7,7 @@ from pydantic.alias_generators import to_camel
 class HistoryRequest(BaseModel):
     model_config = ConfigDict(
         alias_generator=to_camel,
-        populate_by_name=True,
+        validate_by_name=True,
     )
 
     from_date: date
@@ -26,7 +26,7 @@ class HistoryItem(BaseModel):
     model_config = ConfigDict(
         alias_generator=to_camel,
         extra="allow",
-        populate_by_name=True,
+        validate_by_name=True,
     )
 
     auto_fx_fee_in_base_currency: float | None = Field(default=None)

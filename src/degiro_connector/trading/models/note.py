@@ -19,7 +19,7 @@ class NoteBatch(BaseModel):
 class NoteAddRequest(BaseModel):
     model_config = ConfigDict(
         alias_generator=to_camel,
-        populate_by_name=True,
+        validate_by_name=True,
     )
 
     product_id: int | None = Field(default=None)
@@ -32,7 +32,7 @@ class NoteAddResponse(BaseModel):
 class NoteEditRequest(BaseModel):
     model_config = ConfigDict(
         alias_generator=to_camel,
-        populate_by_name=True,
+        validate_by_name=True,
     )
 
     note_id: int | None = Field(default=None)

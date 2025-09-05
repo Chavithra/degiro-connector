@@ -14,7 +14,7 @@ class NewsRequest(BaseModel):
 class NewsItem(BaseModel):
     model_config = ConfigDict(
         alias_generator=to_camel,
-        populate_by_name=True,
+        validate_by_name=True,
     )
 
     brief: str | None = Field(default=None)

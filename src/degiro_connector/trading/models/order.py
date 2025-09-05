@@ -37,7 +37,7 @@ class TimeType(int, Enum):
 class Order(BaseModel):
     model_config = ConfigDict(
         alias_generator=to_camel,
-        populate_by_name=True,
+        validate_by_name=True,
     )
 
     # USED IN CHECKING
@@ -71,7 +71,7 @@ class Order(BaseModel):
 class CheckingResponse(BaseModel):
     model_config = ConfigDict(
         alias_generator=to_camel,
-        populate_by_name=True,
+        validate_by_name=True,
     )
 
     auto_fx_conversion_rate: float | None = Field(default=None)
@@ -95,7 +95,7 @@ class CheckingWrapper(BaseModel):
 class ConfirmationResponse(BaseModel):
     model_config = ConfigDict(
         alias_generator=to_camel,
-        populate_by_name=True,
+        validate_by_name=True,
     )
     order_id: str
     response_datetime: datetime | None = Field(default=None)
@@ -145,7 +145,7 @@ ORDER_FIELD_MAP = {
 class HistoryItem(BaseModel):
     model_config = ConfigDict(
         alias_generator=to_camel,
-        populate_by_name=True,
+        validate_by_name=True,
     )
 
     buysell: Literal["B", "S"]
@@ -168,7 +168,7 @@ class HistoryItem(BaseModel):
 class History(BaseModel):
     model_config = ConfigDict(
         alias_generator=to_camel,
-        populate_by_name=True,
+        validate_by_name=True,
     )
 
     data: list[HistoryItem] = Field(default_factory=list)
@@ -177,7 +177,7 @@ class History(BaseModel):
 class HistoryRequest(BaseModel):
     model_config = ConfigDict(
         alias_generator=to_camel,
-        populate_by_name=True,
+        validate_by_name=True,
     )
 
     from_date: date

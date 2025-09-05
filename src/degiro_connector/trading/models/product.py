@@ -8,7 +8,7 @@ class ProductItem(BaseModel):
     model_config = ConfigDict(
         extra="allow",
         alias_generator=to_camel,
-        populate_by_name=True,
+        validate_by_name=True,
     )
 
     active: bool | None = Field(default=None)
@@ -56,7 +56,7 @@ class FinancialStatements(BaseModel):
     model_config = ConfigDict(
         alias_generator=to_camel,
         extra="allow",
-        populate_by_name=True,
+        validate_by_name=True,
     )
 
     annual: list[dict] = Field(default_factory=list)
@@ -72,7 +72,7 @@ class EstimatesSummaries(BaseModel):
     model_config = ConfigDict(
         alias_generator=to_camel,
         extra="allow",
-        populate_by_name=True,
+        validate_by_name=True,
     )
     annual: list[dict] = Field(default_factory=list)
     interim: list[dict] = Field(default_factory=list)
