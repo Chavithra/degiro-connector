@@ -30,7 +30,7 @@ class Interval(str, Enum):
 class ChartRequest(BaseModel):
     model_config = ConfigDict(
         alias_generator=to_camel,
-        populate_by_name=True,
+        validate_by_name=True,
     )
 
     callback: str = Field(default="vwd.hchart.seriesRequestManager.sync_response")
