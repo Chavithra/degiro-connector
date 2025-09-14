@@ -32,6 +32,7 @@ class AgendaRequest(BaseModel):
     sort_type: str | None = Field(default="asc")
     start_date: datetime
     units: str | None = Field(default=None)
+    isin: str | None = Field(default=None)
 
     int_account: int | None = Field(default=None)
     session_id: str | None = Field(default=None)

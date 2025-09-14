@@ -2059,6 +2059,7 @@ Here are the available parameters for `Agenda.Request` :
 |order_by_desc|bool|-|
 |start_date|Timestamp|Events starting after this date.|
 |end_date|Timestamp|Events before this date.|
+|isin|str| Filter by the company ISIN.|
 |company_name|str|Filter used on the events description.|
 |countries|str|Comma separated list of countries like : `FR,US`|
 |classifications|str|Comma separated list of sectors like : `GovernmentSector,ExternalSector`|
