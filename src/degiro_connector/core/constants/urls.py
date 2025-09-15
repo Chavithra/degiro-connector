@@ -37,10 +37,10 @@ PRODUCT_SEARCH_LOOKUP = (
     "https://trader.degiro.nl/product_search/secure/v5/products/lookup"
 )
 PRODUCT_SEARCH_OPTIONS = "https://trader.degiro.nl/product_search/secure/v5/options"
-PRODUCT_SEARCH_STOCKS = "https://trader.degiro.nl/product_search/secure/v5/stocks"
+PRODUCT_SEARCH_STOCKS = "https://trader.degiro.nl/productsearch/secure/v1/stocks"
 PRODUCT_SEARCH_WARRANTS = "https://trader.degiro.nl/product_search/secure/v5/warrants"
 PRODUCTS_INFO = "https://trader.degiro.nl/product_search/secure/v5/products/info"
-PRODUCT_SEARCH_DICTIONARY = "https://trader.degiro.nl/product_search/config/dictionary"
+PRODUCT_SEARCH_DICTIONARY = "https://trader.degiro.nl/productsearch/secure/v1/config/dictionary"
 FUTURES_UNDERLYINGS = (
     "https://trader.degiro.nl/product_search/secure/v5/futures/underlyings"
 )
