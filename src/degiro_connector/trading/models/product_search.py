@@ -117,9 +117,9 @@ class WarrantsRequest(ProductInfo):
 
 
 class ProductBatch(BaseModel):
-    offset: int
+    #offset: int
     products: list[dict] | None = Field(default=None)
-    response_datetime: datetime = Field(default_factory=datetime.now)
+    #response_datetime: datetime = Field(default_factory=datetime.now)
     total: int = Field(default=0)
 
 
