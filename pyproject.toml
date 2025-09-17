@@ -19,7 +19,7 @@ description = "This is yet another library to access Degiro's API."
 license = "BSD-3-Clause"
 readme = "README.md"
 requires-python = ">=3.10"
-version = "3.0.33"
+version = "3.0.34"
 
 [project.urls]
 repository = "https://github.com/chavithra/degiro-connector"
