@@ -13,7 +13,7 @@ dependencies = [
     "pydantic>=2.11.7",
     "pyotp>=2.9.0",
     "requests>=2.32.5",
-    "wrapt==1.14.1",
+    "wrapt>=1.14.1",
 ]
 description = "This is yet another library to access Degiro's API."
 license = "BSD-3-Clause"
