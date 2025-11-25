@@ -47,6 +47,9 @@ FUTURES_UNDERLYINGS = (
 OPTIONS_UNDERLYINGS = (
     "https://trader.degiro.nl/product_search/secure/v5/options/underlyings"
 )
+SECURITIES_LENDING = "https://trader.degiro.nl/pa/secure/securities-lending"
+SECURITIES_LENDING_REPORT_DATE = "https://trader.degiro.nl/securities-lending-reporting/secure/report/date"
+SECURITIES_LENDING_REPORTING_SNAPSHOT = "https://trader.degiro.nl/securities-lending-reporting/secure/report/snapshot"
 TOP_NEWS_PREVIEW = (
     "https://trader.degiro.nl/dgtbxdsservice/secure/newsfeed/v2/top-news-preview"
 )
