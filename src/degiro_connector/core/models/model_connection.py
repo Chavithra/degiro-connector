@@ -3,7 +3,7 @@ import requests
 import time
 from threading import Event
 
-from wrapt.decorators import synchronized
+from wrapt import synchronized
 
 
 class ModelConnection:
