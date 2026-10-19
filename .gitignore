@@ -33,3 +33,6 @@ __pycache__
 *.lock
 !*template.json
 !pytest.ini
+
+# IDEs
+.idea
