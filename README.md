@@ -709,6 +709,30 @@ trading_api.connect()
 For a more comprehensive example :
 [connection.py](examples/trading/connection.py)
 
+### Read-only mode
+
+If you only read data (portfolio, transactions, reports), you can disable the actions which place,
+change or cancel orders, or modify notes and favourites:
+
+```python
+trading_api = TradingAPI(credentials=credentials, read_only=True)
+
+trading_api.confirm_order  # raises ActionDisabledError
+```
+
+The matching HTTP requests are also refused by the session before being sent.
+
+`check_order` stays available, since it only validates an order and returns its fees. To disable
+it, or any other action, use `disabled_actions`:
+
+```python
+trading_api = TradingAPI(
+    credentials=credentials,
+    read_only=True,
+    disabled_actions={"check_order"},
+)
+```
+
 ## 3.2. How to logout ?
 
 Once you no longer need to use the API you can destroy your connection.

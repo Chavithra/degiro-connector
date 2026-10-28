@@ -1,13 +1,59 @@
 import logging
 import pkgutil
 from pathlib import Path
-from typing import Any, Callable
+from typing import Any, Callable, Iterable
 
 from degiro_connector.core.abstracts.abstract_action import AbstractAction
+from degiro_connector.core.constants import urls
+from degiro_connector.core.exceptions import ActionDisabledError
 from degiro_connector.core.helpers.lazy_loader import InitArgs, LazyLoader, Pair
 from degiro_connector.core.models.model_connection import ModelConnection
-from degiro_connector.core.models.model_session import ModelSession
+from degiro_connector.core.models.model_session import BlockedRequest, ModelSession
 from degiro_connector.trading.models.credentials import Credentials
+
+# Actions which place, change or cancel orders, or modify the account (notes, favourites).
+# `check_order` is not part of it: it only validates an order and returns its fees.
+SENSITIVE_ACTIONS = frozenset(
+    {
+        "confirm_order",
+        "update_order",
+        "delete_order",
+        "create_favorite",
+        "delete_favorite",
+        "delete_favorite_product",
+        "move_favorite",
+        "put_favorite_product",
+        "rename_favorite",
+        "create_note",
+        "delete_note",
+        "edit_note",
+    }
+)
+
+WRITE_METHODS = frozenset({"POST", "PUT", "DELETE", "PATCH"})
+
+# Same protection at the HTTP level, so a disabled action can't be reached another way.
+BLOCKED_REQUESTS: dict[str, BlockedRequest] = {
+    "check_order": (frozenset({"POST"}), urls.ORDER_CHECK),
+    # these three share one URL and differ by method
+    "confirm_order": (frozenset({"POST"}), urls.ORDER_CONFIRM),
+    "update_order": (frozenset({"PUT"}), urls.ORDER_UPDATE),
+    "delete_order": (frozenset({"DELETE"}), urls.ORDER_DELETE),
+    "favorites": (WRITE_METHODS, urls.FAVOURITES_LIST),
+    "notes": (WRITE_METHODS, urls.NOTES_LIST),
+}
+
+
+def _blocked_requests(disabled_actions: frozenset[str]) -> list[BlockedRequest]:
+    blocked = []
+    for action in disabled_actions:
+        if action in BLOCKED_REQUESTS:
+            blocked.append(BLOCKED_REQUESTS[action])
+        elif "favorite" in action:
+            blocked.append(BLOCKED_REQUESTS["favorites"])
+        elif "note" in action:
+            blocked.append(BLOCKED_REQUESTS["notes"])
+    return list(dict.fromkeys(blocked))
 
 
 class API:
@@ -39,6 +85,10 @@ class API:
         return self._action_list
 
     @property
+    def disabled_actions(self) -> frozenset[str]:
+        return self._disabled_actions
+
+    @property
     def connection_storage(self) -> ModelConnection:
         return self._connection_storage
 
@@ -57,6 +107,9 @@ class API:
     ) -> object | None:
         logger = self._logger
         action_list = self._action_list
+
+        if action in self._disabled_actions:
+            raise ActionDisabledError(f"Action disabled: {action}")
 
         if action not in action_list:
             logger.info("Not in action_list")
@@ -86,16 +139,44 @@ class API:
         logger: logging.Logger | None = None,
         preload: bool = True,
         session_storage: ModelSession | None = None,
+        read_only: bool = False,
+        disabled_actions: Iterable[str] | None = None,
     ):
+        """
+        Args:
+            read_only (bool, optional):
+                Disables every action in `SENSITIVE_ACTIONS`: placing, changing or cancelling
+                orders and modifying notes or favourites. Defaults to False.
+            disabled_actions (Iterable[str], optional):
+                Further actions to disable, e.g. {"check_order"}. Defaults to None.
+
+        Disabled actions raise `ActionDisabledError`, and their HTTP requests are refused by the
+        session before being sent.
+        """
+        all_actions = self.build_action_list()
+        disabled = frozenset(disabled_actions or ())
+        if read_only:
+            disabled |= SENSITIVE_ACTIONS
+        unknown = disabled - set(all_actions)
+        if unknown:
+            raise ValueError(f"Unknown actions: {sorted(unknown)}")
+        self._disabled_actions = disabled
+
         self._credentials = credentials
         self._connection_storage = connection_storage or ModelConnection(
             timeout=self.TRADING_TIMEOUT,
         )
         self._logger = logger or logging.getLogger(self.__module__)
+        blocked_requests = _blocked_requests(disabled)
+        if session_storage is not None and blocked_requests:
+            raise ValueError(
+                "Pass either `session_storage` or disabled actions, not both."
+            )
         self._session_storage = session_storage or ModelSession(
-            hooks=self._connection_storage.build_hooks()
+            hooks=self._connection_storage.build_hooks(),
+            blocked_requests=blocked_requests,
         )
-        self._action_list = self.build_action_list()
+        self._action_list = [a for a in all_actions if a not in disabled]
 
         if preload:
             self.setup_all_actions()
@@ -127,6 +208,9 @@ class API:
     def __getattr__(self, item) -> Callable[..., Any]:
         logger = self._logger
         logger.debug("CALLING __GETATTR__, on item : %s", item)
+        if item in self.__dict__.get("_disabled_actions", ()):
+            raise ActionDisabledError(f"Action disabled: {item}")
+
         if item in self._action_list:
             action = item
             self.setup_one_action(action=action)

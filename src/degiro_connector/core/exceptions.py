@@ -34,3 +34,6 @@ class CaptchaRequiredError(DeGiroConnectionError):
             error_details (LoginError): The login error details
         """
         super().__init__(message, error_details)
+
+class ActionDisabledError(PermissionError):
+    """Exception raised when a disabled action is called (e.g. an order action in read-only mode)."""
