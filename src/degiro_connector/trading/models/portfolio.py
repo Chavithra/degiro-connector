@@ -21,7 +21,27 @@ class PortfolioValueRequest(BaseModel):
     period: Period
 
 
+class PortfolioReturnRequest(BaseModel):
+    model_config = ConfigDict(
+        alias_generator=to_camel,
+        validate_by_name=True,
+    )
+
+    period: Period
+
+
 class PortfolioValue(BaseModel):
+    model_config = ConfigDict(
+        alias_generator=to_camel,
+        extra="allow",
+        validate_by_name=True,
+    )
+
+    date: Date
+    value: float
+
+
+class PortfolioReturn(BaseModel):
     model_config = ConfigDict(
         alias_generator=to_camel,
         extra="allow",

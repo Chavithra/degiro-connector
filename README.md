@@ -51,6 +51,7 @@ Here are the features you can access through this library :
 |OrderHistory|Retrieve all Orders created between two dates.|
 |Orders|List pending Orders.|
 |Portfolio|List products in your Portfolio.|
+|PortfolioReturn|Retrieve the portfolio return over a period: 1M, 3M, YTD or 1Y.|
 |PortfolioValue|Retrieve the portfolio value over a period: 1M, 3M, YTD or 1Y.|
 |ProductsConfig|Retrieve a table containing : useful parameters to filter products.|
 |ProductsInfo|Search for products using their ids.|
@@ -119,6 +120,7 @@ Here are the features you can access through this library :
   - [5.5. How to retrieve the TransactionsHistory ?](#55-how-to-retrieve-the-transactionshistory-)
   - [5.6 How to retrieve Upcoming Payments ?](#56-how-to-retrieve-upcoming-payments-)
   - [5.7. How to retrieve the Portfolio value ?](#57-how-to-retrieve-the-portfolio-value-)
+  - [5.8. How to retrieve the Portfolio return ?](#58-how-to-retrieve-the-portfolio-return-)
 - [6. Account](#6-account)
   - [6.1. How to retrieve the table : Config ?](#61-how-to-retrieve-the-table--config-)
   - [6.2. How to retrieve the table : ClientDetails ?](#62-how-to-retrieve-the-table--clientdetails-)
@@ -1264,6 +1266,29 @@ portfolio_value = trading_api.get_portfolio_value(
 
 For a more comprehensive example :
 [portfolio_value.py](examples/trading/portfolio_value.py)
+
+## 5.8. How to retrieve the Portfolio return ?
+
+This method returns the portfolio return for one of the known periods: `1M`, `3M`, `YTD` or `1Y`.
+
+Each point contains:
+
+|**Parameter**|**Type**|
+|:-|:-|
+|date|str|
+|value|float|
+
+```python
+portfolio_return = trading_api.get_portfolio_return(
+    portfolio_return_request=PortfolioReturnRequest(
+        period=Period.YTD,
+    ),
+    raw=False,
+)
+```
+
+For a more comprehensive example :
+[portfolio_return.py](examples/trading/portfolio_return.py)
 
 # 6. Account
 
