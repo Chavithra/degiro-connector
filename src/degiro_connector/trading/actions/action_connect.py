@@ -10,6 +10,8 @@ from degiro_connector.core.abstracts.abstract_action import AbstractAction
 from degiro_connector.trading.models.credentials import Credentials
 from degiro_connector.trading.models.login import Login, LoginError, LoginSuccess
 
+DEGIRO_DOMAIN = "trader.degiro.nl"
+
 
 class ActionConnect(AbstractAction):
     @classmethod
@@ -72,6 +74,11 @@ class ActionConnect(AbstractAction):
         else:
             url = urls.LOGIN
 
+        # a remembered device: DeGiro's device cookies plus the tokens from `remember_device`
+        device_cookies = credentials.device_cookies or {}
+        for name, value in device_cookies.items():
+            session.cookies.set(name, value, domain=DEGIRO_DOMAIN, path="/")
+
         login = Login(
             username=credentials.username,
             password=credentials.password,
@@ -80,6 +87,8 @@ class ActionConnect(AbstractAction):
             query_tarams={},
             one_time_password=one_time_password,
             in_app_token=in_app_token,
+            device_id=credentials.device_id or device_cookies.get("deviceUUID"),
+            user_tokens=credentials.user_tokens,
         )
         payload = login.model_dump(
             by_alias=True,

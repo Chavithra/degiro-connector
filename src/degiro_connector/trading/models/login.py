@@ -46,3 +46,12 @@ class Login(BaseModel):
     query_tarams: dict = Field(default_factory=dict)
     one_time_password: str | None = Field(default=None)
     in_app_token: str | None = Field(default=None)
+    device_id: str | None = Field(default=None)
+    user_tokens: list[dict] | None = Field(default=None)
+
+
+class RememberedDevice(BaseModel):
+    """What a later login needs to skip the in-app approval; keep it as secret as the password."""
+
+    user_tokens: list[dict]
+    device_cookies: dict[str, str]

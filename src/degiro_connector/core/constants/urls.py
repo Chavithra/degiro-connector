@@ -18,6 +18,7 @@ FINANCIAL_STATEMENTS = "https://trader.degiro.nl/dgtbxdsservice/secure/financial
 LATEST_NEWS = "https://trader.degiro.nl/dgtbxdsservice/secure/newsfeed/v2/latest-news"
 LOGIN = "https://trader.degiro.nl/login/secure/login"
 LOGOUT = "https://trader.degiro.nl/trading/secure/logout"
+REMEMBER_ME = "https://trader.degiro.nl/login/secure/remember-me"
 NEWS_BY_COMPANY = "https://trader.degiro.nl/dgtbxdsservice/secure/newsfeed/v2/news-by-company"
 NOTES_LIST = "https://trader.degiro.nl/product-notes-service/secure/notes"
 ORDER_CHECK = "https://trader.degiro.nl/trading/secure/v5/checkOrder"

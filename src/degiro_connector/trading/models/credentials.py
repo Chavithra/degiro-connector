@@ -12,6 +12,11 @@ class Credentials(BaseModel):
     totp_secret_key: str | None = Field(default=None)
     one_time_password: int | None = Field(default=None)
     in_app_token: str | None = Field(default=None)
+    # "Remember this device": filled by `remember_device`, sent on later logins so that
+    # DeGiro skips the in-app approval (see README).
+    device_id: str | None = Field(default=None)
+    user_tokens: list[dict] | None = Field(default=None)
+    device_cookies: dict[str, str] | None = Field(default=None)
 
     @field_validator("totp_secret_key")
     @classmethod
