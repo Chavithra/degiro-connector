@@ -4,6 +4,7 @@ QUOTECAST = "https://degiro.quotecast.vwdservices.com/CORS"
 QUOTECAST_VERSION = "1.0.20201211"
 
 # TRADING RELATED
+COMPANY_LOGO = "https://trader.degiro.nl/logos/api/logos/isin"
 ACCOUNT_INFO = "https://trader.degiro.nl/trading/secure/v5/account/info"
 ACCOUNT_OVERVIEW = "https://trader.degiro.nl/portfolio-reports/secure/v6/accountoverview"
 AGENDA = "https://trader.degiro.nl/dgtbxdsservice/secure/agenda/v2"

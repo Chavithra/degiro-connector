@@ -37,6 +37,7 @@ Here are the features you can access through this library :
 |Bonds<br>ETFs<br>Funds<br>Futures<br>Leverageds<br>Lookup<br>Options<br>Stocks<br>Warrants|Search list of products according their name, type and other criterias. <br> For instance all the stocks from NASDAQ 100.|
 |Chart|Retrieve chart data.|
 |ClientDetails|Retrieve a table containing : "clientId", "intAccount" and other account information.|
+|CompanyLogo|Build a public company logo URL or download its image bytes using an ISIN, without authentication.|
 |CompanyProfile|Retrieve a company's profile using its ISIN code.|
 |CompanyRatios|Retrieve a company's ratios using its ISIN code.|
 |Config|Retrieve a table containing : "clientId" and URLs which are constitutive of Degiro's API.|
@@ -160,6 +161,7 @@ Here are the features you can access through this library :
   - [8.6. How to get : NewsByCompany ?](#86-how-to-get--newsbycompany-)
   - [8.7. How to get : Agenda ?](#87-how-to-get--agenda-)
   - [8.8. How to get : EstimatesSummaries ?](#88-how-to-get--estimatessummaries-)
+  - [8.9. How to get a company logo ?](#89-how-to-get-a-company-logo-)
 - [9. License](#9-license)
 
 # 2. Real-time data
@@ -2149,6 +2151,79 @@ Exact definition of `EstimatesSummaries` is in this file :
 
 For a more comprehensive example :
 [estimates_summaries.py](examples/trading/estimates_summaries.py)
+
+## 8.9. How to get a company logo ?
+
+DEGIRO serves company logos from a public endpoint. No credentials, account
+configuration, or `connect()` call are required when using these methods directly:
+
+```python
+from pathlib import Path
+
+from degiro_connector.trading.actions.action_get_company_logo import (
+    ActionGetCompanyLogo,
+)
+from degiro_connector.trading.actions.action_get_company_logo_url import (
+    ActionGetCompanyLogoUrl,
+)
+
+# Build a URL locally, without a network request.
+logo_url = ActionGetCompanyLogoUrl.get_company_logo_url("US0378331005")
+# https://trader.degiro.nl/logos/api/logos/isin/US0378331005
+
+# Download bytes plus Content-Type metadata to choose the file extension.
+logo = ActionGetCompanyLogo.get_company_logo(
+    "US0378331005", timeout=30, include_metadata=True
+)
+if logo is not None:
+    Path(f"apple-logo{logo.extension}").write_bytes(logo.content)
+```
+
+`get_company_logo_url(product_isin)` returns a `str` and does not check whether
+a logo exists. `get_company_logo(product_isin, timeout=30)` returns `bytes` on
+success and logs an error and returns `None` on HTTP errors (including 404),
+connection errors, timeouts, or explicitly non-image response types (such as
+HTML or JSON error pages). The timeout is in seconds. Image bytes are
+returned unchanged; the library does not convert the image or assume its format.
+
+Pass `include_metadata=True` to receive a `CompanyLogo` instead of bare bytes.
+Its `content` contains the original bytes, `content_type` contains the normalized
+response media type (without parameters such as `charset`), and `extension`
+uses that type to select a file suffix, such as `.svg` for `image/svg+xml` or
+`.png` for `image/png`. Missing or empty content types, generic
+`application/octet-stream` responses, and unrecognized image types fall back to `.bin`.
+The runnable example uses this option, so an SVG response is saved as
+`apple-logo.svg`. The default call still returns bytes.
+
+If you already have a `TradingAPI` instance, both methods are also available as
+`trading_api.get_company_logo_url(product_isin="US0378331005")` and
+`trading_api.get_company_logo(product_isin="US0378331005")` before or after login.
+Logo downloads use a separate session without trading cookies or connection hooks.
+
+For Django, build the URL in your view and pass it to the template:
+
+```python
+from django.shortcuts import render
+
+from degiro_connector.trading.actions.action_get_company_logo_url import (
+    ActionGetCompanyLogoUrl,
+)
+
+
+def company(request):
+    return render(request, "company.html", {
+        "logo_url": ActionGetCompanyLogoUrl.get_company_logo_url("US0378331005"),
+    })
+```
+
+```html
+<img src="{{ logo_url }}" alt="Apple logo">
+```
+
+The browser loads the image directly from DEGIRO. Other example ISINs are
+`US5949181045` (Microsoft), `US88160R1014` (Tesla), and `US30303M1027` (Meta).
+
+For a runnable example: [company_logo.py](examples/trading/company_logo.py).
 
 # 9. License
 [BSD-3-Clause License](https://raw.githubusercontent.com/Chavithra/degiro-connector/main/LICENSE)
